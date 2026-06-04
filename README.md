@@ -1,6 +1,6 @@
 ## Links
 
-main : [main](https://1-brain-cell.github.io/coop-dga/)
+main : [menu](https://1-brain-cell.github.io/coop-dga/)
 
 
 | day | links |
