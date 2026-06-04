@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGA306: Data Analytics (Day 4)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f0f4f8; font-size: 1.125rem; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .equation { font-family: 'Courier New', Courier, monospace; background: #e2e8f0; padding: 14px; border-radius: 8px; font-size: 1.25rem; }
+        .metric-card-btn { transition: all 0.2s ease; cursor: pointer; border-width: 2px; }
+        .metric-card-btn.selected { border-color: #2563eb; background-color: #eff6ff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        h1, h2, h3, h4 { font-weight: 700; }
+        input[type="range"] { height: 8px; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <header class="bg-blue-900 text-white p-6 shadow-lg w-full">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Analytics (Day 4)</h1>
+                <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide</p>
+            </div>
+            <i class="fas fa-chart-pie text-5xl opacity-40 hidden sm:block"></i>
+        </div>
+    </header>
+
+    <nav class="bg-white border-b sticky top-0 z-10 shadow-sm text-base md:text-lg w-full">
+        <div class="max-w-7xl mx-auto flex flex-wrap">
+            <button onclick="openTab(event, 'ml-basics')" class="tab-link px-5 py-4 font-semibold text-blue-900 border-b-2 border-blue-600 active bg-blue-50">
+                <i class="fas fa-graduation-cap mr-2"></i>ML Basics
+            </button>
+            <button onclick="openTab(event, 'regression')" class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition">
+                <i class="fas fa-chart-line mr-2"></i>Linear Regression
+            </button>
+            <button onclick="openTab(event, 'classification')" class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition">
+                <i class="fas fa-tags mr-2"></i>Logistic Regression
+            </button>
+            <button onclick="openTab(event, 'reg-metrics')" class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition">
+                <i class="fas fa-microscope mr-2"></i>Regression Metrics
+            </button>
+            <button onclick="openTab(event, 'confusion')" class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition">
+                <i class="fas fa-table mr-2"></i>Confusion Matrix & F1
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="bg-white p-6 md:p-10 rounded-xl shadow-md border">
+
+            <div id="ml-basics" class="tab-content active space-y-8">
+                <div class="border-l-4 border-blue-600 pl-4">
+                    <h2 class="text-2xl font-bold text-gray-800">บทนำและขอบเขตวิทยาการข้อมูล (Data Science Overview)</h2>
+                    <p class="text-gray-600 text-lg">สรุปเนื้อหาแกนหลักประจำชุดการเรียนรู้ เพื่อทำความเข้าใจความเกี่ยวเนื่องของโมเดลการวิเคราะห์</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 items-center">
+                    <div class="md:col-span-1 bg-slate-50 p-6 rounded-xl border text-center flex flex-col justify-center items-center min-h-[320px]">
+                        <div class="text-blue-900 text-6xl mb-4"><i class="fas fa-circles-intersection"></i></div>
+                        <h3 class="font-bold text-2xl text-gray-800 mb-4">Data Science คืออะไร?</h3>
+                        <p class="text-base text-gray-600 leading-relaxed text-center max-w-md">วิทยาการข้อมูลเกิดจากการบูรณาการความรู้ของ 3 ศาสตร์หลัก ได้แก่ <strong>Computer Science</strong> (ทักษะไอที/การเขียนโปรแกรม), <strong>Math & Statistics</strong> (คณิตศาสตร์และการคำนวณโมเดล) และ <strong>Business Domain Expertise</strong> (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</p>
+                    </div>
+
+                    <div class="md:col-span-2 space-y-4">
+                        <h3 class="font-bold text-xl text-gray-800"><i class="fas fa-layer-group mr-2 text-blue-600"></i>4 ระดับขั้นของการวิเคราะห์ข้อมูล (4 Types of Data Analytics)</h3>
+                        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 bg-white border-l-4 border-gray-400 rounded shadow-sm bg-slate-50/50">
+                                <span class="font-bold text-gray-800 block">1. Descriptive Analytics</span>
+                                <p class="text-gray-600">บอกว่าเกิดอะไรขึ้นในอดีต (What happened?) เช่น รายงานสรุปยอดขายประจำปี</p>
+                            </div>
+                            <div class="p-4 bg-white border-l-4 border-yellow-500 rounded shadow-sm bg-slate-50/50">
+                                <span class="font-bold text-yellow-800 block">2. Diagnostic Analytics</span>
+                                <p class="text-gray-600">เจาะลึกหาสาเหตุว่าทำไมจึงเกิดขึ้น (Why did it happen?) เช่น การทำ Data Drill-Down</p>
+                            </div>
+                            <div class="p-4 bg-white border-l-4 border-blue-500 rounded shadow-sm bg-blue-50/50">
+                                <span class="font-bold text-blue-800 block">3. Predictive Analytics (เน้นใน Day 4)</span>
+                                <p class="text-gray-600">พยากรณ์สิ่งที่มีแนวโน้มจะเกิดขึ้นในอนาคต (What will happen?) โดยอาศัยเทคนิคทางสถิติและ Machine Learning</p>
+                            </div>
+                            <div class="p-4 bg-white border-l-4 border-green-500 rounded shadow-sm bg-green-50/50">
+                                <span class="font-bold text-green-800 block">4. Prescriptive Analytics</span>
+                                <p class="text-gray-600">แนะนำทางเลือกและผลลัพธ์ที่ควรทำ (How can we make it happen?) เพื่อช่วยชี้นำการตัดสินใจสูงสุด</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg border">
+                    <h4 class="font-bold text-gray-800 text-lg mb-3 text-center">ทบทวนงานของ Supervised Learning (Regression vs Classification)</h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-base">
+                        <div class="p-4 bg-white rounded shadow-sm border-t-4 border-blue-500">
+                            <span class="font-bold text-blue-800 text-lg block mb-1">Regression (การทำนายค่าต่อเนื่อง):</span> ผลลัพธ์เป็นค่าตัวเลขเชิงปริมาณที่มีสเกลต่อเนื่อง มุ่งเน้นหาแนวโน้มและความสัมพันธ์เชิงเส้นตรงหรือเส้นโค้งเพื่อทำนายสเกลตัวเลข เช่น รายได้ หรืออุณหภูมิ
+                        </div>
+                        <div class="p-4 bg-white rounded shadow-sm border-t-4 border-green-500">
+                            <span class="font-bold text-green-800 text-lg block mb-1">Classification (การจำแนกประเภทกลุ่ม):</span> ผลลัพธ์เป็นกลุ่มหรือหมวดหมู่ประเภทที่ตัดขาดออกจากกันชัดเจน (Discrete Class) มุ่งเน้นหาเส้นแบ่งเขตเพื่อแยกประเภทข้อมูลออกจากกัน เช่น ผ่าน/ไม่ผ่าน หรือ ป่วย/ปกติ
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="regression" class="tab-content space-y-6">
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Linear Regression Simulation</h2>
+                    <p class="text-gray-600 text-lg">ทดลองปรับค่าสัมประสิทธิ์ความชัน (Slope) และจุดตัดแกน Y (Intercept) เพื่อสังเกตกลไกการคำนวณค่าความคลาดเคลื่อนสะสม</p>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="space-y-4 bg-gray-50 p-5 rounded-xl border">
+                        <h3 class="font-bold text-lg text-blue-950">คอนโทรลพารามิเตอร์</h3>
+                        <div>
+                            <label class="block text-base font-semibold text-gray-700 mb-1">จุดตัดแกน Y (Intercept: β₀): <span id="valBeta0" class="font-bold text-blue-600">20</span></label>
+                            <input type="range" id="sliderBeta0" min="0" max="100" value="20" class="w-full accent-blue-600">
+                        </div>
+                        <div>
+                            <label class="block text-base font-semibold text-gray-700 mb-1">ความชันของเส้นตรง (Slope: β₁): <span id="valBeta1" class="font-bold text-blue-600">0.5</span></label>
+                            <input type="range" id="sliderBeta1" min="-2" max="2" step="0.1" value="0.5" class="w-full accent-blue-600">
+                        </div>
+                        <div class="pt-4 border-t">
+                            <div class="equation text-center font-bold text-base mb-2">สมการทำนาย: ŷ = <span id="eqBeta0">20</span> + (<span id="eqBeta1">0.5</span>)x</div>
+                            <div class="p-3 bg-red-50 text-red-900 rounded text-center border border-red-200">
+                                <span class="text-xs font-bold uppercase block text-red-500">Sum of Squared Errors (SSE) - ผลรวมความคลาดเคลื่อนยกกำลังสอง</span>
+                                <span id="valSSE" class="text-2xl font-mono font-bold">0.00</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 leading-relaxed"><strong>หลักการทำงาน:</strong> เป้าหมายของโมเดลคือการปรับค่า β₀ และ β₁ เพื่อให้เส้นพยากรณ์ลากผ่านใกล้จุดข้อมูลจริงมากที่สุด ซึ่งจะทำให้ค่าความคลาดเคลื่อนยกกำลังสอง (SSE) มีค่าต่ำที่สุดตามหลักการคณิตศาสตร์ Least Squares Method</p>
+                    </div>
+                    <div class="lg:col-span-2 flex flex-col items-center">
+                        <canvas id="regressionCanvas" width="540" height="380" class="border bg-white rounded-xl shadow-inner w-full max-w-xl"></canvas>
+                        <span class="text-xs text-gray-400 mt-2 text-center">เส้นประสีเขียวแสดง "Residuals" (ระยะห่างความเพี้ยนข้อมูล) ระหว่างค่าจริง (จุดแดง) กับเส้นทำนาย (สีน้ำเงิน)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="classification" class="tab-content space-y-6">
+                <div class="border-l-4 border-green-500 pl-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Classification & Logistic Regression</h2>
+                    <p class="text-gray-600 text-lg">เบื้องหลังการทำนายกลุ่มมาจากอะไร? โมเดลจะนำฟีเจอร์คำนวณผ่านฟังก์ชันคณิตศาสตร์เพื่อแปลงค่าเป็นระดับความน่าจะเป็นแบบ S-Curve</p>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="space-y-4 bg-gray-50 p-5 rounded-xl border">
+                        <h3 class="font-bold text-lg text-green-950"><i class="fas fa-sliders-h mr-2"></i>กลไกการคำนวณแยกกลุ่ม</h3>
+                        <div class="bg-white p-3 rounded border text-xs space-y-2 text-gray-700 leading-relaxed">
+                            <p class="font-bold text-gray-800 text-sm">ขั้นตอนที่ 1: คำนวณสมการเชิงเส้นตรง (Log-odds)</p>
+                            <div class="bg-gray-100 p-1 rounded text-center font-mono text-blue-700 text-sm">z = β₀ + β₁X</div>
+                            <p class="font-bold text-gray-800 pt-1 text-sm">ขั้นตอนที่ 2: ส่งผ่านฟังก์ชันปรับความโค้ง Sigmoid</p>
+                            <div class="bg-gray-100 p-1 rounded text-center font-mono text-green-700 text-sm">P = 1 / (1 + e<sup>-z</sup>)</div>
+                            <p class="pt-1 text-gray-600">ผลลัพธ์ย่อย <strong>P</strong> คือค่าความน่าจะเป็น (Probability) ในช่วง 0 ถึง 1 (แสดงด้วยความสูงของเส้นโค้ง S-Curve บนกราฟ)</p>
+                        </div>
+                        <div class="pt-2">
+                            <label class="block text-base font-semibold text-gray-700 mb-1">Decision Boundary (เกณฑ์เส้นแบ่งเขตตัดสินใจ): <span id="valLogThresh" class="font-bold text-green-600">0.50</span></label>
+                            <input type="range" id="sliderLogThresh" min="0.1" max="0.9" step="0.05" value="0.50" class="w-full accent-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-base font-semibold text-gray-700 mb-1">อัตราความชันของกราฟ (Steepness): <span id="valLogSteep" class="font-bold text-green-600">0.20</span></label>
+                            <input type="range" id="sliderLogSteep" min="0.05" max="0.5" step="0.05" value="0.20" class="w-full accent-green-600">
+                        </div>
+                        <div class="p-3 bg-yellow-50 border border-yellow-200 text-xs rounded text-gray-600 leading-relaxed">
+                            <strong>กติกาแบ่งกลุ่ม:</strong> หากจุดข้อมูลมีระดับความน่าจะเป็นลอยสูงพ้นเกณฑ์เส้นปะสีแดง โมเดลจะจัดให้เป็น <span class="text-orange-600 font-bold">Class 1 (โรคอ้วน)</span> ถ้าไม่ถึงจะจัดเป็น <span class="text-blue-600 font-bold">Class 0 (ปกติ)</span> จุดวงแหวนสีแดงซ้อนภายนอกหมายถึงข้อมูลเกิดพยากรณ์ผิดพลาด (Misclassification)
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 flex flex-col items-center">
+                        <canvas id="logisticCanvas" width="540" height="380" class="border bg-white rounded-xl shadow-inner w-full max-w-xl"></canvas>
+                        <span class="text-xs text-gray-400 mt-2 text-center">แกนตั้งแสดงโอกาสความน่าจะเป็น 0.0 ถึง 1.0 (0% ถึง 100%) | จุดสีฟ้าคือคนปกติ จุดสีส้มคือคนเป็นโรคอ้วนจริง (วงกลมสีแดงซ้อนนอก = ทายผิดกลุ่ม)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reg-metrics" class="tab-content space-y-6">
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Regression Evaluation Metrics</h2>
+                    <p class="text-gray-600 text-lg">คลิกเลือกมาตรวัดประเมินผลตัวเลขเพื่อส่องดูหลักการคำนวณและขั้นตอนการหาค่าความแม่นยำของโมเดลอย่างชัดเจน</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div id="card-MAE" onclick="selectMetric('MAE')" class="metric-card-btn p-4 border rounded-xl shadow bg-white selected">
+                        <span class="text-xs font-bold text-blue-600 block mb-1">Metric 01</span>
+                        <h4 class="font-bold text-lg">MAE</h4>
+                        <p class="text-xs text-gray-500">Mean Absolute Error</p>
+                    </div>
+                    <div id="card-MSE" onclick="selectMetric('MSE')" class="metric-card-btn p-4 border rounded-xl shadow bg-white">
+                        <span class="text-xs font-bold text-blue-600 block mb-1">Metric 02</span>
+                        <h4 class="font-bold text-lg">MSE</h4>
+                        <p class="text-xs text-gray-500">Mean Squared Error</p>
+                    </div>
+                    <div id="card-RMSE" onclick="selectMetric('RMSE')" class="metric-card-btn p-4 border rounded-xl shadow bg-white">
+                        <span class="text-xs font-bold text-blue-600 block mb-1">Metric 03</span>
+                        <h4 class="font-bold text-lg">RMSE</h4>
+                        <p class="text-xs text-gray-500">Root Mean Squared Error</p>
+                    </div>
+                    <div id="card-R2" onclick="selectMetric('R2')" class="metric-card-btn p-4 border rounded-xl shadow bg-white">
+                        <span class="text-xs font-bold text-indigo-600 block mb-1">Evaluation Score</span>
+                        <h4 class="font-bold text-lg">R-Squared (R²)</h4>
+                        <p class="text-xs text-gray-500">Coefficient of Determination</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                    <div class="flex flex-wrap justify-between items-center border-b pb-2 gap-2">
+                        <h3 id="metricDetailTitle" class="text-xl font-bold text-blue-900">MAE (Mean Absolute Error)</h3>
+                        <button onclick="simulateMetricProcess()" class="bg-blue-600 text-white px-4 py-2 text-xs font-bold rounded-lg hover:bg-blue-700 transition shadow-sm"><i class="fas fa-play mr-1"></i>จำลองขั้นตอนประมวลผลตัวเลข</button>
+                    </div>
+                    
+                    <div class="grid lg:grid-cols-2 gap-6 text-base">
+                        <div class="space-y-2">
+                            <span class="font-bold text-slate-700 block"><i class="fas fa-comment-dots mr-2 text-blue-600"></i>แนวคิดคำนวณประเมินผล:</span>
+                            <p id="metricDetailDesc" class="text-slate-600 leading-relaxed">นำระยะห่างความเพี้ยนของข้อมูลแต่ละจุดมาปลดเครื่องหมายติดลบออกให้เป็นบวกทั้งหมด (Absolute Value) แล้วนำมาหาค่าเฉลี่ยตรง ๆ วิธีนี้จะสะท้อนความเพี้ยนเฉลี่ยตามจริงที่เป็นมาตราส่วนเดิมของข้อมูลโดยไม่มีการเอนเอียง</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border flex flex-col justify-center shadow-sm">
+                            <span class="font-bold text-slate-700 block mb-2"><i class="fas fa-list-ol mr-2 text-emerald-600"></i>ลำดับขั้นตอนคณิตศาสตร์ (Algorithm Steps):</span>
+                            <div id="metricDetailSteps" class="space-y-1.5 text-slate-700 font-medium">
+                                <div class="p-1.5 bg-slate-50 rounded border">1. หาผลต่างย่อย: (ค่าจริง - ค่าทำนาย) ของข้อมูลในแต่ละคู่อันดับ</div>
+                                <div class="p-1.5 bg-slate-50 rounded border">2. แปลงค่าสัมบูรณ์: ถอดเครื่องหมายติดลบออกให้กลายเป็นบวกทั้งหมดเพื่อคงมูลค่าดิบ</div>
+                                <div class="p-1.5 bg-slate-50 rounded border">3. คำนวณหาค่าเฉลี่ย: นำผลรวมทั้งหมดมาหารด้วยจำนวนปริมาณข้อมูลรวม (N)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="metricSimulationBox" class="hidden p-6 bg-slate-900 text-white rounded-xl font-sans space-y-4">
+                        <span class="font-bold text-amber-400 text-lg block border-b border-slate-800 pb-2"><i class="fas fa-microchip mr-2"></i>หน้าต่างจำลองภาพขั้นตอนการคำนวณ (Visualization Process):</span>
+                        <div id="metricSimGraphics" class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2"></div>
+                        <div id="metricSimFormulaBlock" class="p-4 bg-slate-800 rounded-lg text-center border border-slate-700 font-mono text-lg text-emerald-400 font-bold mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 mt-4">
+                    <h3 class="font-bold text-blue-900 text-lg"><i class="fas fa-search-plus mr-2"></i>ถอดรหัส R² = 0.8 หมายความว่าอย่างไร?</h3>
+                    <p class="mt-2 text-base text-gray-700 leading-relaxed">หมายความว่า ตัวแปรต้นหรือปัจจัยอิสระ (X) ที่ป้อนเข้าไปในระบบ สามารถใช้อธิบายพฤติกรรมและความผันผวนของผลลัพธ์เฉลย (Y) ได้ถูกต้องถึง <strong>80%</strong> ส่วนอีก 20% คือความคลาดเคลื่อนหรือตัวแปรภายนอกอื่น ๆ ที่โมเดลชุดนี้ยังไม่สามารถเรียนรู้ได้</p>
+                </div>
+            </div>
+
+            <div id="confusion" class="tab-content space-y-6">
+                <div class="border-l-4 border-orange-500 pl-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Confusion Matrix & Linked Sliders</h2>
+                    <p class="text-gray-600 text-lg">ตารางตรวจสอบความแม่นยำกลุ่ม: แถบสไลเดอร์ทำงานสัมพันธ์เชื่อมโยงกันอย่างสมดุลตามสัดส่วนปริมาณประชากรจริงในระบบ</p>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 text-sm text-gray-700 space-y-1">
+                    <span class="font-bold text-blue-900 text-base block mb-1"><i class="fas fa-file-medical-alt mr-2"></i>สถานการณ์คัดกรองโรคระบาด (กำหนดกลุ่มประชากรรวมคงที่ 200 รายชิ้น)</span>
+                    <p class="text-xs font-semibold text-gray-800">• กลุ่มผู้ติดเชื้อจริง (Actual Positive) = บังคับคงที่ 50 ราย (คำนวณแชร์สัดส่วนระหว่าง ทายถูกตรงเป๊ะ กับ ทำหลุดรอดไป)</p>
+                    <p class="text-xs font-semibold text-gray-800">• กลุ่มคนปกติไม่ติดเชื้อจริง (Actual Negative) = บังคับคงที่ 150 ราย (คำนวณแชร์สัดส่วนระหว่าง ทายตื่นตูมฟรี กับ ทายถูกว่าปกติ)</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 space-y-6 bg-gray-50 p-6 rounded-xl border overflow-x-auto">
+                        <table class="w-full border-collapse border-2 border-gray-300 bg-white shadow-sm text-center text-base font-medium">
+                            <thead>
+                                <tr>
+                                    <th class="p-3 bg-gray-100 border border-gray-300" colspan="2" rowspan="2"></th>
+                                    <th class="p-3 bg-blue-100 border border-gray-300 text-xs font-bold text-blue-900" colspan="2">Predicted Class (ผลลัพธ์คาดเดาจากโมเดล AI)</th>
+                                </tr>
+                                <tr>
+                                    <th class="p-2 bg-blue-50 border border-gray-300 text-xs text-blue-800 font-bold">ทายว่าติดเชื้อ (Positive)</th>
+                                    <th class="p-2 bg-blue-50 border border-gray-300 text-xs text-blue-800 font-bold">ทายว่าไม่ติดเชื้อ (Negative)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th class="p-3 bg-orange-100 border border-gray-300 text-xs text-orange-900 font-bold" rowspan="2">Actual Class<br>(ข้อมูลจริงหน้างาน)</th>
+                                    <th class="p-2 bg-orange-50 border border-gray-300 italic text-xs text-orange-800 font-bold">ติดเชื้อจริง<br><span class="text-blue-700 text-[10px]">(คงที่ 50 ราย)</span></th>
+                                    <td class="p-4 border border-gray-300 bg-green-50">
+                                        <div class="font-bold text-green-800 text-xs">True Positive (TP)</div>
+                                        <div id="lblSlideTP" class="text-2xl font-mono font-bold text-gray-800 my-1">45</div>
+                                        <input type="range" id="slideTP" min="0" max="50" value="45" class="w-full accent-green-600">
+                                        <span class="text-[11px] text-green-600 block mt-1 font-semibold">"ติดจริง & AI ทายถูกว่าติด"</span>
+                                    </td>
+                                    <td class="p-4 border border-gray-300 bg-red-50">
+                                        <div class="font-bold text-red-800 text-xs">False Negative (FN)</div>
+                                        <div id="lblSlideFN" class="text-2xl font-mono font-bold text-gray-800 my-1">5</div>
+                                        <input type="range" id="slideFN" min="0" max="50" value="5" class="w-full accent-red-600">
+                                        <span class="text-[11px] text-rose-600 font-bold block mt-1">Type II Error (ตรวจหาไม่เจอ)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="p-2 bg-orange-50 border border-gray-300 italic text-xs text-orange-800 font-bold">ไม่ติดเชื้อจริง<br><span class="text-blue-700 text-[10px]">(คงที่ 150 ราย)</span></th>
+                                    <td class="p-4 border border-gray-300 bg-red-50">
+                                        <div class="font-bold text-red-800 text-xs">False Positive (FP)</div>
+                                        <div id="lblSlideFP" class="text-2xl font-mono font-bold text-gray-800 my-1">8</div>
+                                        <input type="range" id="slideFP" min="0" max="150" value="8" class="w-full accent-red-600">
+                                        <span class="text-[11px] text-rose-600 font-bold block mt-1">Type I Error (แจ้งเตือนพลาด)</span>
+                                    </td>
+                                    <td class="p-4 border border-gray-300 bg-green-50">
+                                        <div class="font-bold text-green-800 text-xs">True Negative (TN)</div>
+                                        <div id="lblSlideTN" class="text-2xl font-mono font-bold text-gray-800 my-1">142</div>
+                                        <input type="range" id="slideTN" min="0" max="150" value="142" class="w-full accent-green-600">
+                                        <span class="text-[11px] text-green-600 block mt-1 font-semibold">"ปกติจริง & AI ทายถูกว่าปกติ"</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="space-y-4 bg-gray-900 text-white p-5 rounded-xl flex flex-col justify-between shadow-lg">
+                        <h3 class="font-bold text-base text-orange-400 border-b border-gray-700 pb-2"><i class="fas fa-calculator mr-2"></i>Live Metrics Visualization</h3>
+                        
+                        <div class="space-y-4 text-base">
+                            <div class="bg-gray-800 p-2.5 rounded border border-gray-700 flex justify-between items-center">
+                                <div class="space-y-1">
+                                    <span class="font-bold block text-xs text-green-400">Accuracy (ความแม่นยำรวมของทั้งระบบ)</span>
+                                    <div class="text-[11px] font-mono text-gray-300">
+                                        (TP + TN) / Total
+                                        <br><span id="txtFormulaAcc" class="text-green-300/80"></span>
+                                    </div>
+                                </div>
+                                <span id="calcAccuracy" class="text-2xl font-mono text-green-400 font-bold ml-2">0.00%</span>
+                            </div>
+
+                            <div class="bg-gray-800 p-2.5 rounded border border-gray-700 flex justify-between items-center">
+                                <div class="space-y-1">
+                                    <span class="font-bold block text-xs text-blue-400">Precision (ความแม่นยำในการทำนายบวก)</span>
+                                    <div class="text-[11px] font-mono text-gray-300">
+                                        TP / (TP + FP)
+                                        <br><span id="txtFormulaPre" class="text-blue-300/80"></span>
+                                    </div>
+                                </div>
+                                <span id="calcPrecision" class="text-2xl font-mono text-blue-400 font-bold ml-2">0.00%</span>
+                            </div>
+
+                            <div class="bg-gray-800 p-2.5 rounded border border-gray-700 flex justify-between items-center">
+                                <div class="space-y-1">
+                                    <span class="font-bold block text-xs text-yellow-400">Recall (ความสามารถในการตรวจจับเชื้อ)</span>
+                                    <div class="text-[11px] font-mono text-gray-300">
+                                        TP / (TP + FN)
+                                        <br><span id="txtFormulaRec" class="text-yellow-300/80"></span>
+                                    </div>
+                                </div>
+                                <span id="calcRecall" class="text-2xl font-mono text-yellow-400 font-bold ml-2">0.00%</span>
+                            </div>
+
+                            <div class="bg-gray-800 p-2.5 rounded border border-gradient flex justify-between items-center border-purple-500">
+                                <div class="space-y-1">
+                                    <span class="font-bold block text-xs text-purple-400">F1-Score (ค่าเฉลี่ยฮาร์มอนิกของ Precision & Recall)</span>
+                                    <div class="text-[11px] font-mono text-gray-300">
+                                        2 × (Precision × Recall) / (Precision + Recall)
+                                        <br><span id="txtFormulaF1" class="text-purple-300/80"></span>
+                                    </div>
+                                </div>
+                                <span id="calcF1Score" class="text-2xl font-mono text-purple-400 font-bold ml-2">0.00%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-8 text-center text-gray-500 text-sm pb-8">
+        <p>DGA306: Data Analytics Techniques | Dr. Sirasit Lochanachit</p>
+    </footer>
+
+    <script>
+        let currentSelectedMetric = 'MAE';
+
+        function openTab(evt, tabName) {
+            var i, tabContent, tabLinks;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+            tabLinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("text-blue-900", "border-blue-600", "active", "bg-blue-50");
+                tabLinks[i].classList.add("text-gray-500");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("text-blue-900", "border-blue-600", "active", "bg-blue-50");
+            evt.currentTarget.classList.remove("text-gray-500");
+
+            if(tabName === 'regression') initRegression();
+            if(tabName === 'classification') initClassification();
+        }
+
+        // --- REGRESSION SIMULATION ENGINE ---
+        const regPoints = [
+            {x: 40, y: 45}, {x: 80, y: 70}, {x: 120, y: 65},
+            {x: 160, y: 110}, {x: 200, y: 140}, {x: 240, y: 125},
+            {x: 280, y: 175}, {x: 320, y: 190}
+        ];
+
+        function initRegression() {
+            const canvas = document.getElementById('regressionCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const sBeta0 = document.getElementById('sliderBeta0');
+            const sBeta1 = document.getElementById('sliderBeta1');
+
+            function update() {
+                const b0 = parseFloat(sBeta0.value);
+                const b1 = parseFloat(sBeta1.value);
+
+                document.getElementById('valBeta0').innerText = b0;
+                document.getElementById('valBeta1').innerText = b1;
+                document.getElementById('eqBeta0').innerText = b0;
+                document.getElementById('eqBeta1').innerText = b1;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.strokeStyle = '#64748b';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(40, 350); ctx.lineTo(500, 350); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(40, 20); ctx.lineTo(40, 350); ctx.stroke();
+
+                let sse = 0;
+
+                regPoints.forEach(p => {
+                    const canvasX = 40 + p.x;
+                    const canvasY = 350 - p.y;
+                    const predYVal = b0 + b1 * p.x;
+                    const canvasPredY = 350 - predYVal;
+
+                    sse += Math.pow(p.y - predYVal, 2);
+
+                    ctx.strokeStyle = '#22c55e';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([4, 4]);
+                    ctx.beginPath();
+                    ctx.moveTo(canvasX, canvasY);
+                    ctx.lineTo(canvasX, canvasPredY);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                });
+
+                document.getElementById('valSSE').innerText = sse.toFixed(2);
+
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                for(let x=0; x<=420; x+=10) {
+                    let y = b0 + b1 * x;
+                    let cx = 40 + x;
+                    let cy = 350 - y;
+                    if(x === 0) ctx.moveTo(cx, cy);
+                    else if(cy >= 20 && cy <= 350) ctx.lineTo(cx, cy);
+                }
+                ctx.stroke();
+
+                regPoints.forEach(p => {
+                    ctx.fillStyle = '#ef4444';
+                    ctx.beginPath();
+                    ctx.arc(40 + p.x, 350 - p.y, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                });
+            }
+
+            sBeta0.oninput = update;
+            sBeta1.oninput = update;
+            update();
+        }
+
+        // --- CLASSIFICATION LOGISTIC REGRESSION SIMULATION ---
+        const logPoints = [
+            {x: 60,  y: 0}, {x: 80,  y: 0}, {x: 100, y: 0}, {x: 120, y: 0}, {x: 140, y: 0},
+            {x: 150, y: 0}, {x: 160, y: 1}, {x: 170, y: 0}, {x: 180, y: 1}, {x: 190, y: 1},
+            {x: 210, y: 1}, {x: 230, y: 1}, {x: 250, y: 1}, {x: 270, y: 1}, {x: 290, y: 1}
+        ];
+
+        function initClassification() {
+            const canvas = document.getElementById('logisticCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const sThresh = document.getElementById('sliderLogThresh');
+            const sSteep = document.getElementById('sliderLogSteep');
+
+            function draw() {
+                const thresh = parseFloat(sThresh.value);
+                const steep = parseFloat(sSteep.value);
+
+                document.getElementById('valLogThresh').innerText = thresh.toFixed(2);
+                document.getElementById('valLogSteep').innerText = steep.toFixed(2);
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(55, 340); ctx.lineTo(500, 340); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(55, 40); ctx.lineTo(55, 340); ctx.stroke();
+
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px Sarabun';
+                ctx.fillText("โอกาส: 1.0 (100%)", 5, 45);
+                ctx.fillText("โอกาส: 0.5 (50%)", 5, 190);
+                ctx.fillText("โอกาส: 0.0 (0%)", 5, 335);
+
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                
+                const midX = 175; 
+                
+                for (let cx = 55; cx <= 500; cx++) {
+                    let realX = (cx - 55);
+                    let z = steep * (realX - midX);
+                    let prob = 1 / (1 + Math.exp(-z));
+                    
+                    let cy = 340 - (prob * 260);
+                    if (cx === 55) ctx.moveTo(cx, cy);
+                    else ctx.lineTo(cx, cy);
+                }
+                ctx.stroke();
+
+                let threshY = 340 - (thresh * 260);
+                ctx.strokeStyle = '#ef4444';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath(); ctx.moveTo(55, threshY); ctx.lineTo(500, threshY); ctx.stroke();
+                ctx.setLineDash([]);
+
+                logPoints.forEach(p => {
+                    let cx = 55 + p.x;
+                    let z = steep * (p.x - midX);
+                    let predProb = 1 / (1 + Math.exp(-z));
+                    let predictedClass = (predProb >= thresh) ? 1 : 0;
+
+                    ctx.fillStyle = (p.y === 1) ? '#f97316' : '#3b82f6';
+                    let cy = (p.y === 1) ? 65 : 315;
+
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 9, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    if (predictedClass !== p.y) {
+                        ctx.strokeStyle = '#dc2626';
+                        ctx.lineWidth = 2.5;
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, 13, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                });
+            }
+
+            sThresh.oninput = draw;
+            sSteep.oninput = draw;
+            draw();
+        }
+
+        // --- INTERACTIVE REGRESSION METRICS ---
+        const metricData = {
+            'MAE': {
+                title: 'MAE (Mean Absolute Error) - ส่องส่วนต่างระยะห่างรวมตรง ๆ',
+                desc: 'นำผลต่างเพี้ยนสะสมของข้อมูลแต่ละจุดมาถอดเครื่องหมายลบออกให้กลายเป็นบวก (Absolute Value) แล้วจึงนำมาเฉลี่ยรวม วิธีนี้มีเสถียรภาพต่อค่าที่หลุดกรอบรุนแรง (Outliers) สูง',
+                steps: [
+                    '1. หาผลต่างย่อย: (ค่าจริง - ค่าทำนาย) ของข้อมูลในแต่ละคู่อันดับ',
+                    '2. แปลงค่าสัมบูรณ์: เปลี่ยนพิกัดความเพี้ยนที่เป็นลบให้เป็นค่าบวกทั้งหมด',
+                    '3. คำนวณหาค่าเฉลี่ย: รวมระยะความเพี้ยนทั้งหมดแล้วหารเฉลี่ยด้วยปริมาณข้อมูล (N)'
+                ]
+            },
+            'MSE': {
+                title: 'MSE (Mean Squared Error) - เน้นขยายแผลความผิดพลาดที่เด่นชัด',
+                desc: 'นำส่วนต่างความเพี้ยนมาทำการเบิ้ลค่ายกกำลังสองก่อนส่งทำหาค่าเฉลี่ย ส่งผลให้จุดข้อมูลใดที่พยากรณ์เดาเพี้ยนหลุดกรอบไปไกล (Outliers) ถูกทวีคูณเร่งขนาดแผลความผิดพลาดให้เด่นชัดอย่างรุนแรง',
+                steps: [
+                    '1. หาผลต่างย่อย: (ค่าจริง - ค่าทำนาย) ในข้อมูลทุกจุดพิกัด',
+                    '2. ยกกำลังสองข้อมูล: จับค่าส่วนต่างเหล่านั้นคูณตัวมันเอง (ส่วนต่างความเพี้ยน²)',
+                    '3. หาผลเฉลี่ยรวม: สรุปผลรวมกำลังสองสะสมทั้งหมดแล้วหารด้วยปริมาณชุดข้อมูล (N)'
+                ]
+            },
+            'RMSE': {
+                title: 'RMSE (Root Mean Squared Error) - คืนรูปหน่วยวัดความเพี้ยนเข้าสู่สเกลเดิม',
+                desc: 'เนื่องจากมาตรวัดประเภท MSE ถูกคำนวณเบิ้ลส่งผลให้หน่วยวัดผิดสเกลไปจากมาตรวัดหลักเดิม ตัวชี้วัด RMSE จึงเพิ่มการใส่หมวกสแควร์รูท (ถอดรากที่สอง) ครอบทับลงไป เพื่อปรับสเกลหน่วยความเพี้ยนเฉลี่ยให้หวนคืนสู่สเกลปกติ',
+                steps: [
+                    '1. ดึงฐานเดิม: ประมวลผลลัพธ์คำนวณสถิติของค่า MSE ออกมาก่อน',
+                    '2. ประยุกต์ถอดสแควร์รูท: นำผลลัพธ์ของค่า MSE มาทำการหาค่ารากที่สองทางคณิตศาสตร์ (√MSE)',
+                    '3. ตรวจสอบประสิทธิผล: นำหน่วยปกติที่คืนรูปสมบูรณ์แล้วไปเทียบเคียงกับข้อมูลหลักได้ตรง ๆ'
+                ]
+            },
+            'R2': {
+                title: 'R-Squared (R²) - สัดส่วนการอธิบายความแปรปรวนหรือประสิทธิภาพของโมเดล',
+                desc: 'ดัชนีชี้วัดความแม่นยำเปรียบเทียบในรูปของเปอร์เซ็นต์ (สเกลคะแนน 0 ถึง 1) บ่งบอกว่าแบบจำลองคำนวณเชิงเส้นตัวใหม่นี้ เข้าไปกอบกู้สถานการณ์และช่วยอธิบายพฤทีความผันผวนของระบบได้ดีกว่าโมเดลค่าเฉลี่ยฐานดั่งเดิมเท่าไหร่',
+                steps: [
+                    '1. วัดความแปรปรวนพื้นฐานเดิม (SS Total): คำนวณระยะห่างข้อมูลจริงเทียบเกณฑ์ค่าเฉลี่ยกลาง',
+                    '2. วัดความแปรปรวนที่ไม่ยอมหายไป (SS Residual): คำนวณระยะห่างข้อมูลจริงเทียบเกณฑ์เส้นทำนายตัวใหม่',
+                    '3. แปลงอัตราสัมพัทธ์ประสิทธิภาพ: R² = 1 - (SS Residual / SS Total)'
+                ]
+            }
+        };
+
+        function selectMetric(metricName) {
+            currentSelectedMetric = metricName;
+            document.querySelectorAll('.metric-card-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById(`card-${metricName}`).classList.add('selected');
+            
+            document.getElementById('metricDetailTitle').innerText = metricData[metricName].title;
+            document.getElementById('metricDetailDesc').innerText = metricData[metricName].desc;
+            
+            const stepsContainer = document.getElementById('metricDetailSteps');
+            stepsContainer.innerHTML = '';
+            metricData[metricName].steps.forEach(step => {
+                const div = document.createElement('div');
+                div.className = 'p-1.5 bg-slate-50 rounded border';
+                div.innerText = step;
+                stepsContainer.appendChild(div);
+            });
+            document.getElementById('metricSimulationBox').classList.add('hidden');
+        }
+
+        function simulateMetricProcess() {
+            const outputBox = document.getElementById('metricSimulationBox');
+            const graphicsContainer = document.getElementById('metricSimGraphics');
+            const formulaBlock = document.getElementById('metricSimFormulaBlock');
+            
+            outputBox.classList.remove('hidden');
+            graphicsContainer.innerHTML = '';
+
+            const mockData = [
+                { real: 50, pred: 42 },
+                { real: 80, pred: 85 },
+                { real: 65, pred: 55 }
+            ];
+
+            let sum = 0;
+
+            if (currentSelectedMetric === 'MAE') {
+                mockData.forEach((d, i) => {
+                    let diff = d.real - d.pred;
+                    let abs = Math.abs(diff);
+                    sum += abs;
+
+                    graphicsContainer.innerHTML += `
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 font-mono text-base">
+                            <div class="text-amber-400 font-bold mb-1">ข้อมูลชุดที่ ${i+1}</div>
+                            <div>ค่าจริง (Y) = ${d.real} | เดา (ŷ) = ${d.pred}</div>
+                            <div class="text-xs text-slate-400 mt-1">ส่วนต่างดิบ = ${diff}</div>
+                            <div class="text-emerald-400 font-bold mt-1">ถอด absolute |${diff}| = ${abs}</div>
+                        </div>
+                    `;
+                });
+                let avg = sum / mockData.length;
+                formulaBlock.innerHTML = `MAE = (${mockData.map(d=>Math.abs(d.real-d.pred)).join(' + ')}) / 3 = ${avg.toFixed(2)}`;
+            } else if (currentSelectedMetric === 'MSE') {
+                mockData.forEach((d, i) => {
+                    let diff = d.real - d.pred;
+                    let sq = diff * diff;
+                    sum += sq;
+
+                    graphicsContainer.innerHTML += `
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 font-mono text-base">
+                            <div class="text-amber-400 font-bold mb-1">ข้อมูลชุดที่ ${i+1}</div>
+                            <div>ค่าจริง (Y) = ${d.real} | เดา (ŷ) = ${d.pred}</div>
+                            <div class="text-xs text-slate-400 mt-1">ส่วนต่างดิบ = ${diff}</div>
+                            <div class="text-emerald-400 font-bold mt-1">ยกกำลังสอง (${diff}²) = ${sq}</div>
+                        </div>
+                    `;
+                });
+                let avg = sum / mockData.length;
+                formulaBlock.innerHTML = `MSE = (${mockData.map(d=>Math.pow(d.real-d.pred,2)).join(' + ')}) / 3 = ${avg.toFixed(2)}`;
+            } else if (currentSelectedMetric === 'RMSE') {
+                mockData.forEach((d, i) => {
+                    let diff = d.real - d.pred;
+                    let sq = diff * diff;
+                    sum += sq;
+                });
+                let mse = sum / mockData.length;
+                let rmse = Math.sqrt(mse);
+
+                graphicsContainer.innerHTML = `
+                    <div class="md:col-span-3 bg-slate-800 p-4 rounded-lg border border-slate-700 font-mono text-center text-base">
+                        <div class="text-slate-300">นำค่าเฉลี่ยความคลาดเคลื่อนยกกำลังสอง (MSE) มาทำการถอดราก</div>
+                        <div class="text-xl font-bold text-amber-400 mt-1">ค่า MSE จากชุดทดสอบ = ${mse.toFixed(2)}</div>
+                    </div>
+                `;
+                formulaBlock.innerHTML = `RMSE = √${mse.toFixed(2)} = ${rmse.toFixed(2)}`;
+            } else if (currentSelectedMetric === 'R2') {
+                graphicsContainer.innerHTML = `
+                    <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 font-mono text-center text-base">
+                        <div class="text-slate-400 text-xs">โมเดลฐานกลาง (SS Total)</div>
+                        <div class="text-lg font-bold text-rose-400 mt-1">ความแปรปรวนเดิม = 24.5</div>
+                    </div>
+                    <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 font-mono text-center text-base">
+                        <div class="text-slate-400 text-xs">โมเดลเชิงเส้นใหม่ (SS Residual)</div>
+                        <div class="text-lg font-bold text-emerald-400 mt-1">ความผิดพลาดเหลือ = 4.9</div>
+                    </div>
+                    <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 font-mono text-center text-base">
+                        <div class="text-slate-400 text-xs">สัดส่วนกอบกู้ได้สำเร็จ</div>
+                        <div class="text-lg font-bold text-blue-400 mt-1">ระดับอธิบายเก่ง = 80%</div>
+                    </div>
+                `;
+                formulaBlock.innerHTML = `R² = 1 - (4.9 / 24.5) = 1 - 0.20 = 0.80 (ความแม่นยำชี้วัด 80%)`;
+            }
+        }
+
+        // --- LINKED CONFUSION MATRIX ENGINE WITH F1-SCORE ---
+        const slideTP = document.getElementById('slideTP');
+        const slideFN = document.getElementById('slideFN');
+        const slideFP = document.getElementById('slideFP');
+        const slideTN = document.getElementById('slideTN');
+
+        slideTP.addEventListener('input', () => { slideFN.value = 50 - slideTP.value; calculateConfusionMetrics(); });
+        slideFN.addEventListener('input', () => { slideTP.value = 50 - slideFN.value; calculateConfusionMetrics(); });
+        slideFP.addEventListener('input', () => { slideTN.value = 150 - slideFP.value; calculateConfusionMetrics(); });
+        slideTN.addEventListener('input', () => { 
+            slideFP.value = 150 - slideTN.value; 
+            calculateConfusionMetrics(); 
+        });
+
+        function calculateConfusionMetrics() {
+            const tp = parseFloat(slideTP.value) || 0;
+            const fn = parseFloat(slideFN.value) || 0;
+            const fp = parseFloat(slideFP.value) || 0;
+            const tn = parseFloat(slideTN.value) || 0;
+
+            document.getElementById('lblSlideTP').innerText = tp;
+            document.getElementById('lblSlideFN').innerText = fn;
+            document.getElementById('lblSlideFP').innerText = fp;
+            document.getElementById('lblSlideTN').innerText = tn;
+
+            const total = tp + fn + fp + tn;
+            const accuracy = total > 0 ? ((tp + tn) / total) * 100 : 0;
+            const precision = (tp + fp) > 0 ? (tp / (tp + fp)) * 100 : 0;
+            const recall = (tp + fn) > 0 ? (tp / (tp + fn)) * 100 : 0;
+
+            // การคำนวณและดักจับความผิดพลาดตัวเลขของ F1-Score
+            let f1 = 0;
+            if ((precision + recall) > 0) {
+                f1 = 2 * (precision * recall) / (precision + recall);
+            }
+
+            document.getElementById('calcAccuracy').innerText = accuracy.toFixed(2) + '%';
+            document.getElementById('calcPrecision').innerText = precision.toFixed(2) + '%';
+            document.getElementById('calcRecall').innerText = recall.toFixed(2) + '%';
+            document.getElementById('calcF1Score').innerText = f1.toFixed(2) + '%';
+
+            document.getElementById('txtFormulaAcc').innerText = `= (${tp} + ${tn}) / ${total}`;
+            document.getElementById('txtFormulaPre').innerText = `= ${tp} / (${tp} + ${fp})`;
+            document.getElementById('txtFormulaRec').innerText = `= ${tp} / (${tp} + ${fn})`;
+            document.getElementById('txtFormulaF1').innerText = `= 2 × (${precision.toFixed(1)} × ${recall.toFixed(1)}) / (${precision.toFixed(1)} + ${recall.toFixed(1)})`;
+        }
+
+        calculateConfusionMetrics();
+        selectMetric('MAE');
+    </script>
+</body>
+</html>

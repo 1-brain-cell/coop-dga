@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DGA306 — Day 1: Python & Data Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bd:#1b3a8f;--bm:#2b52c8;--bl:#dce8ff;--am:#f59e0b;--cy:#0ea5e9;--gn:#10b981;--rd:#ef4444;--pu:#8b5cf6;--or:#f97316;--tx:#1e293b;--tl:#64748b;--bg:#eef2ff;--ca:#ffffff;--br:#e2e8f0;--r:12px;--sh:0 4px 24px rgba(27,58,143,.1);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
+.hd{background:#122d7a; padding:32px 48px 28px;position:relative;overflow:hidden;}
+.hd::before{width:280px;height:280px;top:-80px;right:-40px;}
+.hd::after{width:180px;height:180px;bottom:-60px;left:30%;}
+.hd h1{color:#fff;font-size:1.9rem;font-weight:800;letter-spacing:-.5px;position:relative;}
+.hd p{color:rgba(255,255,255,.72);font-size:.95rem;margin-top:6px;position:relative;}
+.hd .badge{display:inline-block;background:var(--am);color:#1a1a1a;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;margin-top:10px;position:relative;}
+.tn{background:#14297a;display:flex;overflow-x:auto;padding:0 32px;scrollbar-width:none;flex-wrap:nowrap;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{background:none;border:none;color:rgba(255,255,255,.55);padding:14px 16px;font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;}
+.tb:hover{color:#fff;}
+.tb.on{color:#fff;border-bottom-color:var(--am);}
+.ct{max-width:980px;margin:0 auto;padding:28px 20px 60px;}
+.tp{display:none;animation:fi .3s ease;}
+.tp.on{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--ca);border-radius:var(--r);padding:26px;box-shadow:var(--sh);margin-bottom:22px;}
+.card-t{font-size:1.15rem;font-weight:700;color:var(--bd);margin-bottom:5px;display:flex;align-items:center;gap:9px;}
+.card-s{font-size:.88rem;color:var(--tl);margin-bottom:18px;}
+.lbl{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--bm);margin-bottom:7px;}
+.hbox{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.9rem;line-height:1.6;}
+.hbox.b{background:#dce8ff;border-left:4px solid var(--bm);}
+.hbox.a{background:#fffbeb;border-left:4px solid var(--am);}
+.hbox.g{background:#f0fdf4;border-left:4px solid var(--gn);}
+.hbox.r{background:#fef2f2;border-left:4px solid var(--rd);}
+.hbox.p{background:#f5f3ff;border-left:4px solid var(--pu);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:640px){.g2,.g3{grid-template-columns:1fr;}}
+.btn{background:var(--bm);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn:hover{background:var(--bd);transform:translateY(-1px);}
+.btn.am{background:var(--am);color:#1a1a1a;}
+.btn.am:hover{background:#d97706;}
+.btn.gr{background:var(--gn);color:#fff;}
+.btn.gr:hover{background:#059669;}
+.btn.sm{padding:7px 14px;font-size:.82rem;}
+.btn.out{background:none;border:2px solid var(--bm);color:var(--bm);}
+.btn.out:hover{background:var(--bl);}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:600;margin:2px;}
+.code{background:#1e293b;border-radius:10px;padding:16px 20px;font-family:'Courier New',monospace;font-size:.85rem;color:#e2e8f0;line-height:1.75;margin:12px 0;overflow-x:auto;}
+.code .kw{color:#7dd3fc;}
+.code .st{color:#86efac;}
+.code .fn{color:#fde68a;}
+.code .cm{color:#6b7280;font-style:italic;}
+.code .nm{color:#f9a8d4;}
+.code .nu{color:#fb923c;}
+
+/* === STRINGS === */
+.str-boxes{display:flex;flex-wrap:wrap;gap:4px;margin:14px 0;}
+.ch-box{display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:all .2s;}
+.ch-cell{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:2px solid var(--br);border-radius:6px;font-family:'Courier New',monospace;font-size:1rem;font-weight:700;background:#fff;transition:all .25s;}
+.ch-idx{font-size:.62rem;color:var(--tl);margin-top:2px;font-weight:600;}
+.ch-nidx{font-size:.58rem;color:#94a3b8;margin-top:1px;}
+.ch-box.sel .ch-cell{background:var(--am);border-color:#d97706;color:#1a1a1a;transform:translateY(-3px);box-shadow:0 4px 10px rgba(245,158,11,.3);}
+.ch-box:hover .ch-cell{background:var(--bl);border-color:var(--bm);}
+.slice-ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0;}
+.slice-ctrl input{width:70px;padding:8px 10px;border:2px solid var(--br);border-radius:7px;font-family:'Courier New',monospace;font-size:.9rem;text-align:center;font-weight:700;outline:none;transition:border .2s;}
+.slice-ctrl input:focus{border-color:var(--bm);}
+.slice-result{background:#1e293b;border-radius:8px;padding:12px 18px;font-family:'Courier New',monospace;font-size:1rem;font-weight:700;color:#86efac;margin-top:10px;min-height:44px;display:flex;align-items:center;gap:8px;}
+.str-methods{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.method-btn{background:#f1f5f9;border:1px solid var(--br);border-radius:7px;padding:7px 13px;font-family:'Courier New',monospace;font-size:.82rem;cursor:pointer;transition:all .2s;font-weight:600;}
+.method-btn:hover{background:var(--bl);border-color:var(--bm);}
+.method-out{background:#1e293b;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.88rem;color:#e2e8f0;margin-top:10px;min-height:36px;}
+
+/* === DATA TYPES === */
+.dtype-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;}
+.dtt{background:#f1f5f9;border:1px solid var(--br);border-radius:8px 8px 0 0;padding:9px 18px;cursor:pointer;font-size:.88rem;font-weight:600;transition:all .2s;}
+.dtt.on{background:var(--bm);color:#fff;border-color:var(--bm);}
+.dtype-panel{display:none;}
+.dtype-panel.on{display:block;}
+.list-container{border:2px solid var(--bm);border-radius:10px;padding:16px;background:var(--bl);min-height:50px;}
+.list-item{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--br);border-radius:6px;padding:6px 12px;margin:4px;font-family:'Courier New',monospace;font-size:.88rem;font-weight:600;}
+.list-item .rm{background:var(--rd);color:#fff;border:none;width:18px;height:18px;border-radius:50%;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dict-row{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--br);border-radius:7px;padding:8px 12px;margin:6px 0;font-family:'Courier New',monospace;font-size:.88rem;}
+.dict-key{color:var(--bm);font-weight:700;}
+.dict-colon{color:var(--tl);}
+.dict-val{color:#166534;font-weight:600;}
+
+/* === CONDITIONS === */
+.cond-visual{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.88rem;position:relative;}
+.cond-box{border:2px solid var(--br);border-radius:8px;padding:10px 20px;text-align:center;min-width:150px;transition:all .4s;background:#fff;}
+.cond-box.active{box-shadow:0 0 0 3px rgba(43,82,200,.25);transform:scale(1.04);}
+.cond-box.hl-g{border-color:var(--gn);background:#dcfce7;box-shadow:0 0 0 3px rgba(16,185,129,.2);}
+.cond-box.hl-r{border-color:var(--rd);background:#fee2e2;box-shadow:0 0 0 3px rgba(239,68,68,.2);}
+.cond-box.hl-y{border-color:var(--am);background:#fef3c7;box-shadow:0 0 0 3px rgba(245,158,11,.2);}
+.cond-arrow{color:var(--tl);font-size:1rem;font-weight:700;transition:all .3s;}
+.cond-arrow.hl{color:var(--gn);}
+.cond-branches{display:flex;gap:24px;align-items:flex-start;margin-top:4px;}
+.branch-label{font-size:.75rem;font-weight:700;text-align:center;margin-bottom:4px;}
+.cond-input{width:120px;padding:10px;border:2px solid var(--br);border-radius:8px;font-size:1.1rem;font-weight:700;text-align:center;font-family:'Courier New',monospace;outline:none;transition:border .2s;}
+.cond-input:focus{border-color:var(--bm);}
+.cond-result{background:var(--bl);border-radius:8px;padding:12px 18px;font-size:.9rem;margin-top:12px;min-height:44px;font-weight:600;transition:all .4s;}
+
+/* === LOOPS === */
+.loop-visual{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;}
+.loop-item{width:46px;height:46px;border:2px solid var(--br);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;transition:all .35s;background:#fff;cursor:pointer;}
+.loop-item.cur{background:var(--am);border-color:#d97706;transform:scale(1.15);box-shadow:0 4px 12px rgba(245,158,11,.35);}
+.loop-item.done{background:#dcfce7;border-color:var(--gn);color:var(--gn);}
+.loop-var{background:#1e293b;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.9rem;color:#e2e8f0;margin-top:8px;min-height:36px;}
+.while-cond{padding:10px 16px;border:2px solid var(--pu);border-radius:8px;background:#f5f3ff;font-family:'Courier New',monospace;font-size:.9rem;margin:8px 0;font-weight:600;}
+.while-cond.t{border-color:var(--gn);background:#dcfce7;color:#166534;}
+.while-cond.f{border-color:var(--rd);background:#fee2e2;color:#991b1b;}
+
+/* === FUNCTIONS === */
+.stack-visual{min-height:180px;display:flex;flex-direction:column-reverse;gap:6px;padding:14px;border:2px solid var(--br);border-radius:10px;background:#f8fafc;justify-content:flex-start;}
+.frame{border-radius:8px;padding:10px 16px;font-family:'Courier New',monospace;font-size:.84rem;border:2px solid transparent;transition:all .4s;animation:slideUp .3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.frame.main{background:#dce8ff;border-color:var(--bm);}
+.frame.func{background:#fef3c7;border-color:var(--am);}
+.frame.top{box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.frame-name{font-weight:700;font-size:.82rem;margin-bottom:4px;}
+.frame-vars{font-size:.78rem;color:var(--tl);}
+.step-ctrl{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap;}
+.step-line{background:#fffbeb;border:1px solid var(--am);border-radius:6px;padding:8px 14px;font-family:'Courier New',monospace;font-size:.88rem;font-weight:600;}
+.step-desc{font-size:.85rem;color:var(--tl);line-height:1.5;margin-top:6px;}
+.return-vs-print{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.rvp-box{border-radius:10px;padding:16px;}
+
+/* === CLASS OBJECT === */
+.mold{border:3px dashed #8b5cf6;border-radius:14px;padding:20px;background:#f5f3ff;position:relative;}
+.mold-label{position:absolute;top:-12px;left:16px;background:var(--pu);color:#fff;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:700;}
+.attr-row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.88rem;}
+.attr-name{background:#ede9fe;padding:3px 10px;border-radius:5px;font-family:'Courier New',monospace;font-size:.82rem;font-weight:600;color:var(--pu);}
+.instances-grid{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+.obj-card{border:2px solid var(--gn);border-radius:10px;padding:14px;background:#f0fdf4;min-width:140px;animation:popIn .3s ease;}
+@keyframes popIn{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.obj-label{background:var(--gn);color:#fff;padding:2px 10px;border-radius:20px;font-size:.78rem;font-weight:700;margin-bottom:8px;display:inline-block;}
+.obj-attr{font-family:'Courier New',monospace;font-size:.8rem;line-height:1.6;}
+
+/* === GLOBAL LOCAL === */
+.scope-visual{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.scope-box{border-radius:10px;padding:16px;min-height:120px;}
+.scope-box.global{background:#dce8ff;border:2px solid var(--bm);}
+.scope-box.local{background:#fef3c7;border:2px solid var(--am);}
+.scope-title{font-weight:700;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.scope-var{font-family:'Courier New',monospace;font-size:.82rem;padding:5px 10px;border-radius:5px;margin:3px 0;transition:all .4s;}
+.scope-var.active{background:rgba(43,82,200,.2);font-weight:700;}
+.scope-var.inactive{opacity:.3;}
+.scope-var.new{background:#dcfce7;animation:fi .4s ease;}
+.code-step{padding:8px 12px;border-radius:6px;font-family:'Courier New',monospace;font-size:.85rem;margin:4px 0;cursor:pointer;border:1px solid var(--br);transition:all .2s;}
+.code-step.active{background:var(--am);border-color:#d97706;font-weight:700;}
+.code-step:hover{background:var(--bl);}
+
+/* === GRAPHS === */
+.chart-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:600px){.chart-gallery{grid-template-columns:1fr 1fr;}}
+.chart-card{border:2px solid var(--br);border-radius:10px;padding:16px;cursor:pointer;text-align:center;transition:all .3s;}
+.chart-card:hover,.chart-card.sel{border-color:var(--bm);background:var(--bl);transform:translateY(-2px);box-shadow:var(--sh);}
+.chart-ico{font-size:2rem;margin-bottom:6px;}
+.chart-nm{font-size:.88rem;font-weight:700;color:var(--bd);}
+.chart-detail{background:var(--ca);border-radius:10px;padding:20px;border:1px solid var(--br);margin-top:16px;min-height:80px;}
+.catnum-drag{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.cn-item{background:#fff;border:2px solid var(--br);border-radius:8px;padding:8px 14px;cursor:grab;font-size:.88rem;font-weight:600;transition:all .2s;user-select:none;}
+.cn-item:hover{border-color:var(--bm);}
+.cn-zone{flex:1;min-width:140px;border:3px dashed var(--br);border-radius:10px;padding:14px;min-height:100px;transition:all .2s;}
+.cn-zone.hover{border-color:var(--bm);background:var(--bl);}
+.cn-dropped{background:var(--bl);border:1px solid rgba(43,82,200,.3);border-radius:5px;padding:4px 9px;font-size:.8rem;margin:3px 2px;display:inline-block;}
+
+/* === PCA/KMEANS === */
+canvas{border-radius:10px;display:block;margin:0 auto;}
+.pca-controls,.km-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px;}
+.km-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+.km-dot{width:14px;height:14px;border-radius:50%;display:inline-block;}
+
+/* Divider */
+.dv{height:1px;background:var(--br);margin:20px 0;}
+
+/* Responsive canvas */
+.canvas-wrap{overflow-x:auto;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <h1>DGA306: Data Analytics (Day 1)</h1>
+  <p>Interactive Guide | Python & Data Exploration</p>
+</div>
+
+<div class="tn">
+  <button class="tb on" onclick="sw(0)">🔤 String</button>
+  <button class="tb" onclick="sw(1)">📋 Data Types</button>
+  <button class="tb" onclick="sw(2)">🔀 Conditions</button>
+  <button class="tb" onclick="sw(3)">🔄 Loops</button>
+  <button class="tb" onclick="sw(4)">⚙️ Functions</button>
+  <button class="tb" onclick="sw(5)">🏭 Class &amp; Object</button>
+  <button class="tb" onclick="sw(6)">🌍 Global/Local</button>
+  <button class="tb" onclick="sw(7)">📊 ข้อมูลและกราฟ</button>
+  <button class="tb" onclick="sw(8)">🔬 PCA &amp; K-Means</button>
+</div>
+
+<div class="ct">
+
+<!-- ===== TAB 0: STRING ===== -->
+<div class="tp on" id="t0">
+  <div class="card">
+    <div class="card-t">🔤 String คืออะไร?</div>
+    <div class="card-s">String คือลำดับ (sequence) ของตัวอักษร แต่ละตัวมี index เริ่มจาก 0</div>
+    <div class="hbox b">📌 Python <strong>เริ่ม Index ที่ 0</strong> ไม่ใช่ 1 — ตัวอักษรตัวแรกคือ index 0, ตัวที่สองคือ index 1, ...</div>
+    <div class="lbl" style="margin-top:16px;">🖱️ คลิกที่ตัวอักษรเพื่อดู index</div>
+    <div class="str-boxes" id="str-main"></div>
+    <div style="font-size:.8rem;color:var(--tl);margin-top:2px;">🟡 สีเหลือง = ตัวที่ถูกเลือก / index ลบ = นับจากท้าย (-1 = ตัวสุดท้าย)</div>
+    <div id="ch-info" style="margin-top:8px;padding:10px 14px;background:var(--bl);border-radius:8px;font-size:.9rem;min-height:36px;font-family:'Courier New',monospace;font-weight:600;"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">✂️ String Slicing</div>
+    <div class="card-s">เลือกส่วนของ String ด้วย <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">s[start:end:step]</code> — ลองปรับค่าแล้วดูผลลัพธ์</div>
+    <div class="slice-ctrl">
+      <div>
+        <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">start</div>
+        <input type="number" id="sl-s" value="0" oninput="doSlice()" style="width:65px;">
+      </div>
+      <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
+      <div>
+        <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">end</div>
+        <input type="number" id="sl-e" value="6" oninput="doSlice()" style="width:65px;">
+      </div>
+      <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
+      <div>
+        <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">step</div>
+        <input type="number" id="sl-st" value="1" min="1" oninput="doSlice()" style="width:65px;">
+      </div>
+      <div style="padding-top:18px;display:flex;gap:8px;">
+        <button class="btn sm" onclick="setSlice(0,13,1)">ทั้งหมด</button>
+        <button class="btn sm am" onclick="setSlice(0,6,1)">แค่ต้น</button>
+        <button class="btn sm" style="background:var(--pu);" onclick="setSlice(7,13,1)">แค่ท้าย</button>
+        <button class="btn sm gr" onclick="setSlice(0,13,2)">Stride 2</button>
+      </div>
+    </div>
+    <div class="str-boxes" id="str-slice"></div>
+    <div class="slice-result" id="slice-out"><span style="color:#94a3b8;">ผลลัพธ์จะปรากฏที่นี่</span></div>
+    <div class="hbox a" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp; <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">🔧 String Methods</div>
+    <div class="card-s">คลิก method เพื่อดูผลลัพธ์กับ string ตัวอย่าง: <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">"Hello, Python World!"</code></div>
+    <div class="str-methods" id="str-methods"></div>
+    <div class="method-out" id="method-out" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ===== TAB 1: DATA TYPES ===== -->
+<div class="tp" id="t1">
+  <div class="card">
+    <div class="card-t">📋 Data Types: list, tuple, set, dict</div>
+    <div class="card-s">Python มี container หลายแบบ — แต่ละแบบเหมาะกับงานต่างกัน คลิก tab เพื่อสำรวจ</div>
+    <div class="dtype-tabs">
+      <div class="dtt on" onclick="dtSw(0,this)">📃 list</div>
+      <div class="dtt" onclick="dtSw(1,this)">🔒 tuple</div>
+      <div class="dtt" onclick="dtSw(2,this)">🌀 set</div>
+      <div class="dtt" onclick="dtSw(3,this)">📖 dict</div>
+    </div>
+
+    <!-- LIST -->
+    <div class="dtype-panel on" id="dp0">
+      <div class="hbox b">📃 <strong>list</strong> — เปลี่ยนแปลงได้ (mutable), เรียงลำดับ, มีซ้ำได้, ใช้ <code>[ ]</code></div>
+      <div class="lbl">🎮 ลองเพิ่ม/ลบสมาชิก</div>
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+        <input type="text" id="list-add-in" placeholder="ใส่ค่า เช่น 42 หรือ แมว" style="padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;flex:1;min-width:120px;">
+        <button class="btn am" onclick="listAdd()">➕ เพิ่ม (append)</button>
+        <button class="btn" style="background:#f1f5f9;color:var(--tx);border:1px solid var(--br);" onclick="listPop()">➖ ลบตัวสุดท้าย (pop)</button>
+      </div>
+      <div class="list-container" id="list-items"></div>
+      <div class="code" id="list-code" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- TUPLE -->
+    <div class="dtype-panel" id="dp1">
+      <div class="hbox b">🔒 <strong>tuple</strong> — เปลี่ยนไม่ได้ (immutable), เรียงลำดับ, ใช้ <code>( )</code></div>
+      <div style="background:#f5f3ff;border:2px solid var(--pu);border-radius:10px;padding:16px;margin:12px 0;">
+        <div style="font-weight:700;color:var(--pu);margin-bottom:10px;">🔒 tuple ตัวอย่าง:</div>
+        <div style="font-family:'Courier New',monospace;font-size:.92rem;letter-spacing:1px;">coords = (<span id="tp0" style="color:#7dd3fc;">13.75</span>, <span id="tp1" style="color:#86efac;">100.52</span>)</div>
+        <div style="font-size:.82rem;color:var(--tl);margin-top:6px;">พิกัด GPS: ละติจูด, ลองติจูด</div>
+      </div>
+      <button class="btn" style="background:var(--rd);margin-top:6px;" onclick="tryMutate()">🔨 ลองแก้ไข coords[0] = 15</button>
+      <div id="tuple-feedback" style="margin-top:10px;"></div>
+      <div class="dv"></div>
+      <div class="g2" style="margin-top:6px;">
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--pu);margin-bottom:8px;">✅ ใช้ tuple เมื่อ...</div>
+          <div style="font-size:.85rem;line-height:1.7;">• ข้อมูลไม่ควรถูกแก้ไข<br>• ใช้เป็น dictionary key<br>• ข้อมูลมีความหมายคงที่ (พิกัด, วันเดือนปี)</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--bm);margin-bottom:8px;">✅ ใช้ list เมื่อ...</div>
+          <div style="font-size:.85rem;line-height:1.7;">• ข้อมูลอาจเปลี่ยนแปลง<br>• ต้องการเพิ่ม/ลบสมาชิก<br>• เก็บรายการที่ยาวขึ้นได้</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SET -->
+    <div class="dtype-panel" id="dp2">
+      <div class="hbox b">🌀 <strong>set</strong> — ไม่มีซ้ำ, ไม่เรียงลำดับ, ใช้ <code>{ }</code></div>
+      <div class="lbl">🎮 ลองเพิ่มค่า (รวมทั้งที่ซ้ำกัน)</div>
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+        <input type="text" id="set-add-in" placeholder="ใส่ค่า เช่น แอปเปิ้ล" style="padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;flex:1;min-width:100px;">
+        <button class="btn am" onclick="setAdd()">➕ add()</button>
+      </div>
+      <div id="set-dup-warning" style="display:none;margin-bottom:8px;"></div>
+      <div class="list-container" id="set-items" style="background:#fff8e1;border-color:var(--am);"></div>
+      <div class="code" id="set-code" style="margin-top:10px;"></div>
+      <div class="hbox a" style="margin-top:10px;">⚠️ set ไม่รับ<strong>ค่าซ้ำ</strong> และไม่มีการ<strong>เรียงลำดับ</strong> — ลองเพิ่มค่าที่มีอยู่แล้วดูสิ!</div>
+    </div>
+
+    <!-- DICT -->
+    <div class="dtype-panel" id="dp3">
+      <div class="hbox b">📖 <strong>dict</strong> — คู่ key:value, เรียกข้อมูลด้วย key, ใช้ <code>{ key: value }</code></div>
+      <div class="lbl">🎮 เพิ่ม key-value pairs</div>
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+        <input type="text" id="dict-k" placeholder="key เช่น name" style="width:130px;padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;">
+        <span style="padding-top:10px;font-size:1.1rem;font-weight:700;color:var(--tl);">:</span>
+        <input type="text" id="dict-v" placeholder="value เช่น สมชาย" style="width:130px;padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;">
+        <button class="btn am" onclick="dictAdd()">➕ เพิ่ม</button>
+      </div>
+      <div id="dict-rows" style="margin-bottom:10px;"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap;">
+        <span style="font-size:.88rem;font-weight:600;">ค้นหาด้วย key:</span>
+        <input type="text" id="dict-srch" placeholder="พิมพ์ key" style="width:130px;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-family:'Sarabun',sans-serif;font-size:.88rem;outline:none;">
+        <button class="btn sm" onclick="dictLookup()">🔍 ดูค่า</button>
+        <span id="dict-result" style="font-family:'Courier New',monospace;font-size:.9rem;font-weight:700;"></span>
+      </div>
+      <div class="code" id="dict-code" style="margin-top:10px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: CONDITIONS ===== -->
+<div class="tp" id="t2">
+  <div class="card">
+    <div class="card-t">🔀 if-elif-else — เงื่อนไข</div>
+    <div class="card-s">ใส่ตัวเลขแล้วดูว่าโปรแกรมเลือกทำสาขาไหน</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div class="code">
+<span class="kw">score</span> = <span class="nu">...</span>
+
+<span class="kw">if</span> score >= <span class="nu">80</span>:
+    <span class="fn">print</span>(<span class="st">"เกรด A"</span>)
+<span class="kw">elif</span> score >= <span class="nu">70</span>:
+    <span class="fn">print</span>(<span class="st">"เกรด B"</span>)
+<span class="kw">elif</span> score >= <span class="nu">60</span>:
+    <span class="fn">print</span>(<span class="st">"เกรด C"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"เกรด F"</span>)
+        </div>
+      </div>
+      <div style="flex:1.2;min-width:220px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+          <span style="font-weight:600;font-size:.9rem;">ใส่คะแนน (0-100):</span>
+          <input type="number" id="cond-in" class="cond-input" value="75" min="0" max="100" oninput="runCond()">
+          <button class="btn am" onclick="runCond()">▶️ รัน</button>
+        </div>
+        <div class="cond-visual" id="cond-flow">
+          <div class="cond-box" id="cb-start">score = <span id="score-disp">75</span></div>
+          <div class="cond-arrow" id="ca0">↓</div>
+          <div class="cond-box" id="cb0">score >= 80?</div>
+          <div id="branch-ab" style="display:flex;gap:20px;align-items:flex-start;">
+            <div style="text-align:center;"><div style="font-size:.72rem;color:var(--gn);font-weight:700;">ใช่</div><div class="cond-box" id="cb-a80" style="min-width:100px;">เกรด A 🏆</div></div>
+            <div style="text-align:center;"><div style="font-size:.72rem;color:var(--tl);font-weight:700;">ไม่</div><div class="cond-box" id="cb1">score >= 70?</div></div>
+          </div>
+          <div id="cond-result" class="cond-result" style="width:100%;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hbox a" style="margin-top:10px;">💡 Python ตรวจสอบเงื่อนไขจากบนลงล่าง และหยุดที่เงื่อนไขแรกที่เป็น <strong>True</strong></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">🔗 การรวมเงื่อนไข: and, or, not</div>
+    <div class="card-s">ลองปรับค่าแล้วดูว่าเงื่อนไขรวมเป็น True หรือ False</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px;">
+      <div><div style="font-size:.8rem;font-weight:600;margin-bottom:4px;">ค่า A (เช่น อายุ)</div><input type="number" id="boolA" value="20" style="width:90px;padding:9px;border:2px solid var(--br);border-radius:7px;font-size:.95rem;text-align:center;outline:none;" oninput="runBool()"></div>
+      <div><div style="font-size:.8rem;font-weight:600;margin-bottom:4px;">ค่า B (เช่น GPA)</div><input type="number" id="boolB" value="3.5" step="0.1" style="width:90px;padding:9px;border:2px solid var(--br);border-radius:7px;font-size:.95rem;text-align:center;outline:none;" oninput="runBool()"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;" id="bool-results"></div>
+  </div>
+</div>
+
+<!-- ===== TAB 3: LOOPS ===== -->
+<div class="tp" id="t3">
+  <div class="card">
+    <div class="card-t">🔄 for loop — วนซ้ำผ่านสมาชิก</div>
+    <div class="card-s">กด ▶️ เพื่อดูการวนลูปผ่านแต่ละสมาชิก — สีเหลือง = ตัวที่กำลังประมวลผล</div>
+    <div class="code"><span class="kw">fruits</span> = [<span class="st">"🍎"</span>, <span class="st">"🍌"</span>, <span class="st">"🍊"</span>, <span class="st">"🍇"</span>, <span class="st">"🍓"</span>]
+<span class="kw">for</span> fruit <span class="kw">in</span> fruits:
+    <span class="fn">print</span>(<span class="st">"ผลไม้:"</span>, fruit)</div>
+    <div class="loop-visual" id="for-items"></div>
+    <div class="loop-var" id="for-var">กด ▶️ เพื่อเริ่ม</div>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;" id="for-out-box" style="display:none;"></div>
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+      <button class="btn am" id="for-btn" onclick="startFor()">▶️ เริ่มลูป</button>
+      <button class="btn out" onclick="resetFor()">🔄 รีเซ็ต</button>
+    </div>
+    <div id="for-output" style="margin-top:10px;background:#1e293b;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.85rem;color:#e2e8f0;min-height:36px;display:none;"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">🔁 while loop — วนจนกว่าเงื่อนไขจะเป็น False</div>
+    <div class="card-s">กด ▶️ เพื่อดูว่า while ทำงานทีละขั้นอย่างไร</div>
+    <div class="code"><span class="kw">count</span> = <span class="nu">0</span>
+<span class="kw">while</span> count < <span class="nu">5</span>:
+    <span class="fn">print</span>(<span class="st">"count ="</span>, count)
+    count += <span class="nu">1</span>
+<span class="fn">print</span>(<span class="st">"จบลูป!"</span>)</div>
+    <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+      <div style="flex:1;min-width:200px;">
+        <div class="while-cond" id="wh-cond">count < 5: ⏳ รอเริ่ม</div>
+        <div style="display:flex;align-items:center;gap:10px;margin:10px 0;">
+          <span style="font-size:.88rem;font-weight:600;">count =</span>
+          <div id="wh-counter" style="font-size:2rem;font-weight:800;color:var(--bm);background:var(--bl);padding:8px 20px;border-radius:10px;min-width:70px;text-align:center;">0</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn am" onclick="stepWhile()">➡️ ขั้นถัดไป</button>
+          <button class="btn out" onclick="resetWhile()">🔄 รีเซ็ต</button>
+        </div>
+      </div>
+      <div id="wh-output" style="flex:1;min-width:180px;background:#1e293b;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.82rem;color:#e2e8f0;line-height:1.8;min-height:100px;"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">⚡ break และ continue</div>
+    <div class="card-s">คลิกเพื่อดูความต่าง</div>
+    <div class="g2">
+      <div style="border:2px solid var(--rd);border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:var(--rd);margin-bottom:8px;">🛑 break — หยุดลูปทันที</div>
+        <div class="code" style="font-size:.8rem;padding:12px;">
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">10</span>):
+    <span class="kw">if</span> i == <span class="nu">5</span>:
+        <span class="kw">break</span>
+    <span class="fn">print</span>(i)
+<span class="cm"># พิมพ์: 0 1 2 3 4</span>
+        </div>
+        <div style="font-size:.82rem;color:var(--tl);line-height:1.5;">เมื่อเจอ i=5 จะ<strong>หยุดทันที</strong> ไม่วนต่อ</div>
+      </div>
+      <div style="border:2px solid var(--am);border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⏭️ continue — ข้ามรอบนี้</div>
+        <div class="code" style="font-size:.8rem;padding:12px;">
+<span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">6</span>):
+    <span class="kw">if</span> i == <span class="nu">3</span>:
+        <span class="kw">continue</span>
+    <span class="fn">print</span>(i)
+<span class="cm"># พิมพ์: 0 1 2 4 5</span>
+        </div>
+        <div style="font-size:.82rem;color:var(--tl);line-height:1.5;">เมื่อเจอ i=3 จะ<strong>ข้ามรอบนั้น</strong> แล้ววนต่อ</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 4: FUNCTIONS ===== -->
+<div class="tp" id="t4">
+  <div class="card">
+    <div class="card-t">⚙️ ฟังก์ชันทำงานอย่างไร?</div>
+    <div class="card-s">กด "ขั้นถัดไป" เพื่อดูการทำงานของ Call Stack — เหมือน Python Tutor</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1.2;min-width:220px;">
+        <div class="code" id="func-code-hl">
+<span class="nm">def</span> <span class="fn">add</span>(<span class="kw">a</span>, <span class="kw">b</span>):
+    result = a + b
+    <span class="nm">return</span> result
+
+<span class="nm">def</span> <span class="fn">main</span>():
+    x = add(<span class="nu">3</span>, <span class="nu">5</span>)
+    y = add(<span class="nu">10</span>, <span class="nu">20</span>)
+    <span class="fn">print</span>(<span class="st">"ผลรวม:"</span>, x + y)
+
+main()
+        </div>
+        <div class="step-ctrl">
+          <button class="btn am" onclick="stepFunc()">➡️ ขั้นถัดไป</button>
+          <button class="btn out" onclick="resetFunc()">🔄 รีเซ็ต</button>
+          <span id="func-step-no" style="font-size:.82rem;color:var(--tl);">ขั้นที่ 0/8</span>
+        </div>
+        <div class="step-line" id="func-line" style="margin-top:8px;">กด ➡️ เพื่อเริ่ม</div>
+        <div class="step-desc" id="func-desc"></div>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <div class="lbl">📚 Call Stack</div>
+        <div class="stack-visual" id="call-stack">
+          <div style="text-align:center;color:var(--tl);font-size:.85rem;padding:20px 0;">Stack ว่างอยู่<br>กด ➡️ เพื่อเริ่ม</div>
+        </div>
+        <div style="font-size:.75rem;color:var(--tl);margin-top:6px;text-align:center;">📦 ด้านบน = frame ที่กำลังทำงานอยู่</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">🆚 return vs print — ต่างกันอย่างไร?</div>
+    <div class="card-s">นักเรียนมักสับสนระหว่างสองคำนี้ — นี่คือความแตกต่างที่สำคัญมาก</div>
+    <div class="return-vs-print">
+      <div class="rvp-box" style="background:#f0fdf4;border:2px solid var(--gn);">
+        <div style="font-weight:700;color:#166534;margin-bottom:10px;font-size:.95rem;">✅ return — ส่งค่ากลับ</div>
+        <div class="code" style="font-size:.82rem;padding:12px;">
+<span class="nm">def</span> <span class="fn">double</span>(n):
+    <span class="nm">return</span> n * <span class="nu">2</span>
+
+result = double(<span class="nu">5</span>)
+<span class="fn">print</span>(result) <span class="cm"># 10</span>
+        </div>
+        <div style="font-size:.82rem;line-height:1.6;color:var(--tl);">• ส่งค่ากลับให้ผู้เรียกใช้ฟังก์ชัน<br>• นำไปใช้ต่อได้ (เก็บใน variable)<br>• ไม่แสดงบนจออัตโนมัติ</div>
+      </div>
+      <div class="rvp-box" style="background:#fff8e1;border:2px solid var(--am);">
+        <div style="font-weight:700;color:#92400e;margin-bottom:10px;font-size:.95rem;">🖨️ print — แสดงบนจอ</div>
+        <div class="code" style="font-size:.82rem;padding:12px;">
+<span class="nm">def</span> <span class="fn">show</span>(n):
+    <span class="fn">print</span>(n * <span class="nu">2</span>)
+
+result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</span>
+<span class="fn">print</span>(result) <span class="cm"># None !</span>
+        </div>
+        <div style="font-size:.82rem;line-height:1.6;color:var(--tl);">• แสดงข้อความบนหน้าจอเท่านั้น<br>• ฟังก์ชันที่ใช้ print แต่ไม่ return จะคืนค่า None<br>• ใช้สำหรับ debug หรือแสดงผลสุดท้าย</div>
+      </div>
+    </div>
+    <div class="hbox a">⚠️ ข้อผิดพลาดที่พบบ่อย: เขียน <code>print()</code> ใน function แต่ลืม <code>return</code> แล้วแปลกใจว่าทำไม variable ได้ค่า None</div>
+  </div>
+</div>
+
+<!-- ===== TAB 5: CLASS & OBJECT ===== -->
+<div class="tp" id="t5">
+  <div class="card">
+    <div class="card-t">🏭 Class = แม่พิมพ์ | Object = สินค้า</div>
+    <div class="card-s">Class คือ "แม่พิมพ์" หรือ "พิมพ์เขียว" — Object คือสิ่งที่สร้างจากแม่พิมพ์นั้น</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
+      <div style="flex:1;min-width:220px;">
+        <div class="mold">
+          <div class="mold-label">🏭 Class: Student</div>
+          <div style="margin-top:10px;">
+            <div class="lbl">Attributes (คุณสมบัติ)</div>
+            <div class="attr-row">🏷️ <span class="attr-name">name</span> <span style="font-size:.82rem;color:var(--tl);">ชื่อนักศึกษา</span></div>
+            <div class="attr-row">📅 <span class="attr-name">age</span> <span style="font-size:.82rem;color:var(--tl);">อายุ</span></div>
+            <div class="attr-row">📊 <span class="attr-name">gpa</span> <span style="font-size:.82rem;color:var(--tl);">เกรดเฉลี่ย</span></div>
+            <div class="dv"></div>
+            <div class="lbl">Methods (ความสามารถ)</div>
+            <div class="attr-row">💬 <span class="attr-name">greet()</span> <span style="font-size:.82rem;color:var(--tl);">แนะนำตัว</span></div>
+            <div class="attr-row">📈 <span class="attr-name">study()</span> <span style="font-size:.82rem;color:var(--tl);">เรียน</span></div>
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="lbl">🎮 สร้าง Object ใหม่</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <input type="text" id="obj-name" placeholder="ชื่อ" style="padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-family:'Sarabun',sans-serif;font-size:.88rem;outline:none;">
+            <div style="display:flex;gap:8px;">
+              <input type="number" id="obj-age" placeholder="อายุ" value="20" style="flex:1;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-size:.88rem;outline:none;">
+              <input type="number" id="obj-gpa" placeholder="GPA" value="3.5" step="0.1" style="flex:1;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-size:.88rem;outline:none;">
+            </div>
+            <button class="btn am" onclick="createObj()">🏭 สร้าง Object</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1.4;min-width:240px;">
+        <div class="lbl">📦 Objects ที่สร้างแล้ว</div>
+        <div class="instances-grid" id="instances">
+          <div style="color:var(--tl);font-size:.85rem;padding:16px;border:2px dashed var(--br);border-radius:10px;text-align:center;width:100%;">กด "สร้าง Object" เพื่อสร้าง instance</div>
+        </div>
+        <div class="code" id="cls-code" style="margin-top:16px;font-size:.8rem;padding:14px;">
+<span class="nm">class</span> <span class="fn">Student</span>:
+    <span class="nm">def</span> __init__(self, name, age, gpa):
+        self.name = name
+        self.age = age
+        self.gpa = gpa
+    <span class="nm">def</span> <span class="fn">greet</span>(self):
+        <span class="nm">return</span> <span class="st">f"สวัสดี, ผม {self.name}"</span>
+        </div>
+      </div>
+    </div>
+    <div class="hbox b" style="margin-top:10px;">💡 ทุก Object ที่สร้างจาก Class เดียวกัน มีโครงสร้างเหมือนกัน แต่ข้อมูลต่างกัน — เหมือนรถยนต์ที่ผลิตจากโรงงานเดียวกัน</div>
+  </div>
+</div>
+
+<!-- ===== TAB 6: GLOBAL vs LOCAL ===== -->
+<div class="tp" id="t6">
+  <div class="card">
+    <div class="card-t">🌍 Global vs Local Scope</div>
+    <div class="card-s">Scope คือ "ขอบเขต" ที่ตัวแปรนั้นใช้งานได้ — คลิกแต่ละบรรทัดเพื่อดูว่าตัวแปรไหนเข้าถึงได้</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div class="lbl">📝 โค้ด — คลิกทีละบรรทัด</div>
+        <div style="display:flex;flex-direction:column;gap:4px;" id="scope-code"></div>
+        <button class="btn out" style="margin-top:10px;" onclick="resetScope()">🔄 รีเซ็ต</button>
+      </div>
+      <div style="flex:1.3;min-width:240px;">
+        <div class="scope-visual">
+          <div class="scope-box global" id="scope-global">
+            <div class="scope-title">🌍 Global Scope</div>
+            <div id="sv-global"></div>
+          </div>
+          <div class="scope-box local" id="scope-local">
+            <div class="scope-title">📦 Local Scope (ฟังก์ชัน)</div>
+            <div id="sv-local"></div>
+          </div>
+        </div>
+        <div id="scope-msg" style="margin-top:10px;padding:10px 14px;border-radius:8px;font-size:.88rem;font-weight:600;background:var(--bl);min-height:36px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📌 กฎของ Scope</div>
+    <div class="card-s">สิ่งที่ต้องจำ</div>
+    <div class="g2">
+      <div>
+        <div class="hbox b"><strong>🌍 Global Variable</strong><br>ใช้งานได้ทุกที่ในโปรแกรม ถ้าไม่มีตัวแปรชื่อเดียวกันใน Local</div>
+        <div class="hbox a"><strong>📦 Local Variable</strong><br>ใช้ได้แค่ภายในฟังก์ชันที่สร้างมัน ออกจากฟังก์ชันแล้ว หายไปเลย</div>
+      </div>
+      <div>
+        <div class="code" style="font-size:.8rem;padding:14px;">
+x = <span class="nu">10</span>  <span class="cm"># global</span>
+
+<span class="nm">def</span> <span class="fn">func</span>():
+    y = <span class="nu">20</span>  <span class="cm"># local</span>
+    <span class="fn">print</span>(x)  <span class="cm"># ✅ เข้า global ได้</span>
+    <span class="fn">print</span>(y)  <span class="cm"># ✅ local ตัวเอง</span>
+
+func()
+<span class="fn">print</span>(y)  <span class="cm"># ❌ Error! y ไม่มีที่นี่</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 7: DATA & GRAPHS ===== -->
+<div class="tp" id="t7">
+  <div class="card">
+    <div class="card-t">📊 Categorical vs Numerical Data</div>
+    <div class="card-s">ลากข้อมูลแต่ละชิ้นไปวางในหมวดหมู่ที่ถูกต้อง</div>
+    <div class="catnum-drag" id="cn-items"></div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;">
+      <div class="cn-zone" id="cn-cat" ondrop="cnDrop(event,'cat')" ondragover="cnOver(event,this)" ondragleave="cnLeave(this)">
+        <div style="font-weight:700;font-size:.82rem;color:var(--bd);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">📝 Categorical</div>
+        <div style="font-size:.78rem;color:var(--tl);margin-bottom:8px;">ข้อมูลที่แบ่งเป็นกลุ่ม/หมวดหมู่</div>
+      </div>
+      <div class="cn-zone" id="cn-num" ondrop="cnDrop(event,'num')" ondragover="cnOver(event,this)" ondragleave="cnLeave(this)">
+        <div style="font-weight:700;font-size:.82rem;color:var(--bd);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">🔢 Numerical</div>
+        <div style="font-size:.78rem;color:var(--tl);margin-bottom:8px;">ข้อมูลตัวเลขที่วัดและคำนวณได้</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="btn am" onclick="checkCN()">✅ ตรวจสอบ</button>
+      <button class="btn out" onclick="resetCN()">🔄 รีเซ็ต</button>
+    </div>
+    <div id="cn-feedback" style="margin-top:8px;"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📈 ประเภทของกราฟ</div>
+    <div class="card-s">คลิกกราฟแต่ละแบบเพื่อดูว่าใช้เมื่อไหร่และวิธีตีความ</div>
+    <div class="chart-gallery" id="chart-gallery"></div>
+    <div class="chart-detail" id="chart-detail">
+      <p style="color:var(--tl);font-size:.9rem;">👆 คลิกประเภทกราฟเพื่อดูรายละเอียด</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 8: PCA & KMEANS ===== -->
+<div class="tp" id="t8">
+  <div class="card">
+    <div class="card-t">🔬 PCA — การลดมิติข้อมูล</div>
+    <div class="card-s">PCA ช่วย "บีบ" ข้อมูลหลาย dimension ให้เหลือน้อยมิติ แต่ยังรักษารูปแบบข้อมูลไว้</div>
+    <div class="hbox b">📌 <strong>Principal Component Analysis (PCA)</strong> เปลี่ยนแกนของข้อมูลให้ PC1 เก็บ "ความแปรปรวน" ไว้มากที่สุด — เหมือนหาทิศทางที่ข้อมูล "กระจาย" มากที่สุด</div>
+    <div class="canvas-wrap">
+      <canvas id="pca-canvas" width="480" height="320"></canvas>
+    </div>
+    <div class="pca-controls">
+      <button class="btn am" onclick="animatePCA()">▶️ แสดง PCA</button>
+      <button class="btn out" onclick="resetPCA()">🔄 รีเซ็ต</button>
+      <span id="pca-info" style="font-size:.85rem;color:var(--tl);"></span>
+    </div>
+    <div class="g2" style="margin-top:16px;">
+      <div style="background:#f0fdf4;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#166534;margin-bottom:8px;">✅ ใช้ PCA เมื่อ...</div>
+        <div style="font-size:.85rem;line-height:1.7;">• มีตัวแปรเยอะ (10+ features)<br>• ต้องการ visualize ใน 2D/3D<br>• ตัวแปรมี multicollinearity<br>• ก่อนทำ clustering</div>
+      </div>
+      <div style="background:#fff8e1;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⚠️ ข้อควรระวัง</div>
+        <div style="font-size:.85rem;line-height:1.7;">• ต้อง standardize ข้อมูลก่อน<br>• PC ไม่มีความหมาย "ตรงๆ"<br>• สูญเสียข้อมูลบางส่วนเสมอ<br>• ดู explained variance ratio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">🎯 K-Means Clustering</div>
+    <div class="card-s">K-Means แบ่งข้อมูลออกเป็น k กลุ่ม โดยจัดแต่ละจุดให้อยู่ในกลุ่มที่ centroid ใกล้ที่สุด</div>
+    <div class="hbox p">📌 <strong>K-Means</strong> เลือก centroid แบบสุ่ม → กำหนดกลุ่มให้แต่ละจุด → ย้าย centroid → ทำซ้ำจนกว่าจะไม่เปลี่ยน</div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+      <span style="font-weight:600;font-size:.9rem;">จำนวนกลุ่ม k =</span>
+      <input type="range" id="km-k" min="2" max="5" value="3" oninput="document.getElementById('km-k-val').textContent=this.value;initKMeans();" style="width:120px;">
+      <span id="km-k-val" style="font-size:1.1rem;font-weight:800;color:var(--bm);min-width:20px;">3</span>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="km-canvas" width="480" height="320"></canvas>
+    </div>
+    <div class="km-controls">
+      <button class="btn am" onclick="stepKMeans()">➡️ ขั้นถัดไป</button>
+      <button class="btn out" onclick="initKMeans()">🔄 สุ่มใหม่</button>
+      <span id="km-step-info" style="font-size:.85rem;color:var(--tl);">กด ➡️ เพื่อเริ่ม</span>
+    </div>
+    <div class="km-legend" id="km-legend"></div>
+    <div class="g2" style="margin-top:16px;">
+      <div style="background:#f5f3ff;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:var(--pu);margin-bottom:8px;">🔄 ขั้นตอน K-Means</div>
+        <div style="font-size:.82rem;line-height:1.9;">1️⃣ สุ่มเลือก k centroids<br>2️⃣ assign แต่ละ point ให้ centroid ใกล้ที่สุด<br>3️⃣ คำนวณ centroid ใหม่ (mean ของ cluster)<br>4️⃣ วนซ้ำ 2-3 จนไม่มีการเปลี่ยน</div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#166534;margin-bottom:8px;">📊 Elbow Method</div>
+        <div style="font-size:.82rem;line-height:1.7;">หา k ที่เหมาะสมโดย: plot กราฟ k vs WCSS (within-cluster sum of squares) แล้วหาจุดที่กราฟ "หัก" คล้ายข้อศอก — นั่นคือ k ที่ดีที่สุด</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /ct -->
+
+<script>
+// ===== TAB SWITCH =====
+function sw(n){
+  document.querySelectorAll('.tb').forEach((b,i)=>b.classList.toggle('on',i===n));
+  document.querySelectorAll('.tp').forEach((p,i)=>p.classList.toggle('on',i===n));
+  if(n===8){setTimeout(()=>{initKMeans();initPCA();},100);}
+}
+
+// ===== STRING =====
+const STR='Hello, Python!';
+function buildStrBoxes(cid,selFn){
+  const c=document.getElementById(cid);
+  c.innerHTML=STR.split('').map((ch,i)=>{
+    const neg=i-STR.length;
+    return `<div class="ch-box" id="${cid}-ch${i}" onclick="${selFn}(${i})">
+      <div class="ch-cell">${ch===' '?'␣':ch}</div>
+      <div class="ch-idx">${i}</div>
+      <div class="ch-nidx">${neg}</div>
+    </div>`;
+  }).join('');
+}
+buildStrBoxes('str-main','selChar');
+buildStrBoxes('str-slice','()=>{}');
+function selChar(i){
+  document.querySelectorAll('#str-main .ch-box').forEach(b=>b.classList.remove('sel'));
+  document.getElementById(`str-main-ch${i}`).classList.add('sel');
+  const neg=i-STR.length;
+  document.getElementById('ch-info').textContent=`s[${i}] = '${STR[i]}' | s[${neg}] = '${STR[i]}' | ตัวอักษรที่ ${i+1} จากซ้าย, หรือ ${Math.abs(neg)} จากขวา`;
+}
+function doSlice(){
+  const s=parseInt(document.getElementById('sl-s').value)||0;
+  const e=parseInt(document.getElementById('sl-e').value)||STR.length;
+  const st=Math.max(1,parseInt(document.getElementById('sl-st').value)||1);
+  const sel=new Set();
+  for(let i=s;i<Math.min(e,STR.length);i+=st)sel.add(i);
+  document.querySelectorAll('#str-slice .ch-box').forEach((b,i)=>{
+    b.classList.toggle('sel',sel.has(i));
+  });
+  let res='';sel.forEach(i=>res+=STR[i]);
+  const el=document.getElementById('slice-out');
+  el.innerHTML=`<span style="color:#94a3b8;">s[${s}:${e}:${st}] = </span><span style="color:#86efac;">'${res}'</span>`;
+}
+function setSlice(s,e,st){
+  document.getElementById('sl-s').value=s;
+  document.getElementById('sl-e').value=e;
+  document.getElementById('sl-st').value=st;
+  doSlice();
+}
+doSlice();
+
+// String methods
+const methods=[
+  {m:'.upper()',res:()=>`'${STR.toUpperCase()}'`},
+  {m:'.lower()',res:()=>`'${STR.toLowerCase()}'`},
+  {m:'.replace("l","L")',res:()=>`'${STR.replace(/l/g,'L')}'`},
+  {m:'.split(",")',res:()=>JSON.stringify(STR.split(','))},
+  {m:'.strip()',res:()=>`'${STR.trim()}'`},
+  {m:'.startswith("H")',res:()=>`${STR.startsWith('H')}`},
+  {m:'.count("l")',res:()=>`${(STR.match(/l/g)||[]).length}`},
+  {m:'len()',res:()=>`${STR.length}`},
+];
+const mc=document.getElementById('str-methods');
+methods.forEach(m=>{
+  const b=document.createElement('div');b.className='method-btn';b.textContent=m.m;
+  b.onclick=()=>{
+    document.querySelectorAll('.method-btn').forEach(x=>x.style.background='');
+    b.style.background='var(--am)';
+    const out=document.getElementById('method-out');
+    out.style.display='block';
+    out.innerHTML=`<span style="color:#94a3b8;">s${m.m} → </span><span style="color:#86efac;">${m.res()}</span>`;
+  };
+  mc.appendChild(b);
+});
+
+// ===== DATA TYPES =====
+function dtSw(n,el){
+  document.querySelectorAll('.dtt').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.dtype-panel').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('dp'+n).classList.add('on');
+}
+let listData=['Python','Data','AI'];
+function renderList(){
+  const c=document.getElementById('list-items');
+  c.innerHTML=listData.map((v,i)=>`<div class="list-item"><span>[${i}]</span> ${v} <button class="rm" onclick="listRm(${i})">✕</button></div>`).join('');
+  document.getElementById('list-code').innerHTML=`<span style="color:#f9a8d4;">my_list</span> = [${listData.map(v=>`<span style="color:#86efac;">'${v}'</span>`).join(', ')}]<br><span style="color:#6b7280;"># len = ${listData.length}</span>`;
+}
+function listAdd(){const v=document.getElementById('list-add-in').value.trim();if(!v)return;listData.push(v);document.getElementById('list-add-in').value='';renderList();}
+function listPop(){if(listData.length)listData.pop();renderList();}
+function listRm(i){listData.splice(i,1);renderList();}
+renderList();
+
+function tryMutate(){
+  document.getElementById('tuple-feedback').innerHTML='<div class="hbox r">❌ <strong>TypeError: tuple object does not support item assignment</strong><br>นี่คือเหตุผลที่ tuple ปลอดภัยกว่า list สำหรับข้อมูลที่ไม่ควรเปลี่ยน!</div>';
+}
+
+let setData=new Set(['Python','Data','Machine Learning']);
+function renderSet(){
+  const c=document.getElementById('set-items');
+  c.innerHTML=[...setData].map(v=>`<div class="list-item">${v}</div>`).join('');
+  document.getElementById('set-code').innerHTML=`<span style="color:#f9a8d4;">my_set</span> = {${[...setData].map(v=>`<span style="color:#86efac;">'${v}'</span>`).join(', ')}}<br><span style="color:#6b7280;"># len = ${setData.size}</span>`;
+}
+function setAdd(){
+  const v=document.getElementById('set-add-in').value.trim();if(!v)return;
+  const before=setData.size;
+  setData.add(v);
+  document.getElementById('set-add-in').value='';
+  const wd=document.getElementById('set-dup-warning');
+  if(setData.size===before){wd.style.display='block';wd.innerHTML='<div class="hbox a">⚠️ ค่า "'+v+'" มีอยู่แล้ว! set ไม่เพิ่มค่าซ้ำ</div>';}
+  else wd.style.display='none';
+  renderSet();
+}
+renderSet();
+
+let dictData=[{k:'name',v:'สมชาย'},{k:'age',v:'21'},{k:'gpa',v:'3.75'}];
+function renderDict(){
+  document.getElementById('dict-rows').innerHTML=dictData.map((d,i)=>`<div class="dict-row"><span class="dict-key">'${d.k}'</span><span class="dict-colon"> : </span><span class="dict-val">'${d.v}'</span><button style="margin-left:auto;background:var(--rd);color:#fff;border:none;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:.7rem;" onclick="dictRm(${i})">✕</button></div>`).join('');
+  document.getElementById('dict-code').innerHTML=`<span style="color:#f9a8d4;">student</span> = {${dictData.map(d=>`<span style="color:#7dd3fc;">'${d.k}'</span>: <span style="color:#86efac;">'${d.v}'</span>`).join(', ')}}`;
+}
+function dictAdd(){
+  const k=document.getElementById('dict-k').value.trim(),v=document.getElementById('dict-v').value.trim();
+  if(!k||!v)return;
+  const idx=dictData.findIndex(d=>d.k===k);
+  if(idx>=0)dictData[idx].v=v; else dictData.push({k,v});
+  document.getElementById('dict-k').value='';document.getElementById('dict-v').value='';
+  renderDict();
+}
+function dictRm(i){dictData.splice(i,1);renderDict();}
+function dictLookup(){
+  const k=document.getElementById('dict-srch').value.trim();
+  const d=dictData.find(x=>x.k===k);
+  document.getElementById('dict-result').textContent=d?`→ '${d.v}'`:'KeyError ❌';
+  document.getElementById('dict-result').style.color=d?'var(--gn)':'var(--rd)';
+}
+renderDict();
+
+// ===== CONDITIONS =====
+function runCond(){
+  const v=parseInt(document.getElementById('cond-in').value)||0;
+  document.getElementById('score-disp').textContent=v;
+  const cbs=['cb-start','cb0','cb-a80','cb1'];
+  cbs.forEach(id=>{const el=document.getElementById(id);if(el){el.className='cond-box';}});
+  let grade,cls;
+  if(v>=80){grade='เกรด A 🏆 (score >= 80)';cls='hl-g';}
+  else if(v>=70){grade='เกรด B 👍 (score >= 70)';cls='hl-g';}
+  else if(v>=60){grade='เกรด C 😐 (score >= 60)';cls='hl-y';}
+  else{grade='เกรด F 😢 (score < 60)';cls='hl-r';}
+  document.getElementById('cb0').className='cond-box '+(v>=80?'hl-g':'active');
+  if(v>=80)document.getElementById('cb-a80').className='cond-box hl-g';
+  else document.getElementById('cb1').className='cond-box '+(v>=70?'hl-g':v>=60?'hl-y':'hl-r');
+  const r=document.getElementById('cond-result');
+  r.className='cond-result';r.style.background=cls==='hl-g'?'#dcfce7':cls==='hl-y'?'#fef3c7':'#fee2e2';
+  r.textContent='ผลลัพธ์: '+grade;
+}
+runCond();
+function runBool(){
+  const a=parseFloat(document.getElementById('boolA').value)||0;
+  const b=parseFloat(document.getElementById('boolB').value)||0;
+  const tests=[
+    {expr:`a >= 18`,result:a>=18,code:`${a} >= 18`},
+    {expr:`b >= 3.0`,result:b>=3.0,code:`${b} >= 3.0`},
+    {expr:`a >= 18 and b >= 3.0`,result:a>=18&&b>=3.0,code:`(${a>=18}) and (${b>=3.0})`},
+    {expr:`a >= 18 or b >= 3.0`,result:a>=18||b>=3.0,code:`(${a>=18}) or (${b>=3.0})`},
+    {expr:`not (a >= 18)`,result:!(a>=18),code:`not (${a>=18})`},
+  ];
+  document.getElementById('bool-results').innerHTML=tests.map(t=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:${t.result?'#f0fdf4':'#fef2f2'};border-radius:7px;font-family:'Courier New',monospace;font-size:.86rem;">
+    <span style="color:${t.result?'var(--gn)':'var(--rd)'};font-weight:800;min-width:50px;">${t.result?'True':'False'}</span>
+    <span style="color:var(--tl);">${t.expr}</span>
+    <span style="color:#94a3b8;margin-left:auto;font-size:.78rem;">${t.code}</span>
+  </div>`).join('');
+}
+runBool();
+
+// ===== LOOPS =====
+const fruits=['🍎','🍌','🍊','🍇','🍓'];
+let forIdx=-1,forTimer=null;
+function buildForItems(){
+  const c=document.getElementById('for-items');
+  c.innerHTML=fruits.map((f,i)=>`<div class="loop-item" id="fi${i}">${f}</div>`).join('');
+}
+buildForItems();
+function startFor(){
+  if(forTimer)return;
+  document.getElementById('for-output').style.display='block';
+  document.getElementById('for-output').innerHTML='';
+  forIdx=-1;
+  forTimer=setInterval(()=>{
+    if(forIdx>=0){document.getElementById('fi'+forIdx).className='loop-item done';}
+    forIdx++;
+    if(forIdx>=fruits.length){clearInterval(forTimer);forTimer=null;document.getElementById('for-var').textContent='จบลูปแล้ว! ✅';document.getElementById('for-btn').textContent='▶️ เริ่มใหม่';return;}
+    document.getElementById('fi'+forIdx).className='loop-item cur';
+    document.getElementById('for-var').innerHTML=`<span style="color:#fde68a;">fruit</span> = <span style="color:#86efac;">"${fruits[forIdx]}"</span>  <span style="color:#6b7280;">← รอบที่ ${forIdx+1}</span>`;
+    document.getElementById('for-output').innerHTML+=`ผลไม้: ${fruits[forIdx]}<br>`;
+  },800);
+}
+function resetFor(){clearInterval(forTimer);forTimer=null;forIdx=-1;buildForItems();document.getElementById('for-var').textContent='กด ▶️ เพื่อเริ่ม';document.getElementById('for-output').style.display='none';document.getElementById('for-btn').textContent='▶️ เริ่มลูป';}
+let whileCount=0,whileDone=false;
+function stepWhile(){
+  if(whileDone)return;
+  const out=document.getElementById('wh-output');
+  const cond=document.getElementById('wh-cond');
+  if(whileCount<5){
+    cond.className='while-cond t';cond.textContent=`count < 5: True ✅ (${whileCount} < 5)`;
+    document.getElementById('wh-counter').textContent=whileCount;
+    out.innerHTML+=(out.innerHTML?'<br>':'')+`count = ${whileCount}`;
+    whileCount++;
+  } else {
+    cond.className='while-cond f';cond.textContent=`count < 5: False ❌ (${whileCount} ≮ 5)`;
+    document.getElementById('wh-counter').textContent=whileCount;
+    out.innerHTML+='<br><span style="color:#fde68a;">จบลูป!</span>';
+    whileDone=true;
+  }
+}
+function resetWhile(){whileCount=0;whileDone=false;document.getElementById('wh-counter').textContent=0;document.getElementById('wh-output').innerHTML='';document.getElementById('wh-cond').className='while-cond';document.getElementById('wh-cond').textContent='count < 5: ⏳ รอเริ่ม';}
+
+// ===== FUNCTIONS =====
+const funcSteps=[
+  {line:'main()',desc:'เรียกใช้ฟังก์ชัน main() — push frame ลง stack',stack:[{name:'main()',type:'main',vars:''}]},
+  {line:'x = add(3, 5)',desc:'main เรียกใช้ add(3,5) — push frame ใหม่',stack:[{name:'main()',type:'main',vars:'x = ?'},{name:'add(a=3, b=5)',type:'func',vars:'a=3, b=5'}]},
+  {line:'result = a + b',desc:'คำนวณ 3 + 5 = 8 ภายใน add()',stack:[{name:'main()',type:'main',vars:'x = ?'},{name:'add(a=3, b=5)',type:'func',vars:'a=3, b=5, result=8'}]},
+  {line:'return result',desc:'return 8 — pop frame ของ add() ออก, คืนค่าให้ main',stack:[{name:'main()',type:'main',vars:'x = 8'}]},
+  {line:'y = add(10, 20)',desc:'main เรียกใช้ add(10,20) อีกครั้ง',stack:[{name:'main()',type:'main',vars:'x=8, y=?'},{name:'add(a=10, b=20)',type:'func',vars:'a=10, b=20'}]},
+  {line:'return result',desc:'return 30 — pop frame ของ add() ออก',stack:[{name:'main()',type:'main',vars:'x=8, y=30'}]},
+  {line:"print('ผลรวม:', x + y)",desc:'แสดงผล: ผลรวม: 38',stack:[{name:'main()',type:'main',vars:'x=8, y=30'}]},
+  {line:'จบการทำงาน',desc:'main() เสร็จสิ้น — pop frame ออก, stack ว่างแล้ว',stack:[]},
+];
+let fStep=0;
+function stepFunc(){
+  if(fStep>=funcSteps.length)return;
+  const s=funcSteps[fStep];
+  document.getElementById('func-line').textContent=s.line;
+  document.getElementById('func-desc').textContent=s.desc;
+  document.getElementById('func-step-no').textContent=`ขั้นที่ ${fStep+1}/${funcSteps.length}`;
+  const cs=document.getElementById('call-stack');
+  if(!s.stack.length){cs.innerHTML='<div style="text-align:center;color:var(--tl);font-size:.85rem;padding:20px;">Stack ว่าง ✅</div>';}
+  else{cs.innerHTML=s.stack.map((f,i)=>`<div class="frame ${f.type} ${i===s.stack.length-1?'top':''}"><div class="frame-name">${f.name}</div><div class="frame-vars">${f.vars}</div></div>`).join('');}
+  fStep++;
+}
+function resetFunc(){fStep=0;document.getElementById('func-line').textContent='กด ➡️ เพื่อเริ่ม';document.getElementById('func-desc').textContent='';document.getElementById('func-step-no').textContent='ขั้นที่ 0/8';document.getElementById('call-stack').innerHTML='<div style="text-align:center;color:var(--tl);font-size:.85rem;padding:20px;">Stack ว่างอยู่<br>กด ➡️ เพื่อเริ่ม</div>';}
+
+// ===== CLASS OBJECT =====
+let instances=[];
+function createObj(){
+  const n=document.getElementById('obj-name').value.trim();
+  const a=document.getElementById('obj-age').value||20;
+  const g=document.getElementById('obj-gpa').value||3.0;
+  if(!n){alert('กรุณาใส่ชื่อ');return;}
+  instances.push({name:n,age:a,gpa:g});
+  renderInstances();
+  document.getElementById('obj-name').value='';
+}
+function renderInstances(){
+  const c=document.getElementById('instances');
+  if(!instances.length){c.innerHTML='<div style="color:var(--tl);font-size:.85rem;padding:16px;border:2px dashed var(--br);border-radius:10px;text-align:center;width:100%;">กด "สร้าง Object" เพื่อสร้าง instance</div>';return;}
+  c.innerHTML=instances.map((obj,i)=>`<div class="obj-card">
+    <div class="obj-label">Object #${i+1}</div>
+    <div class="obj-attr">name = <span style="color:var(--gn);">'${obj.name}'</span><br>age = <span style="color:var(--cy);">${obj.age}</span><br>gpa = <span style="color:var(--am);">${obj.gpa}</span></div>
+    <div style="margin-top:8px;font-size:.78rem;background:var(--ca);padding:4px 8px;border-radius:5px;color:var(--tl);">student_${i+1}.greet()</div>
+    <div style="font-size:.78rem;color:var(--bd);font-weight:600;">"สวัสดี, ผม ${obj.name}"</div>
+  </div>`).join('');
+}
+
+// ===== GLOBAL/LOCAL =====
+const scopeSteps=[
+  {line:'x = 10  # global',gvars:{x:'10'},lvars:{},msg:'สร้าง x=10 ใน Global scope 🌍',active:'g'},
+  {line:'y = 20  # global',gvars:{x:'10',y:'20'},lvars:{},msg:'สร้าง y=20 ใน Global scope 🌍',active:'g'},
+  {line:'def my_func():  ...',gvars:{x:'10',y:'20'},lvars:{},msg:'นิยามฟังก์ชัน my_func (ยังไม่รัน)',active:'g'},
+  {line:'my_func()  # เรียกใช้',gvars:{x:'10',y:'20'},lvars:{},msg:'เรียกใช้ my_func() — เข้าสู่ Local scope 📦',active:'both'},
+  {line:'  a = 5  # local',gvars:{x:'10',y:'20'},lvars:{a:'5'},msg:'สร้าง a=5 ใน Local scope (มองเห็นแค่ในฟังก์ชัน) 📦',active:'l'},
+  {line:'  print(x)  # → 10',gvars:{x:'10',y:'20'},lvars:{a:'5'},msg:'เข้าถึง x จาก Global ได้ ✅ (local ไม่มี x จึงไปหาใน global)',active:'g'},
+  {line:'  print(a)  # → 5',gvars:{x:'10',y:'20'},lvars:{a:'5'},msg:'เข้าถึง a จาก Local ✅',active:'l'},
+  {line:'# ออกจากฟังก์ชัน',gvars:{x:'10',y:'20'},lvars:{},msg:'ออกจาก my_func() — Local scope หายไป a ถูกลบ 📦❌',active:'g'},
+  {line:'print(a)  # ❌ Error',gvars:{x:'10',y:'20'},lvars:{},msg:'NameError: name "a" is not defined — a ไม่มีใน Global scope ❌',active:'none'},
+];
+const scopeCode=[
+  'x = 10  <span style="color:#6b7280;"># global</span>',
+  'y = 20  <span style="color:#6b7280;"># global</span>',
+  'def my_func():  ...',
+  'my_func()  <span style="color:#6b7280;"># เรียกใช้</span>',
+  '  a = 5  <span style="color:#6b7280;"># local</span>',
+  '  print(x)  <span style="color:#86efac;"># → 10</span>',
+  '  print(a)  <span style="color:#86efac;"># → 5</span>',
+  '<span style="color:#6b7280;"># ออกจากฟังก์ชัน</span>',
+  'print(a)  <span style="color:#ef4444;"># ❌ Error</span>',
+];
+let scopeIdx=0;
+function buildScopeCode(){
+  const c=document.getElementById('scope-code');
+  c.innerHTML=scopeCode.map((l,i)=>`<div class="code-step" id="sc${i}" onclick="runScope(${i})">${l}</div>`).join('');
+}
+function runScope(i){
+  const s=scopeSteps[i];
+  document.querySelectorAll('.code-step').forEach((el,j)=>el.classList.toggle('active',j===i));
+  document.getElementById('sv-global').innerHTML=Object.entries(s.gvars).map(([k,v])=>`<div class="scope-var ${s.active==='g'||s.active==='both'?'active':''}" style="background:rgba(43,82,200,.1);padding:5px 10px;border-radius:5px;margin:3px 0;font-family:'Courier New',monospace;font-size:.82rem;">${k} = ${v}</div>`).join('');
+  document.getElementById('sv-local').innerHTML=Object.keys(s.lvars).length?Object.entries(s.lvars).map(([k,v])=>`<div class="scope-var ${s.active==='l'||s.active==='both'?'active':''}" style="background:rgba(245,158,11,.15);padding:5px 10px;border-radius:5px;margin:3px 0;font-family:'Courier New',monospace;font-size:.82rem;">${k} = ${v}</div>`).join(''):'<div style="color:var(--tl);font-size:.8rem;font-style:italic;">ว่างอยู่</div>';
+  document.getElementById('scope-msg').textContent=s.msg;
+}
+function resetScope(){scopeIdx=0;buildScopeCode();document.getElementById('sv-global').innerHTML='';document.getElementById('sv-local').innerHTML='';document.getElementById('scope-msg').textContent='';}
+buildScopeCode();
+
+// ===== CATEGORICAL / NUMERICAL =====
+const cnData=[
+  {text:'เพศ',type:'cat'},{text:'อายุ',type:'num'},{text:'สี',type:'cat'},
+  {text:'น้ำหนัก (kg)',type:'num'},{text:'ประเภทสินค้า',type:'cat'},{text:'ราคา',type:'num'},
+  {text:'จังหวัด',type:'cat'},{text:'คะแนนสอบ',type:'num'},{text:'อาชีพ',type:'cat'},
+];
+let cnDrag=null;
+function buildCN(){
+  const c=document.getElementById('cn-items');
+  c.innerHTML=cnData.map((d,i)=>`<div class="cn-item" draggable="true" id="cni${i}" data-type="${d.type}" ondragstart="cnDragStart(event)">${d.text}</div>`).join('');
+}
+buildCN();
+function cnDragStart(e){cnDrag=e.target;}
+function cnOver(e,el){e.preventDefault();el.classList.add('hover');}
+function cnLeave(el){el.classList.remove('hover');}
+function cnDrop(e,zone){
+  e.preventDefault();
+  if(!cnDrag)return;
+  e.currentTarget.classList.remove('hover');
+  const sp=document.createElement('span');sp.className='cn-dropped';sp.textContent=cnDrag.textContent;sp.dataset.type=cnDrag.dataset.type;sp.dataset.zone=zone;
+  e.currentTarget.appendChild(sp);
+  cnDrag.style.opacity='.3';cnDrag.setAttribute('draggable','false');cnDrag=null;
+}
+function checkCN(){
+  const items=document.querySelectorAll('.cn-dropped');let ok=true,total=0;
+  items.forEach(i=>{total++;if(i.dataset.type!==i.dataset.zone)ok=false;});
+  const fb=document.getElementById('cn-feedback');
+  if(!total){fb.innerHTML='<div class="hbox a">ลากข้อมูลลงในช่องก่อนนะ!</div>';return;}
+  fb.innerHTML=ok?'<div class="hbox g">🎉 ถูกทุกข้อ! คุณแยก Categorical และ Numerical ได้ถูกต้อง</div>':'<div class="hbox r">❌ มีบางข้อผิด — Categorical คือข้อมูลที่แบ่งเป็นกลุ่ม (สี, ประเภท), Numerical คือตัวเลขที่วัดได้ (อายุ, คะแนน)</div>';
+}
+function resetCN(){document.querySelectorAll('.cn-dropped').forEach(i=>i.remove());document.querySelectorAll('.cn-item').forEach(i=>{i.style.opacity='1';i.setAttribute('draggable','true');});document.getElementById('cn-feedback').innerHTML='';cnDrag=null;buildCN();}
+
+// ===== CHARTS =====
+const charts=[
+  {ico:'📊',nm:'Bar Chart',when:'เปรียบเทียบหมวดหมู่',detail:'ใช้กับข้อมูล Categorical เปรียบเทียบขนาดของแต่ละกลุ่ม เช่น ยอดขายรายเดือน จำนวนนักศึกษาต่อสาขา',good:'Categorical, การเปรียบเทียบ'},
+  {ico:'🥧',nm:'Pie Chart',when:'สัดส่วนของทั้งหมด',detail:'แสดงสัดส่วน % ของแต่ละส่วน รวมกัน = 100% ใช้เมื่อมีหมวดหมู่ไม่เกิน 5-6 ประเภท',good:'Categorical, สัดส่วน'},
+  {ico:'📈',nm:'Line Chart',when:'แนวโน้มตามเวลา',detail:'เหมาะสำหรับข้อมูลที่มีลำดับเวลา แสดงการเปลี่ยนแปลงหรือแนวโน้ม เช่น อุณหภูมิรายวัน ราคาหุ้น',good:'Time series, แนวโน้ม'},
+  {ico:'📉',nm:'Histogram',when:'การกระจายของข้อมูล',detail:'แสดงว่าข้อมูล Numerical กระจายตัวอย่างไร มีข้อมูลรวมตัวที่ค่าไหนมากที่สุด ดูว่าเป็น normal distribution ไหม',good:'Numerical, distribution'},
+  {ico:'🔵',nm:'Scatter Plot',when:'ความสัมพันธ์ 2 ตัวแปร',detail:'แสดงความสัมพันธ์ระหว่าง 2 ตัวแปร Numerical ดูว่ามี correlation บวก ลบ หรือไม่มีเลย',good:'2 Numerical, correlation'},
+  {ico:'📦',nm:'Box Plot',when:'สรุปสถิติ+outlier',detail:'แสดง median, Q1, Q3, และ outliers ในกล่องเดียว เหมาะสำหรับเปรียบเทียบ distribution ระหว่างกลุ่ม',good:'Numerical, outlier detection'},
+];
+const cg=document.getElementById('chart-gallery');
+charts.forEach((c,i)=>{
+  const d=document.createElement('div');d.className='chart-card';d.innerHTML=`<div class="chart-ico">${c.ico}</div><div class="chart-nm">${c.nm}</div><div style="font-size:.75rem;color:var(--tl);margin-top:3px;">${c.when}</div>`;
+  d.onclick=()=>{
+    document.querySelectorAll('.chart-card').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');
+    document.getElementById('chart-detail').innerHTML=`<div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;"><div style="font-size:2.5rem;">${c.ico}</div><div><div style="font-size:1rem;font-weight:700;color:var(--bd);margin-bottom:6px;">${c.nm}</div><div style="font-size:.88rem;line-height:1.65;">${c.detail}</div><div class="hbox g" style="margin-top:8px;font-size:.82rem;">✅ เหมาะกับ: <strong>${c.good}</strong></div></div></div>`;
+  };
+  cg.appendChild(d);
+});
+
+// ===== PCA CANVAS =====
+let pcaAnimDone=false,pcaAngle=0;
+const pcaPoints=[];
+function initPCA(){
+  const canvas=document.getElementById('pca-canvas');
+  if(!canvas)return;
+  pcaPoints.length=0;
+  for(let i=0;i<60;i++){
+    const t=Math.random()*Math.PI*2;
+    const r=Math.random()*80;
+    const x=Math.cos(0.6)*r*2+Math.cos(t)*20+240;
+    const y=Math.sin(0.6)*r+Math.sin(t)*15+160;
+    pcaPoints.push({x,y});
+  }
+  pcaAngle=0;pcaAnimDone=false;
+  drawPCA(0);
+}
+function drawPCA(angle){
+  const canvas=document.getElementById('pca-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='rgba(43,82,200,.5)';
+  pcaPoints.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fill();});
+  const cx=w/2,cy=h/2;
+  if(angle>0){
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(angle);
+    ctx.strokeStyle='#ef4444';ctx.lineWidth=3;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(-180,0);ctx.lineTo(180,0);ctx.stroke();
+    ctx.fillStyle='#ef4444';ctx.font='bold 13px Sarabun';ctx.fillText('PC1',160,-8);
+    ctx.strokeStyle='#0ea5e9';ctx.lineWidth=2;ctx.setLineDash([5,5]);
+    ctx.beginPath();ctx.moveTo(0,-100);ctx.lineTo(0,100);ctx.stroke();
+    ctx.fillStyle='#0ea5e9';ctx.fillText('PC2',5,-85);
+    ctx.restore();
+  }
+  ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(w,cy);ctx.moveTo(cx,0);ctx.lineTo(cx,h);ctx.stroke();
+}
+function animatePCA(){
+  if(pcaAnimDone){resetPCA();return;}
+  let a=0;const target=0.3;
+  const anim=setInterval(()=>{
+    a+=0.01;drawPCA(a);
+    document.getElementById('pca-info').textContent=`กำลังหา PC1... (มุม ${(a*180/Math.PI).toFixed(0)}°)`;
+    if(a>=target){clearInterval(anim);pcaAnimDone=true;document.getElementById('pca-info').textContent='✅ PC1 = ทิศทางที่ข้อมูลกระจายมากที่สุด | PC2 ⊥ PC1';}
+  },30);
+}
+function resetPCA(){pcaAnimDone=false;initPCA();document.getElementById('pca-info').textContent='';}
+initPCA();
+
+// ===== KMEANS CANVAS =====
+let kmPoints=[],kmCentroids=[],kmColors=['#ef4444','#2b52c8','#10b981','#f59e0b','#8b5cf6'],kmStep=0;
+function initKMeans(){
+  const k=parseInt(document.getElementById('km-k').value)||3;
+  kmPoints=[];
+  for(let c=0;c<k;c++){
+    const cx=100+Math.random()*300,cy=60+Math.random()*200;
+    for(let i=0;i<20;i++)kmPoints.push({x:cx+(Math.random()-.5)*80,y:cy+(Math.random()-.5)*80,cluster:-1});
+  }
+  kmCentroids=[];
+  for(let i=0;i<k;i++)kmCentroids.push({x:80+Math.random()*340,y:40+Math.random()*240});
+  kmStep=0;
+  drawKMeans();
+  updateKMLegend();
+  document.getElementById('km-step-info').textContent='กด ➡️ เพื่อเริ่ม (assign centroids)';
+}
+function drawKMeans(){
+  const canvas=document.getElementById('km-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);
+  kmPoints.forEach(p=>{
+    ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);
+    ctx.fillStyle=p.cluster>=0?kmColors[p.cluster]+'88':'#94a3b8';
+    ctx.fill();ctx.strokeStyle=p.cluster>=0?kmColors[p.cluster]:'#64748b';ctx.lineWidth=1;ctx.stroke();
+  });
+  kmCentroids.forEach((c,i)=>{
+    ctx.beginPath();ctx.arc(c.x,c.y,11,0,Math.PI*2);
+    ctx.fillStyle=kmColors[i];ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();
+    ctx.fillStyle='#fff';ctx.font='bold 10px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(i+1,c.x,c.y);
+  });
+}
+function assignClusters(){
+  kmPoints.forEach(p=>{
+    let minD=Infinity,best=0;
+    kmCentroids.forEach((c,i)=>{const d=Math.hypot(p.x-c.x,p.y-c.y);if(d<minD){minD=d;best=i;}});
+    p.cluster=best;
+  });
+}
+function moveCentroids(){
+  const k=kmCentroids.length;
+  const sums=Array.from({length:k},()=>({x:0,y:0,n:0}));
+  kmPoints.forEach(p=>{if(p.cluster>=0){sums[p.cluster].x+=p.x;sums[p.cluster].y+=p.y;sums[p.cluster].n++;}});
+  sums.forEach((s,i)=>{if(s.n>0){kmCentroids[i].x=s.x/s.n;kmCentroids[i].y=s.y/s.n;}});
+}
+function stepKMeans(){
+  if(kmStep%2===0){assignClusters();document.getElementById('km-step-info').textContent=`ขั้น ${kmStep+1}: Assign — จัดทุก point ให้ centroid ใกล้ที่สุด`;}
+  else{moveCentroids();document.getElementById('km-step-info').textContent=`ขั้น ${kmStep+1}: Update — ย้าย centroid ไปยังค่าเฉลี่ยของแต่ละ cluster`;}
+  kmStep++;drawKMeans();updateKMLegend();
+}
+function updateKMLegend(){
+  document.getElementById('km-legend').innerHTML=kmCentroids.map((c,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i]};"></div> Cluster ${i+1}</div>`).join('');
+}
+initKMeans();
+</script>
+</body>
+</html>

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DGA306: Data Analytics Techniques</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#14297a;--ph:#1b37a0;--pl:#e8edf8;--acc:#f59e0b;--ok:#10b981;--err:#ef4444;--warn:#f97316;--txt:#1a202c;--ts:#4a5568;--tm:#718096;--bg:#f3f5fb;--card:#fff;--bd:#e2e8f0;--oltp:#ea580c;--oltp-bg:#fff7ed;--r:12px;--sh:0 2px 12px rgba(20,41,122,.09);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--txt);line-height:1.65;}
+
+/* HEADER */
+.hdr{
+  background:#14297a;
+  color:#fff;
+  padding:40px 32px 28px; /* ปรับ */
+}
+.hdr h1{font-size:30px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.hdr .sub{font-size:17px;opacity:.9;}
+
+/* TABS */
+.tnav{
+  background:#fff;
+  display:flex;
+  overflow-x:auto;
+  border-bottom:2px solid var(--bd);
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 8px rgba(20,41,122,.07);
+  scrollbar-width:none;
+  padding:0 32px;
+}
+.tnav::-webkit-scrollbar{display:none;}
+.tbtn{font-family:'Sarabun',sans-serif;font-size:13.5px;font-weight:500;padding:13px 15px;border:none;background:none;color:var(--tm);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;}
+.tbtn:hover{color:var(--p);}
+.tbtn.active{color:var(--p);border-bottom-color:var(--p);font-weight:700;}
+
+/* PANES */
+.pane{display:none;}.pane.active{display:block;}
+.box{max-width:880px;margin:0 auto;padding:28px 16px 44px;}
+
+/* CARDS */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:22px;margin-bottom:18px;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+@media(max-width:620px){.g2,.g3{grid-template-columns:1fr;}}
+
+/* SECTION HEADERS */
+.stitle{font-size:18px;font-weight:700;color:var(--p);margin-bottom:6px;}
+.sdesc{font-size:13.5px;color:var(--ts);margin-bottom:20px;line-height:1.7;}
+
+/* FLIP CARDS */
+.fg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:22px;}
+@media(max-width:520px){.fg{grid-template-columns:1fr;}}
+.fc{height:150px;perspective:1000px;cursor:pointer;}
+.fci{width:100%;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;position:relative;}
+.fc.flipped .fci{transform:rotateY(180deg);}
+.ff,.fb{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.ff{background:#fff;border:2px solid var(--bd);}
+.fb{background:var(--p);color:#fff;transform:rotateY(180deg);}
+.ff .fi{font-size:26px;margin-bottom:7px;}
+.ff .ft{font-size:14px;font-weight:700;color:var(--p);margin-bottom:3px;}
+.ff .fh{font-size:11px;color:var(--tm);}
+.fb p{font-size:13px;line-height:1.7;}
+.fc:hover .ff{border-color:var(--p);box-shadow:0 4px 16px rgba(20,41,122,.14);}
+
+/* EXPANDABLE COMPONENTS */
+.comp-item{background:#fff;border:1.5px solid var(--bd);border-radius:10px;margin-bottom:8px;overflow:hidden;transition:border-color .2s;}
+.comp-item.open{border-color:var(--p);}
+.comp-hdr{padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;}
+.comp-hdr .ci{font-size:20px;}
+.comp-hdr .ct{font-size:14px;font-weight:700;color:var(--p);flex:1;}
+.comp-hdr .ca{font-size:18px;color:var(--tm);transition:transform .25s;}
+.comp-item.open .ca{transform:rotate(180deg);color:var(--p);}
+.comp-body{display:none;padding:0 16px 16px;font-size:13px;color:var(--ts);line-height:1.7;border-top:1px solid var(--bd);}
+.comp-item.open .comp-body{display:block;}
+.comp-tag{display:inline-flex;align-items:center;gap:4px;background:var(--pl);color:var(--p);font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;margin:8px 4px 0 0;}
+
+/* OLTP/OLAP */
+.sflow{display:flex;align-items:center;justify-content:center;gap:0;overflow-x:auto;padding:10px 0 20px;}
+.snode{text-align:center;flex-shrink:0;}
+.snbox{width:78px;height:78px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 7px;transition:transform .2s;cursor:default;}
+.snbox:hover{transform:scale(1.08);}
+.snode.no .snbox{background:var(--oltp-bg);border:2px solid var(--oltp);}
+.snode.nd .snbox{background:var(--pl);border:2px solid var(--p);}
+.snode.nb .snbox{background:#f0fdf4;border:2px solid var(--ok);}
+.snode .sl{font-size:11px;font-weight:700;}
+.snode.no .sl{color:var(--oltp);}
+.snode.nd .sl{color:var(--p);}
+.snode.nb .sl{color:var(--ok);}
+.snode .ss{font-size:10.5px;color:var(--tm);}
+.sarr{width:48px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-bottom:14px;}
+.sarr .al{font-size:20px;color:#cbd5e0;line-height:1;}
+.sarr .alb{font-size:10px;color:var(--tm);margin-top:2px;font-weight:600;text-align:center;}
+
+/* CMP BOXES */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+@media(max-width:580px){.cg{grid-template-columns:1fr;}}
+.cb{border-radius:var(--r);padding:18px;border:2px solid;}
+.cb-o{background:var(--oltp-bg);border-color:var(--oltp);}
+.cb-a{background:var(--pl);border-color:var(--p);}
+.cb h3{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.cb-o h3{color:var(--oltp);}
+.cb-a h3{color:var(--p);}
+.cl{list-style:none;}
+.cl li{font-size:12.5px;color:var(--ts);padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:flex-start;gap:6px;}
+.cl li:last-child{border-bottom:none;}
+
+/* DRAG GAME */
+.gw{background:#fafbff;border-radius:var(--r);border:2px dashed var(--bd);padding:20px;}
+.gt{font-size:14px;font-weight:700;color:var(--p);margin-bottom:4px;}
+.gs{font-size:12.5px;color:var(--ts);margin-bottom:16px;}
+.pool{display:flex;flex-wrap:wrap;gap:7px;min-height:52px;margin-bottom:16px;padding:10px;background:var(--bg);border-radius:8px;border:1px dashed var(--bd);}
+.di{background:#fff;border:1.5px solid var(--bd);border-radius:8px;padding:7px 12px;font-size:12px;font-family:'Sarabun',sans-serif;font-weight:600;cursor:grab;user-select:none;transition:all .2s;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.di:hover{border-color:var(--p);box-shadow:0 3px 10px rgba(20,41,122,.13);transform:translateY(-2px);}
+.di.dragging{opacity:.35;transform:scale(.94);}
+.di.correct{border-color:var(--ok);background:#f0fdf4;color:#065f46;cursor:default;transform:none;}
+.di.wrong{border-color:var(--err);background:#fef2f2;animation:shake .4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
+.dzs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:480px){.dzs{grid-template-columns:1fr;}}
+.dz{min-height:100px;border-radius:10px;border:2px dashed;padding:10px;transition:all .2s;}
+.dzo{border-color:var(--oltp);background:rgba(234,88,12,.03);}
+.dza{border-color:var(--p);background:rgba(20,41,122,.03);}
+.dz.ov{border-style:solid;transform:scale(1.01);}
+.dzo.ov{background:rgba(234,88,12,.09);}
+.dza.ov{background:rgba(20,41,122,.09);}
+.dzt{font-size:12px;font-weight:700;margin-bottom:7px;}
+.dzo .dzt{color:var(--oltp);}
+.dza .dzt{color:var(--p);}
+.dzi{display:flex;flex-wrap:wrap;gap:5px;min-height:32px;}
+.sbar{text-align:center;font-size:13.5px;font-weight:600;color:var(--p);padding:10px;background:var(--pl);border-radius:8px;}
+.snum{font-size:20px;font-weight:700;}
+.vict{display:none;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-radius:var(--r);padding:16px;text-align:center;font-size:14px;font-weight:700;margin-top:12px;animation:pop .4s cubic-bezier(.34,1.56,.64,1);}
+.vict.show{display:block;}
+@keyframes pop{from{transform:scale(.82);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* SCENARIO QUIZ */
+.sqbox{margin-top:20px;}
+.sqtitle{font-size:14px;font-weight:700;color:var(--p);margin-bottom:12px;}
+.sqgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:580px){.sqgrid{grid-template-columns:1fr;}}
+.sqcard{background:#fff;border:2px solid var(--bd);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.sqcard:hover{border-color:var(--p);transform:translateY(-2px);box-shadow:0 4px 14px rgba(20,41,122,.12);}
+.sqcard .sqsc{font-size:24px;display:block;margin-bottom:8px;}
+.sqcard .sqtxt{font-size:12.5px;color:var(--ts);line-height:1.6;margin-bottom:10px;}
+.sqcard .sqbtn{font-family:'Sarabun',sans-serif;font-size:12px;font-weight:700;padding:6px 12px;border:1.5px solid var(--p);border-radius:6px;background:none;color:var(--p);cursor:pointer;transition:all .2s;}
+.sqcard .sqbtn:hover{background:var(--p);color:#fff;}
+.sqcard .sqans{display:none;margin-top:10px;padding:8px 10px;border-radius:7px;font-size:12px;font-weight:600;text-align:center;}
+.sqcard .sqans.ao{background:var(--oltp-bg);color:var(--oltp);border:1.5px solid var(--oltp);}
+.sqcard .sqans.aa{background:var(--pl);color:var(--p);border:1.5px solid var(--p);}
+.sqcard.revealed .sqbtn{display:none;}
+.sqcard.revealed .sqans{display:block;}
+
+/* ===== TAB 2: PREP FLOW ===== */
+.pnav{display:flex;overflow-x:auto;gap:0;padding:6px 0 18px;scrollbar-width:none;align-items:flex-start;}
+.pnav::-webkit-scrollbar{display:none;}
+.pstep{flex-shrink:0;text-align:center;cursor:pointer;}
+.pnum{width:22px;height:22px;background:var(--bd);color:var(--tm);border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;transition:all .25s;}
+.pstep.active .pnum{background:var(--p);color:#fff;}
+.pbox{width:92px;padding:12px 6px;border-radius:10px;background:#fff;border:2px solid var(--bd);transition:all .25s;}
+.pstep:hover .pbox,.pstep.active .pbox{border-color:var(--p);transform:translateY(-3px);}
+.pstep.active .pbox{background:var(--p);}
+.pbox .pi{font-size:20px;margin-bottom:5px;}
+.pbox .pn{font-size:11px;font-weight:700;color:var(--p);}
+.pstep.active .pbox .pn{color:#fff;}
+.pconn{width:32px;flex-shrink:0;display:flex;align-items:center;padding-top:26px;}
+.pconn svg{width:32px;}
+
+/* STEP PANELS */
+.panel{display:none;background:#fff;border-radius:var(--r);border:2px solid var(--p);overflow:hidden;margin-top:4px;}
+.panel.show{display:block;animation:fd .3s ease;}
+@keyframes fd{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.phdr{background:var(--p);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.phdr .phtitle{font-size:15px;font-weight:700;}
+.phdr .phsub{font-size:12px;opacity:.82;margin-top:2px;}
+.pbody{padding:20px;}
+
+/* SOURCE CARDS (step 1) */
+.srcs{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.src{background:var(--bg);border:2px solid var(--bd);border-radius:10px;padding:14px 18px;text-align:center;cursor:pointer;transition:all .22s;flex:1;min-width:90px;}
+.src:hover{border-color:var(--p);transform:translateY(-3px);box-shadow:0 4px 14px rgba(20,41,122,.13);}
+.src.collected{border-color:var(--ok);background:#f0fdf4;pointer-events:none;}
+.src .srico{font-size:26px;display:block;margin-bottom:6px;}
+.src .srname{font-size:12px;font-weight:700;color:var(--p);}
+.src.collected .srname{color:var(--ok);}
+.src .srtype{font-size:11px;color:var(--tm);}
+.df-preview{border:1.5px solid var(--bd);border-radius:8px;overflow:hidden;}
+.df-preview table{width:100%;border-collapse:collapse;font-size:12px;}
+.df-preview th{background:var(--p);color:#fff;padding:7px 10px;font-weight:600;text-align:left;font-family:'Sarabun',sans-serif;}
+.df-preview td{padding:7px 10px;border-bottom:1px solid var(--bd);}
+.df-preview tr:last-child td{border-bottom:none;}
+.df-row{animation:rowIn .35s ease;}
+@keyframes rowIn{from{opacity:0;background:#fffbeb;}to{opacity:1;background:#fff;}}
+.src-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.src-csv{background:#fef9c3;color:#854d0e;}
+.src-db{background:#ede9fe;color:#5b21b6;}
+.src-api{background:#dcfce7;color:#166534;}
+
+/* PROFILING (step 2) */
+.prof-table-wrap{overflow-x:auto;margin-bottom:16px;}
+.prof-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.prof-tbl th{background:#f8fafc;color:var(--ts);padding:8px 10px;border-bottom:2px solid var(--bd);font-weight:700;text-align:left;}
+.prof-tbl td{padding:8px 10px;border-bottom:1px solid var(--bd);}
+.prof-tbl .miss{background:#fef9c3;}
+.prof-results{display:none;}
+.prof-results.show{display:block;animation:fd .4s ease;}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px;}
+@media(max-width:480px){.stat-grid{grid-template-columns:1fr;}}
+.stat-card{background:var(--bg);border-radius:8px;padding:12px 14px;}
+.stat-card .stlbl{font-size:11px;color:var(--tm);font-weight:600;margin-bottom:4px;}
+.stat-card .stval{font-size:18px;font-weight:700;color:var(--p);}
+.stat-card .stdesc{font-size:11.5px;color:var(--ts);margin-top:2px;}
+.stat-card.warn{background:#fef9c3;}.stat-card.warn .stval{color:#b45309;}
+
+/* CLEANSING (step 3) */
+.cln-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.cln-tbl th{background:var(--p);color:#fff;padding:9px 12px;font-weight:700;font-family:'Sarabun',sans-serif;text-align:left;}
+.cln-tbl td{padding:9px 12px;border-bottom:1px solid var(--bd);background:#fff;transition:background .3s;}
+.cln-tbl tr:last-child td{border-bottom:none;}
+.cln-fix-cell{position:relative;}
+.fix-btn{font-family:'Sarabun',sans-serif;font-size:11px;font-weight:700;padding:3px 9px;border:1.5px solid var(--err);border-radius:99px;background:#fef2f2;color:var(--err);cursor:pointer;white-space:nowrap;transition:all .2s;}
+.fix-btn:hover{background:var(--err);color:#fff;}
+.fix-btn.done{border-color:var(--ok);background:#f0fdf4;color:var(--ok);cursor:default;}
+.cln-progress{height:8px;background:var(--bd);border-radius:99px;overflow:hidden;margin-bottom:8px;}
+.cln-prog-bar{height:100%;background:var(--ok);border-radius:99px;transition:width .4s ease;width:0%;}
+.cln-msg{font-size:13px;font-weight:600;color:var(--tm);}
+.fixed-cell{animation:fixAnim .5s ease;}
+@keyframes fixAnim{0%{background:#fffbeb;}50%{background:#dcfce7;}100%{background:#fff;}}
+
+/* TRANSFORMATION (step 4) */
+.tr-toggle{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.tr-toggle label{font-size:13px;font-weight:600;cursor:pointer;}
+.tr-toggle .tog{width:44px;height:24px;background:var(--bd);border-radius:99px;position:relative;cursor:pointer;transition:background .25s;}
+.tr-toggle .tog.on{background:var(--p);}
+.tr-toggle .tog-circle{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+.tr-toggle .tog.on .tog-circle{transform:translateX(20px);}
+.tr-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.tr-tbl th{background:var(--bg);color:var(--ts);padding:9px 12px;border-bottom:2px solid var(--bd);font-weight:700;text-align:left;}
+.tr-tbl td{padding:9px 12px;border-bottom:1px solid var(--bd);}
+.tr-tbl .raw-v{color:var(--tm);}
+.tr-tbl .new-v{color:var(--p);font-weight:700;background:#ede9fe;border-radius:5px;padding:2px 7px;font-size:11.5px;}
+.tr-tbl .arr-c{text-align:center;font-size:16px;color:var(--p);}
+.tr-raw-col{display:table-cell;}
+.tr-new-col{display:none;}
+.transformed .tr-raw-col{display:none;}
+.transformed .tr-new-col{display:table-cell;}
+
+/* VALIDATION (step 5) */
+.val-rules{display:flex;flex-direction:column;gap:10px;}
+.val-rule{background:var(--bg);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;border:1.5px solid var(--bd);transition:all .25s;}
+.val-rule.pass{border-color:var(--ok);background:#f0fdf4;}
+.val-rule.fail{border-color:var(--err);background:#fef2f2;}
+.val-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0;}
+.val-rule .vr-txt{flex:1;}
+.val-rule .vr-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.val-rule .vr-desc{font-size:12px;color:var(--tm);}
+.val-rule .vr-status{font-size:11.5px;font-weight:700;white-space:nowrap;}
+.val-rule.pass .vr-status{color:var(--ok);}
+.val-rule.fail .vr-status{color:var(--err);}
+.run-check-btn{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;padding:10px 20px;border-radius:8px;border:2px solid var(--p);background:var(--p);color:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.run-check-btn:hover{background:var(--ph);}
+.run-check-btn:disabled{opacity:.55;cursor:default;}
+
+/* STAGING (step 6) */
+.staging-ui{text-align:center;padding:10px 0;}
+.stg-file{background:var(--bg);border:1.5px solid var(--bd);border-radius:8px;padding:12px 16px;font-size:12.5px;color:var(--ts);font-family:monospace;margin-bottom:16px;text-align:left;}
+.stg-prog{margin-bottom:12px;}
+.stg-bar-wrap{height:10px;background:var(--bd);border-radius:99px;overflow:hidden;margin-bottom:6px;}
+.stg-bar{height:100%;background:var(--p);border-radius:99px;transition:width .6s ease;width:0%;}
+.stg-bar-lbl{font-size:12px;color:var(--tm);text-align:right;}
+.stg-log{background:#1e293b;border-radius:8px;padding:12px 14px;font-family:'Courier New',monospace;font-size:11.5px;color:#94a3b8;min-height:70px;line-height:1.8;}
+.stg-log .ok-line{color:#34d399;}
+.stg-log .info-line{color:#7dd3fc;}
+.load-btn{font-family:'Sarabun',sans-serif;font-size:13.5px;font-weight:700;padding:11px 28px;border-radius:8px;border:2px solid var(--p);background:var(--p);color:#fff;cursor:pointer;transition:all .2s;margin-bottom:16px;}
+.load-btn:hover{background:var(--ph);}
+.load-btn:disabled{opacity:.5;cursor:default;}
+
+/* TABLES (tab 4) */
+.tblw{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh);}
+.dtbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.dtbl th{background:var(--p);color:#fff;padding:10px 13px;text-align:left;font-weight:700;font-family:'Sarabun',sans-serif;}
+.dtbl td{padding:10px 13px;border-bottom:1px solid var(--bd);background:#fff;}
+.dtbl tr:last-child td{border-bottom:none;}
+.dtbl tr.prob td{background:#fefce8;}
+.ptag{display:inline-flex;align-items:center;gap:3px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:700;}
+.otag{display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;color:#059669;border:1px solid #6ee7b7;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:700;}
+.fv{color:var(--ok);font-weight:700;}
+
+/* DETECTIVE GAME (tab 4) */
+.det-wrap{background:#fafbff;border-radius:var(--r);border:2px dashed var(--bd);padding:20px;margin-bottom:20px;}
+.det-title{font-size:14px;font-weight:700;color:var(--p);margin-bottom:4px;}
+.det-sub{font-size:12.5px;color:var(--ts);margin-bottom:14px;}
+.det-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.det-tbl th{background:var(--p);color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-family:'Sarabun',sans-serif;}
+.det-tbl td{padding:9px 12px;border-bottom:1px solid var(--bd);background:#fff;cursor:pointer;transition:all .2s;}
+.det-tbl td:hover{background:#f0f4ff;}
+.det-tbl td.found{background:#fef9c3;cursor:default;}
+.det-tbl td.good-click{animation:goodFlash .4s ease;}
+@keyframes goodFlash{0%{background:#dcfce7;}100%{background:#fff;}}
+.det-tbl td.bad-click{animation:badFlash .4s ease;}
+@keyframes badFlash{0%{background:#fee2e2;}100%{background:#fff;}}
+.det-score{display:flex;align-items:center;gap:12px;margin-top:12px;}
+.det-prog{flex:1;height:8px;background:var(--bd);border-radius:99px;overflow:hidden;}
+.det-bar{height:100%;background:var(--acc);border-radius:99px;transition:width .3s;}
+.det-found{font-size:13px;font-weight:700;color:var(--p);}
+
+/* CHARTS */
+.chrow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+@media(max-width:560px){.chrow{grid-template-columns:1fr;}}
+.chcard{background:#fff;border-radius:var(--r);padding:16px;box-shadow:var(--sh);}
+.chcard h4{font-size:13.5px;font-weight:700;margin-bottom:4px;}
+.ch-dirty h4{color:var(--err);}
+.ch-clean h4{color:var(--ok);}
+.chcard .chn{font-size:11.5px;color:var(--tm);margin-bottom:10px;}
+.chcard svg{width:100%;display:block;}
+
+/* BTNS & MISC */
+.btn{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;border-radius:8px;cursor:pointer;border:2px solid;transition:all .2s;}
+.btn-out{background:transparent;border-color:var(--p);color:var(--p);}
+.btn-out:hover{background:var(--pl);}
+.btn-pri{background:var(--p);border-color:var(--p);color:#fff;}
+.btn-pri:hover{background:var(--ph);}
+.tip{background:#fffbeb;border:1.5px solid var(--acc);border-radius:8px;padding:12px 14px;font-size:13px;color:#92400e;display:flex;gap:9px;align-items:flex-start;margin-top:14px;}
+.tip .ti{font-size:14px;flex-shrink:0;}
+.badge{display:inline-flex;align-items:center;gap:3px;border-radius:99px;padding:3px 10px;font-size:11.5px;font-weight:700;}
+.badge-ok{background:#f0fdf4;color:#065f46;}
+.badge-warn{background:#fef9c3;color:#854d0e;}
+.badge-err{background:#fef2f2;color:#dc2626;}
+.badge-info{background:var(--pl);color:var(--p);}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <h1>DGA306: Data Analytics Techniques</h1>
+  <p class="sub">Interactive Guide | Data Warehouse: Analysis, Design and Implement</p>
+</header>
+
+<nav class="tnav">
+  <button class="tbtn active" onclick="sw(0)">คลังข้อมูล</button>
+  <button class="tbtn" onclick="sw(1)">OLTP vs OLAP</button>
+  <button class="tbtn" onclick="sw(2)">เตรียมข้อมูล</button>
+  <button class="tbtn" onclick="sw(3)">ทำความสะอาด</button>
+</nav>
+
+<main>
+
+<!-- ========== TAB 0: DATA WAREHOUSE ========== -->
+<div class="pane active" id="t0">
+<div class="box">
+
+  <div style="background:linear-gradient(135deg,#14297a,#1e3fa0);color:#fff;border-radius:var(--r);padding:24px 26px;margin-bottom:20px;position:relative;overflow:hidden;">
+    <div style="font-size:16px;font-weight:700;margin-bottom:9px;">คลังข้อมูล (Data Warehouse) คืออะไร?</div>
+    <p style="font-size:13.5px;opacity:.92;line-height:1.75;">คลังข้อมูลคือระบบจัดเก็บข้อมูลกลางที่รวบรวมข้อมูลจากหลายแหล่ง ผ่านการจัดระเบียบและทำความสะอาดแล้ว เพื่อรองรับการวิเคราะห์ รายงาน และการตัดสินใจทางธุรกิจอย่างมีประสิทธิภาพ</p>
+  </div>
+
+  <div class="stitle">คุณสมบัติ 4 ประการ — คลิกพลิกการ์ดเพื่อดูรายละเอียด</div>
+  <div class="sdesc" style="margin-bottom:14px;"></div>
+  <div class="fg">
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fci">
+        <div class="ff"><div class="fi">🎯</div><div class="ft">Subject-Oriented</div><div class="fh">จัดตามหัวข้อธุรกิจ · คลิกพลิก</div></div>
+        <div class="fb"><p>จัดระเบียบตามหัวข้อธุรกิจ เช่น <strong>ยอดขาย การเงิน สินค้าคงคลัง</strong> ไม่ใช่ตามระบบปฏิบัติการ ทำให้นักวิเคราะห์หาข้อมูลได้ง่าย</p></div>
+      </div>
+    </div>
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fci">
+        <div class="ff"><div class="fi">🔗</div><div class="ft">Integrated</div><div class="fh">บูรณาการจากหลายแหล่ง · คลิกพลิก</div></div>
+        <div class="fb"><p>รวมข้อมูลจากหลายระบบให้เป็น<strong>รูปแบบเดียวกัน</strong> เช่น รหัสสินค้า หน่วยวัด รูปแบบวันที่ เพื่อวิเคราะห์ข้ามระบบได้ถูกต้อง</p></div>
+      </div>
+    </div>
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fci">
+        <div class="ff"><div class="fi">🔒</div><div class="ft">Non-Volatile</div><div class="fh">ข้อมูลมีความเสถียร · คลิกพลิก</div></div>
+        <div class="fb"><p>ข้อมูลจะ<strong>ไม่ถูกแก้ไขบ่อยๆ</strong> เมื่อบันทึกแล้วจะคงอยู่ ทำให้การวิเคราะห์ย้อนหลังมีความแม่นยำน่าเชื่อถือ</p></div>
+      </div>
+    </div>
+    <div class="fc" onclick="this.classList.toggle('flipped')">
+      <div class="fci">
+        <div class="ff"><div class="fi">📅</div><div class="ft">Time-Variant</div><div class="fh">เก็บข้อมูลตามเวลา · คลิกพลิก</div></div>
+        <div class="fb"><p>เก็บข้อมูล<strong>ประวัติศาสตร์หลายปี</strong> ช่วยวิเคราะห์แนวโน้ม เปรียบเทียบช่วงเวลา และคาดการณ์อนาคตได้</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle" style="margin-bottom:12px;">ส่วนประกอบของคลังข้อมูล — คลิกแต่ละส่วนเพื่อขยาย</div>
+  <div id="compList"></div>
+
+  <div class="tip"><span class="ti"></span><div><strong>จำง่ายๆ:</strong> คลังข้อมูลคือ "ห้องสมุดข้อมูลของบริษัท" ที่รวมและจัดระเบียบทุกอย่างไว้ในที่เดียว เพื่อให้ค้นหาและวิเคราะห์ได้รวดเร็ว</div></div>
+
+</div>
+</div>
+
+<!-- ========== TAB 1: OLTP vs OLAP ========== -->
+<div class="pane" id="t1">
+<div class="box">
+
+  <div class="stitle">OLTP กับ OLAP ต่างกันอย่างไร?</div>
+  <div class="sdesc">ระบบข้อมูลแบ่งเป็นสองประเภทหลัก OLTP บันทึกธุรกรรมประจำวัน ส่วน OLAP วิเคราะห์ข้อมูลเชิงลึก</div>
+
+  <div class="card">
+    <div style="font-size:12.5px;font-weight:700;color:var(--tm);text-align:center;margin-bottom:14px;">ความสัมพันธ์ในระบบข้อมูลขององค์กร</div>
+    <div class="sflow">
+      <div class="snode no"><div class="snbox">🏧</div><div class="sl">ระบบ ATM</div><div class="ss">OLTP</div></div>
+      <div class="sarr"><div class="al">→</div><div class="alb">ธุรกรรม</div></div>
+      <div class="snode no"><div class="snbox">🛒</div><div class="sl">ร้านค้าออนไลน์</div><div class="ss">OLTP</div></div>
+      <div class="sarr"><div class="al">→</div><div class="alb">ETL รวมข้อมูล</div></div>
+      <div class="snode nd"><div class="snbox">🏛️</div><div class="sl">Data Warehouse</div><div class="ss">คลังกลาง</div></div>
+      <div class="sarr"><div class="al">→</div><div class="alb">วิเคราะห์</div></div>
+      <div class="snode nb"><div class="snbox">📊</div><div class="sl">Dashboard / BI</div><div class="ss">OLAP</div></div>
+    </div>
+  </div>
+
+  <div class="cg">
+    <div class="cb cb-o">
+      <h3>⚡ OLTP — ระบบธุรกรรม</h3>
+      <ul class="cl">
+        <li>💾 INSERT / UPDATE / DELETE</li>
+        <li>👥 ผู้ใช้งานพร้อมกันจำนวนมาก</li>
+        <li>⏱️ ตอบสนองเร็ว &lt; 1 วินาที</li>
+        <li>📦 ข้อมูลปัจจุบัน แบบละเอียด</li>
+        <li>📋 Normalized Tables</li>
+        <li>🏧 ATM, ร้านค้าออนไลน์, ระบบสต็อก</li>
+      </ul>
+    </div>
+    <div class="cb cb-a">
+      <h3>🔍 OLAP — ระบบวิเคราะห์</h3>
+      <ul class="cl">
+        <li>📖 SELECT เท่านั้น (อ่านอย่างเดียว)</li>
+        <li>👤 นักวิเคราะห์ / ผู้บริหาร</li>
+        <li>⏳ Query ซับซ้อน ใช้เวลาได้นาน</li>
+        <li>📚 ข้อมูลย้อนหลัง แบบสรุป</li>
+        <li>⭐ Star / Snowflake Schema</li>
+        <li>📊 Power BI, Tableau, Looker</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DRAG GAME -->
+  <div class="gw">
+    <div class="gt">กิจกรรม: จัดประเภทคุณสมบัติ</div>
+    <div class="gs">ลากการ์ดแต่ละใบไปวางในกล่องที่ถูกต้อง — OLTP หรือ OLAP?</div>
+    <div class="pool" id="pool"></div>
+    <div class="dzs">
+      <div class="dz dzo" id="dz-OLTP" ondragover="dov(event)" ondrop="dop(event,'OLTP')" ondragleave="dlv(event)">
+        <div class="dzt">⚡ OLTP</div>
+        <div class="dzi" id="pl-OLTP"></div>
+      </div>
+      <div class="dz dza" id="dz-OLAP" ondragover="dov(event)" ondrop="dop(event,'OLAP')" ondragleave="dlv(event)">
+        <div class="dzt">🔍 OLAP</div>
+        <div class="dzi" id="pl-OLAP"></div>
+      </div>
+    </div>
+    <div class="sbar">คะแนน: <span class="snum" id="snum">0</span> / 10</div>
+    <div class="vict" id="vm">🎉 ยอดเยี่ยม! คุณเข้าใจความแตกต่างระหว่าง OLTP และ OLAP แล้ว!</div>
+    <div style="margin-top:10px;"><button class="btn btn-out" onclick="resetGame()">เล่นใหม่</button></div>
+  </div>
+
+  <!-- SCENARIO QUIZ -->
+  <div class="sqbox">
+    <div class="sqtitle">โจทย์สถานการณ์ — คลิก "เฉลย" เพื่อดูคำตอบ</div>
+    <div class="sqgrid" id="sqgrid"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========== TAB 2: DATA PREPARATION ========== -->
+<div class="pane" id="t2">
+<div class="box">
+
+  <div class="stitle">ขั้นตอนการเตรียมข้อมูล (Data Preparation Pipeline)</div>
+  <div class="sdesc">กระบวนการ 6 ขั้นตอนก่อนนำข้อมูลเข้าคลังข้อมูล — <strong>คลิกแต่ละขั้นตอนเพื่อทดลองด้วยตัวเอง</strong></div>
+
+  <div class="card" style="padding:18px 14px;">
+    <div class="pnav" id="pnav"></div>
+  </div>
+
+  <div class="panel show" id="ppanel"></div>
+
+  <div class="tip" style="margin-top:18px;">
+    <span class="ti"></span>
+    <div><strong>Pipeline อัตโนมัติ:</strong> กระบวนการทั้ง 6 ขั้นตอนสามารถเขียนเป็น Python script และตั้งเวลารันอัตโนมัติด้วย Apache Airflow หรือ dbt ได้</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========== TAB 3: DATA CLEANING ========== -->
+<div class="pane" id="t3">
+<div class="box">
+
+  <div class="stitle">ทำความสะอาดข้อมูล (Data Cleansing)</div>
+  <div class="sdesc">ข้อมูลดิบในโลกจริงมักมีปัญหามากมาย — ทดลองระบุและแก้ไขปัญหาด้วยตัวเอง</div>
+
+  <!-- DETECTIVE GAME -->
+  <div class="det-wrap">
+    <div class="det-title">กิจกรรม: นักสืบข้อมูล</div>
+    <div class="det-sub">คลิกที่เซลล์ที่คิดว่า <strong>มีปัญหา</strong> ในตารางด้านล่าง (มีปัญหาทั้งหมด 5 จุด)</div>
+    <div style="overflow-x:auto;">
+      <table class="det-tbl" id="detTbl">
+        <thead><tr><th>ID</th><th>ชื่อ</th><th>รายได้</th><th>วันที่สมัคร</th></tr></thead>
+        <tbody id="detBody"></tbody>
+      </table>
+    </div>
+    <div class="det-score">
+      <div class="det-prog"><div class="det-bar" id="detBar" style="width:0%"></div></div>
+      <div class="det-found">พบ <span id="detCount">0</span> / 5 จุด</div>
+    </div>
+    <div id="detMsg" style="font-size:13px;color:var(--tm);margin-top:8px;font-weight:600;"></div>
+  </div>
+
+  <!-- DIRTY TABLE -->
+  <div style="font-size:14px;font-weight:700;color:var(--err);margin-bottom:9px;">⚠️ ตารางข้อมูลดิบ (มีปัญหา)</div>
+  <div class="tblw" style="margin-bottom:22px;">
+    <table class="dtbl">
+      <thead><tr><th>ID</th><th>ชื่อ</th><th>รายได้</th><th>วันที่สมัคร</th><th>ปัญหาที่พบ</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>John Doe</td><td>5,000</td><td>2020-01-15</td><td><span class="otag">✅ ปกติ</span></td></tr>
+        <tr class="prob"><td>2</td><td><span class="ptag">⚠️ ว่างเปล่า</span></td><td><span class="ptag">⚠️ ว่างเปล่า</span></td><td>2020-03-01</td><td><span class="ptag">ค่าว่าง (Missing)</span></td></tr>
+        <tr class="prob"><td>3</td><td>Mary Smith</td><td><span class="ptag">⚠️ 15,000,000</span></td><td><span class="ptag">⚠️ "error"</span></td><td><span class="ptag">Outlier</span> <span class="ptag">รูปแบบผิด</span></td></tr>
+        <tr class="prob"><td>4</td><td>Brian Kim</td><td><span class="ptag">⚠️ -200</span></td><td>2021-07-20</td><td><span class="ptag">ค่าลบ</span></td></tr>
+        <tr><td>5</td><td>Jane Adams</td><td>8,000</td><td>2020-06-10</td><td><span class="otag">✅ ปกติ</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CLEAN TABLE -->
+  <div style="font-size:14px;font-weight:700;color:var(--ok);margin-bottom:9px;">✅ ตารางหลังทำความสะอาด</div>
+  <div class="tblw" style="margin-bottom:26px;">
+    <table class="dtbl">
+      <thead><tr><th>ID</th><th>ชื่อ</th><th>รายได้</th><th>วันที่สมัคร</th><th>วิธีการแก้ไข</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>John Doe</td><td>5,000</td><td>2020-01-15</td><td><span class="otag">✅ ไม่มีการเปลี่ยนแปลง</span></td></tr>
+        <tr><td>2</td><td><span class="fv">Unknown</span></td><td><span class="fv">6,500</span></td><td>2020-03-01</td><td><span class="otag">✏️ เติมค่า Median</span></td></tr>
+        <tr><td>3</td><td>Mary Smith</td><td><span class="fv">— (Flag ตรวจสอบ)</span></td><td><span class="fv">— (ลบออก)</span></td><td><span class="otag">🚩 Outlier ถูก Flag</span></td></tr>
+        <tr><td>4</td><td>Brian Kim</td><td><span class="fv">0</span></td><td>2021-07-20</td><td><span class="otag">✏️ ค่าลบ → 0</span></td></tr>
+        <tr><td>5</td><td>Jane Adams</td><td>8,000</td><td>2020-06-10</td><td><span class="otag">✅ ไม่มีการเปลี่ยนแปลง</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHART COMPARISON -->
+  <div style="font-size:14px;font-weight:700;color:var(--p);margin-bottom:6px;">เปรียบเทียบกราฟ: ก่อนและหลังทำความสะอาด</div>
+  <div style="font-size:12.5px;color:var(--ts);margin-bottom:12px;">ค่า Outlier (15 ล้าน) ในกราฟซ้ายทำให้ข้อมูลอื่นดูเป็นศูนย์ — กราฟขวาหลังทำความสะอาดอ่านได้ชัดเจน</div>
+  <div class="chrow">
+    <div class="chcard ch-dirty">
+      <h4>❌ กราฟจากข้อมูลดิบ</h4>
+      <div class="chn">Scale: 0–15,000,000 · Outlier ครอบงำกราฟ</div>
+      <svg id="sDirty" viewBox="0 0 300 210"></svg>
+    </div>
+    <div class="chcard ch-clean">
+      <h4>✅ กราฟหลังทำความสะอาด</h4>
+      <div class="chn">Scale: 0–10,000 · วิเคราะห์ได้จริง</div>
+      <svg id="sClean" viewBox="0 0 300 210"></svg>
+    </div>
+  </div>
+
+  <div class="tip"><span class="ti"></span><div><strong>บทเรียนสำคัญ:</strong> ค่า Outlier เพียงตัวเดียวทำให้กราฟทั้งหมดอ่านไม่ออก <strong>การทำความสะอาดตามหลักธุรกิจก่อนวิเคราะห์จึงสำคัญมาก</strong> ไม่ใช่แค่ตรวจสอบทางสถิติ</div></div>
+
+</div>
+</div>
+
+</main>
+
+<script>
+// ==================== UTILS ====================
+function sw(i){document.querySelectorAll('.pane').forEach((p,j)=>p.classList.toggle('active',j===i));document.querySelectorAll('.tbtn').forEach((b,j)=>b.classList.toggle('active',j===i));}
+
+// ==================== TAB 0: COMPONENTS ====================
+var COMPS=[
+  {icon:'📥',name:'Data Sources (แหล่งข้อมูล)',desc:'ข้อมูลดิบจากระบบต่างๆ เช่น ฐานข้อมูล OLTP ไฟล์ CSV APIs และระบบ NoSQL',tags:['SQL Database','NoSQL','CSV/Excel','REST API']},
+  {icon:'⚙️',name:'ETL / ELT Process',desc:'กระบวนการ Extract ดึงข้อมูล → Transform แปลงและทำความสะอาด → Load บรรจุเข้าคลังข้อมูล',tags:['Python','Apache Airflow','dbt','Talend']},
+  {icon:'📦',name:'Staging Area',desc:'พื้นที่จัดเก็บชั่วคราวก่อนนำข้อมูลเข้าคลังจริง ใช้สำหรับ Validation และ Backup',tags:['ชั่วคราว','Validation','Backup']},
+  {icon:'🏛️',name:'Data Warehouse (DW)',desc:'คลังข้อมูลหลัก จัดระเบียบเป็น Fact Table และ Dimension Tables ใน Star/Snowflake Schema',tags:['Fact Table','Dimension Table','Star Schema','BigQuery']},
+  {icon:'📊',name:'BI / Analytics Tools',desc:'เครื่องมือวิเคราะห์ข้อมูลและสร้าง Dashboard สำหรับผู้บริหารและนักวิเคราะห์',tags:['Power BI','Tableau','Looker','Google Looker Studio']}
+];
+(function(){var el=document.getElementById('compList');COMPS.forEach(function(c,i){var d=document.createElement('div');d.className='comp-item';d.innerHTML='<div class="comp-hdr" onclick="toggleComp('+i+')"><span class="ci">'+c.icon+'</span><span class="ct">'+c.name+'</span><span class="ca">▾</span></div><div class="comp-body" id="cb'+i+'"><p style="margin-top:10px;">'+c.desc+'</p><div>'+c.tags.map(function(t){return'<span class="comp-tag">'+t+'</span>';}).join('')+'</div></div>';d.id='ci'+i;el.appendChild(d);});})();
+function toggleComp(i){var item=document.getElementById('ci'+i);item.classList.toggle('open');}
+
+// ==================== TAB 1: GAME & QUIZ ====================
+var ITEMS=[{t:'INSERT / UPDATE / DELETE',a:'OLTP'},{t:'SELECT (อ่านอย่างเดียว)',a:'OLAP'},{t:'ข้อมูลปัจจุบัน แบบละเอียด',a:'OLTP'},{t:'ข้อมูลย้อนหลัง แบบสรุป',a:'OLAP'},{t:'ผู้ใช้พร้อมกันจำนวนมาก',a:'OLTP'},{t:'นักวิเคราะห์ / ผู้บริหาร',a:'OLAP'},{t:'Query สั้น ตอบสนองเร็ว',a:'OLTP'},{t:'Query ซับซ้อน ใช้เวลานาน',a:'OLAP'},{t:'Normalized Tables',a:'OLTP'},{t:'Star / Snowflake Schema',a:'OLAP'}];
+var score=0,dragged=null;
+function initGame(){score=0;dragged=null;document.getElementById('snum').textContent='0';document.getElementById('vm').classList.remove('show');document.getElementById('pl-OLTP').innerHTML='';document.getElementById('pl-OLAP').innerHTML='';var pool=document.getElementById('pool');pool.innerHTML='';[...ITEMS].sort(()=>Math.random()-.5).forEach(function(item){var e=document.createElement('div');e.className='di';e.textContent=item.t;e.draggable=true;e.dataset.a=item.a;e.addEventListener('dragstart',function(ev){dragged=e;e.classList.add('dragging');ev.dataTransfer.effectAllowed='move';});e.addEventListener('dragend',function(){e.classList.remove('dragging');});pool.appendChild(e);});}
+function resetGame(){initGame();}
+function dov(e){e.preventDefault();e.currentTarget.classList.add('ov');}
+function dlv(e){e.currentTarget.classList.remove('ov');}
+function dop(e,zone){e.preventDefault();e.currentTarget.classList.remove('ov');if(!dragged||dragged.classList.contains('correct'))return;if(dragged.dataset.a===zone){dragged.classList.add('correct');dragged.draggable=false;document.getElementById('pl-'+zone).appendChild(dragged);score++;document.getElementById('snum').textContent=score;if(score===ITEMS.length)document.getElementById('vm').classList.add('show');}else{dragged.classList.add('wrong');setTimeout(function(){if(dragged)dragged.classList.remove('wrong');},500);}dragged=null;}
+
+// SCENARIO QUIZ
+var SQ=[{sc:'🛍️',txt:'ลูกค้ากดซื้อสินค้าหน้าเว็บ ระบบต้องบันทึกออเดอร์ทันทีและหักสต็อก',ans:'OLTP',lbl:'⚡ OLTP — ระบบต้องตอบสนองทันที บันทึกธุรกรรมแบบ real-time',cls:'ao'},{sc:'📈',txt:'ฝ่ายการตลาดต้องการดูยอดขายรายเดือนย้อนหลัง 3 ปี แยกตามสาขา',ans:'OLAP',lbl:'🔍 OLAP — วิเคราะห์ข้อมูลย้อนหลัง รวมข้อมูลหลายมิติ',cls:'aa'},{sc:'🏥',txt:'แพทย์บันทึกผลการตรวจและสั่งยาให้คนไข้ในระบบโรงพยาบาล',ans:'OLTP',lbl:'⚡ OLTP — บันทึกข้อมูลแบบ transaction ต้องรวดเร็วและแม่นยำ',cls:'ao'}];
+(function(){var g=document.getElementById('sqgrid');SQ.forEach(function(s,i){var d=document.createElement('div');d.className='sqcard';d.innerHTML='<span class="sqsc">'+s.sc+'</span><div class="sqtxt">'+s.txt+'</div><button class="sqbtn" onclick="revealSQ('+i+')">👁️ เฉลย</button><div class="sqans '+s.cls+'">'+s.lbl+'</div>';g.appendChild(d);});})();
+function revealSQ(i){var cards=document.querySelectorAll('.sqcard');cards[i].classList.add('revealed');}
+
+// ==================== TAB 2: PREP FLOW ====================
+var PS=[
+  {icon:'📥',name:'เก็บข้อมูล',type:'collect'},
+  {icon:'🔍',name:'สำรวจข้อมูล',type:'profile'},
+  {icon:'🧹',name:'ทำความสะอาด',type:'clean'},
+  {icon:'🔄',name:'แปลงข้อมูล',type:'transform'},
+  {icon:'✅',name:'ตรวจสอบ',type:'validate'},
+  {icon:'💾',name:'บันทึกข้อมูล',type:'stage'}
+];
+var activeP=0;
+
+function buildPNav(){
+  var nav=document.getElementById('pnav');nav.innerHTML='';
+  PS.forEach(function(s,i){
+    if(i>0){var c=document.createElement('div');c.className='pconn';c.innerHTML='<svg viewBox="0 0 32 20"><line x1="0" y1="10" x2="24" y2="10" stroke="#cbd5e0" stroke-width="2"/><polygon points="20,6 28,10 20,14" fill="#cbd5e0"/></svg>';nav.appendChild(c);}
+    var e=document.createElement('div');e.className='pstep'+(i===0?' active':'');e.onclick=function(){selP(i);};
+    e.innerHTML='<div class="pnum">'+(i+1)+'</div><div class="pbox"><div class="pi">'+s.icon+'</div><div class="pn">'+s.name+'</div></div>';
+    nav.appendChild(e);
+  });
+}
+
+function selP(i){
+  activeP=i;
+  document.querySelectorAll('.pstep').forEach(function(e,j){e.classList.toggle('active',j===i);});
+  renderPanel(i);
+}
+
+function renderPanel(i){
+  var p=document.getElementById('ppanel');
+  p.classList.remove('show');
+  void p.offsetWidth;
+  p.classList.add('show');
+  var s=PS[i];
+  var html='<div class="phdr"><div><div class="phtitle">'+s.icon+' ขั้นที่ '+(i+1)+': '+({collect:'การเก็บและดึงข้อมูล (Data Collection)',profile:'การสำรวจข้อมูล (Data Profiling)',clean:'ทำความสะอาดข้อมูล (Data Cleansing)',transform:'การแปลงข้อมูล (Data Transformation)',validate:'การตรวจสอบคุณภาพ (Data Validation)',stage:'บันทึกเข้า Staging Area'}[s.type])+'</div><div class="phsub">'+({collect:'ดึงข้อมูลดิบจากหลายแหล่ง รวมเป็น DataFrame เดียว',profile:'ทำความเข้าใจโครงสร้าง ค่าว่าง และสถิติก่อนประมวลผล',clean:'แก้ไขข้อมูลผิดพลาด ซ้ำซ้อน และขาดหายไป',transform:'แปลงรูปแบบข้อมูลให้พร้อมวิเคราะห์',validate:'ตรวจสอบว่าข้อมูลถูกต้องตามกฎธุรกิจ',stage:'บันทึกข้อมูลสะอาดก่อนนำเข้าคลังข้อมูลจริง'}[s.type])+'</div></div></div><div class="pbody">';
+  if(s.type==='collect')html+=buildCollect();
+  else if(s.type==='profile')html+=buildProfile();
+  else if(s.type==='clean')html+=buildClean();
+  else if(s.type==='transform')html+=buildTransform();
+  else if(s.type==='validate')html+=buildValidate();
+  else if(s.type==='stage')html+=buildStage();
+  html+='</div>';
+  p.innerHTML=html;
+  if(s.type==='collect')initCollect();
+  else if(s.type==='profile')initProfile();
+  else if(s.type==='clean')initClean();
+  else if(s.type==='transform')initTransform();
+  else if(s.type==='validate')initValidate();
+  else if(s.type==='stage')initStage();
+}
+
+// STEP 1: COLLECT
+var srcCollected={csv:false,db:false,api:false};
+var srcData={
+  csv:[{s:'csv',id:1,name:'สินค้า A',rev:5000,date:'2024-01-10'},{s:'csv',id:2,name:'สินค้า B',rev:3200,date:'2024-01-11'}],
+  db:[{s:'db',id:3,name:'สินค้า C',rev:7800,date:'2024-01-12'},{s:'db',id:4,name:'สินค้า D',rev:2100,date:'2024-01-13'}],
+  api:[{s:'api',id:5,name:'สินค้า E',rev:9500,date:'2024-01-14'},{s:'api',id:6,name:'สินค้า F',rev:4300,date:'2024-01-15'}]
+};
+function buildCollect(){
+  return '<div style="font-size:13px;color:var(--ts);margin-bottom:14px;">คลิกที่แต่ละแหล่งข้อมูลเพื่อ "ดึงข้อมูล" เข้ามา</div><div class="srcs"><div class="src" id="src-csv" onclick="collectSrc(\'csv\')"><span class="srico">📄</span><div class="srname">CSV File</div><div class="srtype">sales_data.csv</div></div><div class="src" id="src-db" onclick="collectSrc(\'db\')"><span class="srico">🗄️</span><div class="srname">Database</div><div class="srtype">MySQL / PostgreSQL</div></div><div class="src" id="src-api" onclick="collectSrc(\'api\')"><span class="srico">🌐</span><div class="srname">REST API</div><div class="srtype">JSON Response</div></div></div><div style="font-size:12px;font-weight:700;color:var(--tm);margin-bottom:8px;">DataFrame Preview:</div><div class="df-preview"><table><thead><tr><th>แหล่งข้อมูล</th><th>ID</th><th>ชื่อสินค้า</th><th>รายได้</th><th>วันที่</th></tr></thead><tbody id="dfbody"><tr><td colspan="5" style="text-align:center;color:var(--tm);padding:20px;font-size:12px;">ยังไม่มีข้อมูล — คลิกแหล่งข้อมูลด้านบน</td></tr></tbody></table></div><div id="collect-msg" style="margin-top:10px;font-size:13px;font-weight:600;color:var(--tm);">รวบรวมแล้ว 0/3 แหล่งข้อมูล</div>';
+}
+function initCollect(){srcCollected={csv:false,db:false,api:false};}
+function collectSrc(s){
+  if(srcCollected[s])return;
+  srcCollected[s]=true;
+  var src=document.getElementById('src-'+s);
+  src.classList.add('collected');
+  src.querySelector('.srname').textContent='✓ '+src.querySelector('.srname').textContent;
+  var tbody=document.getElementById('dfbody');
+  if(tbody.querySelector('[colspan]'))tbody.innerHTML='';
+  var clsMap={csv:'src-csv',db:'src-db',api:'src-api'};
+  var lblMap={csv:'CSV',db:'DB',api:'API'};
+  srcData[s].forEach(function(r){
+    var tr=document.createElement('tr');tr.className='df-row';
+    tr.innerHTML='<td><span class="src-badge '+clsMap[r.s]+'">'+lblMap[r.s]+'</span></td><td>'+r.id+'</td><td>'+r.name+'</td><td>'+r.rev.toLocaleString()+'</td><td>'+r.date+'</td>';
+    tbody.appendChild(tr);
+  });
+  var cnt=Object.values(srcCollected).filter(Boolean).length;
+  var msg=document.getElementById('collect-msg');
+  if(cnt===3){msg.textContent='✅ รวบรวมครบทั้ง 3 แหล่งข้อมูล — DataFrame พร้อมใช้งาน (6 rows × 4 cols)';msg.style.color='var(--ok)';}
+  else{msg.textContent='รวบรวมแล้ว '+cnt+'/3 แหล่งข้อมูล';msg.style.color='var(--tm)';}
+}
+
+// STEP 2: PROFILE
+var profRun=false;
+function buildProfile(){
+  return '<div style="font-size:13px;color:var(--ts);margin-bottom:12px;">ดูข้อมูลตัวอย่าง แล้วกดปุ่ม "วิเคราะห์ข้อมูล" เพื่อดูผลลัพธ์</div><div class="prof-table-wrap"><table class="prof-tbl"><thead><tr><th>ID</th><th>ชื่อ</th><th>รายได้</th><th>วันที่</th></tr></thead><tbody><tr><td>1</td><td>John Doe</td><td>5,000</td><td>2020-01-15</td></tr><tr class="miss"><td>2</td><td style="color:var(--err);font-weight:700;">NaN</td><td style="color:var(--err);font-weight:700;">NaN</td><td>2020-03-01</td></tr><tr class="miss"><td>3</td><td>Mary Smith</td><td style="color:var(--err);font-weight:700;">15,000,000</td><td style="color:var(--err);font-weight:700;">"error"</td></tr><tr class="miss"><td>4</td><td>Brian Kim</td><td style="color:var(--err);font-weight:700;">-200</td><td>2021-07-20</td></tr><tr><td>5</td><td>Jane Adams</td><td>8,000</td><td>2020-06-10</td></tr></tbody></table></div><button class="run-check-btn" id="profBtn" onclick="runProfile()" style="margin-bottom:14px;">🔍 วิเคราะห์ข้อมูล (df.info() + df.describe())</button><div class="prof-results" id="profResults"><div class="stat-grid" id="statGrid"></div></div>';
+}
+function initProfile(){profRun=false;}
+function runProfile(){
+  if(profRun)return;profRun=true;
+  document.getElementById('profBtn').disabled=true;document.getElementById('profBtn').textContent='⏳ กำลังวิเคราะห์...';
+  var stats=[
+    {lbl:'Shape',val:'5 × 4',desc:'5 แถว, 4 คอลัมน์',cls:''},
+    {lbl:'ค่าว่าง (Missing)',val:'3',desc:'Name:1, Revenue:1, Date:1',cls:'warn'},
+    {lbl:'แถวซ้ำ (Duplicate)',val:'0',desc:'ไม่มีแถวซ้ำ',cls:''},
+    {lbl:'Outlier ที่พบ',val:'1',desc:'Revenue = 15,000,000',cls:'warn'}
+  ];
+  var grid=document.getElementById('statGrid');grid.innerHTML='';
+  var res=document.getElementById('profResults');res.classList.add('show');
+  stats.forEach(function(st,i){
+    setTimeout(function(){
+      var d=document.createElement('div');d.className='stat-card '+st.cls;d.style.animation='fd .3s ease';
+      d.innerHTML='<div class="stlbl">'+st.lbl+'</div><div class="stval">'+st.val+'</div><div class="stdesc">'+st.desc+'</div>';
+      grid.appendChild(d);
+    },i*220);
+  });
+  setTimeout(function(){document.getElementById('profBtn').textContent='วิเคราะห์เสร็จสิ้น';},stats.length*220);
+}
+
+// STEP 3: CLEAN
+var clnFixed=0;var clnProblems=3;
+function buildClean(){
+  return '<div style="font-size:13px;color:var(--ts);margin-bottom:10px;">คลิกปุ่ม <strong>แก้ไข</strong> ในแต่ละแถวที่มีปัญหา เพื่อทำความสะอาดข้อมูล</div><div style="margin-bottom:10px;"><div class="cln-progress"><div class="cln-prog-bar" id="clnBar"></div></div><div class="cln-msg" id="clnMsg">แก้ไขแล้ว 0 / 3 จุด</div></div><div style="overflow-x:auto;"><table class="cln-tbl"><thead><tr><th>ID</th><th>ชื่อ</th><th>รายได้</th><th>วันที่</th><th>การดำเนินการ</th></tr></thead><tbody><tr><td>1</td><td>John Doe</td><td>5,000</td><td>2020-01-15</td><td><span class="badge badge-ok">✓ ปกติ</span></td></tr><tr id="cr2"><td>2</td><td class="cln-fix-cell" id="cc-name2"><span style="color:var(--err);">NaN</span></td><td class="cln-fix-cell" id="cc-rev2"><span style="color:var(--err);">NaN</span></td><td>2020-03-01</td><td><button class="fix-btn" id="fb2" onclick="fixRow(2)">⚠️ แก้ไขค่าว่าง</button></td></tr><tr id="cr3"><td>3</td><td>Mary Smith</td><td class="cln-fix-cell" id="cc-rev3"><span style="color:var(--err);">15,000,000</span></td><td class="cln-fix-cell" id="cc-date3"><span style="color:var(--err);">"error"</span></td><td><button class="fix-btn" id="fb3" onclick="fixRow(3)">🚩 Flag Outlier</button></td></tr><tr id="cr4"><td>4</td><td>Brian Kim</td><td class="cln-fix-cell" id="cc-rev4"><span style="color:var(--err);">-200</span></td><td>2021-07-20</td><td><button class="fix-btn" id="fb4" onclick="fixRow(4)">⚠️ แก้ไขค่าลบ</button></td></tr><tr><td>5</td><td>Jane Adams</td><td>8,000</td><td>2020-06-10</td><td><span class="badge badge-ok">✓ ปกติ</span></td></tr></tbody></table></div><div id="clnDone" style="display:none;margin-top:12px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-radius:8px;padding:12px 16px;font-size:13.5px;font-weight:700;text-align:center;animation:pop .4s cubic-bezier(.34,1.56,.64,1);">🎉 ข้อมูลสะอาดแล้ว! พร้อมนำไปวิเคราะห์</div>';
+}
+function initClean(){
+  clnFixed=0;
+  var bar=document.getElementById('clnBar');
+  if(bar){bar.style.width='0%';}
+}
+function fixRow(n){
+  clnFixed++;
+  var bar=document.getElementById('clnBar');
+  var msg=document.getElementById('clnMsg');
+  if(bar){bar.style.width=(clnFixed/clnProblems*100)+'%';}
+  if(msg){msg.textContent='แก้ไขแล้ว '+clnFixed+' / '+clnProblems+' จุด';}
+  var btn=document.getElementById('fb'+n);
+  if(btn){btn.classList.add('done');btn.textContent='✅ แก้ไขแล้ว';btn.onclick=null;}
+  if(n===2){
+    var cn=document.getElementById('cc-name2');if(cn){cn.classList.add('fixed-cell');cn.innerHTML='<span style="color:var(--ok);font-weight:700;">Unknown</span>';}
+    var cr=document.getElementById('cc-rev2');if(cr){cr.classList.add('fixed-cell');cr.innerHTML='<span style="color:var(--p);font-weight:700;">6,500 <span class="badge badge-info" style="font-size:10px;">Median</span></span>';}
+  }else if(n===3){
+    var rv=document.getElementById('cc-rev3');if(rv){rv.classList.add('fixed-cell');rv.innerHTML='<span style="color:var(--warn);font-weight:700;">🚩 Flagged</span>';}
+    var dt=document.getElementById('cc-date3');if(dt){dt.classList.add('fixed-cell');dt.innerHTML='<span style="color:var(--tm);">— (ลบออก)</span>';}
+  }else if(n===4){
+    var r4=document.getElementById('cc-rev4');if(r4){r4.classList.add('fixed-cell');r4.innerHTML='<span style="color:var(--ok);font-weight:700;">0</span>';}
+  }
+  if(clnFixed===clnProblems){
+    var done=document.getElementById('clnDone');if(done){done.style.display='block';}
+    if(msg){msg.style.color='var(--ok)';}
+  }
+}
+
+// STEP 4: TRANSFORM
+var trOn=false;
+function buildTransform(){
+  return '<div style="font-size:13px;color:var(--ts);margin-bottom:12px;">สลับปุ่มด้านล่างเพื่อดูความแตกต่างระหว่างข้อมูลก่อนและหลังการแปลง</div><div class="tr-toggle" onclick="toggleTransform()"><span id="tr-lbl-l" style="font-weight:700;color:var(--p);">ข้อมูลดิบ</span><div class="tog" id="trTog"><div class="tog-circle"></div></div><span id="tr-lbl-r" style="color:var(--tm);">ข้อมูลหลังแปลง</span></div><div style="overflow-x:auto;"><table class="tr-tbl" id="trTbl"><thead><tr><th>Column</th><th>ก่อนแปลง (Raw)</th><th class="arr-c">→</th><th>หลังแปลง (Transformed)</th><th>วิธีการ</th></tr></thead><tbody><tr><td>Date</td><td class="tr-raw-col raw-v">"2020-01-15" (string)</td><td class="arr-c">→</td><td class="tr-new-col new-v">2020-01-15 (datetime64)</td><td><span class="badge badge-info">pd.to_datetime()</span></td></tr><tr><td>Status</td><td class="tr-raw-col raw-v">"Active" / "Inactive"</td><td class="arr-c">→</td><td class="tr-new-col new-v">1 / 0 (int)</td><td><span class="badge badge-info">.map()</span></td></tr><tr><td>Price</td><td class="tr-raw-col raw-v">1200, 800, 450 (raw)</td><td class="arr-c">→</td><td class="tr-new-col new-v">0.75, 0.50, 0.28 (0–1)</td><td><span class="badge badge-info">MinMaxScaler</span></td></tr><tr><td>Total</td><td class="tr-raw-col raw-v">— (ไม่มี column นี้)</td><td class="arr-c">→</td><td class="tr-new-col new-v">Qty × Price (คำนวณ)</td><td><span class="badge badge-info">Derived Column</span></td></tr></tbody></table></div><div id="tr-note" style="margin-top:12px;font-size:12.5px;color:var(--tm);">💡 คลิกสลับเพื่อเปรียบเทียบ</div>';
+}
+function initTransform(){trOn=false;}
+function toggleTransform(){
+  trOn=!trOn;
+  var tog=document.getElementById('trTog');tog.classList.toggle('on',trOn);
+  var tbl=document.getElementById('trTbl');tbl.classList.toggle('transformed',trOn);
+  document.getElementById('tr-lbl-l').style.color=trOn?'var(--tm)':'var(--p)';document.getElementById('tr-lbl-l').style.fontWeight=trOn?'400':'700';
+  document.getElementById('tr-lbl-r').style.color=trOn?'var(--p)':'var(--tm)';document.getElementById('tr-lbl-r').style.fontWeight=trOn?'700':'400';
+  document.getElementById('tr-note').textContent=trOn?'ข้อมูลถูกแปลงเป็นรูปแบบที่พร้อมวิเคราะห์แล้ว':'คลิกสลับเพื่อเปรียบเทียบ';
+}
+
+// STEP 5: VALIDATE
+var valDone=false;
+var VALRULES=[
+  {icon:'📋',name:'ตรวจสอบค่าว่าง',desc:'ทุก column สำคัญต้องไม่มี NaN หลังทำความสะอาด',pass:true,msg:'✓ ผ่าน — isnull().sum() = 0'},
+  {icon:'📅',name:'ตรวจสอบรูปแบบวันที่',desc:'ทุก Date ต้องเป็น datetime64 ที่ valid',pass:true,msg:'✓ ผ่าน — 5/5 records valid'},
+  {icon:'💰',name:'ตรวจสอบค่าติดลบ',desc:'Revenue และ Quantity ต้องไม่ต่ำกว่า 0',pass:true,msg:'✓ ผ่าน — min(Revenue) = 0'},
+  {icon:'🚩',name:'ตรวจสอบ Outlier',desc:'ค่าที่เกิน 3 Standard Deviation ต้องถูก Flag',pass:true,msg:'✓ ผ่าน — 1 record flagged'}
+];
+function buildValidate(){
+  var rows=VALRULES.map(function(r,i){return'<div class="val-rule" id="vr'+i+'"><div class="val-icon" id="vi'+i+'">⬜</div><div class="vr-txt"><div class="vr-name">'+r.icon+' '+r.name+'</div><div class="vr-desc">'+r.desc+'</div></div><div class="vr-status" id="vs'+i+'">รอตรวจสอบ</div></div>';}).join('');
+  return '<div style="font-size:13px;color:var(--ts);margin-bottom:14px;">กด <strong>"ตรวจสอบทั้งหมด"</strong> เพื่อรันกฎการตรวจสอบทีละข้อ</div><div class="val-rules">'+rows+'</div><div style="margin-top:14px;"><button class="run-check-btn" id="valBtn" onclick="runValidate()">▶ ตรวจสอบทั้งหมด</button></div><div id="valDone" style="display:none;margin-top:12px;background:#f0fdf4;border:1.5px solid var(--ok);border-radius:8px;padding:12px;font-size:13.5px;font-weight:700;color:var(--ok);text-align:center;">✅ ผ่านทุกข้อ — ข้อมูลพร้อม Load เข้า Data Warehouse!</div>';
+}
+function initValidate(){valDone=false;}
+function runValidate(){
+  if(valDone)return;valDone=true;
+  var btn=document.getElementById('valBtn');btn.disabled=true;btn.textContent='⏳ กำลังตรวจสอบ...';
+  VALRULES.forEach(function(r,i){
+    setTimeout(function(){
+      var rule=document.getElementById('vr'+i);rule.classList.add(r.pass?'pass':'fail');
+      document.getElementById('vi'+i).textContent=r.pass?'✅':'❌';
+      document.getElementById('vs'+i).textContent=r.msg;
+      if(i===VALRULES.length-1){
+        setTimeout(function(){btn.textContent='✅ ตรวจสอบเสร็จสิ้น';document.getElementById('valDone').style.display='block';},300);
+      }
+    },(i+1)*350);
+  });
+}
+
+// STEP 6: STAGE
+var stgDone=false;
+function buildStage(){
+  return '<div style="font-size:13px;color:var(--ts);margin-bottom:14px;">กด <strong>"Load to Staging"</strong> เพื่อบันทึกข้อมูลสะอาดลง Staging Area</div><div class="stg-file">📁 staging/<br>└── sales_cleaned.csv<br>└── sales_cleaned_log.txt</div><button class="load-btn" id="loadBtn" onclick="runStage()">💾 Load to Staging Area</button><div class="stg-prog" id="stgProg" style="display:none;"><div class="stg-bar-wrap"><div class="stg-bar" id="stgBar"></div></div><div class="stg-bar-lbl" id="stgPct">0%</div></div><div class="stg-log" id="stgLog"></div>';
+}
+function initStage(){stgDone=false;}
+function runStage(){
+  if(stgDone)return;stgDone=true;
+  var btn=document.getElementById('loadBtn');btn.disabled=true;btn.textContent='⏳ กำลัง Load...';
+  document.getElementById('stgProg').style.display='block';
+  var log=document.getElementById('stgLog');
+  var logs=[
+    [200,'<span class="info-line">[INFO] เริ่มต้น Load process...</span>'],
+    [500,'<span class="info-line">[INFO] สร้าง staging directory...</span>'],
+    [900,'<span class="info-line">[INFO] กำลัง Write 5 rows...</span>'],
+    [1300,'<span class="ok-line">[OK] sales_cleaned.csv — 5 rows saved</span>'],
+    [1700,'<span class="ok-line">[OK] sales_cleaned_log.txt — created</span>'],
+    [2000,'<span class="ok-line">[DONE] Load สำเร็จ! ✅</span>']
+  ];
+  var bar=document.getElementById('stgBar'),pct=document.getElementById('stgPct');
+  var steps=[0,15,40,65,85,100];
+  logs.forEach(function(l,i){
+    setTimeout(function(){
+      log.innerHTML+=l[1]+'\n';log.scrollTop=log.scrollHeight;
+      bar.style.width=steps[i]+'%';pct.textContent=steps[i]+'%';
+      if(i===logs.length-1){btn.textContent='✅ Load สำเร็จ';bar.style.background='var(--ok)';}
+    },l[0]);
+  });
+}
+
+// ==================== TAB 3: DETECTIVE GAME ====================
+var DET_DATA=[
+  [1,'John Doe','5,000','2020-01-15',false,false,false,false],
+  [2,'(ว่าง)','(ว่าง)','2020-03-01',true,true,false,false],
+  [3,'Mary Smith','15,000,000','"error"',false,true,true,true],
+  [4,'Brian Kim','-200','2021-07-20',false,true,false,false],
+  [5,'Jane Adams','8,000','2020-06-10',false,false,false,false]
+];
+var detFound=0;var detTotal=5;
+function buildDetective(){
+  var tbody=document.getElementById('detBody');tbody.innerHTML='';
+  DET_DATA.forEach(function(row,ri){
+    var tr=document.createElement('tr');
+    [row[1],row[2],row[3]].forEach(function(val,ci){
+      var td=document.createElement('td');td.textContent=val;
+      var isProblem=row[4+ci];
+      if(isProblem){
+        td.onclick=function(){
+          if(td.classList.contains('found'))return;
+          td.classList.add('found');td.textContent='พบ: '+val;
+          detFound++;
+          document.getElementById('detBar').style.width=(detFound/detTotal*100)+'%';
+          document.getElementById('detCount').textContent=detFound;
+          if(detFound===detTotal)document.getElementById('detMsg').textContent='เก่งมาก! คุณระบุปัญหาครบทั้ง 5 จุดแล้ว!';
+        };
+      }else{
+        td.onclick=function(){td.classList.add('good-click');setTimeout(function(){td.classList.remove('good-click');},400);};
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+// ==================== CHARTS ====================
+function drawDirty(){
+  var el=document.getElementById('sDirty');if(!el)return;
+  var W=300,H=210,pL=52,pB=46,pT=18,pR=8,cH=H-pT-pB,cW=W-pL-pR;
+  var maxV=15000000,range=maxV+500;
+  var dat=[{n:'John',v:5000,c:'#60a5fa'},{n:'(ว่าง)',v:0,c:'#d1d5db'},{n:'Mary',v:15000000,c:'#ef4444'},{n:'Brian',v:-200,c:'#f97316'},{n:'Jane',v:8000,c:'#60a5fa'}];
+  var bw=34,gap=(cW-bw*5)/6,zeroY=pT+cH*(1-(500/range));
+  function fmt(v){
+    if(v===0)return '0';
+    if(Math.abs(v)>=1000000)return (v/1000000).toFixed(v%1000000===0?0:1).replace(/\.0$/,'')+'M';
+    if(Math.abs(v)>=1000)return (v/1000).toFixed(v%1000===0?0:1).replace(/\.0$/,'')+'K';
+    return String(v);
+  }
+  var o='';
+  o+='<line x1="'+pL+'" y1="'+pT+'" x2="'+pL+'" y2="'+(pT+cH)+'" stroke="#e2e8f0" stroke-width="1"/>';
+  o+='<line x1="'+pL+'" y1="'+zeroY.toFixed(1)+'" x2="'+(W-pR)+'" y2="'+zeroY.toFixed(1)+'" stroke="#94a3b8" stroke-width="1.5"/>';
+  o+='<text x="'+(pL-3)+'" y="'+(pT+8)+'" text-anchor="end" font-size="9" fill="#94a3b8" font-family="Sarabun,sans-serif">15M</text>';
+  o+='<text x="'+(pL-3)+'" y="'+(pT+cH*0.5+4)+'" text-anchor="end" font-size="9" fill="#94a3b8" font-family="Sarabun,sans-serif">7.5M</text>';
+  o+='<text x="'+(pL-3)+'" y="'+(zeroY+3).toFixed(1)+'" text-anchor="end" font-size="9" fill="#94a3b8" font-family="Sarabun,sans-serif">0</text>';
+  o+='<text x="'+(W/2)+'" y="'+(H-3)+'" text-anchor="middle" font-size="9" fill="#ef4444" font-family="Sarabun,sans-serif">Outlier ทำให้ข้อมูลอื่นมองเห็นยาก</text>';
+  dat.forEach(function(d,i){
+    var x=pL+gap*(i+1)+bw*i;var bh,by;
+    if(d.v>=0){bh=(d.v/range)*cH;by=zeroY-bh;}else{bh=(Math.abs(d.v)/range)*cH;by=zeroY;}
+    if(bh<1)bh=1;
+    o+='<rect x="'+x.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bw+'" height="'+bh.toFixed(1)+'" fill="'+d.c+'" rx="3"/>';
+    o+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(zeroY+13)+'" text-anchor="middle" font-size="9" fill="#64748b" font-family="Sarabun,sans-serif">'+d.n+'</text>';
+    o+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(by-3).toFixed(1)+'" text-anchor="middle" font-size="8" fill="#334155" font-family="Sarabun,sans-serif">'+fmt(d.v)+'</text>';
+  });
+  el.innerHTML=o;
+}
+
+function drawClean(){
+  var el=document.getElementById('sClean');if(!el)return;
+  var W=300,H=210,pL=52,pB=46,pT=18,pR=8,cH=H-pT-pB,cW=W-pL-pR;
+  var maxV=10000,baseY=pT+cH;
+  var dat=[{n:'John',v:5000,c:'#34d399',lbl:'5K'},{n:'Unknown',v:6500,c:'#a78bfa',lbl:'6.5K',note:'เติม'},{n:'Mary',v:null,lbl:''},{n:'Brian',v:0,c:'#94a3b8',lbl:'0'},{n:'Jane',v:8000,c:'#34d399',lbl:'8K'}];
+  var bw=34,gap=(cW-bw*5)/6;
+  var o='';
+  [0,2500,5000,7500,10000].forEach(function(v){var y=baseY-(v/maxV)*cH;o+='<line x1="'+pL+'" y1="'+y.toFixed(1)+'" x2="'+(W-pR)+'" y2="'+y.toFixed(1)+'" stroke="'+(v===0?'#94a3b8':'#f1f5f9')+'" stroke-width="'+(v===0?'1.5':'1')+'"/>';o+='<text x="'+(pL-3)+'" y="'+(y+4).toFixed(1)+'" text-anchor="end" font-size="9" fill="#94a3b8" font-family="Sarabun,sans-serif">'+(v>=1000?(v/1000)+'K':v)+'</text>';});
+  o+='<line x1="'+pL+'" y1="'+pT+'" x2="'+pL+'" y2="'+(pT+cH)+'" stroke="#e2e8f0" stroke-width="1"/>';
+  o+='<text x="'+(W/2)+'" y="'+(H-3)+'" text-anchor="middle" font-size="9" fill="#10b981" font-family="Sarabun,sans-serif">✓ อ่านได้ชัดเจน วิเคราะห์ได้จริง</text>';
+  dat.forEach(function(d,i){
+    var x=pL+gap*(i+1)+bw*i;
+    if(d.v===null){o+='<rect x="'+x.toFixed(1)+'" y="'+(baseY-18).toFixed(1)+'" width="'+bw+'" height="18" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" rx="3" stroke-dasharray="4 2"/>';o+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(baseY-5).toFixed(1)+'" text-anchor="middle" font-size="8" fill="#ef4444" font-family="Sarabun,sans-serif">ลบออก</text>';}
+    else{var bh=(d.v/maxV)*cH;if(bh<2&&d.v>=0)bh=2;var by=baseY-bh;o+='<rect x="'+x.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bw+'" height="'+bh.toFixed(1)+'" fill="'+d.c+'" rx="3"/>';if(d.v>0)o+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(by-3).toFixed(1)+'" text-anchor="middle" font-size="9" fill="#334155" font-family="Sarabun,sans-serif">'+d.lbl+'</text>';if(d.note)o+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(baseY+22)+'" text-anchor="middle" font-size="8" fill="#7c3aed" font-family="Sarabun,sans-serif">('+d.note+')</text>';}
+    o+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(baseY+13)+'" text-anchor="middle" font-size="9" fill="#64748b" font-family="Sarabun,sans-serif">'+d.n+'</text>';
+  });
+  o+='<rect x="'+pL+'" y="'+pT+'" width="9" height="9" fill="#34d399" rx="2"/><text x="'+(pL+12)+'" y="'+(pT+8)+'" font-size="8.5" fill="#475569" font-family="Sarabun,sans-serif">ข้อมูลดี</text>';
+  o+='<rect x="'+(pL+58)+'" y="'+pT+'" width="9" height="9" fill="#a78bfa" rx="2"/><text x="'+(pL+70)+'" y="'+(pT+8)+'" font-size="8.5" fill="#475569" font-family="Sarabun,sans-serif">เติมค่า</text>';
+  o+='<rect x="'+(pL+115)+'" y="'+pT+'" width="9" height="9" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" rx="2"/><text x="'+(pL+127)+'" y="'+(pT+8)+'" font-size="8.5" fill="#475569" font-family="Sarabun,sans-serif">ลบออก</text>';
+  el.innerHTML=o;
+}
+
+// ==================== INIT ====================
+window.addEventListener('load',function(){
+  initGame();
+  buildPNav();
+  renderPanel(0);
+  buildDetective();
+  drawDirty();
+  drawClean();
+});
+</script>
+</body>
+</html>
