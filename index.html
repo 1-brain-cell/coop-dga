@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide - Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-header {
+            background: #667eea;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .card-label {
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+        }
+        
+        .card-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .card:hover .card-footer {
+            background: #667eea;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Interactive Guide</h1>
+            <p>Select a guide to get started</p>
+        </div>
+        
+        <div class="cards-grid">
+            <a href="day0.html" class="card">
+                <div class="card-header">Day 0</div>
+                <div class="card-body">
+                    <div class="card-label">Getting Started</div>
+                </div>
+                <div class="card-footer">→ Go to Guide</div>
+            </a>
+            
+            <a href="day1.html" class="card">
+                <div class="card-header">Day 1</div>
+                <div class="card-body">
+                    <div class="card-label">Continue Learning</div>
+                </div>
+                <div class="card-footer">→ Go to Guide</div>
+            </a>
+            
+            <a href="day2.html" class="card">
+                <div class="card-header">Day 2</div>
+                <div class="card-body">
+                    <div class="card-label">Level Up</div>
+                </div>
+                <div class="card-footer">→ Go to Guide</div>
+            </a>
+            
+            <a href="day3.html" class="card">
+                <div class="card-header">Day 3</div>
+                <div class="card-body">
+                    <div class="card-label">Deep Dive</div>
+                </div>
+                <div class="card-footer">→ Go to Guide</div>
+            </a>
+            
+            <a href="day4.html" class="card">
+                <div class="card-header">Day 4</div>
+                <div class="card-body">
+                    <div class="card-label">Advanced Topics</div>
+                </div>
+                <div class="card-footer">→ Go to Guide</div>
+            </a>
+            
+            <a href="day5.html" class="card">
+                <div class="card-header">Day 5</div>
+                <div class="card-body">
+                    <div class="card-label">Master Level</div>
+                </div>
+                <div class="card-footer">→ Go to Guide</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
