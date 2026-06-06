@@ -204,11 +204,11 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 <div class="tp on" id="t0">
   <div class="card">
     <div class="card-t">🔤 String คืออะไร?</div>
-    <div class="card-s">String คือลำดับ (sequence) ของตัวอักษร แต่ละตัวมี index เริ่มจาก 0</div>
-    <div class="hbox b">📌 Python <strong>เริ่ม Index ที่ 0</strong> ไม่ใช่ 1 — ตัวอักษรตัวแรกคือ index 0, ตัวที่สองคือ index 1, ...</div>
+    <div class="card-s">String คือข้อความ ที่เอาตัวอักษรมาเรียงต่อกันเป็นแถว</div>
+    <div class="hbox b">📌 Python<strong> เริ่มนับตำแหน่งแรกเป็นเลข 0 เสมอ</strong> ไม่ใช่ 1 — ตัวอักษรตัวแรกคือ index ที่ 0, ตัวที่สองคือ index 1, ...</div>
     <div class="lbl" style="margin-top:16px;">🖱️ คลิกที่ตัวอักษรเพื่อดู index</div>
     <div class="str-boxes" id="str-main"></div>
-    <div style="font-size:.8rem;color:var(--tl);margin-top:2px;">🟡 สีเหลือง = ตัวที่ถูกเลือก / index ลบ = นับจากท้าย (-1 = ตัวสุดท้าย)</div>
+    <div style="font-size:.8rem;color:var(--tl);margin-top:2px;">🟡 สีเหลือง = ตัวที่ถูกเลือก / index ติดลบ = เริ่มนับจากท้าย (-1 = ตัวสุดท้าย)</div>
     <div id="ch-info" style="margin-top:8px;padding:10px 14px;background:var(--bl);border-radius:8px;font-size:.9rem;min-height:36px;font-family:'Courier New',monospace;font-weight:600;"></div>
   </div>
 
@@ -228,13 +228,14 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
       <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
       <div>
         <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">step</div>
-        <input type="number" id="sl-st" value="1" min="1" oninput="doSlice()" style="width:65px;">
+        <input type="number" id="sl-st" value="1" oninput="doSlice()" style="width:65px;">
       </div>
       <div style="padding-top:18px;display:flex;gap:8px;">
-        <button class="btn sm" onclick="setSlice(0,13,1)">ทั้งหมด</button>
-        <button class="btn sm am" onclick="setSlice(0,6,1)">แค่ต้น</button>
-        <button class="btn sm" style="background:var(--pu);" onclick="setSlice(7,13,1)">แค่ท้าย</button>
-        <button class="btn sm gr" onclick="setSlice(0,13,2)">Stride 2</button>
+        <button class="btn sm" onclick="setSlice(0,14,1)">ทั้งหมด</button>
+        <button class="btn sm am" onclick="setSlice(0,7,1)">แค่ต้น</button>
+        <button class="btn sm" style="background:var(--pu);" onclick="setSlice(7,14,1)">แค่ท้าย</button>
+        <button class="btn sm gr" onclick="setSlice(0,14,2)">Stride 2</button>
+        <button class="btn sm out" onclick="setSlice(null,null,-1)">Reverse</button>
       </div>
     </div>
     <div class="str-boxes" id="str-slice"></div>
@@ -244,7 +245,7 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 
   <div class="card">
     <div class="card-t">🔧 String Methods</div>
-    <div class="card-s">คลิก method เพื่อดูผลลัพธ์กับ string ตัวอย่าง: <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">"Hello, Python World!"</code></div>
+    <div class="card-s">คลิก method เพื่อดูผลลัพธ์กับ string ตัวอย่าง: <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">"Hello, Python!"</code></div>
     <div class="str-methods" id="str-methods"></div>
     <div class="method-out" id="method-out" style="display:none;"></div>
   </div>
@@ -264,7 +265,7 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 
     <!-- LIST -->
     <div class="dtype-panel on" id="dp0">
-      <div class="hbox b">📃 <strong>list</strong> — เปลี่ยนแปลงได้ (mutable), เรียงลำดับ, มีซ้ำได้, ใช้ <code>[ ]</code></div>
+      <div class="hbox b">📃 <strong>List</strong> — เก็บข้อมูลแบบมีลำดับ สามารถเปลี่ยนแปลง (mutable) และมีซ้ำได้ ใช้ <code>[ ]</code></div>
       <div class="lbl">🎮 ลองเพิ่ม/ลบสมาชิก</div>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
         <input type="text" id="list-add-in" placeholder="ใส่ค่า เช่น 42 หรือ แมว" style="padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;flex:1;min-width:120px;">
@@ -273,11 +274,15 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
       </div>
       <div class="list-container" id="list-items"></div>
       <div class="code" id="list-code" style="margin-top:10px;"></div>
+      <div>
+          <div style="font-weight:700;font-size:.9rem;color:var(--bm);margin-bottom:8px;">✅ ใช้ list เมื่อ...</div>
+          <div style="font-size:.85rem;line-height:1.7;">• ข้อมูลอาจเปลี่ยนแปลง<br>• ต้องการเพิ่ม/ลบสมาชิก<br>• เก็บรายการที่ยาวขึ้นได้</div>
+        </div>
     </div>
 
     <!-- TUPLE -->
     <div class="dtype-panel" id="dp1">
-      <div class="hbox b">🔒 <strong>tuple</strong> — เปลี่ยนไม่ได้ (immutable), เรียงลำดับ, ใช้ <code>( )</code></div>
+      <div class="hbox b">🔒 <strong>Tuple</strong> — เก็บค่าตามลำดับ ซ้ำได้ แต่ไม่สามารถเปลี่ยนแปลงได้ ใช้ <code>( )</code></div>
       <div style="background:#f5f3ff;border:2px solid var(--pu);border-radius:10px;padding:16px;margin:12px 0;">
         <div style="font-weight:700;color:var(--pu);margin-bottom:10px;">🔒 tuple ตัวอย่าง:</div>
         <div style="font-family:'Courier New',monospace;font-size:.92rem;letter-spacing:1px;">coords = (<span id="tp0" style="color:#7dd3fc;">13.75</span>, <span id="tp1" style="color:#86efac;">100.52</span>)</div>
@@ -291,16 +296,16 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
           <div style="font-weight:700;font-size:.9rem;color:var(--pu);margin-bottom:8px;">✅ ใช้ tuple เมื่อ...</div>
           <div style="font-size:.85rem;line-height:1.7;">• ข้อมูลไม่ควรถูกแก้ไข<br>• ใช้เป็น dictionary key<br>• ข้อมูลมีความหมายคงที่ (พิกัด, วันเดือนปี)</div>
         </div>
-        <div>
+        <!-- <div>
           <div style="font-weight:700;font-size:.9rem;color:var(--bm);margin-bottom:8px;">✅ ใช้ list เมื่อ...</div>
           <div style="font-size:.85rem;line-height:1.7;">• ข้อมูลอาจเปลี่ยนแปลง<br>• ต้องการเพิ่ม/ลบสมาชิก<br>• เก็บรายการที่ยาวขึ้นได้</div>
-        </div>
+        </div> -->
       </div>
     </div>
 
     <!-- SET -->
     <div class="dtype-panel" id="dp2">
-      <div class="hbox b">🌀 <strong>set</strong> — ไม่มีซ้ำ, ไม่เรียงลำดับ, ใช้ <code>{ }</code></div>
+      <div class="hbox b">🌀 <strong>Set</strong> — เก็บค่าที่ไม่ซ้ำ และไม่มีลำดับ ใช้ <code>{ }</code></div>
       <div class="lbl">🎮 ลองเพิ่มค่า (รวมทั้งที่ซ้ำกัน)</div>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
         <input type="text" id="set-add-in" placeholder="ใส่ค่า เช่น แอปเปิ้ล" style="padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;flex:1;min-width:100px;">
@@ -314,7 +319,7 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 
     <!-- DICT -->
     <div class="dtype-panel" id="dp3">
-      <div class="hbox b">📖 <strong>dict</strong> — คู่ key:value, เรียกข้อมูลด้วย key, ใช้ <code>{ key: value }</code></div>
+      <div class="hbox b">📖 <strong>dict</strong> — เก็บข้อมูลเป็นคู่ๆ เวลาจะดึงข้อมูลให้<strong>ค้นหาจาก Key</strong> ใช้ <code>{ key: value }</code></div>
       <div class="lbl">🎮 เพิ่ม key-value pairs</div>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
         <input type="text" id="dict-k" placeholder="key เช่น name" style="width:130px;padding:9px 14px;border:2px solid var(--br);border-radius:8px;font-family:'Sarabun',sans-serif;font-size:.9rem;outline:none;">
@@ -338,7 +343,7 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 <div class="tp" id="t2">
   <div class="card">
     <div class="card-t">🔀 if-elif-else — เงื่อนไข</div>
-    <div class="card-s">ใส่ตัวเลขแล้วดูว่าโปรแกรมเลือกทำสาขาไหน</div>
+    <div class="card-s">ใส่ตัวเลขแล้วดูว่าผู้เรียนได้เกรดเท่าไร</div>
     <div style="display:flex;gap:20px;flex-wrap:wrap;">
       <div style="flex:1;min-width:200px;">
         <div class="code">
@@ -358,7 +363,7 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
         <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
           <span style="font-weight:600;font-size:.9rem;">ใส่คะแนน (0-100):</span>
           <input type="number" id="cond-in" class="cond-input" value="75" min="0" max="100" oninput="runCond()">
-          <button class="btn am" onclick="runCond()">▶️ รัน</button>
+          <!-- <button class="btn am" onclick="runCond()">▶️ รัน</button> -->
         </div>
         <div class="cond-visual" id="cond-flow">
           <div class="cond-box" id="cb-start">score = <span id="score-disp">75</span></div>
@@ -379,8 +384,8 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
     <div class="card-t">🔗 การรวมเงื่อนไข: and, or, not</div>
     <div class="card-s">ลองปรับค่าแล้วดูว่าเงื่อนไขรวมเป็น True หรือ False</div>
     <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px;">
-      <div><div style="font-size:.8rem;font-weight:600;margin-bottom:4px;">ค่า A (เช่น อายุ)</div><input type="number" id="boolA" value="20" style="width:90px;padding:9px;border:2px solid var(--br);border-radius:7px;font-size:.95rem;text-align:center;outline:none;" oninput="runBool()"></div>
-      <div><div style="font-size:.8rem;font-weight:600;margin-bottom:4px;">ค่า B (เช่น GPA)</div><input type="number" id="boolB" value="3.5" step="0.1" style="width:90px;padding:9px;border:2px solid var(--br);border-radius:7px;font-size:.95rem;text-align:center;outline:none;" oninput="runBool()"></div>
+      <div><div style="font-size:.8rem;font-weight:600;margin-bottom:4px;">ค่า A (เช่น อายุ)</div><input type="number" id="boolA" value="20" style="width:90px;padding:9px;border:2px solid var(--br);border-radius:7px;font-size:1.1rem;text-align:center;outline:none;font-weight:700;font-family:'Courier New',monospace" oninput="runBool()"></div>
+      <div><div style="font-size:.8rem;font-weight:600;margin-bottom:4px;">ค่า B (เช่น GPA)</div><input type="number" id="boolB" value="3.5" step="0.1" style="width:90px;padding:9px;border:2px solid var(--br);border-radius:7px;font-size:1.1rem;text-align:center;outline:none;font-weight:700;font-family:'Courier New',monospace"" oninput="runBool()"></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;" id="bool-results"></div>
   </div>
@@ -389,13 +394,13 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 <!-- ===== TAB 3: LOOPS ===== -->
 <div class="tp" id="t3">
   <div class="card">
-    <div class="card-t">🔄 for loop — วนซ้ำผ่านสมาชิก</div>
-    <div class="card-s">กด ▶️ เพื่อดูการวนลูปผ่านแต่ละสมาชิก — สีเหลือง = ตัวที่กำลังประมวลผล</div>
+    <div class="card-t">🔄 For Loop — วนซ้ำผ่านสมาชิก</div>
+    <div class="card-s">ตัวอย่างการวนซ้ำผ่านสมาชิกแต่ละค่า — สีเหลือง = ตัวที่กำลังประมวลผล</div>
     <div class="code"><span class="kw">fruits</span> = [<span class="st">"🍎"</span>, <span class="st">"🍌"</span>, <span class="st">"🍊"</span>, <span class="st">"🍇"</span>, <span class="st">"🍓"</span>]
 <span class="kw">for</span> fruit <span class="kw">in</span> fruits:
     <span class="fn">print</span>(<span class="st">"ผลไม้:"</span>, fruit)</div>
     <div class="loop-visual" id="for-items"></div>
-    <div class="loop-var" id="for-var">กด ▶️ เพื่อเริ่ม</div>
+    <div class="loop-var" id="for-var">กด <strong>▶️ เริ่มลูป </strong></div>
     <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;" id="for-out-box" style="display:none;"></div>
     <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
       <button class="btn am" id="for-btn" onclick="startFor()">▶️ เริ่มลูป</button>
@@ -405,8 +410,8 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
   </div>
 
   <div class="card">
-    <div class="card-t">🔁 while loop — วนจนกว่าเงื่อนไขจะเป็น False</div>
-    <div class="card-s">กด ▶️ เพื่อดูว่า while ทำงานทีละขั้นอย่างไร</div>
+    <div class="card-t">🔁 While loop — วนจนกว่าเงื่อนไขจะเป็น False</div>
+    <div class="card-s">ตัวอย่างการใช้งาน while ว่าทำงานทีละขั้นอย่างไร</div>
     <div class="code"><span class="kw">count</span> = <span class="nu">0</span>
 <span class="kw">while</span> count < <span class="nu">5</span>:
     <span class="fn">print</span>(<span class="st">"count ="</span>, count)
@@ -429,30 +434,48 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
   </div>
 
   <div class="card">
-    <div class="card-t">⚡ break และ continue</div>
-    <div class="card-s">คลิกเพื่อดูความต่าง</div>
+    <div class="card-t">⚡ Break และ Continue</div>
     <div class="g2">
+      <!-- BREAK -->
       <div style="border:2px solid var(--rd);border-radius:10px;padding:16px;">
-        <div style="font-weight:700;color:var(--rd);margin-bottom:8px;">🛑 break — หยุดลูปทันที</div>
-        <div class="code" style="font-size:.8rem;padding:12px;">
+        <div style="font-weight:700;color:var(--rd);margin-bottom:8px;">🛑 Break — หยุดลูปทันที</div>
+        <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;">
 <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">10</span>):
     <span class="kw">if</span> i == <span class="nu">5</span>:
         <span class="kw">break</span>
     <span class="fn">print</span>(i)
-<span class="cm"># พิมพ์: 0 1 2 3 4</span>
         </div>
-        <div style="font-size:.82rem;color:var(--tl);line-height:1.5;">เมื่อเจอ i=5 จะ<strong>หยุดทันที</strong> ไม่วนต่อ</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+          <span style="font-size:.88rem;font-weight:600;">i =</span>
+          <div id="break-i" style="font-size:1.2rem;font-weight:800;color:var(--rd);background:var(--bl);padding:6px 16px;border-radius:8px;min-width:50px;text-align:center;">0</div>
+          <span id="break-msg" style="font-size:.8rem;color:var(--tl);">เริ่มต้น</span>
+        </div>
+        <div id="break-output" style="background:#1e293b;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.82rem;color:#e2e8f0;min-height:36px;margin-bottom:10px;">พิมพ์:</div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn sm" style="background:var(--rd);" onclick="stepBreak()">▶️ ขั้นถัดไป</button>
+          <button class="btn out sm" onclick="resetBreak()">🔄 รีเซ็ต</button>
+        </div>
       </div>
+
+      <!-- CONTINUE -->
       <div style="border:2px solid var(--am);border-radius:10px;padding:16px;">
-        <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⏭️ continue — ข้ามรอบนี้</div>
-        <div class="code" style="font-size:.8rem;padding:12px;">
+        <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⏭️ Continue — ข้ามรอบนี้</div>
+        <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;">
 <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">6</span>):
     <span class="kw">if</span> i == <span class="nu">3</span>:
         <span class="kw">continue</span>
     <span class="fn">print</span>(i)
-<span class="cm"># พิมพ์: 0 1 2 4 5</span>
         </div>
-        <div style="font-size:.82rem;color:var(--tl);line-height:1.5;">เมื่อเจอ i=3 จะ<strong>ข้ามรอบนั้น</strong> แล้ววนต่อ</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+          <span style="font-size:.88rem;font-weight:600;">i =</span>
+          <div id="cont-i" style="font-size:1.2rem;font-weight:800;color:#f59e0b;background:#fff8e1;padding:6px 16px;border-radius:8px;min-width:50px;text-align:center;">0</div>
+          <span id="cont-msg" style="font-size:.8rem;color:var(--tl);">เริ่มต้น</span>
+        </div>
+        <div id="cont-output" style="background:#1e293b;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.82rem;color:#e2e8f0;min-height:36px;margin-bottom:10px;">พิมพ์:</div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn sm am" onclick="stepContinue()">▶️ ขั้นถัดไป</button>
+          <button class="btn out sm" onclick="resetContinue()">🔄 รีเซ็ต</button>
+        </div>
       </div>
     </div>
   </div>
@@ -751,23 +774,52 @@ function selChar(i){
   const neg=i-STR.length;
   document.getElementById('ch-info').textContent=`s[${i}] = '${STR[i]}' | s[${neg}] = '${STR[i]}' | ตัวอักษรที่ ${i+1} จากซ้าย, หรือ ${Math.abs(neg)} จากขวา`;
 }
+function normalizeSliceValue(rawValue, fallbackValue){
+  if(rawValue===null || rawValue===undefined || rawValue==='') return fallbackValue;
+  const parsed=Number(rawValue);
+  return Number.isFinite(parsed) ? parsed : fallbackValue;
+}
+function collectSliceIndexes(startValue,endValue,stepValue){
+  const length=STR.length;
+  const step=stepValue===0 ? 1 : stepValue;
+  const result=[];
+  if(step>0){
+    let start=normalizeSliceValue(startValue,0);
+    let end=normalizeSliceValue(endValue,length);
+    if(start<0) start+=length;
+    if(end<0) end+=length;
+    start=Math.max(0,Math.min(start,length));
+    end=Math.max(0,Math.min(end,length));
+    for(let i=start;i<end;i+=step) result.push(i);
+    return result;
+  }
+  let start=normalizeSliceValue(startValue,length-1);
+  let end=normalizeSliceValue(endValue,-1);
+  if(start<0) start+=length;
+  if(end<0) end+=length;
+  start=Math.max(-1,Math.min(start,length-1));
+  end=Math.max(-1,Math.min(end,length-1));
+  for(let i=start;i>end;i+=step) result.push(i);
+  return result;
+}
 function doSlice(){
-  const s=parseInt(document.getElementById('sl-s').value)||0;
-  const e=parseInt(document.getElementById('sl-e').value)||STR.length;
-  const st=Math.max(1,parseInt(document.getElementById('sl-st').value)||1);
-  const sel=new Set();
-  for(let i=s;i<Math.min(e,STR.length);i+=st)sel.add(i);
+  const s=document.getElementById('sl-s').value;
+  const e=document.getElementById('sl-e').value;
+  const rawStep=Number(document.getElementById('sl-st').value);
+  const st=Number.isFinite(rawStep) && rawStep!==0 ? rawStep : 1;
+  const selectedIndexes=collectSliceIndexes(s,e,st);
+  const sel=new Set(selectedIndexes);
   document.querySelectorAll('#str-slice .ch-box').forEach((b,i)=>{
     b.classList.toggle('sel',sel.has(i));
   });
-  let res='';sel.forEach(i=>res+=STR[i]);
+  const res=selectedIndexes.map(i=>STR[i]).join('');
   const el=document.getElementById('slice-out');
   el.innerHTML=`<span style="color:#94a3b8;">s[${s}:${e}:${st}] = </span><span style="color:#86efac;">'${res}'</span>`;
 }
 function setSlice(s,e,st){
-  document.getElementById('sl-s').value=s;
-  document.getElementById('sl-e').value=e;
-  document.getElementById('sl-st').value=st;
+  document.getElementById('sl-s').value=s===null || s===undefined ? '' : s;
+  document.getElementById('sl-e').value=e===null || e===undefined ? '' : e;
+  document.getElementById('sl-st').value=st===null || st===undefined ? '' : st;
   doSlice();
 }
 doSlice();
@@ -936,6 +988,46 @@ function stepWhile(){
   }
 }
 function resetWhile(){whileCount=0;whileDone=false;document.getElementById('wh-counter').textContent=0;document.getElementById('wh-output').innerHTML='';document.getElementById('wh-cond').className='while-cond';document.getElementById('wh-cond').textContent='count < 5: ⏳ รอเริ่ม';}
+
+// ===== BREAK / CONTINUE =====
+let breakI=0,breakDone=false,breakOutput='';
+function stepBreak(){
+  if(breakDone) return;
+  if(breakI===5){
+    document.getElementById('break-i').textContent=breakI;
+    document.getElementById('break-msg').textContent='⚠️ i == 5: หยุด (break)!';
+    document.getElementById('break-i').style.color='#ef4444';
+    breakDone=true;
+    return;
+  }
+  document.getElementById('break-i').textContent=breakI;
+  breakOutput+=breakI+' ';
+  document.getElementById('break-output').textContent='พิมพ์: '+breakOutput;
+  document.getElementById('break-msg').textContent=`ทำ print(${breakI})`;
+  breakI++;
+  if(breakI>5) breakDone=true;
+}
+function resetBreak(){breakI=0;breakDone=false;breakOutput='';document.getElementById('break-i').textContent=0;document.getElementById('break-i').style.color='var(--rd)';document.getElementById('break-output').textContent='พิมพ์:';document.getElementById('break-msg').textContent='เริ่มต้น';}
+
+let contI=0,contDone=false,contOutput='';
+function stepContinue(){
+  if(contDone) return;
+  if(contI===3){
+    document.getElementById('cont-i').textContent=contI;
+    document.getElementById('cont-msg').textContent='⏭️ i == 3: ข้ามไป (continue)!';
+    document.getElementById('cont-i').style.color='#f59e0b';
+    contI++;
+    if(contI>6) contDone=true;
+    return;
+  }
+  document.getElementById('cont-i').textContent=contI;
+  contOutput+=contI+' ';
+  document.getElementById('cont-output').textContent='พิมพ์: '+contOutput;
+  document.getElementById('cont-msg').textContent=`ทำ print(${contI})`;
+  contI++;
+  if(contI>6) contDone=true;
+}
+function resetContinue(){contI=0;contDone=false;contOutput='';document.getElementById('cont-i').textContent=0;document.getElementById('cont-i').style.color='#f59e0b';document.getElementById('cont-output').textContent='พิมพ์:';document.getElementById('cont-msg').textContent='เริ่มต้น';}
 
 // ===== FUNCTIONS =====
 const funcSteps=[
