@@ -51,7 +51,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);min-h
 .btn.out{background:none;border:2px solid var(--bm);color:var(--bm);}
 .btn.out:hover{background:var(--bl);}
 .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:600;margin:2px;}
-.code{background:#1e293b;border-radius:10px;padding:16px 20px;font-family:'Courier New',monospace;font-size:.85rem;color:#e2e8f0;line-height:1.75;margin:12px 0;overflow-x:auto;}
+.code{background:#1e293b;border-radius:10px;padding:16px 20px;font-family:'Courier New',monospace;font-size:.85rem;color:#e2e8f0;line-height:1.75;margin:12px 0;overflow-x:auto;white-space:pre-wrap;}
 .code .kw{color:#7dd3fc;}
 .code .st{color:#86efac;}
 .code .fn{color:#fde68a;}
@@ -135,11 +135,14 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);min-h
 .mold-label{position:absolute;top:-12px;left:16px;background:var(--pu);color:#fff;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:700;}
 .attr-row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.88rem;}
 .attr-name{background:#ede9fe;padding:3px 10px;border-radius:5px;font-family:'Courier New',monospace;font-size:.82rem;font-weight:600;color:var(--pu);}
-.instances-grid{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+.instances-grid{display:flex;gap:auto;flex-wrap:wrap;margin-top:14px;}
 .obj-card{border:2px solid var(--gn);border-radius:10px;padding:14px;background:#f0fdf4;min-width:140px;animation:popIn .3s ease;}
+.instances-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:14px;padding-right:4px;align-items:stretch;}
+.obj-card{border:2px solid var(--gn);border-radius:10px;padding:14px;background:#f0fdf4;min-width:0;width:100%;height:100%;animation:popIn .3s ease;display:flex;flex-direction:column;}
 @keyframes popIn{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
 .obj-label{background:var(--gn);color:#fff;padding:2px 10px;border-radius:20px;font-size:.78rem;font-weight:700;margin-bottom:8px;display:inline-block;}
 .obj-attr{font-family:'Courier New',monospace;font-size:.8rem;line-height:1.6;}
+.obj-attr{font-family:'Courier New',monospace;font-size:.8rem;line-height:1.6;flex:1;}
 
 /* === GLOBAL LOCAL === */
 .scope-visual{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -151,18 +154,21 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);min-h
 .scope-var.active{background:rgba(43,82,200,.2);font-weight:700;}
 .scope-var.inactive{opacity:.3;}
 .scope-var.new{background:#dcfce7;animation:fi .4s ease;}
-.code-step{padding:8px 12px;border-radius:6px;font-family:'Courier New',monospace;font-size:.85rem;margin:4px 0;cursor:pointer;border:1px solid var(--br);transition:all .2s;}
+.code-step{padding:8px 12px;border-radius:6px;font-family:'Courier New',monospace;font-size:.85rem;margin:4px 0;border:1px solid var(--br);transition:all .2s;}
 .code-step.active{background:var(--am);border-color:#d97706;font-weight:700;}
-.code-step:hover{background:var(--bl);}
 
 /* === GRAPHS === */
 .chart-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 @media(max-width:600px){.chart-gallery{grid-template-columns:1fr 1fr;}}
-.chart-card{border:2px solid var(--br);border-radius:10px;padding:16px;cursor:pointer;text-align:center;transition:all .3s;}
+.chart-card{border:2px solid var(--br);border-radius:10px;padding:16px;cursor:pointer;text-align:center;transition:all .3s;display:flex;flex-direction:column;gap:10px;align-items:center;}
 .chart-card:hover,.chart-card.sel{border-color:var(--bm);background:var(--bl);transform:translateY(-2px);box-shadow:var(--sh);}
+.chart-thumb{width:100%;height:110px;border-radius:10px;background:#f8fafc;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.chart-thumb svg{width:100%;height:100%;display:block;}
 .chart-ico{font-size:2rem;margin-bottom:6px;}
 .chart-nm{font-size:.88rem;font-weight:700;color:var(--bd);}
 .chart-detail{background:var(--ca);border-radius:10px;padding:20px;border:1px solid var(--br);margin-top:16px;min-height:80px;}
+.chart-preview{width:100%;max-width:520px;margin:12px auto 0;border-radius:12px;overflow:hidden;background:#f8fafc;}
+.chart-preview svg{display:block;width:100%;height:auto;}
 .catnum-drag{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
 .cn-item{background:#fff;border:2px solid var(--br);border-radius:8px;padding:8px 14px;cursor:grab;font-size:.88rem;font-weight:600;transition:all .2s;user-select:none;}
 .cn-item:hover{border-color:var(--bm);}
@@ -516,7 +522,7 @@ main()
       <div style="flex:1;min-width:200px;">
         <div class="lbl">📚 Call Stack</div>
         <div class="stack-visual" id="call-stack">
-          <div style="text-align:center;color:var(--tl);font-size:.85rem;padding:20px 0;">Stack ว่างอยู่<br>กด ➡️ เพื่อเริ่ม</div>
+          <div style="display:flex;align-items:center;justify-content:center;width:100%;min-height:180px;text-align:center;color:var(--tl);font-size:.85rem;">Stack ว่างอยู่<br>กด ➡️ เพื่อเริ่ม</div>
         </div>
         <div style="font-size:.75rem;color:var(--tl);margin-top:6px;text-align:center;">📦 ด้านบน = frame ที่กำลังทำงานอยู่</div>
       </div>
@@ -525,7 +531,6 @@ main()
 
   <div class="card">
     <div class="card-t">🆚 return vs print — ต่างกันอย่างไร?</div>
-    <div class="card-s">นักเรียนมักสับสนระหว่างสองคำนี้ — นี่คือความแตกต่างที่สำคัญมาก</div>
     <div class="return-vs-print">
       <div class="rvp-box" style="background:#f0fdf4;border:2px solid var(--gn);">
         <div style="font-weight:700;color:#166534;margin-bottom:10px;font-size:.95rem;">✅ return — ส่งค่ากลับ</div>
@@ -578,9 +583,9 @@ result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</spa
           <div class="lbl">🎮 สร้าง Object ใหม่</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <input type="text" id="obj-name" placeholder="ชื่อ" style="padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-family:'Sarabun',sans-serif;font-size:.88rem;outline:none;">
-            <div style="display:flex;gap:8px;">
-              <input type="number" id="obj-age" placeholder="อายุ" value="20" style="flex:1;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-size:.88rem;outline:none;">
-              <input type="number" id="obj-gpa" placeholder="GPA" value="3.5" step="0.1" style="flex:1;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-size:.88rem;outline:none;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <input type="number" id="obj-age" placeholder="อายุ" value="20" style="flex:1 1 130px;min-width:130px;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-size:.88rem;outline:none;">
+              <input type="number" id="obj-gpa" placeholder="GPA" value="3.5" step="0.1" style="flex:1 1 130px;min-width:130px;padding:8px 12px;border:2px solid var(--br);border-radius:7px;font-size:.88rem;outline:none;">
             </div>
             <button class="btn am" onclick="createObj()">🏭 สร้าง Object</button>
           </div>
@@ -610,12 +615,16 @@ result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</spa
 <div class="tp" id="t6">
   <div class="card">
     <div class="card-t">🌍 Global vs Local Scope</div>
-    <div class="card-s">Scope คือ "ขอบเขต" ที่ตัวแปรนั้นใช้งานได้ — คลิกแต่ละบรรทัดเพื่อดูว่าตัวแปรไหนเข้าถึงได้</div>
+    <div class="card-s">Scope คือ "ขอบเขต" ที่ตัวแปรนั้นใช้งานได้ — กดขั้นถัดไปเพื่อดูทีละลำดับ</div>
     <div style="display:flex;gap:16px;flex-wrap:wrap;">
       <div style="flex:1;min-width:220px;">
-        <div class="lbl">📝 โค้ด — คลิกทีละบรรทัด</div>
+        <div class="lbl" style="margin-top:14px;">📝 โค้ด — ไล่ตามลำดับ</div>
         <div style="display:flex;flex-direction:column;gap:4px;" id="scope-code"></div>
-        <button class="btn out" style="margin-top:10px;" onclick="resetScope()">🔄 รีเซ็ต</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;">
+          <button class="btn am" onclick="stepScope()">➡️ ขั้นถัดไป</button>
+          <button class="btn out" onclick="resetScope()">🔄 รีเซ็ต</button>
+          <span id="scope-step-no" style="font-size:.82rem;color:var(--tl);">ขั้นที่ 0/9</span>
+        </div>
       </div>
       <div style="flex:1.3;min-width:240px;">
         <div class="scope-visual">
@@ -1053,11 +1062,11 @@ function stepFunc(){
   document.getElementById('func-desc').textContent=s.desc;
   document.getElementById('func-step-no').textContent=`ขั้นที่ ${fStep+1}/${funcSteps.length}`;
   const cs=document.getElementById('call-stack');
-  if(!s.stack.length){cs.innerHTML='<div style="text-align:center;color:var(--tl);font-size:.85rem;padding:20px;">Stack ว่าง ✅</div>';}
+  if(!s.stack.length){cs.innerHTML='<div style="display:flex;align-items:center;justify-content:center;width:100%;min-height:180px;text-align:center;color:var(--tl);font-size:.85rem;">Stack ว่าง ✅</div>';}
   else{cs.innerHTML=s.stack.map((f,i)=>`<div class="frame ${f.type} ${i===s.stack.length-1?'top':''}"><div class="frame-name">${f.name}</div><div class="frame-vars">${f.vars}</div></div>`).join('');}
   fStep++;
 }
-function resetFunc(){fStep=0;document.getElementById('func-line').textContent='กด ➡️ เพื่อเริ่ม';document.getElementById('func-desc').textContent='';document.getElementById('func-step-no').textContent='ขั้นที่ 0/8';document.getElementById('call-stack').innerHTML='<div style="text-align:center;color:var(--tl);font-size:.85rem;padding:20px;">Stack ว่างอยู่<br>กด ➡️ เพื่อเริ่ม</div>';}
+function resetFunc(){fStep=0;document.getElementById('func-line').textContent='กด ➡️ เพื่อเริ่ม';document.getElementById('func-desc').textContent='';document.getElementById('func-step-no').textContent='ขั้นที่ 0/8';document.getElementById('call-stack').innerHTML='<div style="display:flex;align-items:center;justify-content:center;width:100%;min-height:180px;text-align:center;color:var(--tl);font-size:.85rem;">Stack ว่างอยู่<br>กด ➡️ เพื่อเริ่ม</div>';}
 
 // ===== CLASS OBJECT =====
 let instances=[];
@@ -1107,16 +1116,33 @@ const scopeCode=[
 let scopeIdx=0;
 function buildScopeCode(){
   const c=document.getElementById('scope-code');
-  c.innerHTML=scopeCode.map((l,i)=>`<div class="code-step" id="sc${i}" onclick="runScope(${i})">${l}</div>`).join('');
+  c.innerHTML=scopeCode.map((l,i)=>`<div class="code-step" id="sc${i}">${l}</div>`).join('');
 }
-function runScope(i){
-  const s=scopeSteps[i];
+function renderScopeState(s,i){
   document.querySelectorAll('.code-step').forEach((el,j)=>el.classList.toggle('active',j===i));
   document.getElementById('sv-global').innerHTML=Object.entries(s.gvars).map(([k,v])=>`<div class="scope-var ${s.active==='g'||s.active==='both'?'active':''}" style="background:rgba(43,82,200,.1);padding:5px 10px;border-radius:5px;margin:3px 0;font-family:'Courier New',monospace;font-size:.82rem;">${k} = ${v}</div>`).join('');
   document.getElementById('sv-local').innerHTML=Object.keys(s.lvars).length?Object.entries(s.lvars).map(([k,v])=>`<div class="scope-var ${s.active==='l'||s.active==='both'?'active':''}" style="background:rgba(245,158,11,.15);padding:5px 10px;border-radius:5px;margin:3px 0;font-family:'Courier New',monospace;font-size:.82rem;">${k} = ${v}</div>`).join(''):'<div style="color:var(--tl);font-size:.8rem;font-style:italic;">ว่างอยู่</div>';
   document.getElementById('scope-msg').textContent=s.msg;
+  document.getElementById('scope-step-no').textContent=`ขั้นที่ ${i+1}/${scopeSteps.length}`;
 }
-function resetScope(){scopeIdx=0;buildScopeCode();document.getElementById('sv-global').innerHTML='';document.getElementById('sv-local').innerHTML='';document.getElementById('scope-msg').textContent='';}
+function runScope(i){
+  const s=scopeSteps[i];
+  scopeIdx=i;
+  renderScopeState(s,i);
+}
+function stepScope(){
+  if(scopeIdx>=scopeSteps.length) return;
+  runScope(scopeIdx);
+  scopeIdx++;
+}
+function resetScope(){
+  scopeIdx=0;
+  buildScopeCode();
+  document.getElementById('sv-global').innerHTML='';
+  document.getElementById('sv-local').innerHTML='';
+  document.getElementById('scope-msg').textContent='';
+  document.getElementById('scope-step-no').textContent=`ขั้นที่ 0/${scopeSteps.length}`;
+}
 buildScopeCode();
 
 // ===== CATEGORICAL / NUMERICAL =====
@@ -1153,19 +1179,31 @@ function resetCN(){document.querySelectorAll('.cn-dropped').forEach(i=>i.remove(
 
 // ===== CHARTS =====
 const charts=[
-  {ico:'📊',nm:'Bar Chart',when:'เปรียบเทียบหมวดหมู่',detail:'ใช้กับข้อมูล Categorical เปรียบเทียบขนาดของแต่ละกลุ่ม เช่น ยอดขายรายเดือน จำนวนนักศึกษาต่อสาขา',good:'Categorical, การเปรียบเทียบ'},
-  {ico:'🥧',nm:'Pie Chart',when:'สัดส่วนของทั้งหมด',detail:'แสดงสัดส่วน % ของแต่ละส่วน รวมกัน = 100% ใช้เมื่อมีหมวดหมู่ไม่เกิน 5-6 ประเภท',good:'Categorical, สัดส่วน'},
-  {ico:'📈',nm:'Line Chart',when:'แนวโน้มตามเวลา',detail:'เหมาะสำหรับข้อมูลที่มีลำดับเวลา แสดงการเปลี่ยนแปลงหรือแนวโน้ม เช่น อุณหภูมิรายวัน ราคาหุ้น',good:'Time series, แนวโน้ม'},
-  {ico:'📉',nm:'Histogram',when:'การกระจายของข้อมูล',detail:'แสดงว่าข้อมูล Numerical กระจายตัวอย่างไร มีข้อมูลรวมตัวที่ค่าไหนมากที่สุด ดูว่าเป็น normal distribution ไหม',good:'Numerical, distribution'},
-  {ico:'🔵',nm:'Scatter Plot',when:'ความสัมพันธ์ 2 ตัวแปร',detail:'แสดงความสัมพันธ์ระหว่าง 2 ตัวแปร Numerical ดูว่ามี correlation บวก ลบ หรือไม่มีเลย',good:'2 Numerical, correlation'},
-  {ico:'📦',nm:'Box Plot',when:'สรุปสถิติ+outlier',detail:'แสดง median, Q1, Q3, และ outliers ในกล่องเดียว เหมาะสำหรับเปรียบเทียบ distribution ระหว่างกลุ่ม',good:'Numerical, outlier detection'},
+  {ico:'📊',nm:'Bar Chart',when:'เปรียบเทียบหมวดหมู่',detail:'ใช้กับข้อมูล Categorical เปรียบเทียบขนาดของแต่ละกลุ่ม เช่น ยอดขายรายเดือน จำนวนนักศึกษาต่อสาขา',good:'Categorical, การเปรียบเทียบ',kind:'bar'},
+  {ico:'🥧',nm:'Pie Chart',when:'สัดส่วนของทั้งหมด',detail:'แสดงสัดส่วน % ของแต่ละส่วน รวมกัน = 100% ใช้เมื่อมีหมวดหมู่ไม่เกิน 5-6 ประเภท',good:'Categorical, สัดส่วน',kind:'pie'},
+  {ico:'📈',nm:'Line Chart',when:'แนวโน้มตามเวลา',detail:'เหมาะสำหรับข้อมูลที่มีลำดับเวลา แสดงการเปลี่ยนแปลงหรือแนวโน้ม เช่น อุณหภูมิรายวัน ราคาหุ้น',good:'Time series, แนวโน้ม',kind:'line'},
+  {ico:'📉',nm:'Histogram',when:'การกระจายของข้อมูล',detail:'แสดงว่าข้อมูล Numerical กระจายตัวอย่างไร มีข้อมูลรวมตัวที่ค่าไหนมากที่สุด ดูว่าเป็น normal distribution ไหม',good:'Numerical, distribution',kind:'hist'},
+  {ico:'🔵',nm:'Scatter Plot',when:'ความสัมพันธ์ 2 ตัวแปร',detail:'แสดงความสัมพันธ์ระหว่าง 2 ตัวแปร Numerical ดูว่ามี correlation บวก ลบ หรือไม่มีเลย',good:'2 Numerical, correlation',kind:'scatter'},
+  {ico:'📦',nm:'Box Plot',when:'สรุปสถิติ+outlier',detail:'แสดง median, Q1, Q3, และ outliers ในกล่องเดียว เหมาะสำหรับเปรียบเทียบ distribution ระหว่างกลุ่ม',good:'Numerical, outlier detection',kind:'box'},
 ];
+function chartVisual(kind,size='thumb'){
+  const wide=size==='detail';
+  const w=wide?520:260;
+  const h=wide?180:110;
+  const bg=wide?'#ffffff':'#f8fafc';
+  if(kind==='bar') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h-28}" x2="${w-18}" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><rect x="58" y="${h-56}" width="38" height="${wide?74:34}" rx="6" fill="#2b52c8"/><rect x="114" y="${h-82}" width="38" height="${wide?100:50}" rx="6" fill="#0ea5e9"/><rect x="170" y="${h-48}" width="38" height="${wide?66:28}" rx="6" fill="#10b981"/><rect x="226" y="${h-100}" width="38" height="${wide?118:62}" rx="6" fill="#f59e0b"/><rect x="282" y="${h-68}" width="38" height="${wide?86:42}" rx="6" fill="#8b5cf6"/>${wide?`<text x="72" y="${h-14}" text-anchor="middle" fill="#64748b" font-size="12">A</text><text x="128" y="${h-14}" text-anchor="middle" fill="#64748b" font-size="12">B</text><text x="184" y="${h-14}" text-anchor="middle" fill="#64748b" font-size="12">C</text><text x="240" y="${h-14}" text-anchor="middle" fill="#64748b" font-size="12">D</text><text x="296" y="${h-14}" text-anchor="middle" fill="#64748b" font-size="12">E</text>`:''}</svg>`;
+  if(kind==='pie') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pie chart example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><g transform="translate(${wide?150:70},${wide?90:55})"><circle r="${wide?58:34}" fill="#e2e8f0"/><path d="M0,0 L0,-${wide?58:34} A${wide?58:34},${wide?58:34} 0 0,1 ${wide?50:28},${wide?20:12} Z" fill="#2b52c8"/><path d="M0,0 L${wide?50:28},${wide?20:12} A${wide?58:34},${wide?58:34} 0 0,1 ${wide?-20:-12},${wide?54:30} Z" fill="#10b981"/><path d="M0,0 L${wide?-20:-12},${wide?54:30} A${wide?58:34},${wide?58:34} 0 0,1 0,-${wide?58:34} Z" fill="#f59e0b"/></g><g fill="#64748b" font-size="12"><rect x="${wide?290:136}" y="${wide?40:18}" width="12" height="12" fill="#2b52c8"/><text x="${wide?310:154}" y="${wide?50:28}">A 40%</text><rect x="${wide?290:136}" y="${wide?62:40}" width="12" height="12" fill="#10b981"/><text x="${wide?310:154}" y="${wide?72:50}">B 30%</text><rect x="${wide?290:136}" y="${wide?84:62}" width="12" height="12" fill="#f59e0b"/><text x="${wide?310:154}" y="${wide?94:72}">C 30%</text></g></svg>`;
+  if(kind==='line') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h-28}" x2="${w-18}" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><path d="M52 ${h-50} L104 ${h-72} L156 ${h-58} L208 ${h-92} L260 ${h-78} L312 ${h-110}" fill="none" stroke="#2b52c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><g fill="#0ea5e9"><circle cx="52" cy="${h-50}" r="4"/><circle cx="104" cy="${h-72}" r="4"/><circle cx="156" cy="${h-58}" r="4"/><circle cx="208" cy="${h-92}" r="4"/><circle cx="260" cy="${h-78}" r="4"/><circle cx="312" cy="${h-110}" r="4"/></g></svg>`;
+  if(kind==='hist') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Histogram example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h-28}" x2="${w-18}" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><rect x="52" y="${h-42}" width="34" height="24" fill="#2b52c8" opacity=".85"/><rect x="88" y="${h-68}" width="34" height="50" fill="#2b52c8" opacity=".85"/><rect x="124" y="${h-92}" width="34" height="74" fill="#2b52c8" opacity=".85"/><rect x="160" y="${h-108}" width="34" height="90" fill="#2b52c8" opacity=".85"/><rect x="196" y="${h-90}" width="34" height="72" fill="#2b52c8" opacity=".85"/><rect x="232" y="${h-66}" width="34" height="48" fill="#2b52c8" opacity=".85"/><rect x="268" y="${h-40}" width="34" height="22" fill="#2b52c8" opacity=".85"/><path d="M50 ${h-42} C92 ${h-120}, 168 ${h-126}, 304 ${h-42}" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 5"/></svg>`;
+  if(kind==='scatter') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scatter plot example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h-28}" x2="${w-18}" y2="${h-28}" stroke="#94a3b8" stroke-width="2"/><g fill="#2b52c8" opacity=".85"><circle cx="70" cy="${h-48}" r="5"/><circle cx="98" cy="${h-66}" r="5"/><circle cx="128" cy="${h-54}" r="5"/><circle cx="156" cy="${h-82}" r="5"/><circle cx="186" cy="${h-96}" r="5"/><circle cx="216" cy="${h-72}" r="5"/><circle cx="244" cy="${h-110}" r="5"/><circle cx="274" cy="${h-92}" r="5"/><circle cx="302" cy="${h-126}" r="5"/></g></svg>`;
+  return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Box plot example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="${h/2}" x2="${w-18}" y2="${h/2}" stroke="#94a3b8" stroke-width="2"/><line x1="110" y1="${h/2}" x2="${wide?360:210}" y2="${h/2}" stroke="#0ea5e9" stroke-width="3"/><line x1="70" y1="${h/2}" x2="150" y2="${h/2}" stroke="#0ea5e9" stroke-width="3"/><rect x="150" y="${wide?54:28}" width="${wide?140:70}" height="${wide?72:44}" rx="10" fill="#dbeafe" stroke="#2b52c8" stroke-width="3"/><line x1="220" y1="${wide?54:28}" x2="220" y2="${wide?126:72}" stroke="#2b52c8" stroke-width="3"/><line x1="290" y1="${h/2}" x2="${wide?430:320}" y2="${h/2}" stroke="#0ea5e9" stroke-width="3"/><circle cx="${wide?448:336}" cy="${h/2}" r="5" fill="#ef4444"/><circle cx="${wide?464:352}" cy="${h/2+16}" r="5" fill="#ef4444"/></svg>`;
+}
 const cg=document.getElementById('chart-gallery');
 charts.forEach((c,i)=>{
-  const d=document.createElement('div');d.className='chart-card';d.innerHTML=`<div class="chart-ico">${c.ico}</div><div class="chart-nm">${c.nm}</div><div style="font-size:.75rem;color:var(--tl);margin-top:3px;">${c.when}</div>`;
+  const d=document.createElement('div');d.className='chart-card';d.innerHTML=`<div class="chart-thumb">${chartVisual(c.kind,'thumb')}</div><div class="chart-ico">${c.ico}</div><div class="chart-nm">${c.nm}</div><div style="font-size:.75rem;color:var(--tl);margin-top:3px;">${c.when}</div>`;
   d.onclick=()=>{
     document.querySelectorAll('.chart-card').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');
-    document.getElementById('chart-detail').innerHTML=`<div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;"><div style="font-size:2.5rem;">${c.ico}</div><div><div style="font-size:1rem;font-weight:700;color:var(--bd);margin-bottom:6px;">${c.nm}</div><div style="font-size:.88rem;line-height:1.65;">${c.detail}</div><div class="hbox g" style="margin-top:8px;font-size:.82rem;">✅ เหมาะกับ: <strong>${c.good}</strong></div></div></div>`;
+    document.getElementById('chart-detail').innerHTML=`<div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;"><div style="font-size:2.5rem;">${c.ico}</div><div style="flex:1;min-width:220px;"><div style="font-size:1rem;font-weight:700;color:var(--bd);margin-bottom:6px;">${c.nm}</div><div style="font-size:.88rem;line-height:1.65;">${c.detail}</div><div class="hbox g" style="margin-top:8px;font-size:.82rem;">✅ เหมาะกับ: <strong>${c.good}</strong></div><div class="chart-preview">${chartVisual(c.kind,'detail')}</div></div></div>`;
   };
   cg.appendChild(d);
 });
