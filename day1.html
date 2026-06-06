@@ -9,11 +9,15 @@
 :root{--bd:#1b3a8f;--bm:#2b52c8;--bl:#dce8ff;--am:#f59e0b;--cy:#0ea5e9;--gn:#10b981;--rd:#ef4444;--pu:#8b5cf6;--or:#f97316;--tx:#1e293b;--tl:#64748b;--bg:#eef2ff;--ca:#ffffff;--br:#e2e8f0;--r:12px;--sh:0 4px 24px rgba(27,58,143,.1);}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
-.hd{background:#122d7a; padding:32px 48px 28px;position:relative;overflow:hidden;}
+.hd{background:#14297a; padding:32px 180px 28px 48px;position:relative;overflow:hidden;}
 .hd::before{width:280px;height:280px;top:-80px;right:-40px;}
 .hd::after{width:180px;height:180px;bottom:-60px;left:30%;}
 .hd h1{color:#fff;font-size:1.9rem;font-weight:800;letter-spacing:-.5px;position:relative;}
 .hd p{color:rgba(255,255,255,.72);font-size:.95rem;margin-top:6px;position:relative;}
+.hd-home{position:absolute;top:32px;right:48px;z-index:1;}
+.hd-home .home-btn{border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 16px;border-radius:999px;font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+.hd-home .home-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);transform:translateY(-1px);}
+.hd-home .home-btn .ico{font-size:1rem;line-height:1;}
 .hd .badge{display:inline-block;background:var(--am);color:#1a1a1a;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;margin-top:10px;position:relative;}
 .tn{background:#14297a;display:flex;overflow-x:auto;padding:0 32px;scrollbar-width:none;flex-wrap:nowrap;}
 .tn::-webkit-scrollbar{display:none;}
@@ -184,6 +188,7 @@ canvas{border-radius:10px;display:block;margin:0 auto;}
 <div class="hd">
   <h1>DGA306: Data Analytics (Day 1)</h1>
   <p>Interactive Guide | Python & Data Exploration</p>
+  <div class="hd-home"><a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a></div>
 </div>
 
 <div class="tn">
