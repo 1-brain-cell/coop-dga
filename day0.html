@@ -669,8 +669,12 @@
       align-items: center;
       gap: 10px;
       cursor: grab;
-      transition: all .2s;
+      transition: border-color 0.2s, background-color 0.2s, transform 0.1s;
       user-select: none;
+    }
+
+    .step-item:active {
+      cursor: grabbing;
     }
 
     .step-item:hover {
@@ -681,6 +685,29 @@
     .step-item.dragging {
       opacity: .5;
       border-style: dashed;
+    }
+
+    .drag-handle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      cursor: grab;
+      padding-right: 2px;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    .step-item:hover .drag-handle {
+      color: var(--bm);
+    }
+
+    /* Drag Placeholder */
+    .drag-placeholder {
+      border: 2px dashed var(--bm);
+      background: rgba(59, 130, 246, 0.05);
+      border-radius: 8px;
+      box-sizing: border-box;
     }
 
     .step-item .step-no {
@@ -1290,7 +1317,8 @@
           </div>
           <div style="flex:1;min-width:200px;">
             <div id="var-timeline" style="display:flex;flex-direction:column;gap:10px;"></div>
-            <button id="btn-animate" class="btn sm" style="margin-top:10px;" onclick="animateVarChange()">▶️ รันทีละขั้น</button>
+            <button id="btn-animate" class="btn sm" style="margin-top:10px;" onclick="animateVarChange()">▶️
+              รันทีละขั้น</button>
           </div>
         </div>
       </div>
@@ -1300,23 +1328,19 @@
         <div class="card-s">Python มีประเภทข้อมูลหลายชนิด — แต่ละชนิดเหมาะกับงานต่างกัน</div>
         <div class="g2">
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div class="type-item" style="background:#dce8ff;"
-              onclick="showTypeDetail('int')">
+            <div class="type-item" style="background:#dce8ff;" onclick="showTypeDetail('int')">
               <div style="font-weight:700;font-size:.9rem;color:var(--bd);">🔢 int — จำนวนเต็ม</div>
               <code style="font-size:.82rem;color:var(--tl);">age = 21</code>
             </div>
-            <div class="type-item" style="background:#fef3c7;"
-              onclick="showTypeDetail('float')">
+            <div class="type-item" style="background:#fef3c7;" onclick="showTypeDetail('float')">
               <div style="font-weight:700;font-size:.9rem;color:#92400e;">🌊 float — ทศนิยม</div>
               <code style="font-size:.82rem;color:var(--tl);">gpa = 3.75</code>
             </div>
-            <div class="type-item" style="background:#dcfce7;"
-              onclick="showTypeDetail('str')">
+            <div class="type-item" style="background:#dcfce7;" onclick="showTypeDetail('str')">
               <div style="font-weight:700;font-size:.9rem;color:#166534;">📝 str — ข้อความ</div>
               <code style="font-size:.82rem;color:var(--tl);">name = "สมชาย"</code>
             </div>
-            <div class="type-item" style="background:#ede9fe;"
-              onclick="showTypeDetail('bool')">
+            <div class="type-item" style="background:#ede9fe;" onclick="showTypeDetail('bool')">
               <div style="font-weight:700;font-size:.9rem;color:#5b21b6;">✅ bool — ใช่/ไม่ใช่</div>
               <code style="font-size:.82rem;color:var(--tl);">passed = True</code>
             </div>
@@ -1363,7 +1387,7 @@
 
       <div class="card">
         <div class="card-t">📋 เรียงลำดับขั้นตอน</div>
-        <div class="card-s">ลาก ⬆️⬇️ เพื่อเรียงขั้นตอนการ "ล้างจาน" ให้ถูกต้อง แล้วกด ตรวจสอบ</div>
+        <div class="card-s">ลาก ⬆️⬇️ เพื่อเรียงขั้นตอนการ "กดเงินจากตู้ ATM" ให้ถูกต้อง แล้วกด ตรวจสอบ</div>
         <div class="step-list" id="step-list" ondragover="event.preventDefault()">
         </div>
         <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
@@ -1377,41 +1401,60 @@
         <div class="card-t">🗺️ Flowchart — แผนที่ของโปรแกรม</div>
         <div class="card-s">Flowchart คือภาพแสดงขั้นตอนการทำงานก่อนเขียนโค้ดจริง</div>
         <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
-          <div style="flex:1;min-width:200px;">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.85rem;">
-              <div
-                style="background:#dce8ff;border:2px solid var(--bm);border-radius:8px;padding:8px 20px;font-weight:600;">
-                เริ่มต้น (Start)</div>
-              <div style="color:var(--tl);">↓</div>
-              <div
-                style="background:#fef3c7;border:2px solid var(--am);border-radius:8px;padding:8px 20px;font-weight:600;">
-                รับ input: ชื่อ</div>
-              <div style="color:var(--tl);">↓</div>
-              <div
-                style="background:#ede9fe;border:2px solid var(--pu);border-radius:8px;padding:8px 20px;font-weight:600;transform:rotate(0deg);">
-                อายุ ≥ 18?</div>
-              <div style="display:flex;gap:20px;margin-top:4px;">
-                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-                  <span style="font-size:.75rem;color:var(--gn);">ใช่ ✓</span>
-                  <div
-                    style="background:#dcfce7;border:2px solid var(--gn);border-radius:8px;padding:6px 14px;font-size:.82rem;">
-                    เข้าได้</div>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-                  <span style="font-size:.75rem;color:var(--rd);">ไม่ ✗</span>
-                  <div
-                    style="background:#fee2e2;border:2px solid var(--rd);border-radius:8px;padding:6px 14px;font-size:.82rem;">
-                    เข้าไม่ได้</div>
-                </div>
-              </div>
-              <div style="color:var(--tl);">↓</div>
-              <div
-                style="background:#f1f5f9;border:2px solid var(--tl);border-radius:8px;padding:8px 20px;font-weight:600;">
-                จบ (End)</div>
-            </div>
+          <div style="flex:1.2;min-width:240px;display:flex;justify-content:center;align-items:center;">
+            <svg width="100%" height="325" viewBox="0 0 240 325" xmlns="http://www.w3.org/2000/svg" style="font-family: inherit; overflow: visible; max-width: 280px;">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#64748b" />
+                </marker>
+              </defs>
+
+              <!-- Start Node (Oval/Capsule) -->
+              <rect x="70" y="5" width="100" height="32" rx="16" ry="16" fill="#dce8ff" stroke="var(--bm)" stroke-width="2" />
+              <text x="120" y="25" text-anchor="middle" font-weight="600" fill="var(--bd)" font-size="12">เริ่มต้น (Start)</text>
+
+              <!-- Line from Start to Input -->
+              <path d="M 120 37 L 120 56" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+              <!-- Input Node (Sharp Rectangle) -->
+              <rect x="70" y="58" width="100" height="32" rx="0" ry="0" fill="#fef3c7" stroke="var(--am)" stroke-width="2" />
+              <text x="120" y="78" text-anchor="middle" font-weight="600" fill="#92400e" font-size="12">รับ input: ชื่อ</text>
+
+              <!-- Line from Input to Decision -->
+              <path d="M 120 90 L 120 108" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+              <!-- Decision Node (Diamond) -->
+              <polygon points="120,110 165,145 120,180 75,145" fill="#ede9fe" stroke="var(--pu)" stroke-width="2" />
+              <text x="120" y="149" text-anchor="middle" font-weight="600" fill="#5b21b6" font-size="12">อายุ ≥ 18?</text>
+
+              <!-- Yes branch (left) -->
+              <path d="M 75 145 L 45 145 L 45 198" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+              <text x="50" y="138" text-anchor="middle" fill="var(--gn)" font-weight="700" font-size="11">ใช่ ✓</text>
+
+              <!-- Yes Action Node (Sharp Rectangle) -->
+              <rect x="10" y="200" width="70" height="32" rx="0" ry="0" fill="#dcfce7" stroke="var(--gn)" stroke-width="2" />
+              <text x="45" y="220" text-anchor="middle" font-weight="600" fill="#166534" font-size="12">เข้าได้</text>
+
+              <!-- No branch (right) -->
+              <path d="M 165 145 L 195 145 L 195 198" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+              <text x="190" y="138" text-anchor="middle" fill="var(--rd)" font-weight="700" font-size="11">ไม่ ✗</text>
+
+              <!-- No Action Node (Sharp Rectangle) -->
+              <rect x="160" y="200" width="70" height="32" rx="0" ry="0" fill="#fee2e2" stroke="var(--rd)" stroke-width="2" />
+              <text x="195" y="220" text-anchor="middle" font-weight="600" fill="#b91c1c" font-size="12">เข้าไม่ได้</text>
+
+              <!-- Lines from Actions to End -->
+              <path d="M 45 232 L 45 260 L 195 260" stroke="#64748b" stroke-width="2" fill="none" />
+              <path d="M 195 232 L 195 260" stroke="#64748b" stroke-width="2" fill="none" />
+              <path d="M 120 260 L 120 278" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+              <!-- End Node (Oval/Capsule) -->
+              <rect x="70" y="280" width="100" height="32" rx="16" ry="16" fill="#f1f5f9" stroke="var(--tl)" stroke-width="2" />
+              <text x="120" y="300" text-anchor="middle" font-weight="600" fill="var(--tl)" font-size="12">จบ (End)</text>
+            </svg>
           </div>
           <div style="flex:1.5;min-width:240px;">
-            <div class="hbox blue"><strong>🔷 สี่เหลี่ยม</strong> = การกระทำ (action)</div>
+            <div class="hbox blue"><strong>☐ สี่เหลี่ยม</strong> = การกระทำ (action)</div>
             <div class="hbox amber"><strong>🔶 สี่เหลี่ยมข้าวหลามตัด</strong> = การตัดสินใจ (decision)</div>
             <div class="hbox green"><strong>⬬ วงรี</strong> = เริ่ม/จบ</div>
             <div style="margin-top:14px;font-size:.88rem;line-height:1.6;color:var(--tl);">การวาด Flowchart
@@ -1748,8 +1791,8 @@
     function animateVarChange() {
       const tl = document.getElementById('var-timeline');
       let varWord = document.getElementById('btn-animate');
-      if (varStep >= varSteps.length) { 
-        varStep = 0; tl.innerHTML = ''; 
+      if (varStep >= varSteps.length) {
+        varStep = 0; tl.innerHTML = '';
       }
       if (varStep == 2) {
         varWord.innerHTML = `🔄 เริ่มใหม่`;
@@ -1764,7 +1807,7 @@
       div.innerHTML = `<code style="font-weight:600;">${s.code}</code><span style="font-size:1.3rem;font-weight:800;color:var(--bd);">x = ${s.val}</span>`;
       tl.appendChild(div);
       varStep++;
-      
+
     }
     const typeDetails = {
       int: { title: '🔢 int — จำนวนเต็ม', desc: '- เก็บตัวเลขไม่มีจุดทศนิยม ทั้งบวก ลบ และศูนย์ <br> - Python รองรับตัวเลขขนาดใหญ่ไม่จำกัด', ex: 'age = 21<br>year = 2025<br>temp = -5' },
@@ -1778,11 +1821,33 @@
     }
 
     // === TAB 2: Computational Thinking ===
+    // const ctData = [
+    //   { title: '🔪 Decomposition — การแยกส่วน', desc: 'แบ่งปัญหาใหญ่ออกเป็นส่วนเล็กๆ ที่จัดการได้ง่ายกว่า', ex: 'ตัวอย่าง: "สร้างเว็บไซต์" → แยกเป็น: ออกแบบ UI → เขียน HTML → เขียน CSS → เขียน JavaScript → ทดสอบ' },
+    //   { title: '🔍 Pattern Recognition   — หารูปแบบ', desc: 'มองหาสิ่งที่ซ้ำๆ หรือคล้ายกัน เพื่อนำมาใช้ซ้ำแทนการเขียนใหม่ทุกครั้ง', ex: 'ตัวอย่าง: เว็บไซต์ทุกหน้ามี Header และ Footer เหมือนกัน → ทำ Template ครั้งเดียว ใช้ได้ทุกหน้า' },
+    //   { title: '🎭 Abstraction — การมองภาพรวม', desc: 'เน้นเฉพาะสิ่งที่จำเป็น ตัดรายละเอียดที่ไม่เกี่ยวข้องออก เหมือนดูแผนที่แทนดูดาวเทียม', ex: 'ตัวอย่าง: ฟังก์ชัน print() — เราไม่ต้องรู้ว่ามันทำงานยังไงข้างใน แค่รู้ว่า "ใส่ข้อความ → แสดงบนจอ"' },
+    //   { title: '📋 Algorithm — ลำดับขั้นตอน', desc: 'วางแผนแก้ปัญหาเป็นขั้นตอนที่ชัดเจน ไม่คลุมเครือ ทำตามได้ทันที', ex: 'ตัวอย่าง: Algorithm ค้นหาเพลง → 1) รับคำค้นหา 2) เปรียบเทียบกับทุกเพลง 3) แสดงเพลงที่ตรง 4) เรียงตาม relevance' }
+    // ];
     const ctData = [
-      { title: '🔪 Decomposition — การแยกส่วน', desc: 'แบ่งปัญหาใหญ่ออกเป็นส่วนเล็กๆ ที่จัดการได้ง่ายกว่า', ex: 'ตัวอย่าง: "สร้างเว็บไซต์" → แยกเป็น: ออกแบบ UI → เขียน HTML → เขียน CSS → เขียน JavaScript → ทดสอบ' },
-      { title: '🔍 Pattern Recognition — หารูปแบบ', desc: 'มองหาสิ่งที่ซ้ำๆ หรือคล้ายกัน เพื่อนำมาใช้ซ้ำแทนการเขียนใหม่ทุกครั้ง', ex: 'ตัวอย่าง: เว็บไซต์ทุกหน้ามี Header และ Footer เหมือนกัน → ทำ Template ครั้งเดียว ใช้ได้ทุกหน้า' },
-      { title: '🎭 Abstraction — การมองภาพรวม', desc: 'เน้นเฉพาะสิ่งที่จำเป็น ตัดรายละเอียดที่ไม่เกี่ยวข้องออก เหมือนดูแผนที่แทนดูดาวเทียม', ex: 'ตัวอย่าง: ฟังก์ชัน print() — เราไม่ต้องรู้ว่ามันทำงานยังไงข้างใน แค่รู้ว่า "ใส่ข้อความ → แสดงบนจอ"' },
-      { title: '📋 Algorithm — ลำดับขั้นตอน', desc: 'วางแผนแก้ปัญหาเป็นขั้นตอนที่ชัดเจน ไม่คลุมเครือ ทำตามได้ทันที', ex: 'ตัวอย่าง: Algorithm ค้นหาเพลง → 1) รับคำค้นหา 2) เปรียบเทียบกับทุกเพลง 3) แสดงเพลงที่ตรง 4) เรียงตาม relevance' }
+      {
+        title: '🔪 Decomposition — การแยกส่วน',
+        desc: 'แบ่งปัญหาใหญ่ออกเป็นงานย่อย ๆ ที่จัดการได้ง่ายขึ้น',
+        ex: 'ตัวอย่าง: "ขับรถไปเชียงใหม่" <br>แบ่งเป็น: <br>- วางแผนเส้นทาง <br>- เตรียมรถ <br>- เติมน้ำมัน <br>- ขับรถ <br>- หาที่พัก'
+      },
+      {
+        title: '🔍 Pattern Recognition — หารูปแบบ',
+        desc: 'มองหาสิ่งที่ซ้ำกันหรือคล้ายกัน เพื่อนำประสบการณ์เดิมมาช่วยแก้ปัญหา',
+        ex: 'ตัวอย่าง: ไม่ว่าจะขับรถไปเชียงใหม่ หัวหิน หรือพัทยา เรามักต้องตรวจสอบเส้นทาง เตรียมรถ และเติมน้ำมันก่อนออกเดินทาง'
+      },
+      {
+        title: '🎭 Abstraction — เลือกเฉพาะสิ่งสำคัญ',
+        desc: 'โฟกัสเฉพาะข้อมูลที่จำเป็น และละรายละเอียดที่ไม่เกี่ยวข้องออก',
+        ex: 'ตัวอย่าง: เมื่อดูแผนที่ เราสนใจเส้นทาง ระยะทาง และเวลาเดินทาง ไม่จำเป็นต้องรู้ชื่อบ้านทุกหลังที่อยู่ข้างทาง'
+      },
+      {
+        title: '📋 Algorithm — ลำดับขั้นตอน',
+        desc: 'กำหนดขั้นตอนการทำงานอย่างชัดเจน เพื่อให้สามารถทำตามได้ทีละขั้น',
+        ex: 'ตัวอย่าง: <br>1) กำหนดจุดหมายปลายทาง <br>2) ตรวจสอบเส้นทาง <br>3) ออกรถ <br>4) ขับตามเส้นทาง <br>5) ถึงจุดหมาย'
+      }
     ];
     function showCT(i, el) {
       document.querySelectorAll('.ct-card').forEach(c => c.classList.remove('sel'));
@@ -1792,7 +1857,7 @@
     }
 
     // === Sorting Steps ===
-    const correctOrder = ['เปิดก๊อกน้ำ', 'เอาจาน/ชาม/ช้อนใส่อ่าง', 'ทาน้ำยาล้างจาน', 'ถูด้วยฟองน้ำให้ทั่ว', 'ล้างน้ำออกให้สะอาด', 'คว่ำบนตะแกรงให้แห้ง'];
+    const correctOrder = ['ใส่บัตร ATM', 'กรอกรหัส PIN', 'เลือกเมนูถอนเงิน', 'ระบุจำนวนเงิน', 'รับเงินสด', 'รับบัตรคืน'];
     let steps = [...correctOrder];
     function shuffleSteps() {
       for (let i = steps.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[steps[i], steps[j]] = [steps[j], steps[i]]; }
@@ -1801,20 +1866,95 @@
     }
     function renderSteps() {
       const list = document.getElementById('step-list');
-      list.innerHTML = steps.map((s, i) => `<div class="step-item" draggable="true" data-idx="${i}" ondragstart="stepDragStart(event)" ondragover="stepDragOver(event)" ondrop="stepDrop(event,${i})">
-    <div class="step-no">${i + 1}</div><span style="font-size:.9rem;">${s}</span>
+      list.innerHTML = steps.map((s, i) => `<div class="step-item" draggable="true" data-idx="${i}" ondragstart="stepDragStart(event)" ondragover="stepDragOver(event)" ondragend="stepDragEnd(event)">
+    <div class="drag-handle" title="ลากเพื่อเรียงลำดับ">
+      <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="2" cy="3" r="1.5" fill="currentColor"/>
+        <circle cx="2" cy="9" r="1.5" fill="currentColor"/>
+        <circle cx="2" cy="15" r="1.5" fill="currentColor"/>
+        <circle cx="10" cy="3" r="1.5" fill="currentColor"/>
+        <circle cx="10" cy="9" r="1.5" fill="currentColor"/>
+        <circle cx="10" cy="15" r="1.5" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="step-no">${i + 1}</div><span style="font-size:.9rem;flex-grow: 1;">${s}</span>
   </div>`).join('');
     }
     let dragSrc = -1;
-    function stepDragStart(e) { dragSrc = +e.currentTarget.dataset.idx; e.currentTarget.classList.add('dragging'); }
-    function stepDragOver(e) { e.preventDefault(); }
-    function stepDrop(e, target) {
+    let dragEl = null;
+    let placeholder = null;
+
+    function stepDragStart(e) {
+      dragEl = e.currentTarget;
+      dragSrc = +dragEl.dataset.idx;
+      dragEl.classList.add('dragging');
+
+      placeholder = document.createElement('div');
+      placeholder.className = 'drag-placeholder';
+      placeholder.style.height = dragEl.offsetHeight + 'px';
+
+      setTimeout(() => {
+        dragEl.style.display = 'none';
+        dragEl.parentNode.insertBefore(placeholder, dragEl);
+      }, 0);
+    }
+
+    function stepDragOver(e) {
       e.preventDefault();
-      if (dragSrc === target) return;
-      const arr = [...steps];
-      const [moved] = arr.splice(dragSrc, 1);
-      arr.splice(target, 0, moved);
-      steps = arr;
+      e.dataTransfer.dropEffect = 'move';
+
+      const list = document.getElementById('step-list');
+      const target = e.target.closest('.step-item');
+
+      if (target && target !== dragEl) {
+        const rect = target.getBoundingClientRect();
+        const next = (e.clientY - rect.top) > (rect.height / 2);
+        list.insertBefore(placeholder, next ? target.nextSibling : target);
+      } else if (e.target === list) {
+        const children = Array.from(list.children).filter(c => c !== dragEl && c !== placeholder);
+        if (children.length === 0) {
+          list.appendChild(placeholder);
+        } else {
+          let inserted = false;
+          for (const child of children) {
+            const rect = child.getBoundingClientRect();
+            if (e.clientY < rect.top + rect.height / 2) {
+              list.insertBefore(placeholder, child);
+              inserted = true;
+              break;
+            }
+          }
+          if (!inserted) {
+            list.appendChild(placeholder);
+          }
+        }
+      }
+    }
+
+    function stepDragEnd(e) {
+      if (dragEl) {
+        dragEl.style.display = '';
+        dragEl.classList.remove('dragging');
+      }
+
+      if (placeholder && placeholder.parentNode) {
+        const list = document.getElementById('step-list');
+        const children = Array.from(list.children);
+        const activeChildren = children.filter(c => c !== dragEl);
+        const newIdx = activeChildren.indexOf(placeholder);
+
+        if (newIdx !== -1 && newIdx !== dragSrc) {
+          const arr = [...steps];
+          const [moved] = arr.splice(dragSrc, 1);
+          arr.splice(newIdx, 0, moved);
+          steps = arr;
+        }
+        placeholder.remove();
+      }
+
+      dragEl = null;
+      placeholder = null;
+      dragSrc = -1;
       renderSteps();
     }
     function checkSteps() {
