@@ -14,10 +14,15 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--txt);line
 .hdr{
   background:#14297a;
   color:#fff;
-  padding:40px 32px 28px; /* ปรับ */
+  padding:40px 180px 28px 32px; /* ปรับ */
+  position:relative;
 }
 .hdr h1{font-size:30px;font-weight:700;line-height:1.2;margin-bottom:8px;}
 .hdr .sub{font-size:17px;opacity:.9;}
+.hdr-home{position:absolute;top:28px;right:32px;z-index:1;}
+.hdr-home .home-btn{border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 16px;border-radius:999px;font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+.hdr-home .home-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);transform:translateY(-1px);}
+.hdr-home .home-btn .ico{font-size:1rem;line-height:1;}
 
 /* TABS */
 .tnav{
@@ -339,6 +344,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--txt);line
 <header class="hdr">
   <h1>DGA306: Data Analytics Techniques</h1>
   <p class="sub">Interactive Guide | Data Warehouse: Analysis, Design and Implement</p>
+  <div class="hdr-home"><a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a></div>
 </header>
 
 <nav class="tnav">

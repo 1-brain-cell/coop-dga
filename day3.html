@@ -36,10 +36,14 @@ body {
 .site-header {
   background: linear-gradient(135deg, var(--primary) 0%, #0e1f5e 100%);
   color: #fff;
-  padding: 28px 40px 22px;
+  padding: 28px 180px 22px 40px;
   position: relative;
   overflow: hidden;
 }
+.site-home{position:absolute;top:28px;right:40px;z-index:1;}
+.site-home .home-btn{border:2px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 16px;border-radius:999px;font-family:'Sarabun',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+.site-home .home-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);transform:translateY(-1px);}
+.site-home .home-btn .ico{font-size:1rem;line-height:1;}
 .header-badge {
   display: inline-block;
   background: var(--accent);
@@ -841,6 +845,7 @@ body {
 <header class="site-header">
   <h1>DGA306: Data Analytics Techniques</h1>
   <p class="subtitle">Interactive Guide | Data Warehouse: Analysis, Design and Implement</p>
+  <div class="site-home"><a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a></div>
 </header>
 
 <nav class="tab-bar" id="tabBar">
