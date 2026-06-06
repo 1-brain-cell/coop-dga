@@ -317,6 +317,15 @@
       color: #fff;
     }
 
+    .btn.rd {
+      background: var(--rd);
+      color: #fff;
+    }
+
+    .btn.rd:hover {
+      background: #dc2626;
+    }
+
     .btn.sm {
       padding: 7px 15px;
       font-size: .82rem;
@@ -503,6 +512,30 @@
       font-size: .7rem;
       color: var(--tl);
       margin-top: 4px;
+    }
+
+    .var-box .del-btn {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: var(--tl);
+      font-size: 1.1rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 5px;
+      border-radius: 50%;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .var-box .del-btn:hover {
+      color: var(--rd);
+      background: rgba(239, 68, 68, .1);
     }
 
     .assign-form {
@@ -991,6 +1024,20 @@
       box-shadow: var(--sh);
     }
 
+    .type-item {
+      border-radius: 8px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all .2s ease;
+      border: 2px solid transparent;
+    }
+
+    .type-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(27, 58, 143, .12);
+      border-color: var(--bm);
+    }
+
     .dtype-card .d-ico {
       font-size: 2.2rem;
       margin-bottom: 8px;
@@ -1177,8 +1224,12 @@
           <div class="assign-form" style="margin-bottom:16px;">
             <input type="text" id="vname" placeholder="ชื่อตัวแปร เช่น name" style="width:160px;">
             <span class="eq-sign">=</span>
-            <input type="text" id="vval" placeholder="ค่า เช่น สมชาย" style="width:160px;">
-            <select id="vtype">
+            <div id="vval-wrapper" style="display:flex;align-items:center;gap:4px;">
+              <span id="quote-start" style="font-size:1.3rem;font-weight:800;color:var(--bm);">"</span>
+              <input type="text" id="vval" placeholder="ค่า เช่น สมชาย" style="width:160px;">
+              <span id="quote-end" style="font-size:1.3rem;font-weight:800;color:var(--bm);">"</span>
+            </div>
+            <select id="vtype" onchange="updateValPlaceholder()">
               <option value="str">📝 ข้อความ (str)</option>
               <option value="int">🔢 ตัวเลข (int)</option>
               <option value="bool">✅ บูล (bool)</option>
@@ -1208,11 +1259,11 @@
             <p style="font-size:.88rem;font-weight:700;color:var(--rd);margin-bottom:8px;">❌ ผิด</p>
             <div style="display:flex;flex-direction:column;gap:6px;">
               <code
-                style="background:#fef2f2;padding:6px 12px;border-radius:6px;font-size:.88rem;">2name = "สมชาย" <span style="color:var(--rd);">← ขึ้นต้นด้วยตัวเลข</span></code>
+                style="background:#fef2f2;padding:6px 12px;border-radius:6px;font-size:.88rem;"><span style="background:#fca5a5;color:#991b1b;border-radius:3px;padding:0 4px;font-weight:700;">2</span>name = "สมชาย" <span style="color:var(--rd);">← ขึ้นต้นด้วยตัวเลข</span></code>
               <code
-                style="background:#fef2f2;padding:6px 12px;border-radius:6px;font-size:.88rem;">my name = 25 <span style="color:var(--rd);">← มีช่องว่าง</span></code>
+                style="background:#fef2f2;padding:6px 12px;border-radius:6px;font-size:.88rem;">my<span style="background:#fca5a5;border-radius:3px;padding:0 6px;margin:0 2px;">&nbsp;</span>name = 25 <span style="color:var(--rd);">← มีช่องว่าง</span></code>
               <code
-                style="background:#fef2f2;padding:6px 12px;border-radius:6px;font-size:.88rem;">if = 100 <span style="color:var(--rd);">← คำสงวน</span></code>
+                style="background:#fef2f2;padding:6px 12px;border-radius:6px;font-size:.88rem;"><span style="background:#fca5a5;color:#991b1b;border-radius:3px;padding:0 4px;font-weight:700;">if</span> = 100 <span style="color:var(--rd);">← คำสงวน</span></code>
             </div>
           </div>
         </div>
@@ -1226,17 +1277,20 @@
             <div class="code-preview">
               <span class="kw">x</span> = <span class="fn">10</span>
               <span class="cm"># x = 10</span>
+              <br>
 
               <span class="kw">x</span> = <span class="fn">25</span>
               <span class="cm"># x = 25 ทับค่าเก่า</span>
+              <br>
 
               <span class="kw">x</span> = <span class="kw">x</span> + <span class="fn">5</span>
               <span class="cm"># x = 30</span>
+              <br>
             </div>
           </div>
           <div style="flex:1;min-width:200px;">
             <div id="var-timeline" style="display:flex;flex-direction:column;gap:10px;"></div>
-            <button class="btn sm" style="margin-top:10px;" onclick="animateVarChange()">▶️ รันทีละขั้น</button>
+            <button id="btn-animate" class="btn sm" style="margin-top:10px;" onclick="animateVarChange()">▶️ รันทีละขั้น</button>
           </div>
         </div>
       </div>
@@ -1246,22 +1300,22 @@
         <div class="card-s">Python มีประเภทข้อมูลหลายชนิด — แต่ละชนิดเหมาะกับงานต่างกัน</div>
         <div class="g2">
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:#dce8ff;border-radius:8px;padding:12px 16px;cursor:pointer;"
+            <div class="type-item" style="background:#dce8ff;"
               onclick="showTypeDetail('int')">
               <div style="font-weight:700;font-size:.9rem;color:var(--bd);">🔢 int — จำนวนเต็ม</div>
               <code style="font-size:.82rem;color:var(--tl);">age = 21</code>
             </div>
-            <div style="background:#fef3c7;border-radius:8px;padding:12px 16px;cursor:pointer;"
+            <div class="type-item" style="background:#fef3c7;"
               onclick="showTypeDetail('float')">
               <div style="font-weight:700;font-size:.9rem;color:#92400e;">🌊 float — ทศนิยม</div>
               <code style="font-size:.82rem;color:var(--tl);">gpa = 3.75</code>
             </div>
-            <div style="background:#dcfce7;border-radius:8px;padding:12px 16px;cursor:pointer;"
+            <div class="type-item" style="background:#dcfce7;"
               onclick="showTypeDetail('str')">
               <div style="font-weight:700;font-size:.9rem;color:#166534;">📝 str — ข้อความ</div>
               <code style="font-size:.82rem;color:var(--tl);">name = "สมชาย"</code>
             </div>
-            <div style="background:#ede9fe;border-radius:8px;padding:12px 16px;cursor:pointer;"
+            <div class="type-item" style="background:#ede9fe;"
               onclick="showTypeDetail('bool')">
               <div style="font-weight:700;font-size:.9rem;color:#5b21b6;">✅ bool — ใช่/ไม่ใช่</div>
               <code style="font-size:.82rem;color:var(--tl);">passed = True</code>
@@ -1609,12 +1663,53 @@
 
     // === TAB 1: Variables ===
     let varBoxes = [];
+    function updateValPlaceholder() {
+      const tp = document.getElementById('vtype').value;
+      const valInput = document.getElementById('vval');
+      const qStart = document.getElementById('quote-start');
+      const qEnd = document.getElementById('quote-end');
+      valInput.value = '';
+      if (tp === 'str') {
+        valInput.type = 'text';
+        valInput.removeAttribute('step');
+        valInput.placeholder = 'ค่า เช่น สมชาย';
+        if (qStart && qEnd) {
+          qStart.style.display = 'inline';
+          qEnd.style.display = 'inline';
+        }
+      } else {
+        if (qStart && qEnd) {
+          qStart.style.display = 'none';
+          qEnd.style.display = 'none';
+        }
+        if (tp === 'int') {
+          valInput.type = 'number';
+          valInput.step = '1';
+          valInput.placeholder = 'ค่า เช่น 2';
+        } else if (tp === 'bool') {
+          valInput.type = 'text';
+          valInput.removeAttribute('step');
+          valInput.placeholder = 'ค่า เช่น True';
+        }
+      }
+    }
     function assignVar() {
       const nm = document.getElementById('vname').value.trim();
       const vl = document.getElementById('vval').value.trim();
       const tp = document.getElementById('vtype').value;
       if (!nm || !vl) { alert('กรุณากรอกชื่อตัวแปรและค่า'); return; }
-      if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(nm)) { alert('ชื่อตัวแปรไม่ถูกต้อง!\n- ต้องขึ้นต้นด้วยตัวอักษรหรือ _\n- ห้ามมีช่องว่าง'); return; }
+      if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(nm)) { alert('ชื่อตัวแปรไม่ถูกต้อง!\n- ต้องเป็นตัวอักษรภาษาอังกฤษ\n- ต้องขึ้นต้นด้วยตัวอักษรหรือ _\n- ห้ามมีช่องว่าง'); return; }
+      if (tp === 'int') {
+        if (!/^-?\d+$/.test(vl)) {
+          alert('ค่าของตัวแปรประเภท int ต้องเป็นจำนวนเต็มเท่านั้น (ห้ามมีจุดทศนิยม)');
+          return;
+        }
+      } else if (tp === 'bool') {
+        if (vl !== 'True' && vl !== 'False') {
+          alert('ค่าของตัวแปรประเภท bool ต้องเป็น True หรือ False เท่านั้น');
+          return;
+        }
+      }
       varBoxes = varBoxes.filter(b => b.name !== nm);
       varBoxes.push({ name: nm, val: vl, type: tp });
       renderBoxes();
@@ -1625,11 +1720,24 @@
     function renderBoxes() {
       const c = document.getElementById('var-boxes');
       if (!varBoxes.length) { c.innerHTML = '<div style="color:var(--tl);font-size:.88rem;padding:20px;border:2px dashed var(--br);border-radius:10px;text-align:center;width:100%;">กล่องตัวแปรจะปรากฏที่นี่ 👆 ลองสร้างดูสิ!</div>'; return; }
-      c.innerHTML = varBoxes.map(b => `<div class="var-box filled anim">
+      c.innerHTML = varBoxes.map(b => {
+        let displayVal = b.val;
+        if (b.type === 'str') {
+          if (!displayVal.startsWith('"') && !displayVal.startsWith("'")) {
+            displayVal = `"${displayVal}"`;
+          }
+        }
+        return `<div class="var-box filled anim">
+    <button class="del-btn" onclick="deleteVar('${b.name}')" title="ลบตัวแปร">&times;</button>
     <div class="vname">${b.name}</div>
-    <div class="vval">${typeIcons[b.type] || '📦'} ${b.val}</div>
+    <div class="vval">${typeIcons[b.type] || '📦'} ${displayVal}</div>
     <div class="vtype">${b.type}</div>
-  </div>`).join('');
+  </div>`;
+      }).join('');
+    }
+    function deleteVar(nm) {
+      varBoxes = varBoxes.filter(b => b.name !== nm);
+      renderBoxes();
     }
     let varStep = 0;
     const varSteps = [
@@ -1639,19 +1747,30 @@
     ];
     function animateVarChange() {
       const tl = document.getElementById('var-timeline');
-      if (varStep >= varSteps.length) { varStep = 0; tl.innerHTML = ''; }
+      let varWord = document.getElementById('btn-animate');
+      if (varStep >= varSteps.length) { 
+        varStep = 0; tl.innerHTML = ''; 
+      }
+      if (varStep == 2) {
+        varWord.innerHTML = `🔄 เริ่มใหม่`;
+        varWord.classList.add('rd');
+      } else {
+        varWord.innerHTML = `▶️ รันทีละขั้น`;
+        varWord.classList.remove('rd');
+      }
       const s = varSteps[varStep];
       const div = document.createElement('div');
       div.style.cssText = `background:${s.color};border-radius:8px;padding:10px 14px;font-size:.88rem;animation:fadeIn .3s ease;display:flex;justify-content:space-between;align-items:center;`;
       div.innerHTML = `<code style="font-weight:600;">${s.code}</code><span style="font-size:1.3rem;font-weight:800;color:var(--bd);">x = ${s.val}</span>`;
       tl.appendChild(div);
       varStep++;
+      
     }
     const typeDetails = {
-      int: { title: '🔢 int — จำนวนเต็ม', desc: 'เก็บตัวเลขไม่มีจุดทศนิยม ทั้งบวก ลบ และศูนย์ Python รองรับตัวเลขขนาดใหญ่ไม่จำกัด', ex: 'age = 21<br>year = 2025<br>temp = -5' },
-      float: { title: '🌊 float — ทศนิยม', desc: 'เก็บตัวเลขที่มีจุดทศนิยม ใช้สำหรับการวัด คำนวณทางวิทยาศาสตร์ หรือค่าที่ต้องการความแม่นยำ', ex: 'gpa = 3.75<br>pi = 3.14159<br>price = 99.99' },
-      str: { title: '📝 str — ข้อความ', desc: 'เก็บข้อความหรือตัวอักษรใดก็ได้ ต้องครอบด้วย " " หรือ \' \' สามารถทำ String Operations ได้หลากหลาย', ex: 'name = "สมชาย"<br>city = \'กรุงเทพ\'<br>greeting = "สวัสดี!"' },
-      bool: { title: '✅ bool — บูลีน', desc: 'มีแค่สองค่า: True หรือ False ใช้สำหรับเงื่อนไข (if) และตรรกะ ตัว B ต้องพิมพ์ใหญ่เสมอ', ex: 'is_student = True<br>has_paid = False<br>passed = (score >= 50)' }
+      int: { title: '🔢 int — จำนวนเต็ม', desc: '- เก็บตัวเลขไม่มีจุดทศนิยม ทั้งบวก ลบ และศูนย์ <br> - Python รองรับตัวเลขขนาดใหญ่ไม่จำกัด', ex: 'age = 21<br>year = 2025<br>temp = -5' },
+      float: { title: '🌊 float — ทศนิยม', desc: '- เก็บตัวเลขที่มีจุดทศนิยม <br> - ใช้สำหรับการวัด คำนวณทางวิทยาศาสตร์ หรือค่าที่ต้องการความแม่นยำ', ex: 'gpa = 3.75<br>pi = 3.14159<br>price = 99.99' },
+      str: { title: '📝 str — ข้อความ', desc: '- เก็บข้อความหรือตัวอักษรใดก็ได้ <br> - ต้องครอบด้วย " " หรือ \' \' <br> - สามารถทำ String Operations ได้หลากหลาย', ex: 'name = "สมชาย"<br>city = \'กรุงเทพ\'<br>greeting = "สวัสดี!"' },
+      bool: { title: '✅ bool — บูลีน', desc: '- มีแค่สองค่า: True หรือ False <br> - ใช้สำหรับเงื่อนไข (if) และตรรกะ <br> - ตัว B ต้องพิมพ์ใหญ่เสมอ', ex: 'is_student = True<br>has_paid = False<br>passed = (score >= 50)' }
     };
     function showTypeDetail(t) {
       const d = typeDetails[t];
@@ -1706,6 +1825,15 @@
       fb.textContent = ok ? '🎉 ถูกต้อง! ลำดับขั้นตอนสมบูรณ์แบบ' : '❌ ยังไม่ถูก ลองเรียงใหม่ดูนะ ลองคิดว่าต้องทำอะไรก่อน-หลัง';
     }
     shuffleSteps();
+    updateValPlaceholder();
+    document.getElementById('vval').addEventListener('keydown', function (e) {
+      const tp = document.getElementById('vtype').value;
+      if (tp === 'int') {
+        if (e.key === '.' || e.key === ',' || e.key === 'e' || e.key === 'E' || e.key === '+') {
+          e.preventDefault();
+        }
+      }
+    });
 
     // === TAB 3: Flow ===
     const flowDesc = [
