@@ -45,6 +45,51 @@
       padding: 32px 48px 28px;
       position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .hd-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hd-home {
+      position: relative;
+      z-index: 1;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .hd-home .home-btn {
+      border: 2px solid rgba(255, 255, 255, .28);
+      background: rgba(255, 255, 255, .06);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      text-decoration: none;
+    }
+
+    .hd-home .home-btn:hover {
+      background: rgba(255, 255, 255, .14);
+      border-color: rgba(255, 255, 255, .45);
+      transform: translateY(-1px);
+    }
+
+    .hd-home .home-btn .ico {
+      font-size: 1rem;
+      line-height: 1;
     }
 
     .hd::before {
@@ -986,8 +1031,13 @@
 
   <!-- HEADER -->
   <div class="hd">
-    <h1>DGA306: Data Analytics (Day 0)</h1>
-    <p>Interactive Guide</p>
+    <div class="hd-copy">
+      <h1>DGA306: Data Analytics (Day 0)</h1>
+      <p>Interactive Guide</p>
+    </div>
+    <div class="hd-home">
+      <a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a>
+    </div>
   </div>
 
   <!-- TAB NAV -->
