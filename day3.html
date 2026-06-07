@@ -160,6 +160,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
+  align-items: start;
   margin-bottom: 28px;
 }
 .etl-card {
@@ -171,6 +172,8 @@ body {
   cursor: pointer;
   transition: all .25s;
   position: relative;
+  align-self: start;
+  height: fit-content;
 }
 .etl-card:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); transform: translateY(-3px); }
 .etl-card.revealed { border-color: var(--success); background: #f0faf5; }
@@ -831,6 +834,7 @@ body {
   font-family: 'Courier New', monospace;
   font-size: 12.5px;
   line-height: 1.8;
+  white-space: pre-wrap;
   overflow-x: auto;
   margin-top: 12px;
 }
@@ -1011,7 +1015,7 @@ body {
 
     <div class="dnd-btns">
       <button class="btn" onclick="checkDnD()">ตรวจคำตอบ</button>
-      <button class="btn outline" onclick="resetDnD()">เริ่มใหม่</button>
+      <button class="btn outline" id="reset-dnd-btn" style="display: none;" onclick="resetDnD()">เริ่มใหม่</button>
     </div>
     <div class="dnd-result" id="dndResult"></div>
   </div>
@@ -1232,6 +1236,10 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         <button class="quiz-opt" onclick="answerQuiz('q3',this,'same')">🔀 โหลดพร้อมกันได้เลย</button>
       </div>
       <div class="quiz-feedback" id="q3-fb"></div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-start;margin-top:14px;">
+      <button class="btn outline" id="reset-schema-btn" style="display: none;" onclick="resetSchemaQuiz()"> เริ่มใหม่</button>
     </div>
   </div>
 </div>
@@ -1478,6 +1486,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
     </div>
 
   </div>
+  <div style="display:flex;justify-content:flex-start;margin-top:20px;">
+    <button class="btn outline" id="reset-visual-btn" style="display: none;" onclick="resetVisualQuiz()">เริ่มใหม่</button>
+  </div>
   <div id="final-score-box">
     <h3>🏆 ผลคะแนนทั้งหมด</h3>
     <div id="final-score-num">0/8</div>
@@ -1676,6 +1687,10 @@ wide_back.columns.name = <span class="kw">None</span>
       </div>
 
     </div>
+
+    <div style="display:flex;justify-content:flex-start;margin-top:20px;">
+      <button class="btn outline" id="reset-wl-btn" style="display: none;" onclick="resetWLQuiz()">เริ่มใหม่</button>
+    </div>
   </div>
 </div>
 
@@ -1725,6 +1740,8 @@ function dropItem(e) {
   zone.classList.remove('correct','wrong');
   dragging._dropped = true;
   dragging = null;
+  const resetBtn = document.getElementById('reset-dnd-btn');
+  if (resetBtn) resetBtn.style.display = 'inline-block';
 }
 function checkDnD() {
   let correct = 0;
@@ -1752,6 +1769,8 @@ function resetDnD() {
   document.querySelectorAll('.drag-chip').forEach(c => { c.classList.remove('placed'); c._dropped=false; });
   document.getElementById('dndResult').style.display='none';
   dragging=null;
+  const resetBtn = document.getElementById('reset-dnd-btn');
+  if (resetBtn) resetBtn.style.display = 'none';
 }
 
 // ── Schema toggle ──────────────────────────────────────────
@@ -1782,6 +1801,26 @@ function answerQuiz(qid, btn, choice) {
   const fb = document.getElementById(qid+'-fb');
   fb.textContent = quizFeedback[qid][choice];
   fb.className = `quiz-feedback show ${choice===correct?'correct':'wrong'}`;
+  const resetBtn = document.getElementById('reset-schema-btn');
+  if (resetBtn) resetBtn.style.display = 'inline-block';
+}
+
+function resetSchemaQuiz() {
+  Object.keys(quizAnswers).forEach(qid => {
+    const card = document.getElementById(qid);
+    if (!card) return;
+    card.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.disabled = false;
+      opt.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+    });
+    const fb = document.getElementById(qid + '-fb');
+    if (fb) {
+      fb.textContent = '';
+      fb.className = 'quiz-feedback';
+    }
+  });
+  const resetBtn = document.getElementById('reset-schema-btn');
+  if (resetBtn) resetBtn.style.display = 'none';
 }
 
 // ── Visualization quiz ─────────────────────────────────────
@@ -1808,6 +1847,32 @@ function answerViz(id, btn, choice, correct) {
     box.style.display='block';
     document.getElementById('final-score-num').textContent = `${vizScore}/${total}`;
   }
+  const resetBtn = document.getElementById('reset-visual-btn');
+  if (resetBtn) resetBtn.style.display = 'inline-block';
+}
+
+function resetVisualQuiz() {
+  vizScore = 0;
+
+  Object.keys(vizAnswered).forEach(id => {
+    delete vizAnswered[id];
+  });
+
+  document.querySelectorAll('.viz-opt-btn').forEach(btn => {
+    btn.disabled = false;
+    btn.classList.remove('correct-pick', 'wrong-pick', 'show-correct');
+  });
+
+  document.querySelectorAll('.viz-explain').forEach(explain => {
+    explain.classList.remove('show');
+  });
+
+  const box = document.getElementById('final-score-box');
+  if (box) box.style.display = 'none';
+  const scoreNum = document.getElementById('final-score-num');
+  if (scoreNum) scoreNum.textContent = '0/8';
+  const resetBtn = document.getElementById('reset-visual-btn');
+  if (resetBtn) resetBtn.style.display = 'none';
 }
 
 // ── Wide/Long identify ─────────────────────────────────────
@@ -1818,10 +1883,21 @@ function identifyFormat(btn, choice, correct) {
   btn.classList.add(choice===correct?'correct-pick':'wrong-pick');
   if (choice !== correct) {
     btns.forEach(b => {
-      const bc = b.getAttribute('onclick').match(/'([^']+)','[^']+'\)/)?.[1];
+      const bc = b.getAttribute('onclick').match(/'([^']+)'\s*,\s*'([^']+)'/)?.[1];
       if (bc === correct) b.classList.add('correct-pick');
     });
   }
+  const resetBtn = document.getElementById('reset-wl-btn');
+  if (resetBtn) resetBtn.style.display = 'inline-block';
+}
+
+function resetWLQuiz() {
+  document.querySelectorAll('.wl-identify-cards .id-btn').forEach(btn => {
+    btn.disabled = false;
+    btn.classList.remove('correct-pick', 'wrong-pick');
+  });
+  const resetBtn = document.getElementById('reset-wl-btn');
+  if (resetBtn) resetBtn.style.display = 'none';
 }
 </script>
 </body>
