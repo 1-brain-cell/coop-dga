@@ -613,6 +613,7 @@
                             คะแนนรวม: <span id="lblScore">0</span>
                         </div>
                         <button id="btnNext" class="btn-next">ด่านถัดไป <i class="fa-solid fa-arrow-right"></i></button>
+                        <button id="btnReset" class="btn-next" style="display: none;" onclick="resetGame()"><i class="fa-solid fa-rotate-left"></i> เริ่มใหม่</button>
                     </div>
                 </div>
             </div>
@@ -1052,30 +1053,36 @@
         ];
 
         function initGame() {
-            if (currentLvl >= levels.length) {
-            document.getElementById('levelTitle').innerText = "🎉 ยินดีด้วย! คุณผ่านการทดสอบทั้งหมดแล้ว";
-            document.getElementById('levelPrompt').innerText = "คุณมีความเข้าใจในหลักการ Data Visualization ที่ถูกต้อง";
-            document.getElementById('btnHint').style.display = 'none';
-            document.getElementById('statusBox').style.display = 'none';
-            document.getElementById('levelReference').style.display = 'none';
-            document.getElementById('btnNext').style.display = 'none';
-            document.getElementById('lblLevel').innerText = levels.length;
+            ctx.textAlign = "left";
+            ctx.textBaseline = "alphabetic";
 
-            ctx.fillStyle = "#ffffff"; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#1e3a8a"; 
-            ctx.font = "bold 30px Sarabun"; 
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText("จบกิจกรรม Spot the Flaw", canvas.width / 2, canvas.height / 2);
-            return;
-        }
+            if (currentLvl >= levels.length) {
+                document.getElementById('levelTitle').innerText = "🎉 ยินดีด้วย! คุณผ่านการทดสอบทั้งหมดแล้ว";
+                document.getElementById('levelPrompt').innerText = "คุณมีความเข้าใจในหลักการ Data Visualization ที่ถูกต้อง";
+                document.getElementById('btnHint').style.display = 'none';
+                document.getElementById('statusBox').style.display = 'none';
+                document.getElementById('levelReference').style.display = 'none';
+                document.getElementById('btnNext').style.display = 'none';
+                document.getElementById('lblLevel').innerText = levels.length;
+                document.getElementById('btnReset').style.display = 'block';
+
+                ctx.fillStyle = "#ffffff"; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#1e3a8a"; 
+                ctx.font = "bold 30px Sarabun"; 
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("จบกิจกรรม Spot the Flaw", canvas.width / 2, canvas.height / 2);
+                return;
+            }
 
             const lvl = levels[currentLvl];
             document.getElementById('lblLevel').innerText = currentLvl + 1;
             document.getElementById('levelTitle').innerText = lvl.title;
             document.getElementById('levelPrompt').innerText = lvl.prompt;
 
+            document.getElementById('btnHint').style.display = '';
+            document.getElementById('btnReset').style.display = 'none';
             document.getElementById('statusBox').style.display = 'none';
             document.getElementById('btnNext').style.display = 'none';
             gameSolved = false;
@@ -1138,6 +1145,13 @@
         document.getElementById('btnNext').addEventListener('click', () => {
             currentLvl++; initGame();
         });
+
+        function resetGame() {
+            currentLvl = 0;
+            score = 0;
+            document.getElementById('lblScore').innerText = score;
+            initGame();
+        }
 
         initGame();
     </script>
