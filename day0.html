@@ -40,30 +40,19 @@
     }
 
     /* HEADER */
-    .hd {
-      background: #122d7a;
-      padding: 32px 48px 28px;
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 32px 24px 24px 24px;
+      text-align: left;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
     }
 
-    .hd-copy {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hd-home {
-      position: relative;
-      z-index: 1;
-      margin-left: auto;
-      white-space: nowrap;
-    }
-
-    .hd-home .home-btn {
+    .header-home {
+      position: absolute;
+      top: 50px;
+      right: 24px;
       border: 2px solid rgba(255, 255, 255, .28);
       background: rgba(255, 255, 255, .06);
       color: #fff;
@@ -77,51 +66,50 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-
       text-decoration: none;
+      z-index: 1;
     }
 
-    .hd-home .home-btn:hover {
+    .header-home:hover {
       background: rgba(255, 255, 255, .14);
       border-color: rgba(255, 255, 255, .45);
       transform: translateY(-1px);
     }
 
-    .hd-home .home-btn .ico {
+    .header-home .ico {
       font-size: 1rem;
       line-height: 1;
     }
 
-    .hd::before {
-      width: 280px;
-      height: 280px;
-      top: -80px;
-      right: -40px;
+    header h1 {
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.2;
+      font-size: 28px;
     }
 
-    .hd::after {
-      width: 180px;
-      height: 180px;
-      bottom: -60px;
-      left: 30%;
+    header p {
+      font-size: 18px;
+      color: #bfdbfe;
+      font-weight: 500;
     }
 
-    .hd h1 {
-      color: #fff;
-      font-size: 1.9rem;
-      font-weight: 800;
-      letter-spacing: -.5px;
-      position: relative;
+    @media (max-width: 768px) {
+      header {
+        padding: 24px 20px 24px 20px !important;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .header-home {
+        position: static;
+        align-self: flex-start;
+        margin-top: 5px;
+      }
     }
 
-    .hd p {
-      color: rgba(255, 255, 255, .72);
-      font-size: .95rem;
-      margin-top: 6px;
-      position: relative;
-    }
-
-    .hd .badge {
+    header .badge {
       display: inline-block;
       background: var(--am);
       color: #1a1a1a;
@@ -1104,15 +1092,15 @@
 <body>
 
   <!-- HEADER -->
-  <div class="hd">
-    <div class="hd-copy">
-      <h1>DGA306: Data Analytics (Day 0)</h1>
-      <p>Interactive Guide</p>
+  <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
+    <div class="max-w-7xl flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Analytics (Day 0)</h1>
+        <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide</p>
+      </div>
     </div>
-    <div class="hd-home">
-      <a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a>
-    </div>
-  </div>
+    <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
+  </header>
 
   <!-- TAB NAV -->
   <div class="tn">

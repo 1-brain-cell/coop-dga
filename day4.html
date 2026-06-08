@@ -16,14 +16,18 @@
         }
 
         header {
+            background: #1e3a8a;
+            color: white;
+            padding: 32px 24px 64px 24px;
+            text-align: left;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             position: relative;
         }
 
         .header-home {
             position: absolute;
-            top: 3.6rem;
-            right: 1.5rem;
-            z-index: 1;
+            top: 50px;
+            right: 24px;
             border: 2px solid rgba(255, 255, 255, .28);
             background: rgba(255, 255, 255, .06);
             color: #fff;
@@ -38,6 +42,7 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
+            z-index: 1;
         }
 
         .header-home:hover {
@@ -50,6 +55,14 @@
             font-size: 1rem;
             line-height: 1;
         }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
 
         .tab-content {
             display: none;
@@ -89,13 +102,52 @@
         input[type="range"] {
             height: 8px;
         }
+        @media (max-width: 768px) {
+            header {
+                padding: 24px 20px 24px 20px !important;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-home {
+                position: static;
+                align-self: flex-start;
+                margin-top: 5px;
+            }
+
+            .narrative-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-bar {
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .tab-bar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        @media (max-width: 640px) {
+            .tab-bar {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+            }
+
+            .tab-link {
+                flex: 0 0 auto;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 
 <body class="text-slate-800">
 
     <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-7xl flex justify-between items-center">
             <div>
                 <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Analytics (Day 4)</h1>
                 <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide</p>
@@ -104,9 +156,10 @@
         </div>
         <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
     </header>
+    
 
     <nav class="bg-white border-b sticky top-0 z-10 shadow-sm text-base md:text-lg w-full">
-        <div class="max-w-7xl mx-auto flex flex-wrap">
+        <div class="max-w-7xl mx-auto flex flex-nowrap tab-bar">
             <button onclick="openTab(event, 'ml-basics')"
                 class="tab-link px-5 py-4 font-semibold text-blue-900 border-b-2 border-blue-600 active bg-blue-50">
                 <i class="fas fa-graduation-cap mr-2"></i>ML Basics

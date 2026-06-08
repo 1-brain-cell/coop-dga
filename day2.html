@@ -41,34 +41,19 @@
     }
 
     /* HEADER */
-    .hdr {
-      background: #14297a;
-      color: #fff;
-      padding: 40px 180px 28px 32px;
-      /* ปรับ */
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 32px 24px 24px 24px;
+      text-align: left;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       position: relative;
     }
 
-    .hdr h1 {
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
-    .hdr .sub {
-      font-size: 17px;
-      opacity: .9;
-    }
-
-    .hdr-home {
+    .header-home {
       position: absolute;
-      top: 28px;
-      right: 32px;
-      z-index: 1;
-    }
-
-    .hdr-home .home-btn {
+      top: 50px;
+      right: 24px;
       border: 2px solid rgba(255, 255, 255, .28);
       background: rgba(255, 255, 255, .06);
       color: #fff;
@@ -83,17 +68,30 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
+      z-index: 1;
     }
 
-    .hdr-home .home-btn:hover {
+    .header-home:hover {
       background: rgba(255, 255, 255, .14);
       border-color: rgba(255, 255, 255, .45);
       transform: translateY(-1px);
     }
 
-    .hdr-home .home-btn .ico {
+    .header-home .ico {
       font-size: 1rem;
       line-height: 1;
+    }
+
+    header h1 {
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    header p {
+      font-size: 18px;
+      color: #bfdbfe;
+      font-weight: 500;
     }
 
     /* TABS */
@@ -361,7 +359,6 @@
       align-items: flex-start;
       justify-content: center;
       gap: 0;
-      overflow-x: auto;
       padding: 10px 0 20px;
     }
 
@@ -455,9 +452,15 @@
       margin-bottom: 20px;
     }
 
-    @media(max-width:580px) {
+    @media (max-width: 580px) {
       .cg {
         grid-template-columns: 1fr;
+      }
+      .sflow {
+        padding: 10px 16px 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
       }
     }
 
@@ -1855,15 +1858,34 @@
       background: var(--pl);
       color: var(--p);
     }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 24px 20px 24px 20px !important;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .header-home {
+        position: static;
+        align-self: flex-start;
+        margin-top: 5px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <header class="hdr">
-    <h1>DGA306: Data Analytics Techniques (Day 2)</h1>
-    <p class="sub">Interactive Guide | Data Warehouse: Analysis, Design and Implement</p>
-    <div class="hdr-home"><a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a></div>
+  <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
+    <div class="max-w-7xl flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Analytics Techniques (Day 2)</h1>
+        <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | Data Warehouse: Analysis, Design and Implement</p>
+      </div>
+    </div>
+    <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
   </header>
 
   <nav class="tnav">

@@ -40,50 +40,19 @@
       min-height: 100vh;
     }
 
-    .hd {
-      background: #14297a;
-      padding: 32px 180px 28px 48px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hd::before {
-      width: 280px;
-      height: 280px;
-      top: -80px;
-      right: -40px;
-    }
-
-    .hd::after {
-      width: 180px;
-      height: 180px;
-      bottom: -60px;
-      left: 30%;
-    }
-
-    .hd h1 {
-      color: #fff;
-      font-size: 1.9rem;
-      font-weight: 800;
-      letter-spacing: -.5px;
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 32px 24px 24px 24px;
+      text-align: left;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       position: relative;
     }
 
-    .hd p {
-      color: rgba(255, 255, 255, .72);
-      font-size: .95rem;
-      margin-top: 6px;
-      position: relative;
-    }
-
-    .hd-home {
+    .header-home {
       position: absolute;
-      top: 32px;
-      right: 48px;
-      z-index: 1;
-    }
-
-    .hd-home .home-btn {
+      top: 50px;
+      right: 24px;
       border: 2px solid rgba(255, 255, 255, .28);
       background: rgba(255, 255, 255, .06);
       color: #fff;
@@ -98,20 +67,49 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
+      z-index: 1;
     }
 
-    .hd-home .home-btn:hover {
+    .header-home:hover {
       background: rgba(255, 255, 255, .14);
       border-color: rgba(255, 255, 255, .45);
       transform: translateY(-1px);
     }
 
-    .hd-home .home-btn .ico {
+    .header-home .ico {
       font-size: 1rem;
       line-height: 1;
     }
 
-    .hd .badge {
+    header h1 {
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.2;
+      font-size: 28px;
+    }
+
+    header p {
+      font-size: 18px;
+      color: #bfdbfe;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 24px 20px 24px 20px !important;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .header-home {
+        position: static;
+        align-self: flex-start;
+        margin-top: 5px;
+      }
+    }
+
+    header .badge {
       display: inline-block;
       background: var(--am);
       color: #1a1a1a;
@@ -435,6 +433,26 @@
       margin: 14px 0;
     }
 
+    .slice-inputs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slice-btn-group {
+      padding-top: 18px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .slice-btn-group {
+        padding-top: 0;
+        margin-top: 4px;
+      }
+    }
+
     .slice-ctrl input {
       width: 70px;
       padding: 8px 10px;
@@ -465,6 +483,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      overflow: auto;
     }
 
     .str-methods {
@@ -1338,11 +1357,15 @@
 
 <body>
 
-  <div class="hd">
-    <h1>DGA306: Data Analytics (Day 1)</h1>
-    <p>Interactive Guide | Python & Data Exploration</p>
-    <div class="hd-home"><a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a></div>
-  </div>
+  <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
+    <div class="max-w-7xl flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Analytics (Day 1)</h1>
+        <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | Python & Data Exploration</p>
+      </div>
+    </div>
+    <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
+  </header>
 
   <div class="tn">
     <button class="tb on" onclick="sw(0)">🔤 String</button>
@@ -1380,21 +1403,23 @@
             style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">s[start:end:step]</code> —
           ลองปรับค่าแล้วดูผลลัพธ์</div>
         <div class="slice-ctrl">
-          <div>
-            <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">start</div>
-            <input type="number" id="sl-s" value="0" oninput="doSlice()" style="width:65px;">
+          <div class="slice-inputs">
+            <div>
+              <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">start</div>
+              <input type="number" id="sl-s" value="0" oninput="doSlice()" style="width:65px;">
+            </div>
+            <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
+            <div>
+              <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">end</div>
+              <input type="number" id="sl-e" value="6" oninput="doSlice()" style="width:65px;">
+            </div>
+            <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
+            <div>
+              <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">step</div>
+              <input type="number" id="sl-st" value="1" oninput="doSlice()" style="width:65px;">
+            </div>
           </div>
-          <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
-          <div>
-            <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">end</div>
-            <input type="number" id="sl-e" value="6" oninput="doSlice()" style="width:65px;">
-          </div>
-          <div style="font-size:1.2rem;color:var(--tl);padding-top:18px;">:</div>
-          <div>
-            <div style="font-size:.75rem;color:var(--tl);margin-bottom:4px;font-weight:600;">step</div>
-            <input type="number" id="sl-st" value="1" oninput="doSlice()" style="width:65px;">
-          </div>
-          <div style="padding-top:18px;display:flex;gap:8px;">
+          <div class="slice-btn-group">
             <button class="btn sm" onclick="setSlice(0,14,1)">ทั้งหมด</button>
             <button class="btn sm am" onclick="setSlice(0,7,1)">แค่ต้น</button>
             <button class="btn sm" style="background:var(--pu);" onclick="setSlice(7,14,1)">แค่ท้าย</button>

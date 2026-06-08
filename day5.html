@@ -78,18 +78,12 @@
         }
 
         header h1 {
-            font-family: 'Poppins', sans-serif;
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 4px;
             line-height: 1.2;
         }
 
-        @media (min-width: 768px) {
-            header h1 {
-                font-size: 36px;
-            }
-        }
 
         header p {
             font-size: 18px;
@@ -308,6 +302,7 @@
             cursor: pointer;
             transition: 0.2s;
             align-self: flex-start;
+            margin-bottom: 15px;
         }
 
         .btn-hint:hover {
@@ -411,7 +406,7 @@
 
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
 
@@ -491,6 +486,17 @@
             background: var(--catalog-btn-hover);
         }
 
+        .three-pillars {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .three-pillars .step-box {
+            flex: 1;
+        }
+
         @media (max-width: 1100px) {
             .game-layout {
                 grid-template-columns: 1fr;
@@ -504,6 +510,52 @@
                 order: 1;
             }
         }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 24px 20px 24px 20px !important;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-home {
+                position: static;
+                align-self: flex-start;
+                margin-top: 5px;
+            }
+
+            .narrative-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+            }
+
+            .tab-btn {
+                flex: 0 0 auto;
+                white-space: nowrap;
+                padding: 12px 18px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step-box {
+                width: 100%;
+            }
+            .three-pillars {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 
@@ -512,7 +564,7 @@
     <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-3xl md:text-4xl font-bold">DGA306: DATA STORYTELLING (DAY 5)</h1>
+                <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Storytelling (Day 5)</h1>
                 <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | การเล่าเรื่องด้วยข้อมูลและ Visualization</p>
             </div>
         </div>
@@ -534,6 +586,7 @@
                 <h2>Data Storytelling คืออะไร?</h2>
                 <p>การนำเสนอข้อมูลเชิงลึก (Insights) ผ่านการเล่าเรื่องที่น่าสนใจและเข้าใจง่าย ผสมผสาน 3
                     สิ่งเพื่อสร้างการเปลี่ยนแปลง (Change) ไม่ใช่แค่การแคปหน้าจอ Dashboard มาแปะในสไลด์</p>
+                <!-- ของเดิม:
                 <div style="display: flex; gap: 15px; margin-top: 15px; text-align: center;">
                     <div class="step-box" style="flex: 1;"><i class="fa-solid fa-database fa-2x"
                             style="color:var(--secondary-blue); margin-bottom:10px;"></i><br><strong>Data</strong><br><span
@@ -542,6 +595,18 @@
                             style="color:var(--primary-blue); margin-bottom:10px;"></i><br><strong>Visuals</strong><br><span
                             style="font-size:13px">แผนภาพที่ออกแบบให้กระจ่าง (Enlighten)</span></div>
                     <div class="step-box" style="flex: 1;"><i class="fa-solid fa-comment-dots fa-2x"
+                            style="color:var(--accent-orange); margin-bottom:10px;"></i><br><strong>Narrative</strong><br><span
+                            style="font-size:13px">โครงเรื่องที่โน้มน้าวใจ (Engage)</span></div>
+                </div>
+                -->
+                <div class="three-pillars">
+                    <div class="step-box"><i class="fa-solid fa-database fa-2x"
+                            style="color:var(--secondary-blue); margin-bottom:10px;"></i><br><strong>Data</strong><br><span
+                            style="font-size:13px">ข้อมูลที่ถูกต้องและวิเคราะห์มาอย่างดี</span></div>
+                    <div class="step-box"><i class="fa-solid fa-chart-line fa-2x"
+                            style="color:var(--primary-blue); margin-bottom:10px;"></i><br><strong>Visuals</strong><br><span
+                            style="font-size:13px">แผนภาพที่ออกแบบให้กระจ่าง (Enlighten)</span></div>
+                    <div class="step-box"><i class="fa-solid fa-comment-dots fa-2x"
                             style="color:var(--accent-orange); margin-bottom:10px;"></i><br><strong>Narrative</strong><br><span
                             style="font-size:13px">โครงเรื่องที่โน้มน้าวใจ (Engage)</span></div>
                 </div>
@@ -638,15 +703,15 @@
                     placeholder="พิมพ์คำค้นหา (เช่น ฝนหลวง, ขยะ, สถิติ)...">
 
                 <div class="catalog-grid" id="catalogGrid">
-                    <div class="cat-item" data-search="ฝนหลวง กรมฝนหลวง แผนที่">
-                        <div class="cat-header"><i class="fa-solid fa-cloud-rain"></i> กรมฝนหลวงและการบินเกษตร</div>
+                    <div class="cat-item" data-search="เผา PM2.5 พื้นที่การเกษตร">
+                        <div class="cat-header"><i class="fa-solid fa-cloud-rain"></i> กรมส่งเสริมการเกษตร</div>
                         <div class="cat-body">
-                            <h4>รายงานผู้ขอรับบริการฝนหลวงรายจังหวัด</h4>
-                            <p>สรุปสถิติจำนวนผู้ขอรับบริการและพื้นที่การเกษตร พร้อมวิเคราะห์ความหนาแน่นรายภูมิภาค</p>
+                            <h4>รายงานเผาพื้นที่การเกษตร</h4>
+                            <p>วิเคราะห์แนวโน้มการเผาพื้นที่การเกษตร</p>
                             <div class="cat-tags"><span class="tag">Geo-Spatial</span><span class="tag">Agri-Tech</span>
                             </div>
                         </div>
-                        <div class="cat-footer"><a href="pdfs/royal_rain_report.pdf" target="_blank"
+                        <div class="cat-footer"><a href="https://drive.google.com/file/d/1I-nh55wSiebGIsCu2QqzCVNcoQn5Qe5A/view?usp=sharing" target="_blank"
                                 class="btn-pdf">เปิดเอกสาร PDF</a></div>
                     </div>
 
@@ -659,7 +724,7 @@
                             <div class="cat-tags"><span class="tag">Environment</span><span
                                     class="tag">Statistics</span></div>
                         </div>
-                        <div class="cat-footer"><a href="pdfs/waste_management.pdf" target="_blank"
+                        <div class="cat-footer"><a href="https://drive.google.com/file/d/1Xh4CwVj-zekLzIuFj0adA1PN2vtW5w_g/view?usp=sharing" target="_blank"
                                 class="btn-pdf">เปิดเอกสาร PDF</a></div>
                     </div>
                 </div>
