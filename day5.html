@@ -37,19 +37,18 @@
         }
 
         header {
-            background: var(--primary-blue);
+            background: #1e3a8a;
             color: white;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 32px 24px 64px 24px;
+            text-align: left;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             position: relative;
-            padding-right: 180px;
         }
 
-        .home-btn {
+        .header-home {
             position: absolute;
-            top: 18px;
-            right: 20px;
+            top: 50px;
+            right: 24px;
             border: 2px solid rgba(255, 255, 255, .28);
             background: rgba(255, 255, 255, .06);
             color: #fff;
@@ -67,27 +66,35 @@
             z-index: 1;
         }
 
-        .home-btn:hover {
+        .header-home:hover {
             background: rgba(255, 255, 255, .14);
             border-color: rgba(255, 255, 255, .45);
             transform: translateY(-1px);
         }
 
-        .home-btn .ico {
+        .header-home .ico {
             font-size: 1rem;
             line-height: 1;
         }
 
         header h1 {
             font-family: 'Poppins', sans-serif;
-            font-size: 26px;
-            margin-bottom: 5px;
+            font-size: 28px;
             font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            header h1 {
+                font-size: 36px;
+            }
         }
 
         header p {
-            font-size: 15px;
+            font-size: 18px;
             color: #bfdbfe;
+            font-weight: 500;
         }
 
         .container {
@@ -502,10 +509,14 @@
 
 <body>
 
-    <header>
-        <h1>DGA306: DATA STORYTELLING (DAY 5)</h1>
-        <p>Interactive Guide | การเล่าเรื่องด้วยข้อมูลและ Visualization</p>
-        <a class="home-btn" href="index.html"><span class="ico">🏠</span>Back to home</a>
+    <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold">DGA306: DATA STORYTELLING (DAY 5)</h1>
+                <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | การเล่าเรื่องด้วยข้อมูลและ Visualization</p>
+            </div>
+        </div>
+        <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
     </header>
 
     <div class="container">
