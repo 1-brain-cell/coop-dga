@@ -1785,10 +1785,27 @@
       }
     }
     function assignVar() {
-      const nm = document.getElementById('vname').value.trim();
-      const vl = document.getElementById('vval').value.trim();
+      let nm = document.getElementById('vname').value.trim();
+      let vl = document.getElementById('vval').value.trim();
       const tp = document.getElementById('vtype').value;
+
+      // กำหนดค่าเริ่มต้นให้อัตโนมัติหากปล่อยเป็นค่าว่างเพื่อป้องกัน Error
+      if (!nm) {
+        nm = 'my_var';
+      }
+      if (vl === '') {
+        if (tp === 'int') {
+          vl = '0';
+        } else if (tp === 'bool') {
+          vl = 'True';
+        } else if (tp === 'str') {
+          vl = '';
+        }
+      }
+
+      /* ของเดิมจะแจ้งเตือนและยกเลิกหากชื่อหรือค่าว่าง:
       if (!nm || !vl) { alert('กรุณากรอกชื่อตัวแปรและค่า'); return; }
+      */
       if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(nm)) { alert('ชื่อตัวแปรไม่ถูกต้อง!\n- ต้องเป็นตัวอักษรภาษาอังกฤษ\n- ต้องขึ้นต้นด้วยตัวอักษรหรือ _\n- ห้ามมีช่องว่าง'); return; }
       if (tp === 'int') {
         if (!/^-?\d+$/.test(vl)) {

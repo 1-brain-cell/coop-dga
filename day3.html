@@ -467,7 +467,7 @@ body {
   padding: 6px;
 }
 .drop-zone.drag-over { border-color: var(--accent); background: #fffbea; }
-.drop-zone.filled { border-style: solid; background: var(--primary-pale); color: var(--primary); font-weight: 600; }
+.drop-zone.filled { border-style: solid; background: var(--primary-pale); color: var(--primary); font-weight: 600; cursor: pointer; }
 .drop-zone.correct { border-color: var(--success) !important; background: #e8faf0 !important; color: #1a5c38 !important; }
 .drop-zone.wrong { border-color: var(--accent2) !important; background: #fdecea !important; color: #9b2222 !important; }
 .dnd-arrow { font-size: 1.4rem; color: var(--text-soft); margin-top: 24px; }
@@ -989,33 +989,33 @@ body {
     <div class="dnd-pipeline">
       <div class="dnd-stage">
         <div class="dnd-stage-label">ขั้นที่ 1</div>
-        <div class="drop-zone" data-correct="extract" ondragover="allowDrop(event)" ondrop="dropItem(event)">วางที่นี่</div>
+        <div class="drop-zone" data-correct="extract" ondragover="allowDrop(event)" ondrop="dropItem(event)" onclick="removeDropItem(this)">วางที่นี่</div>
       </div>
       <div class="dnd-arrow">→</div>
       <div class="dnd-stage">
         <div class="dnd-stage-label">ขั้นที่ 2</div>
-        <div class="drop-zone" data-correct="stage" ondragover="allowDrop(event)" ondrop="dropItem(event)">วางที่นี่</div>
+        <div class="drop-zone" data-correct="stage" ondragover="allowDrop(event)" ondrop="dropItem(event)" onclick="removeDropItem(this)">วางที่นี่</div>
       </div>
       <div class="dnd-arrow">→</div>
       <div class="dnd-stage">
         <div class="dnd-stage-label">ขั้นที่ 3</div>
-        <div class="drop-zone" data-correct="validate" ondragover="allowDrop(event)" ondrop="dropItem(event)">วางที่นี่</div>
+        <div class="drop-zone" data-correct="validate" ondragover="allowDrop(event)" ondrop="dropItem(event)" onclick="removeDropItem(this)">วางที่นี่</div>
       </div>
       <div class="dnd-arrow">→</div>
       <div class="dnd-stage">
         <div class="dnd-stage-label">ขั้นที่ 4</div>
-        <div class="drop-zone" data-correct="transform" ondragover="allowDrop(event)" ondrop="dropItem(event)">วางที่นี่</div>
+        <div class="drop-zone" data-correct="transform" ondragover="allowDrop(event)" ondrop="dropItem(event)" onclick="removeDropItem(this)">วางที่นี่</div>
       </div>
       <div class="dnd-arrow">→</div>
       <div class="dnd-stage">
         <div class="dnd-stage-label">ขั้นที่ 5</div>
-        <div class="drop-zone" data-correct="load" ondragover="allowDrop(event)" ondrop="dropItem(event)">วางที่นี่</div>
+        <div class="drop-zone" data-correct="load" ondragover="allowDrop(event)" ondrop="dropItem(event)" onclick="removeDropItem(this)">วางที่นี่</div>
       </div>
     </div>
 
     <div class="dnd-btns">
-      <button class="btn" onclick="checkDnD()">ตรวจคำตอบ</button>
       <button class="btn outline" id="reset-dnd-btn" style="display: none;" onclick="resetDnD()">เริ่มใหม่</button>
+      <button class="btn" onclick="checkDnD()">ตรวจคำตอบ</button>
     </div>
     <div class="dnd-result" id="dndResult"></div>
   </div>
@@ -1282,9 +1282,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการแสดงแนวโน้มพื้นที่ปลูกพืชแต่ละชนิดตลอด 5 ปี ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs1-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs1',this,'line','line')">📈 Line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs1',this,'bar','line')">Bar Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs1',this,'pie','line')">🥧 Pie Chart</button>
+          <button class="viz-opt-btn" data-choice="line" data-correct="line" onclick="answerViz('vs1',this)">📈 Line Chart</button>
+          <button class="viz-opt-btn" data-choice="bar" data-correct="line" onclick="answerViz('vs1',this)">Bar Chart</button>
+          <button class="viz-opt-btn" data-choice="pie" data-correct="line" onclick="answerViz('vs1',this)">🥧 Pie Chart</button>
         </div>
         <div class="viz-explain" id="vs1-ex">✅ <strong>Line Chart</strong> เหมาะที่สุด เพราะข้อมูลมีมิติเวลา (Time Series) และต้องการเห็นแนวโน้มต่อเนื่อง</div>
         <div class="source-ref">แรงบันดาลใจจาก dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-dataset_10_0318" target="_blank">การขึ้นทะเบียนเกษตรกร</a> และ <a href="https://gdcatalog.go.th/th/organization/2235f0ff-b13c-4956-97c7-6d471be6dab2" target="_blank">เนื้อที่ปลูกพืชแต่ละชนิด/พันธุ์ รายตำบล</a> — กรมส่งเสริมการเกษตร</div>
@@ -1310,9 +1310,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการแสดงว่าแต่ละหมวดหมู่คิดเป็นกี่เปอร์เซ็นต์ของชุดข้อมูลทั้งหมด ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs2-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs2',this,'line','pie')">📈 Line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs2',this,'pie','pie')">🥧 Pie/Donut Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs2',this,'scatter','pie')">⚫ Scatter Plot</button>
+          <button class="viz-opt-btn" data-choice="line" data-correct="pie" onclick="answerViz('vs2',this)">📈 Line Chart</button>
+          <button class="viz-opt-btn" data-choice="pie" data-correct="pie" onclick="answerViz('vs2',this)">🥧 Pie/Donut Chart</button>
+          <button class="viz-opt-btn" data-choice="scatter" data-correct="pie" onclick="answerViz('vs2',this)">⚫ Scatter Plot</button>
         </div>
         <div class="viz-explain" id="vs2-ex">✅ <strong>Pie / Donut Chart</strong> เหมาะที่สุด เพราะต้องการแสดงสัดส่วนที่รวมกันเป็น 100%</div>
         <div class="source-ref">แรงบันดาลใจจาก dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-di-open1-03" target="_blank">รายการชุดข้อมูลทั้งหมดบนระบบ data.go.th</a> — สพร./DGA</div>
@@ -1338,9 +1338,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการเปรียบเทียบจำนวนโรงงานแต่ละประเภทอย่างชัดเจน ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs3-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs3',this,'bar','bar')">Bar Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs3',this,'line','bar')">📈 Line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs3',this,'map','bar')">Map</button>
+          <button class="viz-opt-btn" data-choice="bar" data-correct="bar" onclick="answerViz('vs3',this)">Bar Chart</button>
+          <button class="viz-opt-btn" data-choice="line" data-correct="bar" onclick="answerViz('vs3',this)">📈 Line Chart</button>
+          <button class="viz-opt-btn" data-choice="map" data-correct="bar" onclick="answerViz('vs3',this)">Map</button>
         </div>
         <div class="viz-explain" id="vs3-ex">✅ <strong>Bar Chart</strong> เหมาะที่สุด เพราะต้องการเปรียบเทียบค่าของกลุ่มที่ไม่มีความต่อเนื่องของเวลา</div>
         <div class="source-ref">แรงบันดาลใจจาก dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-fac-10scurve" target="_blank">ข้อมูลโรงงานประเภทกลุ่มอุตสาหกรรมเป้าหมาย</a> — กรมโรงงานอุตสาหกรรม</div>
@@ -1366,9 +1366,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการดูแนวโน้มมูลค่าสินค้าปศุสัตว์แต่ละชนิดตลอดหลายปี ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs4-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs4',this,'multi','multi')">📈 Multi-line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs4',this,'pie','multi')">🥧 Pie Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs4',this,'scatter','multi')">⚫ Scatter Plot</button>
+          <button class="viz-opt-btn" data-choice="multi" data-correct="multi" onclick="answerViz('vs4',this)">📈 Multi-line Chart</button>
+          <button class="viz-opt-btn" data-choice="pie" data-correct="multi" onclick="answerViz('vs4',this)">🥧 Pie Chart</button>
+          <button class="viz-opt-btn" data-choice="scatter" data-correct="multi" onclick="answerViz('vs4',this)">⚫ Scatter Plot</button>
         </div>
         <div class="viz-explain" id="vs4-ex">✅ <strong>Multi-line Chart</strong> เหมาะที่สุด เพราะข้อมูลมีมิติเวลา (รายปี) + หลาย Series (แต่ละชนิดสัตว์) ต้องการเห็นแนวโน้มและเปรียบเทียบพร้อมกัน</div>
         <div class="source-ref">อ้างอิง dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-dld-value" target="_blank">มูลค่าผลผลิตจากปศุสัตว์</a> — กรมปศุสัตว์</div>
@@ -1393,9 +1393,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการดูความสัมพันธ์ระหว่าง "ขนาดพื้นที่อุทยาน" กับ "จำนวนชนิดพันธุ์" ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs5-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs5',this,'scatter','scatter')">⚫ Scatter Plot</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs5',this,'line','scatter')">📈 Line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs5',this,'pie','scatter')">🥧 Pie Chart</button>
+          <button class="viz-opt-btn" data-choice="scatter" data-correct="scatter" onclick="answerViz('vs5',this)">⚫ Scatter Plot</button>
+          <button class="viz-opt-btn" data-choice="line" data-correct="scatter" onclick="answerViz('vs5',this)">📈 Line Chart</button>
+          <button class="viz-opt-btn" data-choice="pie" data-correct="scatter" onclick="answerViz('vs5',this)">🥧 Pie Chart</button>
         </div>
         <div class="viz-explain" id="vs5-ex">✅ <strong>Scatter Plot</strong> เหมาะที่สุด เพราะต้องการวิเคราะห์ความสัมพันธ์ (Correlation) ระหว่างตัวแปร 2 ตัวที่เป็นตัวเลข</div>
         <div class="source-ref">แรงบันดาลใจจาก dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-biodiversity-survey-species" target="_blank">รายชื่อชนิดพันธุ์ที่พบในพื้นที่อนุรักษ์ (โครงการสำรวจความหลากหลายทางชีวภาพ 2554–2564)</a> — กรมอุทยานแห่งชาติ สัตว์ป่า และพันธุ์พืช</div>
@@ -1421,9 +1421,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการแสดงการเปลี่ยนแปลงของจำนวนผู้ป่วยตลอดทั้งปี ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs6-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs6',this,'line','line')">📈 Line / Area Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs6',this,'bar','line')">Bar Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs6',this,'map','line')">Map</button>
+          <button class="viz-opt-btn" data-choice="line" data-correct="line" onclick="answerViz('vs6',this)">📈 Line / Area Chart</button>
+          <button class="viz-opt-btn" data-choice="bar" data-correct="line" onclick="answerViz('vs6',this)">Bar Chart</button>
+          <button class="viz-opt-btn" data-choice="map" data-correct="line" onclick="answerViz('vs6',this)">Map</button>
         </div>
         <div class="viz-explain" id="vs6-ex">✅ <strong>Line / Area Chart</strong> เหมาะที่สุด เพราะข้อมูลมีมิติเวลา (รายเดือน) และต้องการเห็นการเปลี่ยนแปลงต่อเนื่อง โดยเฉพาะช่วงระบาด</div>
         <div class="source-ref">แรงบันดาลใจจาก dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-ddce-01" target="_blank">กลุ่มโรคติดต่อนำโดยแมลง (รวมไข้เลือดออก)</a> — กรมควบคุมโรค</div>
@@ -1448,9 +1448,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการแสดงการกระจายตัวของเหตุการณ์ธรณีพิบัติภัยในแต่ละจังหวัดทั่วประเทศ ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs7-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs7',this,'map','map')">Map / Choropleth</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs7',this,'line','map')">📈 Line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs7',this,'pie','map')">🥧 Pie Chart</button>
+          <button class="viz-opt-btn" data-choice="map" data-correct="map" onclick="answerViz('vs7',this)">Map / Choropleth</button>
+          <button class="viz-opt-btn" data-choice="line" data-correct="map" onclick="answerViz('vs7',this)">📈 Line Chart</button>
+          <button class="viz-opt-btn" data-choice="pie" data-correct="map" onclick="answerViz('vs7',this)">🥧 Pie Chart</button>
         </div>
         <div class="viz-explain" id="vs7-ex">✅ <strong>Map / Choropleth</strong> เหมาะที่สุด เพราะข้อมูลมีมิติพื้นที่ (รายจังหวัด) การแสดงบนแผนที่ช่วยให้เห็นการกระจายตัวของความเสี่ยงทางภูมิศาสตร์ได้ทันที</div>
         <div class="source-ref">แรงบันดาลใจจาก dataset: <a href="https://data.dmr.go.th/dataset/geohazard_events/resource/47eff7c2-3893-4fbe-95a5-1ba8e0348f2f" target="_blank">เหตุการณ์ธรณีพิบัติภัย (geohazard_events)</a> — กรมทรัพยากรธรณี</div>
@@ -1475,9 +1475,9 @@ staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.c
         </div>
         <div class="viz-q">ต้องการเปรียบเทียบปริมาณเนื้อหาแต่ละประเภทพร้อมกัน และดูแนวโน้มรายเดือน ควรใช้กราฟอะไร?</div>
         <div class="viz-opts" id="vs8-opts">
-          <button class="viz-opt-btn" onclick="answerViz('vs8',this,'multi','multi')">📈 Multi-line Chart</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs8',this,'single_pie','multi')">🥧 Pie Chart เดียว</button>
-          <button class="viz-opt-btn" onclick="answerViz('vs8',this,'scatter','multi')">⚫ Scatter Plot</button>
+          <button class="viz-opt-btn" data-choice="multi" data-correct="multi" onclick="answerViz('vs8',this)">📈 Multi-line Chart</button>
+          <button class="viz-opt-btn" data-choice="single_pie" data-correct="multi" onclick="answerViz('vs8',this)">🥧 Pie Chart เดียว</button>
+          <button class="viz-opt-btn" data-choice="scatter" data-correct="multi" onclick="answerViz('vs8',this)">⚫ Scatter Plot</button>
         </div>
         <div class="viz-explain" id="vs8-ex">✅ <strong>Multi-line Chart</strong> เหมาะที่สุด เพราะมีมิติเวลา (รายเดือน) + หลาย Series (3 ประเภทเนื้อหา) ต้องการเห็นแนวโน้มและเปรียบเทียบพร้อมกัน</div>
         <div class="source-ref">อ้างอิง dataset: <a href="https://gdcatalog.go.th/dataset/gdpublish-12-190" target="_blank">ผังรายการสถานีวิทยุกระจายเสียงและเนื้อหาประชาสัมพันธ์</a> — กรมประชาสัมพันธ์ (ข้อมูลตัวอย่างจาก สปจ.ลพบุรี ปี 2566)</div>
@@ -1626,8 +1626,8 @@ wide_back.columns.name = <span class="kw">None</span>
             </table>
           </div>
           <div class="identify-btns">
-            <button class="id-btn" onclick="identifyFormat(this, 'wide', 'long')">Wide Format</button>
-            <button class="id-btn" onclick="identifyFormat(this, 'long', 'long')">Long Format</button>
+            <button class="id-btn" data-choice="wide" data-correct="long" onclick="identifyFormat(this)">Wide Format</button>
+            <button class="id-btn" data-choice="long" data-correct="long" onclick="identifyFormat(this)">Long Format</button>
           </div>
         </div>
       </div>
@@ -1644,8 +1644,8 @@ wide_back.columns.name = <span class="kw">None</span>
             </table>
           </div>
           <div class="identify-btns">
-            <button class="id-btn" onclick="identifyFormat(this, 'wide', 'wide')">Wide Format</button>
-            <button class="id-btn" onclick="identifyFormat(this, 'long', 'wide')">Long Format</button>
+            <button class="id-btn" data-choice="wide" data-correct="wide" onclick="identifyFormat(this)">Wide Format</button>
+            <button class="id-btn" data-choice="long" data-correct="wide" onclick="identifyFormat(this)">Long Format</button>
           </div>
         </div>
       </div>
@@ -1662,8 +1662,8 @@ wide_back.columns.name = <span class="kw">None</span>
             </table>
           </div>
           <div class="identify-btns">
-            <button class="id-btn" onclick="identifyFormat(this, 'wide', 'long')">Wide Format</button>
-            <button class="id-btn" onclick="identifyFormat(this, 'long', 'long')">Long Format</button>
+            <button class="id-btn" data-choice="wide" data-correct="long" onclick="identifyFormat(this)">Wide Format</button>
+            <button class="id-btn" data-choice="long" data-correct="long" onclick="identifyFormat(this)">Long Format</button>
           </div>
         </div>
       </div>
@@ -1680,8 +1680,8 @@ wide_back.columns.name = <span class="kw">None</span>
             </table>
           </div>
           <div class="identify-btns">
-            <button class="id-btn" onclick="identifyFormat(this, 'wide', 'wide')">Wide Format</button>
-            <button class="id-btn" onclick="identifyFormat(this, 'long', 'wide')">Long Format</button>
+            <button class="id-btn" data-choice="wide" data-correct="wide" onclick="identifyFormat(this)">Wide Format</button>
+            <button class="id-btn" data-choice="long" data-correct="wide" onclick="identifyFormat(this)">Long Format</button>
           </div>
         </div>
       </div>
@@ -1742,6 +1742,28 @@ function dropItem(e) {
   dragging = null;
   const resetBtn = document.getElementById('reset-dnd-btn');
   if (resetBtn) resetBtn.style.display = 'inline-block';
+}
+
+// ของใหม่: ฟังก์ชันลบการ์ดขั้นตอนการเรียง ETL ออกทีละตัวเมื่อถูกคลิก
+function removeDropItem(zone) {
+  if (!zone.dataset.filled) return;
+  const prev = zone.dataset.filled;
+  document.querySelectorAll('.drag-chip').forEach(c => {
+    if (c.dataset.id === prev) {
+      c.classList.remove('placed');
+      c._dropped = false;
+    }
+  });
+  zone.textContent = 'วางที่นี่';
+  delete zone.dataset.filled;
+  zone.classList.remove('filled', 'correct', 'wrong');
+  
+  const filledZones = Array.from(document.querySelectorAll('.drop-zone')).filter(z => z.dataset.filled);
+  const resetBtn = document.getElementById('reset-dnd-btn');
+  if (resetBtn && filledZones.length === 0) {
+    resetBtn.style.display = 'none';
+  }
+  document.getElementById('dndResult').style.display = 'none';
 }
 function checkDnD() {
   let correct = 0;
@@ -1824,8 +1846,7 @@ function resetSchemaQuiz() {
 }
 
 // ── Visualization quiz ─────────────────────────────────────
-let vizScore = 0;
-const vizAnswered = {};
+/* ของเดิมใช้ Regex ในการดึงค่าคำตอบจาก onclick ซึ่งเปราะบาง:
 function answerViz(id, btn, choice, correct) {
   if (vizAnswered[id]) return;
   vizAnswered[id] = true;
@@ -1846,6 +1867,35 @@ function answerViz(id, btn, choice, correct) {
     const box = document.getElementById('final-score-box');
     box.style.display='block';
     document.getElementById('final-score-num').textContent = `${vizScore}/${total}`;
+  }
+  const resetBtn = document.getElementById('reset-visual-btn');
+  if (resetBtn) resetBtn.style.display = 'inline-block';
+}
+*/
+
+// ของใหม่: ใช้ custom data attributes (dataset) แทน เพื่อความยืดหยุ่นและปลอดภัยขึ้น
+function answerViz(id, btn) {
+  if (vizAnswered[id]) return;
+  vizAnswered[id] = true;
+  const choice = btn.dataset.choice;
+  const correct = btn.dataset.correct;
+  const opts = btn.parentElement.querySelectorAll('.viz-opt-btn');
+  opts.forEach(o => o.disabled=true);
+  opts.forEach(o => {
+    if (o.dataset.choice === correct) o.classList.add('show-correct');
+  });
+  if (choice === correct) {
+    btn.classList.add('correct-pick'); vizScore++;
+  } else {
+    btn.classList.add('wrong-pick');
+  }
+  document.getElementById(id+'-ex').classList.add('show');
+  const total = 8;
+  if (Object.keys(vizAnswered).length === total) {
+    const box = document.getElementById('final-score-box');
+    if (box) box.style.display='block';
+    const numDisp = document.getElementById('final-score-num');
+    if (numDisp) numDisp.textContent = `${vizScore}/${total}`;
   }
   const resetBtn = document.getElementById('reset-visual-btn');
   if (resetBtn) resetBtn.style.display = 'inline-block';
@@ -1875,7 +1925,7 @@ function resetVisualQuiz() {
   if (resetBtn) resetBtn.style.display = 'none';
 }
 
-// ── Wide/Long identify ─────────────────────────────────────
+/* ของเดิมใช้ Regex ในการดึงค่าคำตอบจาก onclick:
 function identifyFormat(btn, choice, correct) {
   const btns = btn.parentElement.querySelectorAll('.id-btn');
   if (btns[0].disabled) return;
@@ -1885,6 +1935,24 @@ function identifyFormat(btn, choice, correct) {
     btns.forEach(b => {
       const bc = b.getAttribute('onclick').match(/'([^']+)'\s*,\s*'([^']+)'/)?.[1];
       if (bc === correct) b.classList.add('correct-pick');
+    });
+  }
+  const resetBtn = document.getElementById('reset-wl-btn');
+  if (resetBtn) resetBtn.style.display = 'inline-block';
+}
+*/
+
+// ของใหม่: ใช้ custom data attributes (dataset) ในการสกัดพารามิเตอร์เพื่อความยืดหยุ่น
+function identifyFormat(btn) {
+  const choice = btn.dataset.choice;
+  const correct = btn.dataset.correct;
+  const btns = btn.parentElement.querySelectorAll('.id-btn');
+  if (btns[0].disabled) return;
+  btns.forEach(b => b.disabled=true);
+  btn.classList.add(choice===correct?'correct-pick':'wrong-pick');
+  if (choice !== correct) {
+    btns.forEach(b => {
+      if (b.dataset.choice === correct) b.classList.add('correct-pick');
     });
   }
   const resetBtn = document.getElementById('reset-wl-btn');

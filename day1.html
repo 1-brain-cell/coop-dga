@@ -1282,12 +1282,17 @@ function drawKMeans(){
   ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,canvas.width,canvas.height);
   kmPoints.forEach(p=>{
     ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);
-    ctx.fillStyle=p.cluster>=0?kmColors[p.cluster]+'88':'#94a3b8';
-    ctx.fill();ctx.strokeStyle=p.cluster>=0?kmColors[p.cluster]:'#64748b';ctx.lineWidth=1;ctx.stroke();
+    // ctx.fillStyle=p.cluster>=0?kmColors[p.cluster]+'88':'#94a3b8';
+    // ctx.fill();ctx.strokeStyle=p.cluster>=0?kmColors[p.cluster]:'#64748b';ctx.lineWidth=1;ctx.stroke();
+    // ของใหม่: ป้องกัน Array Index Overflow ด้วย Modulo % kmColors.length
+    ctx.fillStyle=p.cluster>=0?kmColors[p.cluster % kmColors.length]+'88':'#94a3b8';
+    ctx.fill();ctx.strokeStyle=p.cluster>=0?kmColors[p.cluster % kmColors.length]:'#64748b';ctx.lineWidth=1;ctx.stroke();
   });
   kmCentroids.forEach((c,i)=>{
     ctx.beginPath();ctx.arc(c.x,c.y,11,0,Math.PI*2);
-    ctx.fillStyle=kmColors[i];ctx.fill();
+    // ctx.fillStyle=kmColors[i];ctx.fill();
+    // ของใหม่: ป้องกัน Index Overflow
+    ctx.fillStyle=kmColors[i % kmColors.length];ctx.fill();
     ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();
     ctx.fillStyle='#fff';ctx.font='bold 10px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(i+1,c.x,c.y);
@@ -1312,7 +1317,9 @@ function stepKMeans(){
   kmStep++;drawKMeans();updateKMLegend();
 }
 function updateKMLegend(){
-  document.getElementById('km-legend').innerHTML=kmCentroids.map((c,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i]};"></div> Cluster ${i+1}</div>`).join('');
+  // document.getElementById('km-legend').innerHTML=kmCentroids.map((c,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i]};"></div> Cluster ${i+1}</div>`).join('');
+  // ของใหม่: ป้องกัน Index Overflow
+  document.getElementById('km-legend').innerHTML=kmCentroids.map((c,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i % kmColors.length]};"></div> Cluster ${i+1}</div>`).join('');
 }
 initKMeans();
 </script>

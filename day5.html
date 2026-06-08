@@ -702,6 +702,13 @@
             ctx.fillText(xLabel, 400, 440);
         }
 
+        // กำหนดพิกัดและขนาดคงที่ของ Bubble ในด่าน 7 เพื่อป้องกันการสุ่มใหม่ทุกครั้งที่วาด (Flickering)
+        const staticBubbles = Array.from({ length: 25 }, () => ({
+            offsetLon: (Math.random() - 0.5) * 1.5,
+            offsetLat: (Math.random() - 0.5) * 1.5,
+            size: 8 + Math.random() * 12
+        }));
+
         const levels = [
             {
                 title: "ด่าน 1: แกนบิดเบือนข้อมูล",
@@ -940,7 +947,8 @@
                 title: "ด่าน 7: การแสดงผลบนแผนที่ (Bubble Map Overplotting)",
                 prompt: "สังเกตว่าพื้นที่ที่มีจุดข้อมูลหนาแน่นทำให้การอ่านแผนที่ยากขึ้นอย่างไร",
                 hint: "ลองดูว่าบริเวณไหนอ่านจำนวนและตำแหน่งจริงได้ไม่ชัด เพราะจุดซ้อนกันมากเกินไป",
-                checkHit: (x, y) => true,
+                // checkHit: (x, y) => true,
+                checkHit: (x, y) => Math.hypot(x - 355, y - 312) <= 72,
                 reference: {
                     label: "แหล่ง GeoJSON: SimpleMaps – Thailand Provinces (Admin 1)",
                     url: "https://simplemaps.com/gis/country/th#admin1"
@@ -1014,12 +1022,18 @@
 
                         const clusterLon = 100.5;
                         const clusterLat = 13.7;
+                        /* ของเดิมสุ่มพิกัดทำให้ภาพกะพริบ (Flickering):
                         for (let i = 0; i < 25; i++) {
                             let offsetLon = (Math.random() - 0.5) * 1.5;
                             let offsetLat = (Math.random() - 0.5) * 1.5;
                             let size = 8 + Math.random() * 12;
                             bubble(clusterLon + offsetLon, clusterLat + offsetLat, size, "rgba(59, 130, 246, 0.85)");
                         }
+                        */
+                        // ของใหม่: ใช้ค่าคงที่ที่สุ่มไว้ตั้งแต่เริ่มโหลดหน้าเว็บเพื่อหลีกเลี่ยงการ Flickering
+                        staticBubbles.forEach(b => {
+                            bubble(clusterLon + b.offsetLon, clusterLat + b.offsetLat, b.size, "rgba(59, 130, 246, 0.85)");
+                        });
 
                         ctx.fillStyle = "#475569";
                         ctx.font = "13px Sarabun";
