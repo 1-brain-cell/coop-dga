@@ -1610,6 +1610,73 @@
               คือคำสั่งให้แสดงผลออกจอ — เป็นคำสั่งแรกที่นักโปรแกรมทุกคนเรียนรู้!</div>
           </div>
         </div>
+
+        <div class="divider"></div>
+
+        <div class="card-t">⚠️ ทำความรู้จัก "ข้อผิดพลาด" (Basic Errors)</div>
+        <div class="card-s">การเจอ Error คือส่วนหนึ่งของการเรียนรู้ ไม่ต้องตกใจ! มาดูประเภทที่พบบ่อยกัน</div>
+
+        <div class="g2" style="gap:24px;">
+          <!-- 1. Syntax Error -->
+          <div>
+            <div class="lbl" style="color:var(--rd);">1. พิมพ์ผิด (Syntax Error)</div>
+            <div class="code-preview" style="margin-top:4px;margin-bottom:8px;">
+              <span class="fn">prnit</span>(<span class="st">"Hello"</span>) <span class="cm"># พิมพ์ print ผิด</span><br>
+              <span class="fn">print</span>(<span class="st">"Hi"</span> <span class="cm"># ลืมปิดวงเล็บ</span>
+            </div>
+            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
+              เหมือนการสะกดคำผิด ทำให้ Python อ่านไม่รู้เรื่องและหยุดทำงานทันที
+            </div>
+          </div>
+
+          <!-- 2. Runtime Error -->
+          <div>
+            <div class="lbl" style="color:var(--am);">2. ข้อผิดพลาดขณะรัน (Runtime Error)</div>
+            <div class="code-preview" style="margin-top:4px;margin-bottom:8px;">
+              <span class="nm">x</span> = <span class="nm">10</span> / <span class="nm">0</span> <span class="cm"># ZeroDivisionError (หารด้วย 0)</span><br>
+              <span class="st">"5"</span> + <span class="nm">10</span> <span class="cm"># TypeError (บวกตัวเลขกับข้อความ)</span><br>
+              <span class="fn">int</span>(<span class="st">"abc"</span>) <span class="cm"># ValueError (แปลงข้อความที่ไม่ใช่เลข)</span><br>
+              <span class="fn">print</span>(<span class="nm">y</span>) <span class="cm"># NameError (เรียกตัวแปรที่ไม่ได้สร้าง)</span>
+            </div>
+            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
+              ไวยากรณ์ถูกแต่มีปัญหาตอนทำงาน เช่น คำนวณที่เป็นไปไม่ได้ หรือใช้ข้อมูลผิดประเภท
+            </div>
+          </div>
+
+          <!-- 3. Warning -->
+          <div>
+            <div class="lbl" style="color:var(--cy);">3. คำเตือน (Warning)</div>
+            <div class="hbox blue" style="margin-top:4px;margin-bottom:8px;font-size:.82rem;padding:10px 14px;">
+              💡 มักพบเมื่อใช้ Library ที่เริ่มเก่า หรือวิธีการที่กำลังจะเลิกใช้ (Deprecated)
+            </div>
+            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
+              โปรแกรมยังทำงานได้ต่อ แต่ Python แจ้งเตือนว่ามีบางอย่างที่ควรปรับปรุง
+            </div>
+          </div>
+
+          <!-- 4. Handling Error -->
+          <div>
+            <div class="lbl" style="color:var(--gn);">4. การรับมือ (Try-Except)</div>
+            <div class="code-preview" style="margin-top:4px;margin-bottom:8px;">
+              <span class="kw">try</span>:<br>
+              &nbsp;&nbsp;<span class="nm">result</span> = <span class="nm">10</span> / <span class="nm">0</span><br>
+              <span class="kw">except</span>:<br>
+              &nbsp;&nbsp;<span class="fn">print</span>(<span class="st">"เกิดข้อผิดพลาด"</span>)
+            </div>
+            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
+              ใช้เพื่อดักจับ Error และสั่งให้โปรแกรมทำงานต่อไปได้โดยไม่หยุดชะงัก
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. File Not Found -->
+        <div style="margin-top:24px;padding:16px;background:#f8fafc;border:1px dashed var(--br);border-radius:10px;">
+          <div class="lbl" style="color:var(--bd);">📂 5. หาไฟล์ไม่เจอ (FileNotFoundError)</div>
+          <div class="code-preview">
+            <span class="nm">f</span> = <span class="fn">open</span>(<span class="st">"data.csv"</span>) <span class="cm"># ถ้าไม่มีไฟล์ในโฟลเดอร์จะ Error</span>
+          </div>
+          <p style="font-size:.85rem;color:var(--tl);">เกิดขึ้นเมื่อสั่งเปิดไฟล์แต่ชื่อไฟล์ผิด หรือไฟล์ไม่ได้อยู่ในโฟลเดอร์ที่ระบุ</p>
+        </div>
       </div>
     </div>
 
