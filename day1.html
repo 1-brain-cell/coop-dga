@@ -1429,7 +1429,11 @@
         </div>
         <div class="str-boxes" id="str-slice"></div>
         <div class="slice-result" id="slice-out"><span style="color:#94a3b8;">ผลลัพธ์จะปรากฏที่นี่</span></div>
+        <!-- ของเดิม:
         <div class="hbox a" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
+          <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
+        -->
+        <div class="hbox a" id="slice-tip" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
           <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
       </div>
 
@@ -2216,29 +2220,114 @@
         const parsed = Number(rawValue);
         return Number.isFinite(parsed) ? parsed : fallbackValue;
       }
+      // ของเดิม:
+      // function collectSliceIndexes(startValue, endValue, stepValue) {
+      //   const length = STR.length;
+      //   const step = stepValue === 0 ? 1 : stepValue;
+      //   const result = [];
+      //   if (step > 0) {
+      //     let start = normalizeSliceValue(startValue, 0);
+      //     let end = normalizeSliceValue(endValue, length);
+      //     if (start < 0) start += length;
+      //     if (end < 0) end += length;
+      //     start = Math.max(0, Math.min(start, length));
+      //     end = Math.max(0, Math.min(end, length));
+      //     for (let i = start; i < end; i += step) result.push(i);
+      //     return result;
+      //   }
+      //   let start = normalizeSliceValue(startValue, length - 1);
+      //   let end = normalizeSliceValue(endValue, -1);
+      //   if (start < 0) start += length;
+      //   if (end < 0) end += length;
+      //   start = Math.max(-1, Math.min(start, length - 1));
+      //   end = Math.max(-1, Math.min(end, length - 1));
+      //   for (let i = start; i > end; i += step) result.push(i);
+      //   return result;
+      // }
+
       function collectSliceIndexes(startValue, endValue, stepValue) {
         const length = STR.length;
         const step = stepValue === 0 ? 1 : stepValue;
         const result = [];
+        
         if (step > 0) {
-          let start = normalizeSliceValue(startValue, 0);
-          let end = normalizeSliceValue(endValue, length);
+          let start = startValue === '' || startValue === null || startValue === undefined ? 0 : Number(startValue);
+          let end = endValue === '' || endValue === null || endValue === undefined ? length : Number(endValue);
+          
           if (start < 0) start += length;
           if (end < 0) end += length;
+          
+          // Clamp start and end to [0, length]
           start = Math.max(0, Math.min(start, length));
           end = Math.max(0, Math.min(end, length));
-          for (let i = start; i < end; i += step) result.push(i);
+          
+          for (let i = start; i < end; i += step) {
+            result.push(i);
+          }
+          return result;
+        } else {
+          let start = startValue === '' || startValue === null || startValue === undefined ? length - 1 : Number(startValue);
+          let end = endValue === '' || endValue === null || endValue === undefined ? -1 : Number(endValue);
+          
+          if (start < 0) start += length;
+          if (end < 0 && endValue !== '' && endValue !== null && endValue !== undefined) end += length;
+          
+          // If start is >= length, it starts at length - 1
+          if (start >= length) start = length - 1;
+          // If end is < -1, clamp to -1 to include index 0
+          if (end < -1) end = -1;
+          
+          for (let i = start; i > end; i += step) {
+            result.push(i);
+          }
           return result;
         }
-        let start = normalizeSliceValue(startValue, length - 1);
-        let end = normalizeSliceValue(endValue, -1);
-        if (start < 0) start += length;
-        if (end < 0) end += length;
-        start = Math.max(-1, Math.min(start, length - 1));
-        end = Math.max(-1, Math.min(end, length - 1));
-        for (let i = start; i > end; i += step) result.push(i);
-        return result;
       }
+
+      function updateSliceTip(s, e, st) {
+        const length = STR.length;
+        
+        let startText = '';
+        if (s === '') {
+          startText = `<strong>start ขาด</strong> = เริ่มจาก${st < 0 ? 'ท้ายสุด ( index ที่ ' + (length - 1) + ')' : ' 0'}`;
+        } else {
+          const val = Number(s);
+          if (val < 0) {
+            startText = `<strong>start = ${s}</strong> = เริ่มจากตัวที่ ${Math.abs(val)} จากท้าย`;
+          } else {
+            startText = `<strong>start = ${s}</strong> = เริ่มจาก index ที่ ${val}`;
+          }
+        }
+
+        let endText = '';
+        if (e === '') {
+          endText = `<strong>end ขาด</strong> = จนถึง${st < 0 ? 'ตัวแรกสุด' : 'ท้ายสุด'}`;
+        } else {
+          const val = Number(e);
+          if (val < 0) {
+            endText = `<strong>end = ${e}</strong> = จนถึงก่อนตัวที่ ${Math.abs(val)} จากท้าย`;
+          } else {
+            endText = `<strong>end = ${e}</strong> = จนถึงก่อน index ที่ ${val}`;
+          }
+        }
+
+        let stepText = '';
+        if (st < 0) {
+          stepText = `<strong>step ติดลบ (${st})</strong> = กลับด้าน/ถอยหลัง`;
+        } else if (st === 0) {
+          stepText = `<strong>step เป็น 0</strong> = ใช้ 1 แทน`;
+        } else if (st === 1) {
+          stepText = `<strong>step = 1</strong> = เดินหน้าทีละ 1`;
+        } else {
+          stepText = `<strong>step = ${st}</strong> = เดินหน้าทีละ ${st}`;
+        }
+
+        const tipEl = document.getElementById('slice-tip');
+        if (tipEl) {
+          tipEl.innerHTML = `💡 ${startText} &nbsp;|&nbsp; ${endText} &nbsp;|&nbsp; ${stepText}`;
+        }
+      }
+
       function doSlice() {
         const s = document.getElementById('sl-s').value;
         const e = document.getElementById('sl-e').value;
@@ -2252,6 +2341,7 @@
         const res = selectedIndexes.map(i => STR[i]).join('');
         const el = document.getElementById('slice-out');
         el.innerHTML = `<span style="color:#94a3b8;">s[${s}:${e}:${st}] = </span><span style="color:#86efac;">'${res}'</span>`;
+        updateSliceTip(s, e, st);
       }
       function setSlice(s, e, st) {
         document.getElementById('sl-s').value = s === null || s === undefined ? '' : s;
