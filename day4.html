@@ -16,12 +16,21 @@
         }
 
         header {
-            background: #1e3a8a;
-            color: white;
-            padding: 32px 24px 64px 24px;
-            text-align: left;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            position: relative;
+            background: #1e3a8a !important;
+            color: white !important;
+            padding: 32px 24px 24px 24px !important;
+            text-align: left !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+            position: relative !important;
+        }
+        .tabs {
+            background: #14297a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(20, 41, 122, .07);
+            margin-bottom: 25px;
+            width: 100%;
         }
 
         .header-home {
@@ -57,10 +66,16 @@
         }
 
         header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            line-height: 1.2;
+            font-size: 28px !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px !important;
+            line-height: 1.2 !important;
+        }
+
+        header p {
+            font-size: 18px !important;
+            color: #bfdbfe !important;
+            font-weight: 500 !important;
         }
 
 
@@ -122,24 +137,55 @@
         }
 
         .tab-bar {
+            overflow-x: auto;
             scrollbar-width: none; /* Firefox */
+            -webkit-overflow-scrolling: touch;
         }
         
         .tab-bar::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera */
         }
 
-        @media (max-width: 640px) {
-            .tab-bar {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                white-space: nowrap;
-            }
+        .tab-link {
+            font-size: .9rem !important;
+            padding: 14px 16px !important;
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+        }
 
-            .tab-link {
-                flex: 0 0 auto;
-                white-space: nowrap;
-            }
+        /* === PCA/KMEANS === */
+        canvas {
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .pca-controls,
+        .km-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .km-legend {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .km-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .canvas-wrap {
+            overflow-x: auto;
+            text-align: center;
         }
     </style>
 </head>
@@ -158,27 +204,31 @@
     </header>
     
 
-    <nav class="bg-white border-b sticky top-0 z-10 shadow-sm text-base md:text-lg w-full">
-        <div class="max-w-7xl mx-auto flex flex-nowrap tab-bar">
+    <nav class="tabs">
+        <div class="max-w-7xl mx-auto flex flex-nowrap tab-bar px-8">
             <button onclick="openTab(event, 'ml-basics')"
-                class="tab-link px-5 py-4 font-semibold text-blue-900 border-b-2 border-blue-600 active bg-blue-50">
+                class="tab-link px-5 py-4 font-semibold text-white border-b-[3px] border-amber-500 active">
                 <i class="fas fa-graduation-cap mr-2"></i>ML Basics
             </button>
             <button onclick="openTab(event, 'regression')"
-                class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent">
+                class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-chart-line mr-2"></i>Linear Regression
             </button>
             <button onclick="openTab(event, 'classification')"
-                class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent">
+                class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-tags mr-2"></i>Logistic Regression
             </button>
             <button onclick="openTab(event, 'reg-metrics')"
-                class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent">
+                class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-microscope mr-2"></i>Regression Metrics
             </button>
             <button onclick="openTab(event, 'confusion')"
-                class="tab-link px-5 py-4 font-semibold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent">
+                class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-table mr-2"></i>Confusion Matrix & F1
+            </button>
+            <button onclick="openTab(event, 'pca-kmeans')"
+                class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
+                <i class="fas fa-shapes mr-2"></i>PCA &amp; K-Means
             </button>
         </div>
     </nav>
@@ -687,6 +737,103 @@
                 </div>
             </div>
 
+            <!-- ===== TAB 5: PCA & KMEANS ===== -->
+            <div id="pca-kmeans" class="tab-content space-y-6">
+                <div class="border-l-4 border-blue-600 pl-4">
+                    <h2 class="text-2xl font-bold text-gray-800">PCA &amp; K-Means Clustering</h2>
+                    <p class="text-gray-600 text-lg">การลดมิติข้อมูลด้วย PCA และการแบ่งกลุ่มข้อมูลด้วย K-Means</p>
+                </div>
+
+                <!-- PCA Card -->
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border space-y-4">
+                    <h3 class="text-xl font-bold text-gray-800">🔬 PCA — การลดมิติข้อมูล</h3>
+                    <p class="text-gray-600 text-base">PCA ช่วย "บีบ" ข้อมูลหลาย dimension ให้เหลือน้อยมิติ แต่ยังรักษารูปแบบข้อมูลไว้</p>
+                    
+                    <div class="bg-blue-50/70 p-5 rounded-xl border border-blue-100 shadow-sm text-sm text-gray-700 leading-relaxed">
+                        📌 <strong>Principal Component Analysis (PCA)</strong> เปลี่ยนแกนของข้อมูลให้ PC1 เก็บ "ความแปรปรวน" ไว้มากที่สุด — เหมือนหาทิศทางที่ข้อมูล "กระจาย" มากที่สุด
+                    </div>
+
+                    <div class="canvas-wrap my-4">
+                        <canvas id="pca-canvas" width="480" height="320" class="border bg-white rounded-xl shadow-inner max-w-full"></canvas>
+                    </div>
+
+                    <div class="pca-controls flex flex-wrap gap-3 items-center">
+                        <button class="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition font-semibold shadow-sm" onclick="animatePCA()">▶️ แสดง PCA</button>
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-5 py-2.5 rounded-lg transition font-semibold" onclick="resetPCA()">🔄 รีเซ็ต</button>
+                        <span id="pca-info" class="text-sm text-gray-500 font-medium"></span>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 mt-6 pt-4 border-t">
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-5">
+                            <h4 class="font-bold text-green-800 mb-2">✅ ใช้ PCA เมื่อ...</h4>
+                            <ul class="text-sm text-green-950 space-y-1.5 list-disc list-inside">
+                                <li>มีตัวแปรเยอะ (10+ features)</li>
+                                <li>ต้องการ visualize ใน 2D/3D</li>
+                                <li>ตัวแปรมี multicollinearity</li>
+                                <li>ก่อนทำ clustering</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-5">
+                            <h4 class="font-bold text-amber-800 mb-2">⚠️ ข้อควรระวัง</h4>
+                            <ul class="text-sm text-amber-950 space-y-1.5 list-disc list-inside">
+                                <li>ต้อง standardize ข้อมูลก่อน</li>
+                                <li>PC ไม่มีความหมาย "ตรงๆ"</li>
+                                <li>สูญเสียข้อมูลบางส่วนเสมอ</li>
+                                <li>ดู explained variance ratio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- K-Means Card -->
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border space-y-4">
+                    <h3 class="text-xl font-bold text-gray-800">🎯 K-Means Clustering</h3>
+                    <p class="text-gray-600 text-base">K-Means แบ่งข้อมูลออกเป็น k กลุ่ม โดยจัดแต่ละจุดให้อยู่ในกลุ่มที่ centroid ใกล้ที่สุด</p>
+
+                    <div class="bg-purple-50/70 p-5 rounded-xl border border-purple-100 shadow-sm text-sm text-gray-700 leading-relaxed">
+                        📌 <strong>K-Means</strong> เลือก centroid แบบสุ่ม → กำหนดกลุ่มให้แต่ละจุด → ย้าย centroid → ทำซ้ำจนกว่าจะไม่เปลี่ยน
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 items-center mb-4 bg-gray-50 p-4 rounded-xl border">
+                        <span class="font-semibold text-gray-700 text-base">จำนวนกลุ่ม k =</span>
+                        <input type="range" id="km-k" min="2" max="5" value="3"
+                            oninput="document.getElementById('km-k-val').textContent=this.value;initKMeans();" 
+                            class="accent-purple-600 w-32">
+                        <span id="km-k-val" class="text-lg font-bold text-purple-700 min-w-[20px]">3</span>
+                    </div>
+
+                    <div class="canvas-wrap my-4">
+                        <canvas id="km-canvas" width="480" height="320" class="border bg-white rounded-xl shadow-inner max-w-full"></canvas>
+                    </div>
+
+                    <div class="km-controls flex flex-wrap gap-3 items-center">
+                        <button class="bg-purple-600 text-white px-5 py-2.5 rounded-lg hover:bg-purple-700 transition font-semibold shadow-sm" onclick="stepKMeans()">➡️ ขั้นถัดไป</button>
+                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-5 py-2.5 rounded-lg transition font-semibold" onclick="initKMeans()">🔄 สุ่มใหม่</button>
+                        <span id="km-step-info" class="text-sm text-gray-500 font-medium">กด ➡️ เพื่อเริ่ม</span>
+                    </div>
+
+                    <div class="km-legend mt-2 flex flex-wrap gap-4" id="km-legend"></div>
+
+                    <div class="grid md:grid-cols-2 gap-4 mt-6 pt-4 border-t">
+                        <div class="bg-purple-50 border border-purple-200 rounded-xl p-5">
+                            <h4 class="font-bold text-purple-800 mb-2">🔄 ขั้นตอน K-Means</h4>
+                            <ol class="text-sm text-purple-950 space-y-1.5 list-decimal list-inside">
+                                <li>สุ่มเลือก k centroids</li>
+                                <li>assign แต่ละ point ให้ centroid ใกล้ที่สุด</li>
+                                <li>คำนวณ centroid ใหม่ (mean ของ cluster)</li>
+                                <li>วนซ้ำ 2-3 จนไม่มีการเปลี่ยน</li>
+                            </ol>
+                        </div>
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-5">
+                            <h4 class="font-bold text-green-800 mb-2">📊 Elbow Method</h4>
+                            <p class="text-sm text-green-950 leading-relaxed">
+                                หา k ที่เหมาะสมโดย: plot กราฟ k vs WCSS (within-cluster sum of squares) แล้วหาจุดที่กราฟ "หัก" คล้ายข้อศอก — นั่นคือ k ที่ดีที่สุด
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -705,15 +852,21 @@
             }
             tabLinks = document.getElementsByClassName("tab-link");
             for (i = 0; i < tabLinks.length; i++) {
-                tabLinks[i].classList.remove("text-blue-900", "border-blue-600", "active", "bg-blue-50");
-                tabLinks[i].classList.add("text-gray-500", "border-transparent");
+                tabLinks[i].classList.remove("text-white", "border-amber-500", "active");
+                tabLinks[i].classList.add("text-white/55", "border-transparent");
             }
             document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("text-blue-900", "border-blue-600", "active", "bg-blue-50");
-            evt.currentTarget.classList.remove("text-gray-500", "border-transparent");
+            evt.currentTarget.classList.add("text-white", "border-amber-500", "active");
+            evt.currentTarget.classList.remove("text-white/55", "border-transparent");
 
             if (tabName === 'regression') initRegression();
             if (tabName === 'classification') initClassification();
+            if (tabName === 'pca-kmeans') {
+                setTimeout(() => {
+                    initKMeans();
+                    initPCA();
+                }, 100);
+            }
         }
 
         // --- REGRESSION SIMULATION ENGINE ---
@@ -1082,6 +1235,112 @@
 
         calculateConfusionMetrics();
         selectMetric('MAE');
+
+        // ===== PCA CANVAS =====
+        let pcaAnimDone = false, pcaAngle = 0;
+        const pcaPoints = [];
+        function initPCA() {
+            const canvas = document.getElementById('pca-canvas');
+            if (!canvas) return;
+            pcaPoints.length = 0;
+            for (let i = 0; i < 60; i++) {
+                const t = Math.random() * Math.PI * 2;
+                const r = Math.random() * 80;
+                const x = Math.cos(0.6) * r * 2 + Math.cos(t) * 20 + 240;
+                const y = Math.sin(0.6) * r + Math.sin(t) * 15 + 160;
+                pcaPoints.push({ x, y });
+            }
+            pcaAngle = 0; pcaAnimDone = false;
+            drawPCA(0);
+        }
+        function drawPCA(angle) {
+            const canvas = document.getElementById('pca-canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = '#f8fafc'; ctx.fillRect(0, 0, w, h);
+            ctx.fillStyle = 'rgba(43,82,200,.5)';
+            pcaPoints.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill(); });
+            const cx = w / 2, cy = h / 2;
+            if (angle > 0) {
+                ctx.save(); ctx.translate(cx, cy); ctx.rotate(angle);
+                ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.setLineDash([]);
+                ctx.beginPath(); ctx.moveTo(-180, 0); ctx.lineTo(180, 0); ctx.stroke();
+                ctx.fillStyle = '#ef4444'; ctx.font = 'bold 13px Sarabun'; ctx.fillText('PC1', 160, -8);
+                ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
+                ctx.beginPath(); ctx.moveTo(0, -100); ctx.lineTo(0, 100); ctx.stroke();
+                ctx.fillStyle = '#0ea5e9'; ctx.fillText('PC2', 5, -85);
+                ctx.restore();
+            }
+            ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
+        }
+        function animatePCA() {
+            if (pcaAnimDone) { resetPCA(); return; }
+            let a = 0; const target = 0.3;
+            const anim = setInterval(() => {
+                a += 0.01; drawPCA(a);
+                document.getElementById('pca-info').textContent = `กำลังหา PC1... (มุม ${(a * 180 / Math.PI).toFixed(0)}°)`;
+                if (a >= target) { clearInterval(anim); pcaAnimDone = true; document.getElementById('pca-info').textContent = '✅ PC1 = ทิศทางที่ข้อมูลกระจายมากที่สุด | PC2 ⊥ PC1'; }
+            }, 30);
+        }
+        function resetPCA() { pcaAnimDone = false; initPCA(); document.getElementById('pca-info').textContent = ''; }
+
+        // ===== KMEANS CANVAS =====
+        let kmPoints = [], kmCentroids = [], kmColors = ['#ef4444', '#2b52c8', '#10b981', '#f59e0b', '#8b5cf6'], kmStep = 0;
+        function initKMeans() {
+            const k = parseInt(document.getElementById('km-k').value) || 3;
+            kmPoints = [];
+            for (let c = 0; c < k; c++) {
+                const cx = 100 + Math.random() * 300, cy = 60 + Math.random() * 200;
+                for (let i = 0; i < 20; i++) kmPoints.push({ x: cx + (Math.random() - .5) * 80, y: cy + (Math.random() - .5) * 80, cluster: -1 });
+            }
+            kmCentroids = [];
+            for (let i = 0; i < k; i++) kmCentroids.push({ x: 80 + Math.random() * 340, y: 40 + Math.random() * 240 });
+            kmStep = 0;
+            drawKMeans();
+            updateKMLegend();
+            document.getElementById('km-step-info').textContent = 'กด ➡️ เพื่อเริ่ม (assign centroids)';
+        }
+        function drawKMeans() {
+            const canvas = document.getElementById('km-canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#f8fafc'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            kmPoints.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = p.cluster >= 0 ? kmColors[p.cluster % kmColors.length] + '88' : '#94a3b8';
+                ctx.fill(); ctx.strokeStyle = p.cluster >= 0 ? kmColors[p.cluster % kmColors.length] : '#64748b'; ctx.lineWidth = 1; ctx.stroke();
+            });
+            kmCentroids.forEach((c, i) => {
+                ctx.beginPath(); ctx.arc(c.x, c.y, 11, 0, Math.PI * 2);
+                ctx.fillStyle = kmColors[i % kmColors.length]; ctx.fill();
+                ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.stroke();
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 10px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(i + 1, c.x, c.y);
+            });
+        }
+        function assignClusters() {
+            kmPoints.forEach(p => {
+                let minD = Infinity, best = 0;
+                kmCentroids.forEach((c, i) => { const d = Math.hypot(p.x - c.x, p.y - c.y); if (d < minD) { minD = d; best = i; } });
+                p.cluster = best;
+            });
+        }
+        function moveCentroids() {
+            const k = kmCentroids.length;
+            const sums = Array.from({ length: k }, () => ({ x: 0, y: 0, n: 0 }));
+            kmPoints.forEach(p => { if (p.cluster >= 0) { sums[p.cluster].x += p.x; sums[p.cluster].y += p.y; sums[p.cluster].n++; } });
+            sums.forEach((s, i) => { if (s.n > 0) { kmCentroids[i].x = s.x / s.n; kmCentroids[i].y = s.y / s.n; } });
+        }
+        function stepKMeans() {
+            if (kmStep % 2 === 0) { assignClusters(); document.getElementById('km-step-info').textContent = `ขั้น ${kmStep + 1}: Assign — จัดทุก point ให้ centroid ใกล้ที่สุด`; }
+            else { moveCentroids(); document.getElementById('km-step-info').textContent = `ขั้น ${kmStep + 1}: Update — ย้าย centroid ไปยังค่าเฉลี่ยของแต่ละ cluster`; }
+            kmStep++; drawKMeans(); updateKMLegend();
+        }
+        function updateKMLegend() {
+            document.getElementById('km-legend').innerHTML = kmCentroids.map((c, i) => `<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i % kmColors.length]};"></div> Cluster ${i + 1}</div>`).join('');
+        }
     </script>
 </body>
 

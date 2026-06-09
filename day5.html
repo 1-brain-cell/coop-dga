@@ -39,7 +39,7 @@
         header {
             background: #1e3a8a;
             color: white;
-            padding: 32px 24px 64px 24px;
+            padding: 32px 24px 24px 24px;
             text-align: left;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             position: relative;
@@ -99,27 +99,34 @@
 
         /* Tabs */
         .tabs {
+            background: #14297a;
             display: flex;
-            background: var(--card-bg);
-            border-radius: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(20, 41, 122, .07);
             margin-bottom: 25px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
         }
 
         .tab-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
             background: none;
+            border: none;
+            color: rgba(255, 255, 255, .55);
+            padding: 14px 22px;
             font-family: 'Sarabun', sans-serif;
             font-weight: 600;
-            font-size: 15px;
-            color: #64748b;
+            font-size: .9rem;
             cursor: pointer;
-            transition: 0.3s;
+            white-space: nowrap;
             border-bottom: 3px solid transparent;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -127,14 +134,12 @@
         }
 
         .tab-btn:hover {
-            background: #f8fafc;
-            color: var(--secondary-blue);
+            color: #fff;
         }
 
         .tab-btn.active {
-            background: #eff6ff;
-            color: var(--primary-blue);
-            border-bottom-color: var(--secondary-blue);
+            color: #fff;
+            border-bottom-color: var(--accent-orange);
         }
 
         .tab-content {
@@ -562,7 +567,7 @@
 <body>
 
     <header class="bg-blue-900 text-white p-6 pt-8 pb-16 shadow-lg w-full">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-7xl flex justify-between items-center">
             <div>
                 <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Storytelling (Day 5)</h1>
                 <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | การเล่าเรื่องด้วยข้อมูลและ Visualization</p>
@@ -571,15 +576,16 @@
         <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
     </header>
 
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-theory')"><i
+                class="fa-solid fa-book-open"></i> Review Day 5</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-game')"><i class="fa-solid fa-chart-pie"></i>
+            กิจกรรม: Spot the Flaw</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-catalog')"><i class="fa-solid fa-folder-tree"></i>
+            Catalog</button>
+    </nav>
+
     <div class="container">
-        <nav class="tabs">
-            <button class="tab-btn active" onclick="switchTab(event, 'tab-theory')"><i
-                    class="fa-solid fa-book-open"></i> Review Day 5</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-game')"><i class="fa-solid fa-chart-pie"></i>
-                กิจกรรม: Spot the Flaw</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-catalog')"><i class="fa-solid fa-folder-tree"></i>
-                Catalog</button>
-        </nav>
 
         <div id="tab-theory" class="tab-content active">
             <div class="card">
