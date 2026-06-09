@@ -2001,72 +2001,73 @@
               <div class="lbl">📦 Objects ที่สร้างแล้ว</div>
               <div class="instances-grid" id="instances">
                 <div
-                  style="color:var(--tl);font-size:.85rem;padding:16px;border:2px dashed var(--br);border-radius:10px;t      <!-- ของเดิม (ย้ายไป Day 4 แล้ว):
-      <div class="tp" id="t8">
-        <div class="card">
-          <div class="card-t">🔬 PCA — การลดมิติข้อมูล</div>
-          <div class="card-s">PCA ช่วย "บีบ" ข้อมูลหลาย dimension ให้เหลือน้อยมิติ แต่ยังรักษารูปแบบข้อมูลไว้</div>
-          <div class="hbox b">📌 <strong>Principal Component Analysis (PCA)</strong> เปลี่ยนแกนของข้อมูลให้ PC1 เก็บ
-            "ความแปรปรวน" ไว้มากที่สุด — เหมือนหาทิศทางที่ข้อมูล "กระจาย" มากที่สุด</div>
-          <div class="canvas-wrap">
-            <canvas id="pca-canvas" width="480" height="320"></canvas>
-          </div>
-          <div class="pca-controls">
-            <button class="btn am" onclick="animatePCA()">▶️ แสดง PCA</button>
-            <button class="btn out" onclick="resetPCA()">🔄 รีเซ็ต</button>
-            <span id="pca-info" style="font-size:.85rem;color:var(--tl);"></span>
-          </div>
-          <div class="g2" style="margin-top:16px;">
-            <div style="background:#f0fdf4;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:#166534;margin-bottom:8px;">✅ ใช้ PCA เมื่อ...</div>
-              <div style="font-size:.85rem;line-height:1.7;">• มีตัวแปรเยอะ (10+ features)<br>• ต้องการ visualize ใน
-                2D/3D<br>• ตัวแปรมี multicollinearity<br>• ก่อนทำ clustering</div>
+                  style="color:var(--tl);font-size:.85rem;padding:16px;border:2px dashed var(--br);border-radius:10px;text-align:center;width:100%;">
+                  กด "สร้าง Object" เพื่อสร้าง instance</div>
+              </div>
+              <div class="code" id="cls-code" style="margin-top:16px;font-size:.8rem;padding:14px;">
+                <span class="nm">class</span> <span class="fn">Student</span>:
+                <span class="nm">def</span> __init__(self, name, age, gpa):
+                self.name = name
+                self.age = age
+                self.gpa = gpa
+                <span class="nm">def</span> <span class="fn">greet</span>(self):
+                <span class="nm">return</span> <span class="st">f"สวัสดี, ผม {self.name}"</span>
+              </div>
             </div>
-            <div style="background:#fff8e1;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⚠️ ข้อควรระวัง</div>
-              <div style="font-size:.85rem;line-height:1.7;">• ต้อง standardize ข้อมูลก่อน<br>• PC ไม่มีความหมาย
-                "ตรงๆ"<br>• สูญเสียข้อมูลบางส่วนเสมอ<br>• ดู explained variance ratio</div>
+          </div>
+          <div class="hbox b" style="margin-top:10px;">💡 ทุก Object ที่สร้างจาก Class เดียวกัน มีโครงสร้างเหมือนกัน
+            แต่ข้อมูลต่างกัน — เหมือนรถยนต์ที่ผลิตจากโรงงานเดียวกัน</div>
+        </div>
+      </div>
+
+      <!-- ===== TAB 6: GLOBAL vs LOCAL ===== -->
+      <div class="tp" id="t6">
+        <div class="card">
+          <div class="card-t">🌍 Global vs Local Scope</div>
+          <div class="card-s">Scope คือ "ขอบเขต" ที่ตัวแปรนั้นใช้งานได้ — กดขั้นถัดไปเพื่อดูทีละลำดับ</div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:220px;">
+              <div class="lbl" style="margin-top:14px;">📝 โค้ด — ไล่ตามลำดับ</div>
+              <div style="display:flex;flex-direction:column;gap:4px;" id="scope-code"></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;">
+                <button class="btn am" onclick="stepScope()">➡️ ขั้นถัดไป</button>
+                <button class="btn out" onclick="resetScope()">🔄 รีเซ็ต</button>
+                <span id="scope-step-no" style="font-size:.82rem;color:var(--tl);">ขั้นที่ 0/9</span>
+              </div>
+            </div>
+            <div style="flex:1.3;min-width:240px;">
+              <div class="scope-visual">
+                <div class="scope-box global" id="scope-global">
+                  <div class="scope-title">🌍 Global Scope</div>
+                  <div id="sv-global"></div>
+                </div>
+                <div class="scope-box local" id="scope-local">
+                  <div class="scope-title">📦 Local Scope (ฟังก์ชัน)</div>
+                  <div id="sv-local"></div>
+                </div>
+              </div>
+              <div id="scope-msg"
+                style="margin-top:10px;padding:10px 14px;border-radius:8px;font-size:.88rem;font-weight:600;background:var(--bl);min-height:36px;">
+              </div>
             </div>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-t">🎯 K-Means Clustering</div>
-          <div class="card-s">K-Means แบ่งข้อมูลออกเป็น k กลุ่ม โดยจัดแต่ละจุดให้อยู่ในกลุ่มที่ centroid ใกล้ที่สุด
-          </div>
-          <div class="hbox p">📌 <strong>K-Means</strong> เลือก centroid แบบสุ่ม → กำหนดกลุ่มให้แต่ละจุด → ย้าย centroid
-            → ทำซ้ำจนกว่าจะไม่เปลี่ยน</div>
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
-            <span style="font-weight:600;font-size:.9rem;">จำนวนกลุ่ม k =</span>
-            <input type="range" id="km-k" min="2" max="5" value="3"
-              oninput="document.getElementById('km-k-val').textContent=this.value;initKMeans();" style="width:120px;">
-            <span id="km-k-val" style="font-size:1.1rem;font-weight:800;color:var(--bm);min-width:20px;">3</span>
-          </div>
-          <div class="canvas-wrap">
-            <canvas id="km-canvas" width="480" height="320"></canvas>
-          </div>
-          <div class="km-controls">
-            <button class="btn am" onclick="stepKMeans()">➡️ ขั้นถัดไป</button>
-            <button class="btn out" onclick="initKMeans()">🔄 สุ่มใหม่</button>
-            <span id="km-step-info" style="font-size:.85rem;color:var(--tl);">กด ➡️ เพื่อเริ่ม</span>
-          </div>
-          <div class="km-legend" id="km-legend"></div>
-          <div class="g2" style="margin-top:16px;">
-            <div style="background:#f5f3ff;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:var(--pu);margin-bottom:8px;">🔄 ขั้นตอน K-Means</div>
-              <div style="font-size:.82rem;line-height:1.9;">1️⃣ สุ่มเลือก k centroids<br>2️⃣ assign แต่ละ point ให้
-                centroid ใกล้ที่สุด<br>3️⃣ คำนวณ centroid ใหม่ (mean ของ cluster)<br>4️⃣ วนซ้ำ 2-3 จนไม่มีการเปลี่ยน
-              </div>
+          <div class="card-t">📌 กฎของ Scope</div>
+          <div class="card-s">สิ่งที่ต้องจำ</div>
+          <div class="g2">
+            <div>
+              <div class="hbox b"><strong>🌍 Global Variable</strong><br>ใช้งานได้ทุกที่ในโปรแกรม
+                ถ้าไม่มีตัวแปรชื่อเดียวกันใน Local</div>
+              <div class="hbox a"><strong>📦 Local Variable</strong><br>ใช้ได้แค่ภายในฟังก์ชันที่สร้างมัน
+                ออกจากฟังก์ชันแล้ว หายไปเลย</div>
             </div>
-            <div style="background:#f0fdf4;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:#166534;margin-bottom:8px;">📊 Elbow Method</div>
-              <div style="font-size:.82rem;line-height:1.7;">หา k ที่เหมาะสมโดย: plot กราฟ k vs WCSS (within-cluster sum
-                of squares) แล้วหาจุดที่กราฟ "หัก" คล้ายข้อศอก — นั่นคือ k ที่ดีที่สุด</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      -->> <span class="fn">func</span>():
+            <div>
+              <div class="code" style="font-size:.8rem;padding:14px;">
+                x = <span class="nu">10</span> <span class="cm"># global</span>
+
+                <span class="nm">def</span> <span class="fn">func</span>():
                 y = <span class="nu">20</span> <span class="cm"># local</span>
                 <span class="fn">print</span>(x) <span class="cm"># ✅ เข้า global ได้</span>
                 <span class="fn">print</span>(y) <span class="cm"># ✅ local ตัวเอง</span>
@@ -2117,73 +2118,6 @@
           </div>
         </div>
       </div>
-
-      <!-- ===== TAB 8: PCA & KMEANS ===== -->
-      <div class="tp" id="t8">
-        <div class="card">
-          <div class="card-t">🔬 PCA — การลดมิติข้อมูล</div>
-          <div class="card-s">PCA ช่วย "บีบ" ข้อมูลหลาย dimension ให้เหลือน้อยมิติ แต่ยังรักษารูปแบบข้อมูลไว้</div>
-          <div class="hbox b">📌 <strong>Principal Component Analysis (PCA)</strong> เปลี่ยนแกนของข้อมูลให้ PC1 เก็บ
-            "ความแปรปรวน" ไว้มากที่สุด — เหมือนหาทิศทางที่ข้อมูล "กระจาย" มากที่สุด</div>
-          <div class="canvas-wrap">
-            <canvas id="pca-canvas" width="480" height="320"></canvas>
-          </div>
-          <div class="pca-controls">
-            <button class="btn am" onclick="animatePCA()">▶️ แสดง PCA</button>
-            <button class="btn out" onclick="resetPCA()">🔄 รีเซ็ต</button>
-            <span id="pca-info" style="font-size:.85rem;color:var(--tl);"></span>
-          </div>
-          <div class="g2" style="margin-top:16px;">
-            <div style="background:#f0fdf4;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:#166534;margin-bottom:8px;">✅ ใช้ PCA เมื่อ...</div>
-              <div style="font-size:.85rem;line-height:1.7;">• มีตัวแปรเยอะ (10+ features)<br>• ต้องการ visualize ใน
-                2D/3D<br>• ตัวแปรมี multicollinearity<br>• ก่อนทำ clustering</div>
-            </div>
-            <div style="background:#fff8e1;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⚠️ ข้อควรระวัง</div>
-              <div style="font-size:.85rem;line-height:1.7;">• ต้อง standardize ข้อมูลก่อน<br>• PC ไม่มีความหมาย
-                "ตรงๆ"<br>• สูญเสียข้อมูลบางส่วนเสมอ<br>• ดู explained variance ratio</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-t">🎯 K-Means Clustering</div>
-          <div class="card-s">K-Means แบ่งข้อมูลออกเป็น k กลุ่ม โดยจัดแต่ละจุดให้อยู่ในกลุ่มที่ centroid ใกล้ที่สุด
-          </div>
-          <div class="hbox p">📌 <strong>K-Means</strong> เลือก centroid แบบสุ่ม → กำหนดกลุ่มให้แต่ละจุด → ย้าย centroid
-            → ทำซ้ำจนกว่าจะไม่เปลี่ยน</div>
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
-            <span style="font-weight:600;font-size:.9rem;">จำนวนกลุ่ม k =</span>
-            <input type="range" id="km-k" min="2" max="5" value="3"
-              oninput="document.getElementById('km-k-val').textContent=this.value;initKMeans();" style="width:120px;">
-            <span id="km-k-val" style="font-size:1.1rem;font-weight:800;color:var(--bm);min-width:20px;">3</span>
-          </div>
-          <div class="canvas-wrap">
-            <canvas id="km-canvas" width="480" height="320"></canvas>
-          </div>
-          <div class="km-controls">
-            <button class="btn am" onclick="stepKMeans()">➡️ ขั้นถัดไป</button>
-            <button class="btn out" onclick="initKMeans()">🔄 สุ่มใหม่</button>
-            <span id="km-step-info" style="font-size:.85rem;color:var(--tl);">กด ➡️ เพื่อเริ่ม</span>
-          </div>
-          <div class="km-legend" id="km-legend"></div>
-          <div class="g2" style="margin-top:16px;">
-            <div style="background:#f5f3ff;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:var(--pu);margin-bottom:8px;">🔄 ขั้นตอน K-Means</div>
-              <div style="font-size:.82rem;line-height:1.9;">1️⃣ สุ่มเลือก k centroids<br>2️⃣ assign แต่ละ point ให้
-                centroid ใกล้ที่สุด<br>3️⃣ คำนวณ centroid ใหม่ (mean ของ cluster)<br>4️⃣ วนซ้ำ 2-3 จนไม่มีการเปลี่ยน
-              </div>
-            </div>
-            <div style="background:#f0fdf4;border-radius:10px;padding:16px;">
-              <div style="font-weight:700;color:#166534;margin-bottom:8px;">📊 Elbow Method</div>
-              <div style="font-size:.82rem;line-height:1.7;">หา k ที่เหมาะสมโดย: plot กราฟ k vs WCSS (within-cluster sum
-                of squares) แล้วหาจุดที่กราฟ "หัก" คล้ายข้อศอก — นั่นคือ k ที่ดีที่สุด</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div><!-- /ct -->
 
     <script>
@@ -2762,122 +2696,50 @@
       const cnData = [
         { text: 'เพศ', type: 'cat' }, { text: 'อายุ', type: 'num' }, { text: 'สี', type: 'cat' },
         { text: 'น้ำหนัก (kg)', type: 'num' }, { text: 'ประเภทสินค้า', type: 'cat' }, { text: 'ราคา', type: 'num' },
-        { text: 'จังหวัด', type: 'cat' }, { text: 'คะแนนสอบ', type: 'num' }      /* ของเดิม (ย้ายไป Day 4 แล้ว):
-      // ===== PCA CANVAS =====
-      let pcaAnimDone = false, pcaAngle = 0;
-      const pcaPoints = [];
-      function initPCA() {
-        const canvas = document.getElementById('pca-canvas');
-        if (!canvas) return;
-        pcaPoints.length = 0;
-        for (let i = 0; i < 60; i++) {
-          const t = Math.random() * Math.PI * 2;
-          const r = Math.random() * 80;
-          const x = Math.cos(0.6) * r * 2 + Math.cos(t) * 20 + 240;
-          const y = Math.sin(0.6) * r + Math.sin(t) * 15 + 160;
-          pcaPoints.push({ x, y });
-        }
-        pcaAngle = 0; pcaAnimDone = false;
-        drawPCA(0);
+        { text: 'จังหวัด', type: 'cat' }, { text: 'คะแนนสอบ', type: 'num' }, { text: 'อาชีพ', type: 'cat' },
+      ];
+      let cnDrag = null;
+      function buildCN() {
+        const c = document.getElementById('cn-items');
+        c.innerHTML = cnData.map((d, i) => `<div class="cn-item" draggable="true" id="cni${i}" data-type="${d.type}" ondragstart="cnDragStart(event)">${d.text}</div>`).join('');
       }
-      function drawPCA(angle) {
-        const canvas = document.getElementById('pca-canvas'); if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#f8fafc'; ctx.fillRect(0, 0, w, h);
-        ctx.fillStyle = 'rgba(43,82,200,.5)';
-        pcaPoints.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill(); });
-        const cx = w / 2, cy = h / 2;
-        if (angle > 0) {
-          ctx.save(); ctx.translate(cx, cy); ctx.rotate(angle);
-          ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.setLineDash([]);
-          ctx.beginPath(); ctx.moveTo(-180, 0); ctx.lineTo(180, 0); ctx.stroke();
-          ctx.fillStyle = '#ef4444'; ctx.font = 'bold 13px Sarabun'; ctx.fillText('PC1', 160, -8);
-          ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
-          ctx.beginPath(); ctx.moveTo(0, -100); ctx.lineTo(0, 100); ctx.stroke();
-          ctx.fillStyle = '#0ea5e9'; ctx.fillText('PC2', 5, -85);
-          ctx.restore();
-        }
-        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.setLineDash([]);
-        ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
+      buildCN();
+      function cnDragStart(e) { cnDrag = e.target; }
+      function cnOver(e, el) { e.preventDefault(); el.classList.add('hover'); }
+      function cnLeave(el) { el.classList.remove('hover'); }
+      function cnDrop(e, zone) {
+        e.preventDefault();
+        if (!cnDrag) return;
+        e.currentTarget.classList.remove('hover');
+        const sp = document.createElement('span'); sp.className = 'cn-dropped'; sp.textContent = cnDrag.textContent; sp.dataset.type = cnDrag.dataset.type; sp.dataset.zone = zone;
+        e.currentTarget.appendChild(sp);
+        cnDrag.style.opacity = '.3'; cnDrag.setAttribute('draggable', 'false'); cnDrag = null;
       }
-      function animatePCA() {
-        if (pcaAnimDone) { resetPCA(); return; }
-        let a = 0; const target = 0.3;
-        const anim = setInterval(() => {
-          a += 0.01; drawPCA(a);
-          document.getElementById('pca-info').textContent = `กำลังหา PC1... (มุม ${(a * 180 / Math.PI).toFixed(0)}°)`;
-          if (a >= target) { clearInterval(anim); pcaAnimDone = true; document.getElementById('pca-info').textContent = '✅ PC1 = ทิศทางที่ข้อมูลกระจายมากที่สุด | PC2 ⊥ PC1'; }
-        }, 30);
+      function checkCN() {
+        const items = document.querySelectorAll('.cn-dropped'); let ok = true, total = 0;
+        items.forEach(i => { total++; if (i.dataset.type !== i.dataset.zone) ok = false; });
+        const fb = document.getElementById('cn-feedback');
+        if (!total) { fb.innerHTML = '<div class="hbox a">ลากข้อมูลลงในช่องก่อนนะ!</div>'; return; }
+        fb.innerHTML = ok ? '<div class="hbox g">🎉 ถูกทุกข้อ! คุณแยก Categorical และ Numerical ได้ถูกต้อง</div>' : '<div class="hbox r">❌ มีบางข้อผิด — Categorical คือข้อมูลที่แบ่งเป็นกลุ่ม (สี, ประเภท), Numerical คือตัวเลขที่วัดได้ (อายุ, คะแนน)</div>';
       }
-      function resetPCA() { pcaAnimDone = false; initPCA(); document.getElementById('pca-info').textContent = ''; }
-      initPCA();
+      function resetCN() { document.querySelectorAll('.cn-dropped').forEach(i => i.remove()); document.querySelectorAll('.cn-item').forEach(i => { i.style.opacity = '1'; i.setAttribute('draggable', 'true'); }); document.getElementById('cn-feedback').innerHTML = ''; cnDrag = null; buildCN(); }
 
-      // ===== KMEANS CANVAS =====
-      let kmPoints = [], kmCentroids = [], kmColors = ['#ef4444', '#2b52c8', '#10b981', '#f59e0b', '#8b5cf6'], kmStep = 0;
-      function initKMeans() {
-        const k = parseInt(document.getElementById('km-k').value) || 3;
-        kmPoints = [];
-        for (let c = 0; c < k; c++) {
-          const cx = 100 + Math.random() * 300, cy = 60 + Math.random() * 200;
-          for (let i = 0; i < 20; i++)kmPoints.push({ x: cx + (Math.random() - .5) * 80, y: cy + (Math.random() - .5) * 80, cluster: -1 });
-        }
-        kmCentroids = [];
-        for (let i = 0; i < k; i++)kmCentroids.push({ x: 80 + Math.random() * 340, y: 40 + Math.random() * 240 });
-        kmStep = 0;
-        drawKMeans();
-        updateKMLegend();
-        document.getElementById('km-step-info').textContent = 'กด ➡️ เพื่อเริ่ม (assign centroids)';
-      }
-      function drawKMeans() {
-        const canvas = document.getElementById('km-canvas'); if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#f8fafc'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        kmPoints.forEach(p => {
-          ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-          // ctx.fillStyle=p.cluster>=0?kmColors[p.cluster]+'88':'#94a3b8';
-          // ctx.fill();ctx.strokeStyle=p.cluster>=0?kmColors[p.cluster]:'#64748b';ctx.lineWidth=1;ctx.stroke();
-          // ของใหม่: ป้องกัน Array Index Overflow ด้วย Modulo % kmColors.length
-          ctx.fillStyle = p.cluster >= 0 ? kmColors[p.cluster % kmColors.length] + '88' : '#94a3b8';
-          ctx.fill(); ctx.strokeStyle = p.cluster >= 0 ? kmColors[p.cluster % kmColors.length] : '#64748b'; ctx.lineWidth = 1; ctx.stroke();
-        });
-        kmCentroids.forEach((c, i) => {
-          ctx.beginPath(); ctx.arc(c.x, c.y, 11, 0, Math.PI * 2);
-          // ctx.fillStyle=kmColors[i];ctx.fill();
-          // ของใหม่: ป้องกัน Index Overflow
-          ctx.fillStyle = kmColors[i % kmColors.length]; ctx.fill();
-          ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.stroke();
-          ctx.fillStyle = '#fff'; ctx.font = 'bold 10px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-          ctx.fillText(i + 1, c.x, c.y);
-        });
-      }
-      function assignClusters() {
-        kmPoints.forEach(p => {
-          let minD = Infinity, best = 0;
-          kmCentroids.forEach((c, i) => { const d = Math.hypot(p.x - c.x, p.y - c.y); if (d < minD) { minD = d; best = i; } });
-          p.cluster = best;
-        });
-      }
-      function moveCentroids() {
-        const k = kmCentroids.length;
-        const sums = Array.from({ length: k }, () => ({ x: 0, y: 0, n: 0 }));
-        kmPoints.forEach(p => { if (p.cluster >= 0) { sums[p.cluster].x += p.x; sums[p.cluster].y += p.y; sums[p.cluster].n++; } });
-        sums.forEach((s, i) => { if (s.n > 0) { kmCentroids[i].x = s.x / s.n; kmCentroids[i].y = s.y / s.n; } });
-      }
-      function stepKMeans() {
-        if (kmStep % 2 === 0) { assignClusters(); document.getElementById('km-step-info').textContent = `ขั้น ${kmStep + 1}: Assign — จัดทุก point ให้ centroid ใกล้ที่สุด`; }
-        else { moveCentroids(); document.getElementById('km-step-info').textContent = `ขั้น ${kmStep + 1}: Update — ย้าย centroid ไปยังค่าเฉลี่ยของแต่ละ cluster`; }
-        kmStep++; drawKMeans(); updateKMLegend();
-      }
-      function updateKMLegend() {
-        // document.getElementById('km-legend').innerHTML=kmCentroids.map((c,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i]};"></div> Cluster ${i+1}</div>`).join('');
-        // ของใหม่: ป้องกัน Index Overflow
-        document.getElementById('km-legend').innerHTML = kmCentroids.map((c, i) => `<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i % kmColors.length]};"></div> Cluster ${i + 1}</div>`).join('');
-      }
-      initKMeans();
-      */" fill="#10b981"/><path d="M0,0 L${wide ? -20 : -12},${wide ? 54 : 30} A${wide ? 58 : 34},${wide ? 58 : 34} 0 0,1 0,-${wide ? 58 : 34} Z" fill="#f59e0b"/></g><g fill="#64748b" font-size="12"><rect x="${wide ? 290 : 136}" y="${wide ? 40 : 18}" width="12" height="12" fill="#2b52c8"/><text x="${wide ? 310 : 154}" y="${wide ? 50 : 28}">A 40%</text><rect x="${wide ? 290 : 136}" y="${wide ? 62 : 40}" width="12" height="12" fill="#10b981"/><text x="${wide ? 310 : 154}" y="${wide ? 72 : 50}">B 30%</text><rect x="${wide ? 290 : 136}" y="${wide ? 84 : 62}" width="12" height="12" fill="#f59e0b"/><text x="${wide ? 310 : 154}" y="${wide ? 94 : 72}">C 30%</text></g></svg>`;
+      // ===== CHARTS =====
+      const charts = [
+        { ico: '📊', nm: 'Bar Chart', when: 'เปรียบเทียบหมวดหมู่', detail: 'ใช้กับข้อมูล Categorical เปรียบเทียบขนาดของแต่ละกลุ่ม เช่น ยอดขายรายเดือน จำนวนนักศึกษาต่อสาขา', good: 'Categorical, การเปรียบเทียบ', kind: 'bar' },
+        { ico: '🥧', nm: 'Pie Chart', when: 'สัดส่วนของทั้งหมด', detail: 'แสดงสัดส่วน % ของแต่ละส่วน รวมกัน = 100% ใช้เมื่อมีหมวดหมู่ไม่เกิน 5-6 ประเภท', good: 'Categorical, สัดส่วน', kind: 'pie' },
+        { ico: '📈', nm: 'Line Chart', when: 'แนวโน้มตามเวลา', detail: 'เหมาะสำหรับข้อมูลที่มีลำดับเวลา แสดงการเปลี่ยนแปลงหรือแนวโน้ม เช่น อุณหภูมิรายวัน ราคาหุ้น', good: 'Time series, แนวโน้ม', kind: 'line' },
+        { ico: '📉', nm: 'Histogram', when: 'การกระจายของข้อมูล', detail: 'แสดงว่าข้อมูล Numerical กระจายตัวอย่างไร มีข้อมูลรวมตัวที่ค่าไหนมากที่สุด ดูว่าเป็น normal distribution ไหม', good: 'Numerical, distribution', kind: 'hist' },
+        { ico: '🔵', nm: 'Scatter Plot', when: 'ความสัมพันธ์ 2 ตัวแปร', detail: 'แสดงความสัมพันธ์ระหว่าง 2 ตัวแปร Numerical ดูว่ามี correlation บวก ลบ หรือไม่มีเลย', good: '2 Numerical, correlation', kind: 'scatter' },
+        { ico: '📦', nm: 'Box Plot', when: 'สรุปสถิติ+outlier', detail: 'แสดง median, Q1, Q3, และ outliers ในกล่องเดียว เหมาะสำหรับเปรียบเทียบ distribution ระหว่างกลุ่ม', good: 'Numerical, outlier detection', kind: 'box' },
+      ];
+      function chartVisual(kind, size = 'thumb') {
+        const wide = size === 'detail';
+        const w = wide ? 520 : 260;
+        const h = wide ? 180 : 110;
+        const bg = wide ? '#ffffff' : '#f8fafc';
+        if (kind === 'bar') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h - 28}" x2="${w - 18}" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><rect x="58" y="${h - 56}" width="38" height="${wide ? 74 : 34}" rx="6" fill="#2b52c8"/><rect x="114" y="${h - 82}" width="38" height="${wide ? 100 : 50}" rx="6" fill="#0ea5e9"/><rect x="170" y="${h - 48}" width="38" height="${wide ? 66 : 28}" rx="6" fill="#10b981"/><rect x="226" y="${h - 100}" width="38" height="${wide ? 118 : 62}" rx="6" fill="#f59e0b"/><rect x="282" y="${h - 68}" width="38" height="${wide ? 86 : 42}" rx="6" fill="#8b5cf6"/>${wide ? `<text x="72" y="${h - 14}" text-anchor="middle" fill="#64748b" font-size="12">A</text><text x="128" y="${h - 14}" text-anchor="middle" fill="#64748b" font-size="12">B</text><text x="184" y="${h - 14}" text-anchor="middle" fill="#64748b" font-size="12">C</text><text x="240" y="${h - 14}" text-anchor="middle" fill="#64748b" font-size="12">D</text><text x="296" y="${h - 14}" text-anchor="middle" fill="#64748b" font-size="12">E</text>` : ''}</svg>`;
+        if (kind === 'pie') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pie chart example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><g transform="translate(${wide ? 150 : 70},${wide ? 90 : 55})"><circle r="${wide ? 58 : 34}" fill="#e2e8f0"/><path d="M0,0 L0,-${wide ? 58 : 34} A${wide ? 58 : 34},${wide ? 58 : 34} 0 0,1 ${wide ? 50 : 28},${wide ? 20 : 12} Z" fill="#2b52c8"/><path d="M0,0 L${wide ? 50 : 28},${wide ? 20 : 12} A${wide ? 58 : 34},${wide ? 58 : 34} 0 0,1 ${wide ? -20 : -12},${wide ? 54 : 30} Z" fill="#10b981"/><path d="M0,0 L${wide ? -20 : -12},${wide ? 54 : 30} A${wide ? 58 : 34},${wide ? 58 : 34} 0 0,1 0,-${wide ? 58 : 34} Z" fill="#f59e0b"/></g><g fill="#64748b" font-size="12"><rect x="${wide ? 290 : 136}" y="${wide ? 40 : 18}" width="12" height="12" fill="#2b52c8"/><text x="${wide ? 310 : 154}" y="${wide ? 50 : 28}">A 40%</text><rect x="${wide ? 290 : 136}" y="${wide ? 62 : 40}" width="12" height="12" fill="#10b981"/><text x="${wide ? 310 : 154}" y="${wide ? 72 : 50}">B 30%</text><rect x="${wide ? 290 : 136}" y="${wide ? 84 : 62}" width="12" height="12" fill="#f59e0b"/><text x="${wide ? 310 : 154}" y="${wide ? 94 : 72}">C 30%</text></g></svg>`;
         if (kind === 'line') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h - 28}" x2="${w - 18}" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><path d="M52 ${h - 50} L104 ${h - 72} L156 ${h - 58} L208 ${h - 92} L260 ${h - 78} L312 ${h - 110}" fill="none" stroke="#2b52c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><g fill="#0ea5e9"><circle cx="52" cy="${h - 50}" r="4"/><circle cx="104" cy="${h - 72}" r="4"/><circle cx="156" cy="${h - 58}" r="4"/><circle cx="208" cy="${h - 92}" r="4"/><circle cx="260" cy="${h - 78}" r="4"/><circle cx="312" cy="${h - 110}" r="4"/></g></svg>`;
         if (kind === 'hist') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Histogram example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h - 28}" x2="${w - 18}" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><rect x="52" y="${h - 42}" width="34" height="24" fill="#2b52c8" opacity=".85"/><rect x="88" y="${h - 68}" width="34" height="50" fill="#2b52c8" opacity=".85"/><rect x="124" y="${h - 92}" width="34" height="74" fill="#2b52c8" opacity=".85"/><rect x="160" y="${h - 108}" width="34" height="90" fill="#2b52c8" opacity=".85"/><rect x="196" y="${h - 90}" width="34" height="72" fill="#2b52c8" opacity=".85"/><rect x="232" y="${h - 66}" width="34" height="48" fill="#2b52c8" opacity=".85"/><rect x="268" y="${h - 40}" width="34" height="22" fill="#2b52c8" opacity=".85"/><path d="M50 ${h - 42} C92 ${h - 120}, 168 ${h - 126}, 304 ${h - 42}" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 5"/></svg>`;
         if (kind === 'scatter') return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scatter plot example"><rect width="${w}" height="${h}" rx="12" fill="${bg}"/><line x1="34" y1="20" x2="34" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><line x1="34" y1="${h - 28}" x2="${w - 18}" y2="${h - 28}" stroke="#94a3b8" stroke-width="2"/><g fill="#2b52c8" opacity=".85"><circle cx="70" cy="${h - 48}" r="5"/><circle cx="98" cy="${h - 66}" r="5"/><circle cx="128" cy="${h - 54}" r="5"/><circle cx="156" cy="${h - 82}" r="5"/><circle cx="186" cy="${h - 96}" r="5"/><circle cx="216" cy="${h - 72}" r="5"/><circle cx="244" cy="${h - 110}" r="5"/><circle cx="274" cy="${h - 92}" r="5"/><circle cx="302" cy="${h - 126}" r="5"/></g></svg>`;
@@ -2892,121 +2754,6 @@
         };
         cg.appendChild(d);
       });
-
-      // ===== PCA CANVAS =====
-      let pcaAnimDone = false, pcaAngle = 0;
-      const pcaPoints = [];
-      function initPCA() {
-        const canvas = document.getElementById('pca-canvas');
-        if (!canvas) return;
-        pcaPoints.length = 0;
-        for (let i = 0; i < 60; i++) {
-          const t = Math.random() * Math.PI * 2;
-          const r = Math.random() * 80;
-          const x = Math.cos(0.6) * r * 2 + Math.cos(t) * 20 + 240;
-          const y = Math.sin(0.6) * r + Math.sin(t) * 15 + 160;
-          pcaPoints.push({ x, y });
-        }
-        pcaAngle = 0; pcaAnimDone = false;
-        drawPCA(0);
-      }
-      function drawPCA(angle) {
-        const canvas = document.getElementById('pca-canvas'); if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#f8fafc'; ctx.fillRect(0, 0, w, h);
-        ctx.fillStyle = 'rgba(43,82,200,.5)';
-        pcaPoints.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill(); });
-        const cx = w / 2, cy = h / 2;
-        if (angle > 0) {
-          ctx.save(); ctx.translate(cx, cy); ctx.rotate(angle);
-          ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3; ctx.setLineDash([]);
-          ctx.beginPath(); ctx.moveTo(-180, 0); ctx.lineTo(180, 0); ctx.stroke();
-          ctx.fillStyle = '#ef4444'; ctx.font = 'bold 13px Sarabun'; ctx.fillText('PC1', 160, -8);
-          ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
-          ctx.beginPath(); ctx.moveTo(0, -100); ctx.lineTo(0, 100); ctx.stroke();
-          ctx.fillStyle = '#0ea5e9'; ctx.fillText('PC2', 5, -85);
-          ctx.restore();
-        }
-        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.setLineDash([]);
-        ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
-      }
-      function animatePCA() {
-        if (pcaAnimDone) { resetPCA(); return; }
-        let a = 0; const target = 0.3;
-        const anim = setInterval(() => {
-          a += 0.01; drawPCA(a);
-          document.getElementById('pca-info').textContent = `กำลังหา PC1... (มุม ${(a * 180 / Math.PI).toFixed(0)}°)`;
-          if (a >= target) { clearInterval(anim); pcaAnimDone = true; document.getElementById('pca-info').textContent = '✅ PC1 = ทิศทางที่ข้อมูลกระจายมากที่สุด | PC2 ⊥ PC1'; }
-        }, 30);
-      }
-      function resetPCA() { pcaAnimDone = false; initPCA(); document.getElementById('pca-info').textContent = ''; }
-      initPCA();
-
-      // ===== KMEANS CANVAS =====
-      let kmPoints = [], kmCentroids = [], kmColors = ['#ef4444', '#2b52c8', '#10b981', '#f59e0b', '#8b5cf6'], kmStep = 0;
-      function initKMeans() {
-        const k = parseInt(document.getElementById('km-k').value) || 3;
-        kmPoints = [];
-        for (let c = 0; c < k; c++) {
-          const cx = 100 + Math.random() * 300, cy = 60 + Math.random() * 200;
-          for (let i = 0; i < 20; i++)kmPoints.push({ x: cx + (Math.random() - .5) * 80, y: cy + (Math.random() - .5) * 80, cluster: -1 });
-        }
-        kmCentroids = [];
-        for (let i = 0; i < k; i++)kmCentroids.push({ x: 80 + Math.random() * 340, y: 40 + Math.random() * 240 });
-        kmStep = 0;
-        drawKMeans();
-        updateKMLegend();
-        document.getElementById('km-step-info').textContent = 'กด ➡️ เพื่อเริ่ม (assign centroids)';
-      }
-      function drawKMeans() {
-        const canvas = document.getElementById('km-canvas'); if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#f8fafc'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        kmPoints.forEach(p => {
-          ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-          // ctx.fillStyle=p.cluster>=0?kmColors[p.cluster]+'88':'#94a3b8';
-          // ctx.fill();ctx.strokeStyle=p.cluster>=0?kmColors[p.cluster]:'#64748b';ctx.lineWidth=1;ctx.stroke();
-          // ของใหม่: ป้องกัน Array Index Overflow ด้วย Modulo % kmColors.length
-          ctx.fillStyle = p.cluster >= 0 ? kmColors[p.cluster % kmColors.length] + '88' : '#94a3b8';
-          ctx.fill(); ctx.strokeStyle = p.cluster >= 0 ? kmColors[p.cluster % kmColors.length] : '#64748b'; ctx.lineWidth = 1; ctx.stroke();
-        });
-        kmCentroids.forEach((c, i) => {
-          ctx.beginPath(); ctx.arc(c.x, c.y, 11, 0, Math.PI * 2);
-          // ctx.fillStyle=kmColors[i];ctx.fill();
-          // ของใหม่: ป้องกัน Index Overflow
-          ctx.fillStyle = kmColors[i % kmColors.length]; ctx.fill();
-          ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.stroke();
-          ctx.fillStyle = '#fff'; ctx.font = 'bold 10px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-          ctx.fillText(i + 1, c.x, c.y);
-        });
-      }
-      function assignClusters() {
-        kmPoints.forEach(p => {
-          let minD = Infinity, best = 0;
-          kmCentroids.forEach((c, i) => { const d = Math.hypot(p.x - c.x, p.y - c.y); if (d < minD) { minD = d; best = i; } });
-          p.cluster = best;
-        });
-      }
-      function moveCentroids() {
-        const k = kmCentroids.length;
-        const sums = Array.from({ length: k }, () => ({ x: 0, y: 0, n: 0 }));
-        kmPoints.forEach(p => { if (p.cluster >= 0) { sums[p.cluster].x += p.x; sums[p.cluster].y += p.y; sums[p.cluster].n++; } });
-        sums.forEach((s, i) => { if (s.n > 0) { kmCentroids[i].x = s.x / s.n; kmCentroids[i].y = s.y / s.n; } });
-      }
-      function stepKMeans() {
-        if (kmStep % 2 === 0) { assignClusters(); document.getElementById('km-step-info').textContent = `ขั้น ${kmStep + 1}: Assign — จัดทุก point ให้ centroid ใกล้ที่สุด`; }
-        else { moveCentroids(); document.getElementById('km-step-info').textContent = `ขั้น ${kmStep + 1}: Update — ย้าย centroid ไปยังค่าเฉลี่ยของแต่ละ cluster`; }
-        kmStep++; drawKMeans(); updateKMLegend();
-      }
-      function updateKMLegend() {
-        // document.getElementById('km-legend').innerHTML=kmCentroids.map((c,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i]};"></div> Cluster ${i+1}</div>`).join('');
-        // ของใหม่: ป้องกัน Index Overflow
-        document.getElementById('km-legend').innerHTML = kmCentroids.map((c, i) => `<div style="display:flex;align-items:center;gap:6px;font-size:.82rem;"><div class="km-dot" style="background:${kmColors[i % kmColors.length]};"></div> Cluster ${i + 1}</div>`).join('');
-      }
-      initKMeans();
     </script>
 </body>
 
