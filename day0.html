@@ -8,6 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <style>
+    html {
+      font-size: 18px;
+    }
+
     :root {
       --bd: #1b3a8f;
       --bm: #2b52c8;
@@ -1108,7 +1112,8 @@
     <button class="tb" onclick="switchTab(1)">📦 ข้อมูลและตัวแปร</button>
     <button class="tb" onclick="switchTab(2)">🧩 คิดแบบโปรแกรมเมอร์</button>
     <button class="tb" onclick="switchTab(3)">🐍 พบกับ Python</button>
-    <button class="tb" onclick="switchTab(4)">🎯 ทบทวนและฝึกฝน</button>
+    <button class="tb" onclick="switchTab(4)">⚠️ Error เบื้องต้น</button>
+    <button class="tb" onclick="switchTab(5)">🎯 ทบทวนและฝึกฝน</button>
   </div>
 
   <div class="ct">
@@ -1611,77 +1616,208 @@
           </div>
         </div>
 
-        <div class="divider"></div>
-
-        <div class="card-t">⚠️ ทำความรู้จัก "ข้อผิดพลาด" (Basic Errors)</div>
-        <div class="card-s">การเจอ Error คือส่วนหนึ่งของการเรียนรู้ ไม่ต้องตกใจ! มาดูประเภทที่พบบ่อยกัน</div>
-
-        <div class="g2" style="gap:24px;">
-          <!-- 1. Syntax Error -->
-          <div>
-            <div class="lbl" style="color:var(--rd);">1. พิมพ์ผิด (Syntax Error)</div>
-            <div class="code-preview" style="margin-top:4px;margin-bottom:8px;">
-              <span class="fn">prnit</span>(<span class="st">"Hello"</span>) <span class="cm"># พิมพ์ print ผิด</span><br>
-              <span class="fn">print</span>(<span class="st">"Hi"</span> <span class="cm"># ลืมปิดวงเล็บ</span>
-            </div>
-            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
-              เหมือนการสะกดคำผิด ทำให้ Python อ่านไม่รู้เรื่องและหยุดทำงานทันที
-            </div>
-          </div>
-
-          <!-- 2. Runtime Error -->
-          <div>
-            <div class="lbl" style="color:var(--am);">2. ข้อผิดพลาดขณะรัน (Runtime Error)</div>
-            <div class="code-preview" style="margin-top:4px;margin-bottom:8px;">
-              <span class="nm">x</span> = <span class="nm">10</span> / <span class="nm">0</span> <span class="cm"># ZeroDivisionError (หารด้วย 0)</span><br>
-              <span class="st">"5"</span> + <span class="nm">10</span> <span class="cm"># TypeError (บวกตัวเลขกับข้อความ)</span><br>
-              <span class="fn">int</span>(<span class="st">"abc"</span>) <span class="cm"># ValueError (แปลงข้อความที่ไม่ใช่เลข)</span><br>
-              <span class="fn">print</span>(<span class="nm">y</span>) <span class="cm"># NameError (เรียกตัวแปรที่ไม่ได้สร้าง)</span>
-            </div>
-            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
-              ไวยากรณ์ถูกแต่มีปัญหาตอนทำงาน เช่น คำนวณที่เป็นไปไม่ได้ หรือใช้ข้อมูลผิดประเภท
-            </div>
-          </div>
-
-          <!-- 3. Warning -->
-          <div>
-            <div class="lbl" style="color:var(--cy);">3. คำเตือน (Warning)</div>
-            <div class="hbox blue" style="margin-top:4px;margin-bottom:8px;font-size:.82rem;padding:10px 14px;">
-              💡 มักพบเมื่อใช้ Library ที่เริ่มเก่า หรือวิธีการที่กำลังจะเลิกใช้ (Deprecated)
-            </div>
-            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
-              โปรแกรมยังทำงานได้ต่อ แต่ Python แจ้งเตือนว่ามีบางอย่างที่ควรปรับปรุง
-            </div>
-          </div>
-
-          <!-- 4. Handling Error -->
-          <div>
-            <div class="lbl" style="color:var(--gn);">4. การรับมือ (Try-Except)</div>
-            <div class="code-preview" style="margin-top:4px;margin-bottom:8px;">
-              <span class="kw">try</span>:<br>
-              &nbsp;&nbsp;<span class="nm">result</span> = <span class="nm">10</span> / <span class="nm">0</span><br>
-              <span class="kw">except</span>:<br>
-              &nbsp;&nbsp;<span class="fn">print</span>(<span class="st">"เกิดข้อผิดพลาด"</span>)
-            </div>
-            <div style="font-size:.85rem;color:var(--tl);line-height:1.5;">
-              ใช้เพื่อดักจับ Error และสั่งให้โปรแกรมทำงานต่อไปได้โดยไม่หยุดชะงัก
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. File Not Found -->
-        <div style="margin-top:24px;padding:16px;background:#f8fafc;border:1px dashed var(--br);border-radius:10px;">
-          <div class="lbl" style="color:var(--bd);">📂 5. หาไฟล์ไม่เจอ (FileNotFoundError)</div>
-          <div class="code-preview">
-            <span class="nm">f</span> = <span class="fn">open</span>(<span class="st">"data.csv"</span>) <span class="cm"># ถ้าไม่มีไฟล์ในโฟลเดอร์จะ Error</span>
-          </div>
-          <p style="font-size:.85rem;color:var(--tl);">เกิดขึ้นเมื่อสั่งเปิดไฟล์แต่ชื่อไฟล์ผิด หรือไฟล์ไม่ได้อยู่ในโฟลเดอร์ที่ระบุ</p>
-        </div>
       </div>
     </div>
 
-    <!-- === TAB 4: QUIZ === -->
+    <!-- === TAB 4: BASIC ERRORS === -->
     <div class="tp" id="tab4">
+
+      <!-- Intro -->
+      <div class="card">
+        <div class="card-t">⚠️ เจอ Error ไม่ต้องตกใจ</div>
+        <div class="card-s">ทุกคนที่เขียนโปรแกรม — แม้แต่มืออาชีพ — ก็เจอ Error ทุกวัน มันคือเรื่องปกติของการเรียนรู้</div>
+        <div class="hbox green" style="font-size:1rem;">✅ <strong>Error ไม่ใช่ความล้มเหลว</strong> แต่คือ Python กำลัง
+          <strong>บอกเราว่าตรงไหนมีปัญหา</strong> เหมือนเพื่อนที่ช่วยชี้จุดผิดให้ — แก้ทีละจุดก็เรียบร้อย</div>
+        <div class="hbox blue" style="font-size:1rem;">🔎 <strong>เคล็ดลับอ่าน Error:</strong> ให้อ่าน
+          <strong>บรรทัดสุดท้าย</strong> ก่อนเสมอ เพราะมันบอก <em>ชื่อ Error</em> และ <em>สาเหตุ</em> และดูเลข
+          <strong>บรรทัด (line)</strong> ว่าผิดตรงไหน</div>
+      </div>
+
+      <!-- Common errors grid -->
+      <div class="card">
+        <div class="card-t">🧩 Error ที่พบบ่อย 11 แบบ</div>
+        <div class="card-s">แต่ละแบบมีตัวอย่างสั้น ๆ และวิธีสังเกต — ไม่ต้องท่อง แค่รู้จักหน้าตาไว้</div>
+
+        <div class="g2" style="gap:18px;">
+
+          <!-- 1 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--rd);font-size:1rem;">1. SyntaxError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">เขียนไวยากรณ์ผิด</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="kw">if</span> <span class="nm">x</span> > <span class="nm">0</span> <span class="cm"># ← ลืมใส่ : ท้ายบรรทัด</span>
+            </div>
+            <div style="font-size:.9rem;">👉 ตรวจ <strong>เครื่องหมาย :</strong> และ <strong>วงเล็บ</strong> ให้ครบ</div>
+          </div>
+
+          <!-- 2 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--rd);font-size:1rem;">2. IndentationError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">ย่อหน้า (เว้นวรรคหน้าบรรทัด) ผิด</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="kw">for</span> <span class="nm">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">5</span>):<br>
+              <span class="fn">print</span>(<span class="nm">i</span>) <span class="cm"># ← ต้องเว้นวรรคเข้าไป</span>
+            </div>
+            <div style="font-size:.9rem;">👉 ย่อหน้าให้ <strong>เท่ากันทุกบรรทัด</strong> อย่าปน Tab กับ Space</div>
+          </div>
+
+          <!-- 3 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">3. NameError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">ใช้ตัวแปรที่ยังไม่ได้สร้าง</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="fn">print</span>(<span class="nm">salery</span>) <span class="cm"># พิมพ์ชื่อผิด (salary)</span>
+            </div>
+            <div style="font-size:.9rem;">👉 ตรวจ <strong>การสะกดชื่อ</strong> และ <strong>รัน cell ที่สร้างตัวแปร</strong> แล้วหรือยัง</div>
+          </div>
+
+          <!-- 4 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">4. TypeError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">ใช้ชนิดข้อมูลผิดประเภท</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="st">"25"</span> + <span class="nm">5</span> <span class="cm"># เอาข้อความบวกตัวเลข</span>
+            </div>
+            <div style="font-size:.9rem;">👉 เช็กชนิดด้วย <code>type(x)</code> แล้วแปลงก่อน เช่น <code>int("25")</code></div>
+          </div>
+
+          <!-- 5 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">5. ValueError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">ชนิดถูก แต่ค่าไม่สมเหตุสมผล</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="fn">int</span>(<span class="st">"hello"</span>) <span class="cm"># แปลงคำเป็นตัวเลขไม่ได้</span>
+            </div>
+            <div style="font-size:.9rem;">👉 ตรวจว่าค่าที่ใส่ <strong>แปลงได้จริง</strong> เช่น ผู้ใช้พิมพ์ตัวเลขมาไหม</div>
+          </div>
+
+          <!-- 6 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">6. IndexError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">เรียกตำแหน่งที่ไม่มีในลิสต์</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="nm">scores</span> = [<span class="nm">85</span>, <span class="nm">90</span>, <span class="nm">78</span>]<br>
+              <span class="fn">print</span>(<span class="nm">scores</span>[<span class="nm">3</span>]) <span class="cm"># มีแค่ 0,1,2</span>
+            </div>
+            <div style="font-size:.9rem;">👉 จำไว้ว่า index <strong>เริ่มที่ 0</strong> ตัวสุดท้ายคือ <code>[-1]</code></div>
+          </div>
+
+          <!-- 7 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">7. KeyError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">เรียก key / คอลัมน์ที่ไม่มี</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="nm">df</span>[<span class="st">'Salary'</span>] <span class="cm"># จริง ๆ ชื่อ 'salary'</span>
+            </div>
+            <div style="font-size:.9rem;">👉 ตรวจชื่อคอลัมน์ด้วย <code>df.columns</code> (ตัวพิมพ์ใหญ่-เล็กสำคัญ)</div>
+          </div>
+
+          <!-- 8 -->
+          <div style="border:1px solid var(--br);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">8. AttributeError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">เรียกคำสั่งที่ชนิดนั้นไม่มี</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="st">"Alice"</span>.<span class="fn">append</span>(<span class="st">"!"</span>) <span class="cm"># str ไม่มี append</span>
+            </div>
+            <div style="font-size:.9rem;">👉 เช็กว่ากำลังใช้คำสั่งกับ <strong>ชนิดข้อมูลที่ถูกต้อง</strong> ไหม</div>
+          </div>
+
+          <!-- 9 -->
+          <div style="border:1px solid var(--am);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--am);font-size:1rem;">9. ZeroDivisionError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">หารด้วยศูนย์</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="nm">avg</span> = <span class="nm">total</span> / <span class="nm">count</span> <span class="cm"># ถ้า count = 0</span>
+            </div>
+            <div style="font-size:.9rem;">👉 เช็กก่อนหารว่า <strong>ตัวหารไม่เป็น 0</strong></div>
+          </div>
+
+          <!-- 10 -->
+          <div style="border:1px solid var(--bm);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--bm);font-size:1rem;">10. FileNotFoundError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">หาไฟล์ไม่เจอ</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="nm">df</span> = <span class="nm">pd</span>.<span class="fn">read_csv</span>(<span class="st">'data.csv'</span>)
+            </div>
+            <div style="font-size:.9rem;">👉 อัปโหลดไฟล์แล้วหรือยัง? ดูไฟล์ที่มีด้วย <code>os.listdir()</code></div>
+          </div>
+
+          <!-- 11 -->
+          <div style="border:1px solid var(--pu);border-radius:10px;padding:16px;">
+            <div style="font-weight:800;color:var(--pu);font-size:1rem;">11. ModuleNotFoundError</div>
+            <div style="font-size:.9rem;color:var(--tl);margin-bottom:6px;">ยังไม่ได้ติดตั้ง library</div>
+            <div class="code-preview" style="margin:0 0 8px;">
+              <span class="kw">import</span> <span class="nm">seaborn</span> <span class="cm"># ยังไม่มีในเครื่อง</span>
+            </div>
+            <div style="font-size:.9rem;">👉 ติดตั้งด้วย <code>!pip install seaborn</code></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Warning -->
+      <div class="card">
+        <div class="card-t">💡 Warning ต่างจาก Error</div>
+        <div class="card-s">Warning ไม่ทำให้โปรแกรมหยุด — แค่เตือนว่ามีบางอย่างควรปรับปรุง</div>
+        <div class="g2">
+          <div class="hbox amber">
+            <strong>⚠️ Error</strong> = หยุดทันที โปรแกรมไปต่อไม่ได้ ต้องแก้ก่อน
+          </div>
+          <div class="hbox blue">
+            <strong>💬 Warning</strong> = ยังรันต่อได้ มักเตือนว่าวิธีนี้กำลังจะเลิกใช้ (เช่น FutureWarning)
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:.95rem;">ระหว่างเรียน ถ้า Warning เยอะจนรกตา สามารถปิดชั่วคราวได้:</div>
+        <div class="code-preview" style="margin-top:8px;">
+          <span class="kw">import</span> <span class="nm">warnings</span><br>
+          <span class="nm">warnings</span>.<span class="fn">filterwarnings</span>(<span class="st">'ignore'</span>) <span class="cm"># ปิดคำเตือนทั้งหมด</span>
+        </div>
+      </div>
+
+      <!-- Try-Except -->
+      <div class="card">
+        <div class="card-t">🛟 รับมือ Error ด้วย try-except</div>
+        <div class="card-s">บางครั้งเรารู้ว่าอาจมี Error เราดักไว้ให้โปรแกรมทำงานต่อได้</div>
+        <div class="code-preview">
+          <span class="kw">try</span>:<br>
+          &nbsp;&nbsp;<span class="nm">result</span> = <span class="nm">10</span> / <span class="nm">0</span><br>
+          <span class="kw">except</span>:<br>
+          &nbsp;&nbsp;<span class="fn">print</span>(<span class="st">"เกิดข้อผิดพลาด แต่โปรแกรมไปต่อได้"</span>)
+        </div>
+        <div class="hbox green" style="margin-top:4px;">✅ โค้ดใน <code>try</code> ถ้าพังจะกระโดดไปทำใน <code>except</code> แทน
+          แทนที่จะหยุดทั้งโปรแกรม</div>
+      </div>
+
+      <!-- Cheat sheet table -->
+      <div class="card">
+        <div class="card-t">📋 เจอ Error แล้วทำอะไรก่อน</div>
+        <div class="card-s">โพยสั้น ๆ ไว้เปิดดูเวลาติด</div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:.95rem;">
+            <thead>
+              <tr style="background:var(--bl);text-align:left;">
+                <th style="padding:12px 14px;border-radius:8px 0 0 0;color:var(--bd);">Error</th>
+                <th style="padding:12px 14px;border-radius:0 8px 0 0;color:var(--bd);">สิ่งแรกที่ทำ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--br);"><td style="padding:10px 14px;font-weight:700;">SyntaxError</td><td style="padding:10px 14px;">ดูบรรทัดที่ชี้ ตรวจ <code>:</code> และวงเล็บ</td></tr>
+              <tr style="border-bottom:1px solid var(--br);background:#f8fafc;"><td style="padding:10px 14px;font-weight:700;">IndentationError</td><td style="padding:10px 14px;">ตรวจย่อหน้าให้สม่ำเสมอ ไม่ปน Tab/Space</td></tr>
+              <tr style="border-bottom:1px solid var(--br);"><td style="padding:10px 14px;font-weight:700;">NameError</td><td style="padding:10px 14px;">รัน cell ที่สร้างตัวแปรแล้วหรือยัง / สะกดถูกไหม</td></tr>
+              <tr style="border-bottom:1px solid var(--br);background:#f8fafc;"><td style="padding:10px 14px;font-weight:700;">TypeError</td><td style="padding:10px 14px;">ตรวจชนิดข้อมูลด้วย <code>type(x)</code></td></tr>
+              <tr style="border-bottom:1px solid var(--br);"><td style="padding:10px 14px;font-weight:700;">KeyError</td><td style="padding:10px 14px;">ตรวจชื่อคอลัมน์ด้วย <code>df.columns</code></td></tr>
+              <tr style="border-bottom:1px solid var(--br);background:#f8fafc;"><td style="padding:10px 14px;font-weight:700;">FileNotFoundError</td><td style="padding:10px 14px;">ตรวจชื่อไฟล์ด้วย <code>os.listdir()</code></td></tr>
+              <tr style="border-bottom:1px solid var(--br);"><td style="padding:10px 14px;font-weight:700;">ModuleNotFoundError</td><td style="padding:10px 14px;">รัน <code>!pip install ชื่อ library</code></td></tr>
+              <tr style="background:#f8fafc;"><td style="padding:10px 14px;font-weight:700;">Warning</td><td style="padding:10px 14px;">ไม่ใช่ Error — ระหว่างเรียนปิดด้วย <code>filterwarnings('ignore')</code> ได้</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- === TAB 5: QUIZ === -->
+    <div class="tp" id="tab5">
       <div class="card">
         <div class="card-t">🎯 ทดสอบความเข้าใจ</div>
         <div class="card-s">ตรวจสอบว่าคุณเข้าใจพื้นฐานแค่ไหน — คลิกคำตอบที่คิดว่าถูก</div>
