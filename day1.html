@@ -1435,11 +1435,11 @@
         <div class="str-boxes" id="str-slice"></div>
         <div class="slice-result" id="slice-out"><span style="color:#94a3b8;">ผลลัพธ์จะปรากฏที่นี่</span></div>
         <!-- ของเดิม:
-        <div class="hbox a" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
-          <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
+        <div class="hbox a" style="margin-top:12px;">💡 <strong>ไม่มี start</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
+          <strong>ไม่มี end</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
         -->
-        <div class="hbox a" id="slice-tip" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
-          <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
+        <div class="hbox a" id="slice-tip" style="margin-top:12px;">💡 <strong>ไม่มี start</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
+          <strong>ไม่มี end</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
       </div>
 
       <div class="card">
@@ -2227,7 +2227,7 @@
         
         let startText = '';
         if (s === '') {
-          startText = `<strong>start ขาด</strong> = เริ่มจาก${st < 0 ? 'ท้ายสุด ( index ที่ ' + (length - 1) + ')' : ' 0'}`;
+          startText = `<strong>ไม่มี start</strong> = เริ่มจาก${st < 0 ? 'ท้ายสุด ( index ที่ ' + (length - 1) + ')' : ' 0'}`;
         } else {
           const val = Number(s);
           if (val < 0) {
@@ -2239,7 +2239,7 @@
 
         let endText = '';
         if (e === '') {
-          endText = `<strong>end ขาด</strong> = จนถึง${st < 0 ? 'ตัวแรกสุด' : 'ท้ายสุด'}`;
+          endText = `<strong>ไม่มี end</strong> = จนถึง${st < 0 ? 'ตัวแรกสุด' : 'ท้ายสุด'}`;
         } else {
           const val = Number(e);
           if (val < 0) {
