@@ -1784,10 +1784,9 @@
       <div class="card">
         <div class="card-t">🔄 For Loop — วนซ้ำผ่านสมาชิก</div>
         <div class="card-s">ตัวอย่างการวนซ้ำผ่านสมาชิกแต่ละค่า — สีเหลือง = ตัวที่กำลังประมวลผล</div>
-        <div class="code"><span class="kw">fruits</span> = [<span class="st">"🍎"</span>, <span class="st">"🍌"</span>,
-          <span class="st">"🍊"</span>, <span class="st">"🍇"</span>, <span class="st">"🍓"</span>]
-          <span class="kw">for</span> fruit <span class="kw">in</span> fruits:
-          <span class="fn">print</span>(<span class="st">"ผลไม้:"</span>, fruit)
+        <div class="code"><span class="kw">fruits</span> = [<span class="st">"🍎"</span>, <span class="st">"🍌"</span>, <span class="st">"🍊"</span>, <span class="st">"🍇"</span>, <span class="st">"🍓"</span>]
+<span class="kw">for</span> fruit <span class="kw">in</span> fruits:
+    <span class="fn">print</span>(<span class="st">"ผลไม้:"</span>, fruit)
         </div>
         <div class="loop-visual" id="for-items"></div>
         <div class="loop-var" id="for-var">กด <strong>▶️ เริ่มลูป </strong></div>
@@ -1804,11 +1803,12 @@
       <div class="card">
         <div class="card-t">🔁 While loop — วนจนกว่าเงื่อนไขจะเป็น False</div>
         <div class="card-s">ตัวอย่างการใช้งาน while ว่าทำงานทีละขั้นอย่างไร</div>
-        <div class="code"><span class="kw">count</span> = <span class="nu">0</span>
+        <div class="code">
+          <span class="kw">count</span> = <span class="nu">0</span>
           <span class="kw">while</span> count < <span class="nu">5</span>:
-            <span class="fn">print</span>(<span class="st">"count ="</span>, count)
-            count += <span class="nu">1</span>
-            <span class="fn">print</span>(<span class="st">"จบลูป!"</span>)
+              <span class="fn">print</span>(<span class="st">"count ="</span>, count)
+              count += <span class="nu">1</span>
+              <span class="fn">print</span>(<span class="st">"จบลูป!"</span>)
         </div>
         <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
           <div style="flex:1;min-width:200px;">
@@ -1837,10 +1837,10 @@
             <div style="border:2px solid var(--rd);border-radius:10px;padding:16px;">
               <div style="font-weight:700;color:var(--rd);margin-bottom:8px;">🛑 Break — หยุดลูปทันที</div>
               <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;">
-                <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">10</span>):
-                <span class="kw">if</span> i == <span class="nu">5</span>:
-                <span class="kw">break</span>
-                <span class="fn">print</span>(i)
+          <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">10</span>):
+              <span class="kw">if</span> i == <span class="nu">5</span>:
+                  <span class="kw">break</span>
+              <span class="fn">print</span>(i)
               </div>
               <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
                 <span style="font-size:.88rem;font-weight:600;">i =</span>
@@ -1862,10 +1862,10 @@
             <div style="border:2px solid var(--am);border-radius:10px;padding:16px;">
               <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⏭️ Continue — ข้ามรอบนี้</div>
               <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;">
-                <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">6</span>):
-                <span class="kw">if</span> i == <span class="nu">3</span>:
-                <span class="kw">continue</span>
-                <span class="fn">print</span>(i)
+          <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">6</span>):
+              <span class="kw">if</span> i == <span class="nu">3</span>:
+                  <span class="kw">continue</span>
+              <span class="fn">print</span>(i)
               </div>
               <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
                 <span style="font-size:.88rem;font-weight:600;">i =</span>
@@ -1894,17 +1894,16 @@
           <div style="display:flex;gap:16px;flex-wrap:wrap;">
             <div style="flex:1.2;min-width:220px;">
               <div class="code" id="func-code-hl">
-                <span class="nm">def</span> <span class="fn">add</span>(<span class="kw">a</span>, <span
-                  class="kw">b</span>):
-                result = a + b
-                <span class="nm">return</span> result
+<span class="nm">def</span> <span class="fn">add</span>(<span class="kw">a</span>, <span class="kw">b</span>):
+    result = a + b
+    <span class="nm">return</span> result
 
-                <span class="nm">def</span> <span class="fn">main</span>():
-                x = add(<span class="nu">3</span>, <span class="nu">5</span>)
-                y = add(<span class="nu">10</span>, <span class="nu">20</span>)
-                <span class="fn">print</span>(<span class="st">"ผลรวม:"</span>, x + y)
+<span class="nm">def</span> <span class="fn">main</span>():
+    x = add(<span class="nu">3</span>, <span class="nu">5</span>)
+    y = add(<span class="nu">10</span>, <span class="nu">20</span>)
+    <span class="fn">print</span>(<span class="st">"ผลรวม:"</span>, x + y)
 
-                main()
+main()
               </div>
               <div class="step-ctrl">
                 <button class="btn am" onclick="stepFunc()">➡️ ขั้นถัดไป</button>
@@ -1934,11 +1933,11 @@
               <div style="font-weight:700;color:#166534;margin-bottom:10px;font-size:.95rem;">✅ return — ส่งค่ากลับ
               </div>
               <div class="code" style="font-size:.82rem;padding:12px;">
-                <span class="nm">def</span> <span class="fn">double</span>(n):
-                <span class="nm">return</span> n * <span class="nu">2</span>
+    <span class="nm">def</span> <span class="fn">double</span>(n):
+        <span class="nm">return</span> n * <span class="nu">2</span>
 
-                result = double(<span class="nu">5</span>)
-                <span class="fn">print</span>(result) <span class="cm"># 10</span>
+    result = double(<span class="nu">5</span>)
+    <span class="fn">print</span>(result) <span class="cm"># 10</span>
               </div>
               <div style="font-size:.82rem;line-height:1.6;color:var(--tl);">• ส่งค่ากลับให้ผู้เรียกใช้ฟังก์ชัน<br>•
                 นำไปใช้ต่อได้ (เก็บใน variable)<br>• ไม่แสดงบนจออัตโนมัติ</div>
@@ -1946,11 +1945,11 @@
             <div class="rvp-box" style="background:#fff8e1;border:2px solid var(--am);">
               <div style="font-weight:700;color:#92400e;margin-bottom:10px;font-size:.95rem;">🖨️ print — แสดงบนจอ</div>
               <div class="code" style="font-size:.82rem;padding:12px;">
-                <span class="nm">def</span> <span class="fn">show</span>(n):
-                <span class="fn">print</span>(n * <span class="nu">2</span>)
+    <span class="nm">def</span> <span class="fn">show</span>(n):
+        <span class="fn">print</span>(n * <span class="nu">2</span>)
 
-                result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</span>
-                <span class="fn">print</span>(result) <span class="cm"># None !</span>
+    result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</span>
+    <span class="fn">print</span>(result) <span class="cm"># None !</span>
               </div>
               <div style="font-size:.82rem;line-height:1.6;color:var(--tl);">• แสดงข้อความบนหน้าจอเท่านั้น<br>•
                 ฟังก์ชันที่ใช้ print แต่ไม่ return จะคืนค่า None<br>• ใช้สำหรับ debug หรือแสดงผลสุดท้าย</div>
