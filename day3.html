@@ -1642,25 +1642,19 @@
     <!-- Python snippet -->
     <div class="card" style="margin-top:24px;">
       <div class="card-title">ตัวอย่างโค้ด Python: โหลดข้อมูลดิบเข้า Staging</div>
-      <div class="code-block">
-        <span class="cm"># โหลดข้อมูลดิบเข้า Staging Area</span>
-        <span class="kw">import</span> pandas <span class="kw">as</span> pd
+      <div class="code-block"><span class="cm"># โหลดข้อมูลดิบเข้า Staging Area</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
 
-        <span class="cm"># ขั้นที่ 1: Extract — อ่านไฟล์ CSV ดิบ</span>
-        staging_data = pd.<span class="fn">read_csv</span>(<span class="str">"raw_sales_data.csv"</span>)
+<span class="cm"># ขั้นที่ 1: Extract — อ่านไฟล์ CSV ดิบ</span>
+staging_data = pd.<span class="fn">read_csv</span>(<span class="str">"raw_sales_data.csv"</span>)
 
-        <span class="cm"># ขั้นที่ 2: Transform — ตรวจสอบและทำความสะอาด</span>
-        <span class="fn">print</span>(staging_data.<span class="fn">isnull</span>().<span class="fn">sum</span>()) <span
-          class="cm"># ดูค่าว่าง</span>
-        staging_data[<span class="str">'Revenue'</span>] = staging_data[<span class="str">'Revenue'</span>].<span
-          class="fn">fillna</span>(<span class="str">0</span>)
-        staging_data[<span class="str">'OrderDate'</span>] = pd.<span class="fn">to_datetime</span>(staging_data[<span
-          class="str">'OrderDate'</span>], errors=<span class="str">'coerce'</span>)
+<span class="cm"># ขั้นที่ 2: Transform — ตรวจสอบและทำความสะอาด</span>
+<span class="fn">print</span>(staging_data.<span class="fn">isnull</span>().<span class="fn">sum</span>()) <span class="cm"># ดูค่าว่าง</span>
+staging_data[<span class="str">'Revenue'</span>] = staging_data[<span class="str">'Revenue'</span>].<span class="fn">fillna</span>(<span class="str">0</span>)
+staging_data[<span class="str">'OrderDate'</span>] = pd.<span class="fn">to_datetime</span>(staging_data[<span class="str">'OrderDate'</span>], errors=<span class="str">'coerce'</span>)
 
-        <span class="cm"># ขั้นที่ 3: Load — บันทึกเข้า Warehouse (จำลอง)</span>
-        staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.csv"</span>, index=<span
-          class="kw">False</span>)
-      </div>
+<span class="cm"># ขั้นที่ 3: Load — บันทึกเข้า Warehouse (จำลอง)</span>
+staging_data.<span class="fn">to_csv</span>(<span class="str">"warehouse_ready.csv"</span>, index=<span class="kw">False</span>)</div>
     </div>
   </div>
 
@@ -2519,39 +2513,34 @@
         <div>
           <div style="font-weight:700; color:var(--primary); margin-bottom:8px; font-size:13px;">Wide → Long ด้วย <code
               style="background:#e8edf8; padding:2px 6px; border-radius:4px;">melt()</code></div>
-          <div class="code-block" style="font-size:11.5px;">
-            <span class="cm"># Wide → Long</span>
-            <span class="kw">import</span> pandas <span class="kw">as</span> pd
+          <div class="code-block" style="font-size:11.5px;"><span class="cm"># Wide → Long</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
 
-            wide_df = pd.<span class="fn">DataFrame</span>({
-            <span class="str">'อุทยาน'</span>: [<span class="str">'เขาใหญ่'</span>, <span
-              class="str">'ดอยสุเทพ'</span>],
-            <span class="str">'เสือโคร่ง'</span>: [20, 5],
-            <span class="str">'ช้าง'</span>: [150, 80]
-            })
+wide_df = pd.<span class="fn">DataFrame</span>({
+    <span class="str">'อุทยาน'</span>: [<span class="str">'เขาใหญ่'</span>, <span class="str">'ดอยสุเทพ'</span>],
+    <span class="str">'เสือโคร่ง'</span>: [20, 5],
+    <span class="str">'ช้าง'</span>: [150, 80]
+})
 
-            long_df = wide_df.<span class="fn">melt</span>(
-            id_vars=[<span class="str">'อุทยาน'</span>],
-            var_name=<span class="str">'ชนิดสัตว์'</span>,
-            value_name=<span class="str">'จำนวน'</span>
-            )
-          </div>
+long_df = wide_df.<span class="fn">melt</span>(
+    id_vars=[<span class="str">'อุทยาน'</span>],
+    var_name=<span class="str">'ชนิดสัตว์'</span>,
+    value_name=<span class="str">'จำนวน'</span>
+)</div>
         </div>
         <div>
           <div style="font-weight:700; color:var(--primary); margin-bottom:8px; font-size:13px;">Long → Wide ด้วย <code
               style="background:#e8edf8; padding:2px 6px; border-radius:4px;">pivot()</code></div>
-          <div class="code-block" style="font-size:11.5px;">
-            <span class="cm"># Long → Wide</span>
-            wide_back = long_df.<span class="fn">pivot</span>(
-            index=<span class="str">'อุทยาน'</span>,
-            columns=<span class="str">'ชนิดสัตว์'</span>,
-            values=<span class="str">'จำนวน'</span>
-            ).<span class="fn">reset_index</span>()
+          <div class="code-block" style="font-size:11.5px;"><span class="cm"># Long → Wide</span>
+wide_back = long_df.<span class="fn">pivot</span>(
+    index=<span class="str">'อุทยาน'</span>,
+    columns=<span class="str">'ชนิดสัตว์'</span>,
+    values=<span class="str">'จำนวน'</span>
+).<span class="fn">reset_index</span>()
 
-            <span class="cm"># ลบ MultiIndex ที่คอลัมน์</span>
-            wide_back.columns.name = <span class="kw">None</span>
-            <span class="fn">print</span>(wide_back)
-          </div>
+<span class="cm"># ลบ MultiIndex ที่คอลัมน์</span>
+wide_back.columns.name = <span class="kw">None</span>
+<span class="fn">print</span>(wide_back)</div>
         </div>
       </div>
     </div>

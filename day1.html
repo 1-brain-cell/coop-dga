@@ -1370,6 +1370,7 @@
     <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
   </header>
 
+  <!-- NAV -->
   <div class="tn">
     <button class="tb on" onclick="sw(0)">🔤 String</button>
     <button class="tb" onclick="sw(1)">📋 Data Types</button>
@@ -1435,11 +1436,11 @@
         <div class="str-boxes" id="str-slice"></div>
         <div class="slice-result" id="slice-out"><span style="color:#94a3b8;">ผลลัพธ์จะปรากฏที่นี่</span></div>
         <!-- ของเดิม:
-        <div class="hbox a" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
-          <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
+        <div class="hbox a" style="margin-top:12px;">💡 <strong>ไม่มี start</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
+          <strong>ไม่มี end</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
         -->
-        <div class="hbox a" id="slice-tip" style="margin-top:12px;">💡 <strong>start ขาด</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
-          <strong>end ขาด</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
+        <div class="hbox a" id="slice-tip" style="margin-top:12px;">💡 <strong>ไม่มี start</strong> = เริ่มจาก 0 &nbsp;|&nbsp;
+          <strong>ไม่มี end</strong> = จนถึงท้าย &nbsp;|&nbsp; <strong>step ติดลบ</strong> = กลับด้าน</div>
       </div>
 
       <div class="card">
@@ -1784,11 +1785,9 @@
       <div class="card">
         <div class="card-t">🔄 For Loop — วนซ้ำผ่านสมาชิก</div>
         <div class="card-s">ตัวอย่างการวนซ้ำผ่านสมาชิกแต่ละค่า — สีเหลือง = ตัวที่กำลังประมวลผล</div>
-        <div class="code"><span class="kw">fruits</span> = [<span class="st">"🍎"</span>, <span class="st">"🍌"</span>,
-          <span class="st">"🍊"</span>, <span class="st">"🍇"</span>, <span class="st">"🍓"</span>]
-          <span class="kw">for</span> fruit <span class="kw">in</span> fruits:
-          <span class="fn">print</span>(<span class="st">"ผลไม้:"</span>, fruit)
-        </div>
+        <div class="code"><span class="kw">fruits</span> = [<span class="st">"🍎"</span>, <span class="st">"🍌"</span>, <span class="st">"🍊"</span>, <span class="st">"🍇"</span>, <span class="st">"🍓"</span>]
+<span class="kw">for</span> fruit <span class="kw">in</span> fruits:
+    <span class="fn">print</span>(<span class="st">"ผลไม้:"</span>, fruit)</div>
         <div class="loop-visual" id="for-items"></div>
         <div class="loop-var" id="for-var">กด <strong>▶️ เริ่มลูป </strong></div>
         <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;" id="for-out-box" style="display:none;"></div>
@@ -1805,11 +1804,10 @@
         <div class="card-t">🔁 While loop — วนจนกว่าเงื่อนไขจะเป็น False</div>
         <div class="card-s">ตัวอย่างการใช้งาน while ว่าทำงานทีละขั้นอย่างไร</div>
         <div class="code"><span class="kw">count</span> = <span class="nu">0</span>
-          <span class="kw">while</span> count < <span class="nu">5</span>:
-            <span class="fn">print</span>(<span class="st">"count ="</span>, count)
-            count += <span class="nu">1</span>
-            <span class="fn">print</span>(<span class="st">"จบลูป!"</span>)
-        </div>
+<span class="kw">while</span> count < <span class="nu">5</span>:
+    <span class="fn">print</span>(<span class="st">"count ="</span>, count)
+    count += <span class="nu">1</span>
+    <span class="fn">print</span>(<span class="st">"จบลูป!"</span>)</div>
         <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
           <div style="flex:1;min-width:200px;">
             <div class="while-cond" id="wh-cond">count < 5: ⏳ รอเริ่ม</div>
@@ -1836,12 +1834,10 @@
             <!-- BREAK -->
             <div style="border:2px solid var(--rd);border-radius:10px;padding:16px;">
               <div style="font-weight:700;color:var(--rd);margin-bottom:8px;">🛑 Break — หยุดลูปทันที</div>
-              <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;">
-                <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">10</span>):
-                <span class="kw">if</span> i == <span class="nu">5</span>:
-                <span class="kw">break</span>
-                <span class="fn">print</span>(i)
-              </div>
+              <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;"><span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">10</span>):
+    <span class="kw">if</span> i == <span class="nu">5</span>:
+        <span class="kw">break</span>
+    <span class="fn">print</span>(i)</div>
               <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
                 <span style="font-size:.88rem;font-weight:600;">i =</span>
                 <div id="break-i"
@@ -1861,12 +1857,10 @@
             <!-- CONTINUE -->
             <div style="border:2px solid var(--am);border-radius:10px;padding:16px;">
               <div style="font-weight:700;color:#92400e;margin-bottom:8px;">⏭️ Continue — ข้ามรอบนี้</div>
-              <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;">
-                <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">6</span>):
-                <span class="kw">if</span> i == <span class="nu">3</span>:
-                <span class="kw">continue</span>
-                <span class="fn">print</span>(i)
-              </div>
+              <div class="code" style="font-size:.8rem;padding:12px;margin-bottom:10px;"><span class="kw">for</span> i <span class="kw">in</span> range(<span class="nu">6</span>):
+    <span class="kw">if</span> i == <span class="nu">3</span>:
+        <span class="kw">continue</span>
+    <span class="fn">print</span>(i)</div>
               <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
                 <span style="font-size:.88rem;font-weight:600;">i =</span>
                 <div id="cont-i"
@@ -1893,19 +1887,16 @@
           <div class="card-s">กด "ขั้นถัดไป" เพื่อดูการทำงานของ Call Stack — เหมือน Python Tutor</div>
           <div style="display:flex;gap:16px;flex-wrap:wrap;">
             <div style="flex:1.2;min-width:220px;">
-              <div class="code" id="func-code-hl">
-                <span class="nm">def</span> <span class="fn">add</span>(<span class="kw">a</span>, <span
-                  class="kw">b</span>):
-                result = a + b
-                <span class="nm">return</span> result
+              <div class="code" id="func-code-hl"><span class="nm">def</span> <span class="fn">add</span>(<span class="kw">a</span>, <span class="kw">b</span>):
+    result = a + b
+    <span class="nm">return</span> result
 
-                <span class="nm">def</span> <span class="fn">main</span>():
-                x = add(<span class="nu">3</span>, <span class="nu">5</span>)
-                y = add(<span class="nu">10</span>, <span class="nu">20</span>)
-                <span class="fn">print</span>(<span class="st">"ผลรวม:"</span>, x + y)
+<span class="nm">def</span> <span class="fn">main</span>():
+    x = add(<span class="nu">3</span>, <span class="nu">5</span>)
+    y = add(<span class="nu">10</span>, <span class="nu">20</span>)
+    <span class="fn">print</span>(<span class="st">"ผลรวม:"</span>, x + y)
 
-                main()
-              </div>
+main()</div>
               <div class="step-ctrl">
                 <button class="btn am" onclick="stepFunc()">➡️ ขั้นถัดไป</button>
                 <button class="btn out" onclick="resetFunc()">🔄 รีเซ็ต</button>
@@ -1933,25 +1924,21 @@
             <div class="rvp-box" style="background:#f0fdf4;border:2px solid var(--gn);">
               <div style="font-weight:700;color:#166534;margin-bottom:10px;font-size:.95rem;">✅ return — ส่งค่ากลับ
               </div>
-              <div class="code" style="font-size:.82rem;padding:12px;">
-                <span class="nm">def</span> <span class="fn">double</span>(n):
-                <span class="nm">return</span> n * <span class="nu">2</span>
+              <div class="code" style="font-size:.82rem;padding:12px;"><span class="nm">def</span> <span class="fn">double</span>(n):
+    <span class="nm">return</span> n * <span class="nu">2</span>
 
-                result = double(<span class="nu">5</span>)
-                <span class="fn">print</span>(result) <span class="cm"># 10</span>
-              </div>
+result = double(<span class="nu">5</span>)
+<span class="fn">print</span>(result) <span class="cm"># 10</span></div>
               <div style="font-size:.82rem;line-height:1.6;color:var(--tl);">• ส่งค่ากลับให้ผู้เรียกใช้ฟังก์ชัน<br>•
                 นำไปใช้ต่อได้ (เก็บใน variable)<br>• ไม่แสดงบนจออัตโนมัติ</div>
             </div>
             <div class="rvp-box" style="background:#fff8e1;border:2px solid var(--am);">
               <div style="font-weight:700;color:#92400e;margin-bottom:10px;font-size:.95rem;">🖨️ print — แสดงบนจอ</div>
-              <div class="code" style="font-size:.82rem;padding:12px;">
-                <span class="nm">def</span> <span class="fn">show</span>(n):
-                <span class="fn">print</span>(n * <span class="nu">2</span>)
+              <div class="code" style="font-size:.82rem;padding:12px;"><span class="nm">def</span> <span class="fn">show</span>(n):
+    <span class="fn">print</span>(n * <span class="nu">2</span>)
 
-                result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</span>
-                <span class="fn">print</span>(result) <span class="cm"># None !</span>
-              </div>
+result = show(<span class="nu">5</span>) <span class="cm"># แสดง 10</span>
+<span class="fn">print</span>(result) <span class="cm"># None !</span></div>
               <div style="font-size:.82rem;line-height:1.6;color:var(--tl);">• แสดงข้อความบนหน้าจอเท่านั้น<br>•
                 ฟังก์ชันที่ใช้ print แต่ไม่ return จะคืนค่า None<br>• ใช้สำหรับ debug หรือแสดงผลสุดท้าย</div>
             </div>
@@ -2008,15 +1995,13 @@
                   style="color:var(--tl);font-size:.85rem;padding:16px;border:2px dashed var(--br);border-radius:10px;text-align:center;width:100%;">
                   กด "สร้าง Object" เพื่อสร้าง instance</div>
               </div>
-              <div class="code" id="cls-code" style="margin-top:16px;font-size:.8rem;padding:14px;">
-                <span class="nm">class</span> <span class="fn">Student</span>:
-                <span class="nm">def</span> __init__(self, name, age, gpa):
-                self.name = name
-                self.age = age
-                self.gpa = gpa
-                <span class="nm">def</span> <span class="fn">greet</span>(self):
-                <span class="nm">return</span> <span class="st">f"สวัสดี, ผม {self.name}"</span>
-              </div>
+              <div class="code" id="cls-code" style="margin-top:16px;font-size:.8rem;padding:14px;"><span class="nm">class</span> <span class="fn">Student</span>:
+    <span class="nm">def</span> __init__(self, name, age, gpa):
+        self.name = name
+        self.age = age
+        self.gpa = gpa
+    <span class="nm">def</span> <span class="fn">greet</span>(self):
+        <span class="nm">return</span> <span class="st">f"สวัสดี, ผม {self.name}"</span></div>
             </div>
           </div>
           <div class="hbox b" style="margin-top:10px;">💡 ทุก Object ที่สร้างจาก Class เดียวกัน มีโครงสร้างเหมือนกัน
@@ -2068,17 +2053,15 @@
                 ออกจากฟังก์ชันแล้ว หายไปเลย</div>
             </div>
             <div>
-              <div class="code" style="font-size:.8rem;padding:14px;">
-                x = <span class="nu">10</span> <span class="cm"># global</span>
+              <div class="code" style="font-size:.8rem;padding:14px;">x = <span class="nu">10</span> <span class="cm"># global</span>
 
-                <span class="nm">def</span> <span class="fn">func</span>():
-                y = <span class="nu">20</span> <span class="cm"># local</span>
-                <span class="fn">print</span>(x) <span class="cm"># ✅ เข้า global ได้</span>
-                <span class="fn">print</span>(y) <span class="cm"># ✅ local ตัวเอง</span>
+<span class="nm">def</span> <span class="fn">func</span>():
+    y = <span class="nu">20</span> <span class="cm"># local</span>
+    <span class="fn">print</span>(x) <span class="cm"># ✅ เข้า global ได้</span>
+    <span class="fn">print</span>(y) <span class="cm"># ✅ local ตัวเอง</span>
 
-                func()
-                <span class="fn">print</span>(y) <span class="cm"># ❌ Error! y ไม่มีที่นี่</span>
-              </div>
+func()
+<span class="fn">print</span>(y) <span class="cm"># ❌ Error! y ไม่มีที่นี่</span></div>
             </div>
           </div>
         </div>
@@ -2227,7 +2210,7 @@
         
         let startText = '';
         if (s === '') {
-          startText = `<strong>start ขาด</strong> = เริ่มจาก${st < 0 ? 'ท้ายสุด ( index ที่ ' + (length - 1) + ')' : ' 0'}`;
+          startText = `<strong>ไม่มี start</strong> = เริ่มจาก${st < 0 ? 'ท้ายสุด ( index ที่ ' + (length - 1) + ')' : ' 0'}`;
         } else {
           const val = Number(s);
           if (val < 0) {
@@ -2239,7 +2222,7 @@
 
         let endText = '';
         if (e === '') {
-          endText = `<strong>end ขาด</strong> = จนถึง${st < 0 ? 'ตัวแรกสุด' : 'ท้ายสุด'}`;
+          endText = `<strong>ไม่มี end</strong> = จนถึง${st < 0 ? 'ตัวแรกสุด' : 'ท้ายสุด'}`;
         } else {
           const val = Number(e);
           if (val < 0) {
