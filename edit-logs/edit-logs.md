@@ -501,3 +501,36 @@ plan แก้ไขงานเพิ่มเติม
 *   **การเปลี่ยนแปลงในโค้ด**:
     *   **CSS**: เพิ่มกฎ `html { font-size: 18px; }` ไว้ต้น `<style>` (จาก 16px เป็น 18px, +12.5%) ทำให้ข้อความที่ใช้หน่วย `rem` ขยายใหญ่ขึ้นตามสัดส่วนทั้งไฟล์
 
+---
+
+# บันทึกการแก้ไข (Edit Timeline) - day4.html
+
+---
+
+## 1. เพิ่มเนื้อหา Unsupervised Learning และเกริ่น Clustering ในแท็บ ML Basics (Unsupervised Learning & Clustering Intro)
+*   **สิ่งที่ทำ**: เพิ่มเนื้อหาเรื่อง Unsupervised Learning ลงในหน้าแรก (แท็บ ML Basics) ของ day4.html โดยทำเป็นกล่องเปรียบเทียบ Supervised vs Unsupervised และเกริ่นเรื่อง Clustering เบื้องต้น โดยอ้างอิงเนื้อหาเพิ่มเติมจากสไลด์เอกสาร Day 4 (Types of Machine Learning, Supervised/Unsupervised Learning, Clustering)
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **HTML (หัวข้อใหม่ "2 ประเภทหลักของ Machine Learning")**: แทรกหัวข้อย่อยพร้อมคำอธิบายว่าตัวชี้ขาดในการเลือกโมเดลคือข้อมูลมีผลเฉลย (Label) หรือไม่
+    *   **HTML (กล่องเปรียบเทียบ 2 คอลัมน์)**: เพิ่มการ์ดเปรียบเทียบคู่กัน — ฝั่งซ้าย **Supervised Learning** (โทนน้ำเงิน, ไอคอน chalkboard-teacher) อธิบายการเรียนรู้แบบมีผู้สอนจาก Labeled Data พร้อมตัวอย่างข้อมูลนำเข้า (Feature + Target) และแตกแขนงเป็น Regression/Classification; ฝั่งขวา **Unsupervised Learning** (โทนม่วง, ไอคอน shapes) อธิบายการเรียนรู้แบบไม่มีผู้สอนจาก Unlabeled Data ค้นหา Pattern เอง พร้อมแตกแขนงเป็น Clustering/Dimensionality Reduction (PCA)
+    *   **HTML (กล่องเกริ่น Clustering)**: เพิ่มกล่องไล่เฉดสีม่วงอธิบายหลักการ Clustering เบื้องต้น (จับกลุ่มจากความคล้ายกัน, K-Means) พร้อมการ์ดย่อย 3 ใบ: วิธีจับกลุ่ม (Centroid), ตัวอย่างการใช้งาน (โซนมลพิษ/กลุ่มลูกค้า), ความต่างจาก Classification และเพิ่มข้อความชี้นำให้ไปทดลองเล่นต่อในแท็บ "PCA & K-Means"
+    *   **HTML (ย้ายตำแหน่งกล่องทบทวน Supervised)**: ย้ายกล่อง "ทบทวนงานของ Supervised Learning (Regression vs Classification)" เดิม จากที่อยู่ก่อนหน้าหัวข้อ Machine Learning ให้ลงไปอยู่หลังจากส่วนเนื้อหา Machine Learning (Supervised vs Unsupervised + Clustering) เพื่อให้ลำดับการเล่าเรื่องไหลต่อเนื่องจากภาพรวมประเภทของ ML ก่อนลงรายละเอียดงานย่อย
+
+---
+
+## 2. จัดลำดับเนื้อหาใหม่และเพิ่มมินิเกมจำแนก Supervised/Unsupervised (Reorder + Interactive Mini-Game)
+*   **สิ่งที่ทำ**: ตามคำขอผู้ใช้ ปรับให้กล่อง Clustering ไปอยู่ท้ายสุดของแท็บ ML Basics (เป็นตัวแทนฝั่ง Unsupervised ปิดท้าย) และเพิ่ม "ลูกเล่น" แบบโต้ตอบคั่นระหว่างภาพรวม Machine Learning กับเนื้อหาเรื่องย่อยด้านใน เพื่อให้ผู้เรียนได้ทดลองคิดก่อนเข้าสู่รายละเอียด
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **HTML (จัดลำดับใหม่)**: สลับลำดับให้เป็น → การ์ดเปรียบเทียบ Supervised vs Unsupervised → มินิเกมจำแนก → กล่องทบทวน Supervised (Regression vs Classification) → กล่องเกริ่น Clustering (ย้ายมาปิดท้ายสุด) พร้อมเพิ่มคอมเมนต์กำกับว่า Clustering เป็นตัวแทนฝั่ง Unsupervised
+    *   **HTML (มินิเกม `#mlGameBox`)**: เพิ่มกล่องเกมโทนสีเข้ม (slate-900) แสดงโจทย์สถานการณ์ข้อมูล มีปุ่มเลือก 2 ทาง (Supervised สีน้ำเงิน / Unsupervised สีม่วง) ช่องแสดงผลตอบกลับ (Feedback) ปุ่มโจทย์ถัดไป และตัวนับคะแนน
+    *   **JavaScript (Mini-game logic)**: เพิ่มชุดข้อมูล `mlGameData` 5 โจทย์ (อ้างอิงตัวอย่างจากสไลด์ Day 4: จักรยานเช่า, ดอกไอริส, มลพิษรายพื้นที่, กลุ่มลูกค้า, โรคอ้วน) พร้อมเฉลยและคำอธิบายว่าเป็น Regression/Classification/Clustering และเขียนฟังก์ชัน `renderMLGame()`, `answerMLGame(choice)`, `nextMLGame()` จัดการการแสดงโจทย์ ตรวจคำตอบ ให้ feedback สีเขียว/แดง ล็อกปุ่มหลังตอบ นับคะแนนสะสม และสรุปคะแนนเมื่อจบครบทุกโจทย์
+    *   **JavaScript (Init)**: เพิ่มการเรียก `renderMLGame()` ในส่วนเริ่มต้นของสคริปต์ (ถัดจาก `selectMetric('MAE')`) เพื่อให้เกมพร้อมเล่นทันทีเมื่อโหลดหน้า เนื่องจากแท็บ ML Basics เป็นแท็บเริ่มต้น
+
+---
+
+## 3. ลบมินิเกมจำแนก Supervised/Unsupervised ออก (Remove Interactive Mini-Game)
+*   **สิ่งที่ทำ**: ตามคำขอผู้ใช้ ถอดมินิเกม "ลองจำแนกดู: นี่คือ Supervised หรือ Unsupervised?" ที่เพิ่มไว้ในรายการที่ 2 ออกทั้งหมด ทำให้ลำดับเนื้อหาในแท็บ ML Basics เหลือเป็น → การ์ดเปรียบเทียบ Supervised vs Unsupervised → กล่องทบทวน Supervised (Regression vs Classification) → กล่องเกริ่น Clustering (ปิดท้าย) โดยยังคงให้ Clustering อยู่ท้ายสุดตามที่ปรับไว้ก่อนหน้า
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **HTML**: ลบบล็อกกล่องเกม `#mlGameBox` (โจทย์สถานการณ์ ปุ่มเลือก Supervised/Unsupervised ช่อง Feedback ปุ่มถัดไป และตัวนับคะแนน) ที่คั่นอยู่ระหว่างการ์ดเปรียบเทียบกับกล่องทบทวน Supervised ออก
+    *   **JavaScript (Mini-game logic)**: ลบชุดข้อมูล `mlGameData` และฟังก์ชัน `renderMLGame()`, `answerMLGame()`, `nextMLGame()` รวมถึงตัวแปรสถานะ `mlGameIdx/mlGameScore/mlGameAnswered` ออกจากสคริปต์
+    *   **JavaScript (Init)**: ลบการเรียก `renderMLGame()` ในส่วนเริ่มต้นของสคริปต์ออก
+

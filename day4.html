@@ -302,6 +302,75 @@
                     </div>
                 </div>
 
+                <!-- Supervised vs Unsupervised -->
+                <div class="border-l-4 border-blue-600 pl-4 pt-2">
+                    <h2 class="text-2xl font-bold text-gray-800">2 ประเภทหลักของ Machine Learning</h2>
+                    <p class="text-gray-600 text-lg">สิ่งที่ชี้ขาดว่าจะใช้โมเดลแบบไหน คือข้อมูลที่เรามี
+                        "มีผลเฉลย (Label)" ติดมาด้วยหรือไม่</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 items-stretch">
+                    <!-- Supervised -->
+                    <div class="bg-blue-50/60 p-6 rounded-xl border-2 border-blue-200 shadow-sm flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="text-blue-700 text-3xl"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <div>
+                                <h3 class="font-bold text-xl text-blue-900">Supervised Learning</h3>
+                                <p class="text-sm text-blue-700 font-semibold">เรียนรู้แบบ "มีผู้สอน"</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed mb-3">
+                            เรียนรู้จากข้อมูลที่ <strong>มีผลเฉลย (Labeled Data)</strong> กำกับไว้ครบทุกแถว
+                            อัลกอริทึมจะค่อย ๆ เรียนรู้ความสัมพันธ์ระหว่างคุณลักษณะ (Feature) กับผลเฉลย (Target)
+                            เพื่อนำไปทำนายข้อมูลใหม่ที่ยังไม่เคยเห็น
+                        </p>
+                        <div class="bg-white/70 p-3 rounded-lg border text-xs text-gray-600 mb-3">
+                            <strong class="text-blue-950 block mb-1">📥 ข้อมูลนำเข้า</strong>
+                            Feature + Target (เฉลย) เช่น [อุณหภูมิ → จำนวนจักรยานที่ถูกเช่า]
+                        </div>
+                        <div class="mt-auto grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-white p-2.5 rounded border text-center">
+                                <span class="font-bold text-blue-800 block">Regression</span>
+                                <span class="text-gray-500">ทำนายค่าต่อเนื่อง</span>
+                            </div>
+                            <div class="bg-white p-2.5 rounded border text-center">
+                                <span class="font-bold text-green-800 block">Classification</span>
+                                <span class="text-gray-500">ทำนายหมวดหมู่</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unsupervised -->
+                    <div class="bg-purple-50/60 p-6 rounded-xl border-2 border-purple-200 shadow-sm flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="text-purple-700 text-3xl"><i class="fas fa-shapes"></i></div>
+                            <div>
+                                <h3 class="font-bold text-xl text-purple-900">Unsupervised Learning</h3>
+                                <p class="text-sm text-purple-700 font-semibold">เรียนรู้แบบ "ไม่มีผู้สอน"</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed mb-3">
+                            เรียนรู้จากข้อมูลที่ <strong>ไม่มีผลเฉลย (Unlabeled Data)</strong> มีเพียงคุณลักษณะ
+                            (Feature) เท่านั้น อัลกอริทึมจะค้นหา <strong>รูปแบบ (Pattern)</strong>
+                            หรือโครงสร้างที่ซ่อนอยู่ภายในข้อมูลด้วยตัวเอง โดยไม่มีคำตอบที่ถูกต้องคอยบอก
+                        </p>
+                        <div class="bg-white/70 p-3 rounded-lg border text-xs text-gray-600 mb-3">
+                            <strong class="text-purple-950 block mb-1">📥 ข้อมูลนำเข้า</strong>
+                            Feature เพียงอย่างเดียว (ไม่มีเฉลย) เช่น [ปริมาณการปล่อยมลพิษของแต่ละพื้นที่]
+                        </div>
+                        <div class="mt-auto grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-white p-2.5 rounded border text-center">
+                                <span class="font-bold text-purple-800 block">Clustering</span>
+                                <span class="text-gray-500">จับกลุ่มข้อมูล</span>
+                            </div>
+                            <div class="bg-white p-2.5 rounded border text-center">
+                                <span class="font-bold text-indigo-800 block">Dimensionality Reduction</span>
+                                <span class="text-gray-500">ลดมิติข้อมูล (PCA)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="bg-gray-50 p-6 rounded-lg border">
                     <h4 class="font-bold text-gray-800 text-lg mb-3 text-center">ทบทวนงานของ Supervised Learning
                         (Regression vs Classification)</h4>
@@ -317,6 +386,36 @@
                                 (การจำแนกประเภทกลุ่ม):</span> ผลลัพธ์เป็นกลุ่มหรือหมวดหมู่ประเภทที่ตัดขาดออกจากกันชัดเจน
                             (Discrete Class) มุ่งเน้นหาเส้นแบ่งเขตเพื่อแยกประเภทข้อมูลออกจากกัน เช่น ผ่าน/ไม่ผ่าน หรือ
                             ป่วย/ปกติ
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clustering intro (ตัวแทนฝั่ง Unsupervised — ปิดท้าย) -->
+                <div class="bg-gradient-to-br from-purple-50 to-white p-6 rounded-xl border border-purple-200 shadow-sm">
+                    <h4 class="font-bold text-purple-900 text-lg mb-2 flex items-center gap-2">
+                        <i class="fas fa-object-group"></i> รู้จัก Clustering เบื้องต้น: การจับกลุ่มข้อมูลที่คล้ายกัน
+                    </h4>
+                    <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                        Clustering คือเทคนิคยอดนิยมของ Unsupervised Learning ที่ใช้
+                        <strong>จับกลุ่มข้อมูลโดยดูจากความคล้ายกันและความแตกต่างกัน</strong> ของคุณลักษณะ
+                        หลักการสำคัญคือ <em>"ข้อมูลที่อยู่กลุ่มเดียวกันจะมีความเหมือนกันมากกว่าข้อมูลที่อยู่นอกกลุ่ม"</em>
+                        โดยอัลกอริทึมที่นิยมใช้มากที่สุดคือ <strong>K-Means Clustering</strong>
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-4 text-xs">
+                        <div class="bg-white p-4 rounded-lg border">
+                            <span class="font-bold text-purple-800 block mb-1">🧩 จับกลุ่มอย่างไร?</span>
+                            <p class="text-gray-600 leading-relaxed">กำหนดจำนวนกลุ่ม (k) → จับแต่ละจุดเข้ากลุ่มที่
+                                "จุดศูนย์กลาง (Centroid)" อยู่ใกล้ที่สุด → ขยับจุดศูนย์กลาง → ทำซ้ำจนกลุ่มนิ่ง</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border">
+                            <span class="font-bold text-purple-800 block mb-1">🌍 ตัวอย่างการใช้งาน</span>
+                            <p class="text-gray-600 leading-relaxed">จับกลุ่มพื้นที่ที่มีอัตราการปล่อยมลพิษใกล้เคียงกัน
+                                (โซนอุตสาหกรรม / โซนเกษตรกรรม) หรือจับกลุ่มลูกค้าตามพฤติกรรมการซื้อ</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border">
+                            <span class="font-bold text-purple-800 block mb-1">⚡ ต่างจาก Classification</span>
+                            <p class="text-gray-600 leading-relaxed">Classification รู้ชื่อกลุ่มล่วงหน้าจากเฉลย
+                                แต่ Clustering ไม่มีเฉลย ต้องค้นหากลุ่มขึ้นมาเองจากความคล้ายของข้อมูล</p>
                         </div>
                     </div>
                 </div>
