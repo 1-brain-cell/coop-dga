@@ -270,43 +270,137 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6 items-center">
+                <div class="grid md:grid-cols-3 gap-6 items-stretch">
                     <div
                         class="md:col-span-1 bg-slate-50 p-6 rounded-xl border text-center flex flex-col justify-center items-center min-h-[320px]">
-                        <div class="text-blue-900 text-6xl mb-4"><i class="fas fa-circles-intersection"></i></div>
+                        <!-- ของเดิม: <div class="text-blue-900 text-6xl mb-4"><i class="fas fa-circles-intersection"></i></div> -->
+                        <div class="text-blue-900 text-6xl mb-4"><i class="fas fa-diagram-project"></i></div>
                         <h3 class="font-bold text-2xl text-gray-800 mb-4">Data Science คืออะไร?</h3>
+                        <!-- ของเดิม:
                         <p class="text-base text-gray-600 leading-relaxed text-center max-w-md">
-                            วิทยาการข้อมูลเกิดจากการบูรณาการความรู้ของ 3 ศาสตร์หลัก ได้แก่ <strong>Computer
-                                Science</strong> (ทักษะไอที/การเขียนโปรแกรม), <strong>Math & Statistics</strong>
-                            (คณิตศาสตร์และการคำนวณโมเดล) และ <strong>Business Domain Expertise</strong>
+                            วิทยาการข้อมูลเกิดจากการบูรณาการความรู้ของ 3 ศาสตร์หลัก ได้แก่ 
+                            <ul>
+                                <li>Computer Science (ทักษะไอที/การเขียนโปรแกรม)</li>
+                                <li>Math & Statistics (คณิตศาสตร์และการคำนวณโมเดล)</li>
+                                <li>Business Domain Expertise (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</li>
+                            </ul>
+                            (ทักษะไอที/การเขียนโปรแกรม), 
+                            <strong>Math & Statistics</strong>
+                            (คณิตศาสตร์และการคำนวณโมเดล) และ 
+                            <strong>Business Domain Expertise</strong>
                             (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</p>
+                        -->
+                        <p class="text-base text-gray-600 leading-relaxed text-center max-w-md">
+                            วิทยาการข้อมูลเกิดจากการบูรณาการความรู้ของ 3 ศาสตร์หลัก ได้แก่
+                        </p>
+                        <ul class="text-base text-gray-600 leading-relaxed text-left list-disc list-inside max-w-md mt-2 space-y-1">
+                            <li><strong>Computer Science</strong> (ทักษะไอที/การเขียนโปรแกรม)</li>
+                            <li><strong>Math & Statistics</strong> (คณิตศาสตร์และการคำนวณโมเดล)</li>
+                            <li><strong>Business Domain Expertise</strong> (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</li>
+                        </ul>
                     </div>
 
                     <div class="md:col-span-2 space-y-4">
                         <h3 class="font-bold text-xl text-gray-800"><i
                                 class="fas fa-layer-group mr-2 text-blue-600"></i>4 ระดับขั้นของการวิเคราะห์ข้อมูล (4
                             Types of Data Analytics)</h3>
+                        <!-- ของเดิม:
                         <div class="grid sm:grid-cols-2 gap-4 text-sm">
                             <div class="p-4 bg-white border-l-4 border-gray-400 rounded shadow-sm bg-slate-50/50">
                                 <span class="font-bold text-gray-800 block">1. Descriptive Analytics</span>
-                                <p class="text-gray-600">บอกว่าเกิดอะไรขึ้นในอดีต (What happened?) เช่น
-                                    รายงานสรุปยอดขายประจำปี</p>
+                                <p class="text-gray-600">บอกว่าเกิดอะไรขึ้นในอดีต (What happened?) เช่น รายงานสรุปยอดขายประจำปี</p>
                             </div>
                             <div class="p-4 bg-white border-l-4 border-yellow-500 rounded shadow-sm bg-slate-50/50">
                                 <span class="font-bold text-yellow-800 block">2. Diagnostic Analytics</span>
-                                <p class="text-gray-600">เจาะลึกหาสาเหตุว่าทำไมจึงเกิดขึ้น (Why did it happen?) เช่น
-                                    การทำ Data Drill-Down</p>
+                                <p class="text-gray-600">เจาะลึกหาสาเหตุว่าทำไมจึงเกิดขึ้น (Why did it happen?) เช่น การทำ Data Drill-Down</p>
                             </div>
                             <div class="p-4 bg-white border-l-4 border-blue-500 rounded shadow-sm bg-blue-50/50">
-                                <span class="font-bold text-blue-800 block">3. Predictive Analytics (เน้นใน Day
-                                    4)</span>
-                                <p class="text-gray-600">พยากรณ์สิ่งที่มีแนวโน้มจะเกิดขึ้นในอนาคต (What will happen?)
-                                    โดยอาศัยเทคนิคทางสถิติและ Machine Learning</p>
+                                <span class="font-bold text-blue-800 block">3. Predictive Analytics (เน้นใน Day 4)</span>
+                                <p class="text-gray-600">พยากรณ์สิ่งที่มีแนวโน้มจะเกิดขึ้นในอนาคต (What will happen?) โดยอาศัยเทคนิคทางสถิติและ Machine Learning</p>
                             </div>
                             <div class="p-4 bg-white border-l-4 border-green-500 rounded shadow-sm bg-green-50/50">
                                 <span class="font-bold text-green-800 block">4. Prescriptive Analytics</span>
-                                <p class="text-gray-600">แนะนำทางเลือกและผลลัพธ์ที่ควรทำ (How can we make it happen?)
-                                    เพื่อช่วยชี้นำการตัดสินใจสูงสุด</p>
+                                <p class="text-gray-600">แนะนำทางเลือกและผลลัพธ์ที่ควรทำ (How can we make it happen?) เพื่อช่วยชี้นำการตัดสินใจสูงสุด</p>
+                            </div>
+                        </div>
+                        -->
+                        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 bg-white border-l-4 border-gray-400 rounded shadow-sm bg-slate-50/50">
+                                <span class="font-bold text-gray-800 block mb-1">1. Descriptive Analytics</span>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    <li><strong>อธิบายสิ่งที่เกิดขึ้น (What happened?)</strong></li>
+                                    <li>ใช้วิธีนำข้อมูลในอดีตมาสรุปเป็นรายงาน กราฟ หรือ Dashboard เพื่อให้เห็นภาพรวมได้ง่าย</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white border-l-4 border-yellow-500 rounded shadow-sm bg-slate-50/50">
+                                <span class="font-bold text-yellow-800 block mb-1">2. Diagnostic Analytics</span>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    <li><strong>หาสาเหตุของสิ่งที่เกิด (Why did it happen?)</strong></li>
+                                    <li>วิเคราะห์ข้อมูลเชิงลึกเพื่อหาปัจจัยหรือสาเหตุที่ทำให้เกิดผลลัพธ์นั้น</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white border-l-4 border-blue-500 rounded shadow-sm bg-blue-50/50">
+                                <span class="font-bold text-blue-800 block mb-1">3. Predictive Analytics (เน้นใน Day 4)</span>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    <li><strong>ทำนายสิ่งที่จะเกิดขึ้น (What will happen?)</strong></li>
+                                    <li>ใช้สถิติหรือ Machine Learning เพื่อคาดการณ์แนวโน้มในอนาคต</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white border-l-4 border-green-500 rounded shadow-sm bg-green-50/50">
+                                <span class="font-bold text-green-800 block mb-1">4. Prescriptive Analytics</span>
+                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                    <li><strong>แนะนำสิ่งที่ควรทำ (What should we do?)</strong></li>
+                                    <li>ใช้ผลการวิเคราะห์และแบบจำลองเพื่อเสนอแนวทางที่เหมาะสมที่สุดในการตัดสินใจ</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Example Box -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mt-4 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
+                                <span class="font-bold text-sm text-slate-700">
+                                    <i class="fas fa-lightbulb text-amber-500 mr-1.5"></i>ตัวอย่างการวิเคราะห์ข้อมูลในสถานการณ์จริง
+                                </span>
+                                <!-- Small tabs -->
+                                <div class="flex gap-1.5 flex-wrap">
+                                    <button onclick="switchExampleScenario(1)" id="btn-scenario-1" class="scenario-tab-btn px-3 py-1 text-xs font-semibold rounded-full border bg-blue-600 text-white border-blue-600 transition">
+                                        ☕ ร้านกาแฟ
+                                    </button>
+                                    <button onclick="switchExampleScenario(2)" id="btn-scenario-2" class="scenario-tab-btn px-3 py-1 text-xs font-semibold rounded-full border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                        🛒 ร้านค้าออนไลน์
+                                    </button>
+                                    <button onclick="switchExampleScenario(3)" id="btn-scenario-3" class="scenario-tab-btn px-3 py-1 text-xs font-semibold rounded-full border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                        📚 การศึกษา
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Content container -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="scenario-content-box">
+                                <div class="p-3 bg-white border-l-4 border-gray-400 rounded shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <span class="font-bold text-gray-700 block mb-1 text-xs">📊 Descriptive</span>
+                                        <p class="text-gray-600 leading-relaxed text-xs">เดือนนี้มียอดขาย 450,000 บาท</p>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-white border-l-4 border-yellow-500 rounded shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <span class="font-bold text-yellow-800 block mb-1 text-xs">🔍 Diagnostic</span>
+                                        <p class="text-gray-600 leading-relaxed text-xs">ยอดขายลดลงเพราะลูกค้าช่วงเช้ามาใช้บริการน้อยลง</p>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <span class="font-bold text-blue-800 block mb-1 text-xs">🔮 Predictive</span>
+                                        <p class="text-gray-600 leading-relaxed text-xs">หากแนวโน้มยังเหมือนเดิม เดือนหน้ายอดขายอาจลดลงอีก 5%</p>
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-white border-l-4 border-green-500 rounded shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <span class="font-bold text-green-800 block mb-1 text-xs">💡 Prescriptive</span>
+                                        <p class="text-gray-600 leading-relaxed text-xs">ควรจัดโปรโมชันเครื่องดื่มช่วงเช้าเพื่อดึงลูกค้ากลับมา</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -321,7 +415,7 @@
 
                 <div class="grid md:grid-cols-2 gap-6 items-stretch">
                     <!-- Supervised -->
-                    <div class="bg-blue-50/60 p-6 rounded-xl border-2 border-blue-200 shadow-sm flex flex-col">
+                    <div id="card-supervised" onclick="toggleMlType('supervised')" class="bg-blue-100/30 p-6 rounded-xl border-2 border-blue-500 shadow-md flex flex-col cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="text-blue-700 text-3xl"><i class="fas fa-chalkboard-teacher"></i></div>
                             <div>
@@ -351,7 +445,7 @@
                     </div>
 
                     <!-- Unsupervised -->
-                    <div class="bg-purple-50/60 p-6 rounded-xl border-2 border-purple-200 shadow-sm flex flex-col">
+                    <div id="card-unsupervised" onclick="toggleMlType('unsupervised')" class="bg-purple-50/60 p-6 rounded-xl border-2 border-purple-200 shadow-sm flex flex-col cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg opacity-75 hover:opacity-100">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="text-purple-700 text-3xl"><i class="fas fa-shapes"></i></div>
                             <div>
@@ -379,11 +473,22 @@
                             </div>
                         </div>
                     </div>
+
+
+                </div>
+                <!-- ของเดิม:
+                    <p class="text-gray-600 text-sm text-center">คลิกเพื่อดูเนื้อหา</p>
+                -->
+                <div class="text-center mt-4 mb-2">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs border border-slate-200/60 shadow-sm">
+                        <i class="fas fa-mouse-pointer text-blue-500 animate-bounce text-[10px]"></i>
+                        <span>คลิกเลือกการ์ด <strong>Supervised</strong> หรือ <strong>Unsupervised</strong> ด้านบนเพื่อสลับดูเนื้อหาเปรียบเทียบ</span>
+                    </span>
                 </div>
 
+                <!-- ของเดิม:
                 <div class="bg-gray-50 p-6 rounded-lg border">
-                    <h4 class="font-bold text-gray-800 text-lg mb-3 text-center">ทบทวนงานของ Supervised Learning
-                        (Regression vs Classification)</h4>
+                    <h4 class="font-bold text-gray-800 text-lg mb-3 text-center">Supervised Learning: Regression vs Classification</h4>
                     <div class="grid md:grid-cols-2 gap-4 text-base">
                         <div class="p-4 bg-white rounded shadow-sm border-t-4 border-blue-500">
                             <span class="font-bold text-blue-800 text-lg block mb-1">Regression
@@ -399,10 +504,128 @@
                         </div>
                     </div>
                 </div>
+                -->
+                <div id="detail-supervised" class="bg-gray-50 p-6 rounded-lg border space-y-6 transition-all duration-300">
+                    <h4 class="font-bold text-gray-800 text-lg mb-1 text-center">Supervised Learning: Regression vs Classification</h4>
+                    
+                    <!-- Responsive Comparison Table -->
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                        <table class="w-full text-sm text-left text-slate-600 border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200">
+                                    <th class="p-3 font-bold text-slate-700">หัวข้อ</th>
+                                    <th class="p-3 font-bold text-blue-900 border-l border-slate-200 bg-blue-50/30">Regression (การถดถอย)</th>
+                                    <th class="p-3 font-bold text-green-900 border-l border-slate-200 bg-green-50/30">Classification (การจำแนกประเภท)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-150">
+                                <tr>
+                                    <td class="p-3 font-semibold text-slate-700 bg-slate-50/50">ความหมาย</td>
+                                    <td class="p-3 border-l border-slate-200">ทำนายค่าตัวเลข</td>
+                                    <td class="p-3 border-l border-slate-200">ทำนายประเภทหรือกลุ่ม</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-slate-700 bg-slate-50/50">ผลลัพธ์</td>
+                                    <td class="p-3 border-l border-slate-200"><span class="font-mono text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Continuous Value</span> (ค่าต่อเนื่อง)</td>
+                                    <td class="p-3 border-l border-slate-200"><span class="font-mono text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">Discrete Class</span> (กลุ่มที่แบ่งชัดเจน)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-slate-700 bg-slate-50/50">คำถามที่ตอบ</td>
+                                    <td class="p-3 border-l border-slate-200 font-medium text-blue-800">"จะได้ค่าเท่าไร?"</td>
+                                    <td class="p-3 border-l border-slate-200 font-medium text-green-800">"จะอยู่กลุ่มไหน?"</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-slate-700 bg-slate-50/50">เป้าหมาย</td>
+                                    <td class="p-3 border-l border-slate-200">ประมาณค่าที่ใกล้เคียงความจริงที่สุด</td>
+                                    <td class="p-3 border-l border-slate-200">จำแนกข้อมูลให้ถูกกลุ่มที่สุด</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-slate-700 bg-slate-50/50">ตัวอย่างผลลัพธ์</td>
+                                    <td class="p-3 border-l border-slate-200 font-mono text-xs text-blue-700">32.5°C, 15,000 บาท</td>
+                                    <td class="p-3 border-l border-slate-200 font-mono text-xs text-green-700">ผ่าน, ไม่ผ่าน</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Case Study Comparison Widget -->
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-4 shadow-sm">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b pb-3">
+                            <div class="space-y-0.5">
+                                <span class="font-bold text-sm text-slate-800 block"><i class="fas fa-book-open text-blue-600 mr-1.5"></i>กรณีศึกษาเปรียบเทียบความต่าง</span>
+                                <span class="text-xs text-gray-500 block">คลิกเลือกเพื่อดูว่าข้อมูลเดียวกันสามารถนำไปพยากรณ์ได้ทั้ง 2 รูปแบบอย่างไร</span>
+                            </div>
+                            <!-- Small Pill Tabs -->
+                            <div class="flex gap-1.5 flex-wrap">
+                                <button onclick="switchVsCase(1)" id="btn-vscase-1" class="vscase-tab-btn px-2.5 py-1 text-xs font-semibold rounded-lg border bg-blue-600 text-white border-blue-600 transition">
+                                    🎓 นักศึกษา
+                                </button>
+                                <button onclick="switchVsCase(2)" id="btn-vscase-2" class="vscase-tab-btn px-2.5 py-1 text-xs font-semibold rounded-lg border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    🏠 บ้าน
+                                </button>
+                                <button onclick="switchVsCase(3)" id="btn-vscase-3" class="vscase-tab-btn px-2.5 py-1 text-xs font-semibold rounded-lg border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    🏥 ผู้ป่วย
+                                </button>
+                                <button onclick="switchVsCase(4)" id="btn-vscase-4" class="vscase-tab-btn px-2.5 py-1 text-xs font-semibold rounded-lg border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    🚗 รถยนต์
+                                </button>
+                                <button onclick="switchVsCase(5)" id="btn-vscase-5" class="vscase-tab-btn px-2.5 py-1 text-xs font-semibold rounded-lg border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    🛒 ลูกค้า
+                                </button>
+                                <button onclick="switchVsCase(6)" id="btn-vscase-6" class="vscase-tab-btn px-2.5 py-1 text-xs font-semibold rounded-lg border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    🌡️ สภาพอากาศ
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card grid container -->
+                        <div class="grid md:grid-cols-2 gap-4" id="vscase-content-box">
+                            <!-- Left card (Regression) -->
+                            <div class="p-4 bg-blue-50/60 border border-blue-200 rounded-xl space-y-2 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-blue-900 text-sm">📈 Regression (ทำนายตัวเลข)</span>
+                                        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-100 text-blue-700 rounded-full">Continuous</span>
+                                    </div>
+                                    <div class="text-xs space-y-1.5 text-slate-700">
+                                        <div><span class="text-slate-400 font-medium">โจทย์:</span> <span id="vscase-reg-title">ทำนายคะแนนสอบ</span></div>
+                                        <div><span class="text-slate-400 font-medium">คำถาม:</span> <span class="font-semibold text-slate-800" id="vscase-reg-question">นักศึกษาคนนี้จะได้คะแนนเท่าไร?</span></div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 border-t border-blue-100/50 mt-2">
+                                    <span class="text-xs text-slate-400 block mb-0.5">ผลลัพธ์ทำนาย:</span>
+                                    <span class="text-lg font-bold text-blue-700 font-mono" id="vscase-reg-result">78.5 คะแนน</span>
+                                </div>
+                            </div>
+
+                            <!-- Right card (Classification) -->
+                            <div class="p-4 bg-green-50/60 border border-green-200 rounded-xl space-y-2 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-green-900 text-sm">🎯 Classification (แยกกลุ่ม)</span>
+                                        <span class="px-2 py-0.5 text-[10px] font-bold bg-green-100 text-green-700 rounded-full">Discrete</span>
+                                    </div>
+                                    <div class="text-xs space-y-1.5 text-slate-700">
+                                        <div><span class="text-slate-400 font-medium">โจทย์:</span> <span id="vscase-cls-title">ทำนายผลสอบ</span></div>
+                                        <div><span class="text-slate-400 font-medium">คำถาม:</span> <span class="font-semibold text-slate-800" id="vscase-cls-question">นักศึกษาคนนี้จะสอบผ่านหรือไม่?</span></div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 border-t border-green-100/50 mt-2">
+                                    <span class="text-xs text-slate-400 block mb-0.5">ผลลัพธ์ทำนาย:</span>
+                                    <span class="text-lg font-bold text-green-700" id="vscase-cls-result">ผ่าน</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-[11px] text-slate-500 bg-slate-100 p-2.5 rounded-lg border text-center">
+                            💡 <strong>ข้อสังเกต:</strong> ข้อมูลชุดเดียวกันสามารถนำไปประยุกต์ทำนายได้ทั้ง 2 แบบ ขึ้นอยู่กับเป้าหมายการตอบคำถาม โดย <strong class="text-blue-800">Regression จะได้คำตอบเป็นตัวเลข (ต่อเนื่อง)</strong> ส่วน <strong class="text-green-800">Classification จะได้คำตอบเป็นกลุ่ม/หมวดหมู่</strong>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Clustering intro (ตัวแทนฝั่ง Unsupervised — ปิดท้าย) -->
-                <div
-                    class="bg-gradient-to-br from-purple-50 to-white p-6 rounded-xl border border-purple-200 shadow-sm">
+                <div id="detail-unsupervised"
+                    class="hidden transition-all duration-300 bg-gradient-to-br from-purple-50 to-white p-6 rounded-xl border border-purple-200 shadow-sm">
                     <h4 class="font-bold text-purple-900 text-lg mb-2 flex items-center gap-2">
                         <i class="fas fa-object-group"></i> รู้จัก Clustering เบื้องต้น: การจับกลุ่มข้อมูลที่คล้ายกัน
                     </h4>
@@ -992,6 +1215,182 @@
 
     <script>
         let currentSelectedMetric = 'MAE';
+
+        // --- 4 TYPES OF DATA ANALYTICS INTERACTIVE EXAMPLES ---
+        const scenarioData = {
+            1: {
+                descriptive: "เดือนนี้มียอดขาย 450,000 บาท",
+                diagnostic: "ยอดขายลดลงเพราะลูกค้าช่วงเช้ามาใช้บริการน้อยลง",
+                predictive: "หากแนวโน้มยังเหมือนเดิม เดือนหน้ายอดขายอาจลดลงอีก 5%",
+                prescriptive: "ควรจัดโปรโมชันเครื่องดื่มช่วงเช้าเพื่อดึงลูกค้ากลับมา"
+            },
+            2: {
+                descriptive: "เว็บไซต์มีผู้เข้าชม 20,000 คนในสัปดาห์นี้",
+                diagnostic: "จำนวนผู้เข้าชมเพิ่มขึ้นจากการลงโฆษณาบนโซเชียลมีเดีย",
+                predictive: "คาดว่าสัปดาห์หน้าจะมีผู้เข้าชมประมาณ 25,000 คน",
+                prescriptive: "ควรเพิ่มงบโฆษณาในช่องทางที่สร้างผู้เข้าชมได้ดีที่สุด"
+            },
+            3: {
+                descriptive: "นักศึกษาสอบผ่าน 80% ของทั้งชั้น",
+                diagnostic: "นักศึกษาส่วนใหญ่ทำคะแนนต่ำในบทฐานข้อมูล",
+                predictive: "หากไม่มีการทบทวนเพิ่มเติม คะแนนเฉลี่ยครั้งหน้าอาจลดลง",
+                prescriptive: "ควรจัดกิจกรรมทบทวนบทฐานข้อมูลก่อนสอบครั้งถัดไป"
+            }
+        };
+
+        function switchExampleScenario(num) {
+            // Update tabs active styles
+            document.querySelectorAll('.scenario-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'hover:bg-slate-100');
+            });
+            
+            const activeBtn = document.getElementById(`btn-scenario-${num}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'hover:bg-slate-100');
+                activeBtn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+            }
+
+            const data = scenarioData[num];
+            const box = document.getElementById('scenario-content-box');
+            if (box && data) {
+                box.innerHTML = `
+                    <div class="p-3 bg-white border-l-4 border-gray-400 rounded shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="font-bold text-gray-700 block mb-1 text-xs">📊 Descriptive</span>
+                            <p class="text-gray-600 leading-relaxed text-xs">${data.descriptive}</p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white border-l-4 border-yellow-500 rounded shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="font-bold text-yellow-800 block mb-1 text-xs">🔍 Diagnostic</span>
+                            <p class="text-gray-600 leading-relaxed text-xs">${data.diagnostic}</p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="font-bold text-blue-800 block mb-1 text-xs">🔮 Predictive</span>
+                            <p class="text-gray-600 leading-relaxed text-xs">${data.predictive}</p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white border-l-4 border-green-500 rounded shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="font-bold text-green-800 block mb-1 text-xs">💡 Prescriptive</span>
+                            <p class="text-gray-600 leading-relaxed text-xs">${data.prescriptive}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // --- REGRESSION VS CLASSIFICATION CASE STUDY INTERACTIVE WIDGET ---
+        const vsCaseData = {
+            1: {
+                regTitle: "ทำนายคะแนนสอบ",
+                regQuestion: "นักศึกษาคนนี้จะได้คะแนนเท่าไร?",
+                regResult: "78.5 คะแนน",
+                clsTitle: "ทำนายผลสอบ",
+                clsQuestion: "นักศึกษาคนนี้จะสอบผ่านหรือไม่?",
+                clsResult: "ผ่าน"
+            },
+            2: {
+                regTitle: "ทำนายราคาบ้าน",
+                regQuestion: "บ้านหลังนี้มีราคาเท่าไร?",
+                regResult: "3,250,000 บาท",
+                clsTitle: "ทำนายระดับราคาบ้าน",
+                clsQuestion: "บ้านหลังนี้อยู่ในกลุ่มราคาสูงหรือไม่?",
+                clsResult: "ราคาสูง"
+            },
+            3: {
+                regTitle: "ทำนายระดับน้ำตาลในเลือด",
+                regQuestion: "ระดับน้ำตาลในเลือดจะอยู่ที่เท่าไร?",
+                regResult: "145 mg/dL",
+                clsTitle: "ทำนายความเสี่ยงโรคเบาหวาน",
+                clsQuestion: "ผู้ป่วยมีความเสี่ยงเป็นเบาหวานหรือไม่?",
+                clsResult: "มีความเสี่ยง"
+            },
+            4: {
+                regTitle: "ทำนายราคาขายรถ",
+                regQuestion: "รถคันนี้จะขายได้ราคาเท่าไร?",
+                regResult: "520,000 บาท",
+                clsTitle: "ทำนายสภาพรถ",
+                clsQuestion: "รถคันนี้อยู่ในสภาพดีหรือไม่?",
+                clsResult: "สภาพดี"
+            },
+            5: {
+                regTitle: "ทำนายยอดใช้จ่าย",
+                regQuestion: "ลูกค้าคนนี้จะใช้จ่ายเท่าไรในเดือนหน้า?",
+                regResult: "4,800 บาท",
+                clsTitle: "ทำนายการยกเลิกสมาชิก",
+                clsQuestion: "ลูกค้าคนนี้จะยกเลิกสมาชิกหรือไม่?",
+                clsResult: "มีแนวโน้มยกเลิก"
+            },
+            6: {
+                regTitle: "ทำนายอุณหภูมิ",
+                regQuestion: "พรุ่งนี้อุณหภูมิจะอยู่ที่เท่าไร?",
+                regResult: "34.2°C",
+                clsTitle: "ทำนายสภาพอากาศ",
+                clsQuestion: "พรุ่งนี้ฝนจะตกหรือไม่?",
+                clsResult: "ฝนตก"
+            }
+        };
+
+        function switchVsCase(num) {
+            // Update active state of buttons
+            document.querySelectorAll('.vscase-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'hover:bg-slate-100');
+            });
+            
+            const activeBtn = document.getElementById(`btn-vscase-${num}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'hover:bg-slate-100');
+                activeBtn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+            }
+
+            const data = vsCaseData[num];
+            if (data) {
+                document.getElementById('vscase-reg-title').innerText = data.regTitle;
+                document.getElementById('vscase-reg-question').innerText = data.regQuestion;
+                document.getElementById('vscase-reg-result').innerText = data.regResult;
+                document.getElementById('vscase-cls-title').innerText = data.clsTitle;
+                document.getElementById('vscase-cls-question').innerText = data.clsQuestion;
+                document.getElementById('vscase-cls-result').innerText = data.clsResult;
+            }
+        }
+
+        function toggleMlType(type) {
+            const supervisedCard = document.getElementById('card-supervised');
+            const unsupervisedCard = document.getElementById('card-unsupervised');
+            const detailSupervised = document.getElementById('detail-supervised');
+            const detailUnsupervised = document.getElementById('detail-unsupervised');
+
+            if (type === 'supervised') {
+                // 1. Highlight Supervised Card
+                supervisedCard.classList.remove('border-blue-200', 'bg-blue-50/60', 'opacity-75', 'shadow-sm');
+                supervisedCard.classList.add('border-blue-500', 'bg-blue-100/30', 'scale-[1.01]', 'shadow-md', 'opacity-100');
+
+                // 2. Un-highlight Unsupervised Card
+                unsupervisedCard.classList.remove('border-purple-500', 'bg-purple-100/30', 'scale-[1.01]', 'shadow-md', 'opacity-100');
+                unsupervisedCard.classList.add('border-purple-200', 'bg-purple-50/60', 'opacity-75', 'shadow-sm');
+
+                // 3. Toggle Details
+                detailSupervised.classList.remove('hidden');
+                detailUnsupervised.classList.add('hidden');
+            } else {
+                // 1. Highlight Unsupervised Card
+                unsupervisedCard.classList.remove('border-purple-200', 'bg-purple-50/60', 'opacity-75', 'shadow-sm');
+                unsupervisedCard.classList.add('border-purple-500', 'bg-purple-100/30', 'scale-[1.01]', 'shadow-md', 'opacity-100');
+
+                // 2. Un-highlight Supervised Card
+                supervisedCard.classList.remove('border-blue-500', 'bg-blue-100/30', 'scale-[1.01]', 'shadow-md', 'opacity-100');
+                supervisedCard.classList.add('border-blue-200', 'bg-blue-50/60', 'opacity-75', 'shadow-sm');
+
+                // 3. Toggle Details
+                detailSupervised.classList.add('hidden');
+                detailUnsupervised.classList.remove('hidden');
+            }
+        }
 
         function openTab(evt, tabName) {
             var i, tabContent, tabLinks;
