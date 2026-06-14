@@ -16,7 +16,7 @@
     *   **CSS**: เพิ่มสไตล์ `.drag-handle` เพื่อแสดงสัญลักษณ์ปุ่มลาก 6 จุด (⋮⋮) และออกแบบสถานะการกดลาก (`grabbing`) พร้อมทั้งจัดโทนสีให้เป็นสีฟ้า (`var(--bm)`) เมื่อเมาส์ Hover
     *   **CSS**: เพิ่มสไตล์ `.drag-placeholder` (กรอบเส้นประสีน้ำเงินอ่อน) สำหรับแสดงพื้นที่จองก่อนที่จะวางการ์ด โดยในตอนแรกมีการใส่ Keyframe Animation (`expandPlaceholder`) เพื่อให้แสดงผลลัพธ์แบบเด้งขยายตัว
     *   **HTML (JS Template)**: แก้ไขฟังก์ชัน `renderSteps()` เพื่อเพิ่มแท็ก `<div class="drag-handle">` (ใช้ SVG ไอคอนรูปปุ่มจับลาก 6 จุด) ไว้ข้างหน้าสุดของการ์ดขั้นตอน และเปลี่ยนจาก `ondrop` เป็นใช้งานคู่กับ `ondragend` แทน
-    *   **JavaScript**: เปลี่ยนจากกลไก Swap แบบเดิมมาเป็นการแสดงกล่องจองคิว (Placeholder) โดยเขียนระบบคำนวณตำแหน่งเมาส์ใน `stepDragOver` (ตรวจสอบว่าเมาส์อยู่ครึ่งบนหรือครึ่งล่างของการ์ดเพื่อทำการย้ายกล่องจองคิว) และเมื่อสิ้นสุดการลาก (`stepDragEnd`) จะนำตำแหน่งของกล่องจองมาสับเปลี่ยนลำดับจริงในอาเรย์ `steps` และลบกล่องจองคิวทิ้ง
+    *   **JavaScript**: เปลี่ยนจากกลไก Swap แบบเดิมมาเป็นการแสดงกล่องจองคิว (Placeholder) โดยเขียนระบบคำวณตำแหน่งเมาส์ใน `stepDragOver` (ตรวจสอบว่าเมาส์อยู่ครึ่งบนหรือครึ่งล่างของการ์ดเพื่อทำการย้ายกล่องจองคิว) และเมื่อสิ้นสุดการลาก (`stepDragEnd`) จะนำตำแหน่งของกล่องจองมาสับเปลี่ยนลำดับจริงในอาเรย์ `steps` และลบกล่องจองคิวทิ้ง
 
 ---
 
@@ -551,61 +551,6 @@ plan แก้ไขงานเพิ่มเติม
 
 ---
 
-# บันทึกการแก้ไข (Edit Timeline) - day1.html
-
----
-
-## 2. แก้ไข whitespace และการเคาะย่อหน้าในกล่องโค้ด (Fix Code Snippet Whitespace and Indentation Formatting)
-*   **สิ่งที่ทำ**: แก้ไขปัญหาการเคาะ whitespace, บรรทัดว่างส่วนเกิน และการจัดรูปแบบการย่อหน้า (Indentation) ในกล่องโค้ด (`<div class="code">`) ทั้ง 9 จุด เพื่อให้โค้ด Python แสดงผลอย่างถูกต้อง สวยงาม และอ่านง่ายสำหรับผู้เรียน
-*   **การเปลี่ยนแปลงในโค้ด**:
-    *   **HTML**: ปรับโค้ดใน `<div class="code">` ของตัวอย่าง For Loop, While Loop, Break, Continue, การทำงานของฟังก์ชัน, return vs print, Class & Object และ Scope ของตัวแปร โดยนำบรรทัดแรกไปอยู่บรรทัดเดียวกับแท็กเปิด และปิดแท็ก `</div>` ในบรรทัดเดียวกับโค้ดบรรทัดสุดท้าย พร้อมลบช่องว่างนำหน้า (leading spaces) ใน HTML ออก ให้คงเหลือเฉพาะการย่อหน้าของโค้ด Python จริง ๆ เท่านั้น
-
----
-
-# บันทึกการแก้ไข (Edit Timeline) - day3.html
-
----
-
-## 2. แก้ไข whitespace และการเคาะย่อหน้าในกล่องโค้ด (Fix Code Snippet Whitespace and Indentation Formatting)
-*   **สิ่งที่ทำ**: แก้ไขปัญหาการเคาะ whitespace และการจัดรูปแบบการย่อหน้า (Indentation) ในกล่องโค้ด (`<div class="code-block">`) ทั้ง 3 จุด เพื่อให้โค้ดแสดงผลอย่างถูกต้องและมีโครงสร้างย่อหน้าที่สวยงามตามหลัก Python/Pandas
-*   **การเปลี่ยนแปลงในโค้ด**:
-    *   **HTML**: ปรับโค้ดใน `<div class="code-block">` ของตัวอย่างการโหลดข้อมูลเข้า Staging, Wide → Long (`melt()`) และ Long → Wide (`pivot()`) โดยนำบรรทัดแรกไปต่อท้ายแท็กเปิด และปิดแท็ก `</div>` ในบรรทัดเดียวกับโค้ดบรรทัดสุดท้าย รวมถึงลบช่องว่างนำหน้าใน HTML และจัดเยื้อง (indent) ภายในฟังก์ชัน/พารามิเตอร์ให้สวยงามถูกต้อง
-
----
-
-# บันทึกการแก้ไข (Edit Timeline) - day4.html
-
----
-
-## 1. เพิ่มเนื้อหา Unsupervised Learning และเกริ่น Clustering ในแท็บ ML Basics (Unsupervised Learning & Clustering Intro)
-*   **สิ่งที่ทำ**: เพิ่มเนื้อหาเรื่อง Unsupervised Learning ลงในหน้าแรก (แท็บ ML Basics) ของ day4.html โดยทำเป็นกล่องเปรียบเทียบ Supervised vs Unsupervised และเกริ่นเรื่อง Clustering เบื้องต้น โดยอ้างอิงเนื้อหาเพิ่มเติมจากสไลด์เอกสาร Day 4 (Types of Machine Learning, Supervised/Unsupervised Learning, Clustering)
-*   **การเปลี่ยนแปลงในโค้ด**:
-    *   **HTML (หัวข้อใหม่ "2 ประเภทหลักของ Machine Learning")**: แทรกหัวข้อย่อยพร้อมคำอธิบายว่าตัวชี้ขาดในการเลือกโมเดลคือข้อมูลมีผลเฉลย (Label) หรือไม่
-    *   **HTML (กล่องเปรียบเทียบ 2 คอลัมน์)**: เพิ่มการ์ดเปรียบเทียบคู่กัน — ฝั่งซ้าย **Supervised Learning** (โทนน้ำเงิน, ไอคอน chalkboard-teacher) อธิบายการเรียนรู้แบบมีผู้สอนจาก Labeled Data พร้อมตัวอย่างข้อมูลนำเข้า (Feature + Target) และแตกแขนงเป็น Regression/Classification; ฝั่งขวา **Unsupervised Learning** (โทนม่วง, ไอคอน shapes) อธิบายการเรียนรู้แบบไม่มีผู้สอนจาก Unlabeled Data ค้นหา Pattern เอง พร้อมแตกแขนงเป็น Clustering/Dimensionality Reduction (PCA)
-    *   **HTML (กล่องเกริ่น Clustering)**: เพิ่มกล่องไล่เฉดสีม่วงอธิบายหลักการ Clustering เบื้องต้น (จับกลุ่มจากความคล้ายกัน, K-Means) พร้อมการ์ดย่อย 3 ใบ: วิธีจับกลุ่ม (Centroid), ตัวอย่างการใช้งาน (โซนมลพิษ/กลุ่มลูกค้า), ความต่างจาก Classification และเพิ่มข้อความชี้นำให้ไปทดลองเล่นต่อในแท็บ "PCA & K-Means"
-    *   **HTML (ย้ายตำแหน่งกล่องทบทวน Supervised)**: ย้ายกล่อง "ทบทวนงานของ Supervised Learning (Regression vs Classification)" เดิม จากที่อยู่ก่อนหน้าหัวข้อ Machine Learning ให้ลงไปอยู่หลังจากส่วนเนื้อหา Machine Learning (Supervised vs Unsupervised + Clustering) เพื่อให้ลำดับการเล่าเรื่องไหลต่อเนื่องจากภาพรวมประเภทของ ML ก่อนลงรายละเอียดงานย่อย
-
----
-
-## 2. จัดลำดับเนื้อหาใหม่และเพิ่มมินิเกมจำแนก Supervised/Unsupervised (Reorder + Interactive Mini-Game)
-*   **สิ่งที่ทำ**: ตามคำขอผู้ใช้ ปรับให้กล่อง Clustering ไปอยู่ท้ายสุดของแท็บ ML Basics (เป็นตัวแทนฝั่ง Unsupervised ปิดท้าย) และเพิ่ม "ลูกเล่น" แบบโต้ตอบคั่นระหว่างภาพรวม Machine Learning กับเนื้อหาเรื่องย่อยด้านใน เพื่อให้ผู้เรียนได้ทดลองคิดก่อนเข้าสู่รายละเอียด
-*   **การเปลี่ยนแปลงในโค้ด**:
-    *   **HTML (จัดลำดับใหม่)**: สลับลำดับให้เป็น → การ์ดเปรียบเทียบ Supervised vs Unsupervised → มินิเกมจำแนก → กล่องทบทวน Supervised (Regression vs Classification) → กล่องเกริ่น Clustering (ย้ายมาปิดท้ายสุด) พร้อมเพิ่มคอมเมนต์กำกับว่า Clustering เป็นตัวแทนฝั่ง Unsupervised
-    *   **HTML (มินิเกม `#mlGameBox`)**: เพิ่มกล่องเกมโทนสีเข้ม (slate-900) แสดงโจทย์สถานการณ์ข้อมูล มีปุ่มเลือก 2 ทาง (Supervised สีน้ำเงิน / Unsupervised สีม่วง) ช่องแสดงผลตอบกลับ (Feedback) ปุ่มโจทย์ถัดไป และตัวนับคะแนน
-    *   **JavaScript (Mini-game logic)**: เพิ่มชุดข้อมูล `mlGameData` 5 โจทย์ (อ้างอิงตัวอย่างจากสไลด์ Day 4: จักรยานเช่า, ดอกไอริส, มลพิษรายพื้นที่, กลุ่มลูกค้า, โรคอ้วน) พร้อมเฉลยและคำอธิบายว่าเป็น Regression/Classification/Clustering และเขียนฟังก์ชัน `renderMLGame()`, `answerMLGame(choice)`, `nextMLGame()` จัดการการแสดงโจทย์ ตรวจคำตอบ ให้ feedback สีเขียว/แดง ล็อกปุ่มหลังตอบ นับคะแนนสะสม และสรุปคะแนนเมื่อจบครบทุกโจทย์
-    *   **JavaScript (Init)**: เพิ่มการเรียก `renderMLGame()` ในส่วนเริ่มต้นของสคริปต์ (ถัดจาก `selectMetric('MAE')`) เพื่อให้เกมพร้อมเล่นทันทีเมื่อโหลดหน้า เนื่องจากแท็บ ML Basics เป็นแท็บเริ่มต้น
-
----
-
-## 3. ลบมินิเกมจำแนก Supervised/Unsupervised ออก (Remove Interactive Mini-Game)
-*   **สิ่งที่ทำ**: ตามคำขอผู้ใช้ ถอดมินิเกม "ลองจำแนกดู: นี่คือ Supervised หรือ Unsupervised?" ที่เพิ่มไว้ในรายการที่ 2 ออกทั้งหมด ทำให้ลำดับเนื้อหาในแท็บ ML Basics เหลือเป็น → การ์ดเปรียบเทียบ Supervised vs Unsupervised → กล่องทบทวน Supervised (Regression vs Classification) → กล่องเกริ่น Clustering (ปิดท้าย) โดยยังคงให้ Clustering อยู่ท้ายสุดตามที่ปรับไว้ก่อนหน้า
-*   **การเปลี่ยนแปลงในโค้ด**:
-    *   **HTML**: ลบบล็อกกล่องเกม `#mlGameBox` (โจทย์สถานการณ์ ปุ่มเลือก Supervised/Unsupervised ช่อง Feedback ปุ่มถัดไป และตัวนับคะแนน) ที่คั่นอยู่ระหว่างการ์ดเปรียบเทียบกับกล่องทบทวน Supervised ออก
-    *   **JavaScript (Mini-game logic)**: ลบชุดข้อมูล `mlGameData` และฟังก์ชัน `renderMLGame()`, `answerMLGame()`, `nextMLGame()` รวมถึงตัวแปรสถานะ `mlGameIdx/mlGameScore/mlGameAnswered` ออกจากสคริปต์
-    *   **JavaScript (Init)**: ลบการเรียก `renderMLGame()` ในส่วนเริ่มต้นของสคริปต์ออก
-
----
-
 ## 4. แก้ไขโครงสร้างรายการและการแสดงสัญลักษณ์แสดงหัวข้อย่อย (Fix Bullet List rendering in ML Basics)
 *   **สิ่งที่ทำ**: แก้ไขปัญหาการแสดงสัญลักษณ์แสดงหัวข้อย่อย (Bullet List) ในหัวข้อ "Data Science คืออะไร?" ในแท็บ ML Basics ของ day4.html เนื่องจากโครงสร้างเดิมซ้อนแท็กไม่ถูกต้องและขาดการใช้คลาสสไตล์ลิสต์ใน Tailwind CSS ทำให้สัญลักษณ์วงกลมหัวข้อ (bullet) หายไป
 *   **การเปลี่ยนแปลงในโค้ด**:
@@ -735,51 +680,74 @@ plan แก้ไขงานเพิ่มเติม
 
 
 
-## 4. ��Ѻ��ا�����һپ�鹰ҹ��� UI �ͧ�� Logistic Regression (Refactor Logistic Regression Tab)
-*   **��觷���**: ��Ѻ��ا�����ҡ�ûپ�鹰ҹ����ͧ Logistic Regression ����դ������ӴѺ��鹵͹������㨧��¢�� ����ҧ�ԧ�����Ũҡ��� `day4_classification.md` �������駻�Ѻ��ا��Ҵ�͹������������������ҹ���µ���ҵðҹ���������
-*   **�������¹�ŧ���**:
-    *   **Content (Introduction)**: ����¹���ͧ��������������෤�Ԥ�Թ� ����繡��ͧ **"�ǤԴ��ѡ: Logistic Regression �������?"** �ⷹ�������������Ŵ� (Emerald) ������ 3 �����Ӥѭ: 
-        1. �����Ѻ Classification
-        2. ����� Sigmoid �ŧ����� 0-1
-        3. ����� Decision Boundary �Ѵ�Թ�
-    *   **UI/UX**: ��Ѻ��ا��Ҵ�͹����纷���������˭��� (�ԧ��������Ѵਹ�ͧ�� Regression Metrics) �� ��Ѻ��͸Ժ�¨ҡ `text-xs` �� `text-sm` �������˹�㹨ش����Ӥѭ
-    *   **Visual Styling**: ��Ѻ��ا���ͧ�Ǻ��� (Control Panel) �ҧ����������ٷѹ���¢�鹴��¾����ѧ�բ�����Ҵ��, ��鹢ͺ 2 ���, ����Ҩҧ � �������駨Ѵ����º�����ҡ�ԡҡ��觡�������Ѵਹ
-    *   **Safety**: ����ա���е�ͧ����ǹ����Ҵ��ҿ (Canvas) ���� Logic ��û����żŴ����� �����ѡ���ʶ����Ҿ�ͧ�к� Interactive
+## 4. Ѻาһپ鹰ҹ UI ͧ Logistic Regression (Refactor Logistic Regression Tab)
+*   **觷**: Ѻาҡûپ鹰ҹͧ Logistic Regression դӴѺ鹵͹㨧¢ ҧԧŨҡ `day4_classification.md` 駻ѺาҴ͹ҹµҵðҹ
+*   **¹ŧ**:
+    *   **Content (Introduction)**: ¹ͧ෤ԤԹ 繡ͧ **"ǤԴѡ: Logistic Regression ?"** ⷹŴ (Emerald)  3 Ӥѭ: 
+        1. Ѻ Classification
+        2.  Sigmoid ŧ 0-1
+        3.  Decision Boundary ѴԹ
+    *   **UI/UX**: ѺาҴ͹纷˭ (ԧѴਹͧ Regression Metrics)  Ѻ͸Ժ¨ҡ `text-xs`  `text-sm` ˹㹨شӤѭ
+    *   **Visual Styling**: ѺาͧǺ (Control Panel) ҧٷѹ¢鹴¾ѧբҴ, 鹢ͺ 2 , Ҩҧ  駨Ѵºҡԡҡ觡Ѵਹ
+    *   **Safety**: աеͧǹҴҿ (Canvas)  Logic ûżŴ ѡʶҾͧк Interactive
 
-## 5. ������͸Ժ�¤��¢��ʧ�������ͧ���� Logistic Regression
-*   **��觷���**: �������ͧ��ͤ���͸Ժ���˵ؼŷ����š��Է���������� `Regression` ��駷��������Ѻ�ҹ `Classification` ����Ŵ�����Ѻʹ�ͧ������¹����
-*   **�������¹�ŧ���**:
-    *   **Clarification Box**: �������ͧ������ͧ�Ӿѹ (Amber) ͸Ժ�����º��º�����ҧ���ͧ��ѧ��Ե��ʵ�� (�Ţ������ͧ) �Ѻ��������ش���� (������͡�����)
-    *   **Analogy**: ����������º��º�Ѻ `����ͧ�Ѵ�س�����` �����������Ҿ������Ѵਹ��ҵ���Ţ�١������Ѵ�Թ����͡����������ҧ��
+## 5. ͸Ժ¤¢ʧͧ Logistic Regression
+*   **觷**: ͧͤ͸Ժ˵ؼŷšԷ `Regression` 駷Ѻҹ `Classification` ŴѺʹͧ¹
+*   **¹ŧ**:
+    *   **Clarification Box**: ͧͧӾѹ (Amber) ͸ԺººҧͧѧԵʵ (Ţͧ) Ѻش (͡)
+    *   **Analogy**: ººѺ `ͧѴس` ҾѴਹҵŢ١ѴԹ͡ҧ
 
-## 6. ��Ѻ��ا��ǹ ML Basics ����к��ӷҧ�ó��֡��
-*   **��觷���**: ��Ѻ��ا��èѴ�ҧ�����һپ�鹰ҹ���ѹ���� ��ҹ���¢�� ��������к��ӷҧ�ҡ�ó��֡����ѧ�������ҷ������Ǣ�ͧ
-*   **�������¹�ŧ���**:
-    *   **UI/UX (ML Basics)**: �Ѵ Layout ��ǹ `Data Science �������` ��� `4 �дѺ�����������` ������Ẻ Card-based ������ͤ͹����ӴѺ��� 1-4 ���Ѵਹ���ʺ�µҢ��
-    *   **Case Study Navigation**: �������� `��ͧ��Ѻ�ٹ�����` ��� `��ͧ�¡��������� Sigmoid` 㹡��ͧ�ó��֡�����º��º ������������¹����ö���ⴴ��ѧ�к� Interactive �������Ǣ�ͧ��ѹ��
-    *   **Visual Polish**: ��Ѻⷹ�ա�������դ����繡������͹���ǡѹ��д�������Ҫվ�ҡ���
-
-
----
-
-## 15. ��Ѻ��ا�����ӷҧ��Ǣ�� Regression ��� Classification ������ Transition (Refactor Navigation Buttons to Transition Style)
-*   **��觷���**: ��Ѻ��ا���� "�ͧ��Ѻ�ٹ�������鹵ç" ��� "�ͧ�¡��������� Sigmoid" ������ѡɳ��繺��͡�ӷҧ (Transition Block) ���Ѵਹ ����������áѺ������¹����繡����������Ǣ�ͶѴ� ������������蹤��㹡��ͧ���
-*   **�������¹�ŧ���**:
-    *   **HTML (day4.html)**:
-        - ��Ѻ�ç���ҧ�������㹡��ͧ���º��º�ó��֡�� (Case Study Comparison) ��������ͤ������蹹� "?? ������֡�ҵ�����ҧ��š��Է�����ҧ... �����ѧ?"
-        - ����¹��ͤ����������� "��ѧ Linear Regression" ��� "��ѧ Logistic Regression"
-        - ��Ѻ�����������բ�Ҵ�͹�� `text-[11px]` ������ͤ͹�١�ê���� (`fa-arrow-right`) ᷹�ͤ͹�ԧ����¹͡ ����������ö֧����Թ˹����ѧ�����ҶѴ�
-        - ������鹤�� `border-t` ���������ҧ `pt-3`, `mt-2` �����¡��ǹ�ӷҧ�͡�ҡ��ǹ�ʴ��šó��֡�����Ѵਹ
+## 6. Ѻาǹ ML Basics кӷҧó֡
+*   **觷**: ѺาèѴҧһپ鹰ҹѹ ҹ¢ кӷҧҡó֡ѧҷǢͧ
+*   **¹ŧ**:
+    *   **UI/UX (ML Basics)**: Ѵ Layout ǹ `Data Science `  `4 дѺ` Ẻ Card-based ͤ͹ӴѺ 1-4 ѴਹʺµҢ
+    *   **Case Study Navigation**:  `ͧѺٹ`  `ͧ¡ Sigmoid` 㹡ͧó֡ºº ¹öⴴѧк Interactive Ǣͧѹ
+    *   **Visual Polish**: Ѻⷹադ繡͹ǡѹдҪվҡ
 
 
 ---
 
-## 16. ��Ѻ��ا�����������ͧ͢�� (Visual Consistency) ���ǹ 4 �дѺ�����������
-*   **��觷���**: ��Ѻ��ا�բͧ���ͧ�дѺ����������� 1-4 ����դ����������͡ѹ ��л�Ѻ�բͧ���ͧ������ҧ�ʶҹ��ó��ԧ���ç�Ѻ�����բͧ�����дѺ
-*   **�������¹�ŧ���**:
+## 15. ѺาӷҧǢ Regression  Classification  Transition (Refactor Navigation Buttons to Transition Style)
+*   **觷**: Ѻา "ͧѺٹ鹵ç"  "ͧ¡ Sigmoid" ѡɳ繺͡ӷҧ (Transition Block) Ѵਹ áѺ¹繡ǢͶѴ 蹤㹡ͧ
+*   **¹ŧ**:
     *   **HTML (day4.html)**:
-        - ��Ѻ���ͧ **Descriptive** (1) ��� **Diagnostic** (2) ����վ����ѧ����͹ (g-slate-50, g-amber-50/50) ��Тͺ�յ����� �����ǡѺ�дѺ 3 ��� 4
-        - ��Ѻǧ�������Ţ 1 ��� 2 ������շֺ (g-slate-500, g-amber-500) ��Т�ͤ����բ�� ���������繪ش���ǡѹ��� 4 �дѺ
-        - ��Ѻ���ͧ������ҧ� scenario-content-box (��ǹ Interactive Example) ���������ѧ��Тͺ�յ�������բͧ�����дѺ (Slate, Amber, Blue, Emerald)
+        - Ѻçҧ㹡ͧººó֡ (Case Study Comparison) ͤ蹹 "?? ֡ҵҧšԷҧ... ѧ?"
+        - ¹ͤ "ѧ Linear Regression"  "ѧ Logistic Regression"
+        - ѺբҴ͹ `text-[11px]` ͤ͹١ê (`fa-arrow-right`) ᷹ͤ͹ԧ¹͡ ö֧Թ˹ѧҶѴ
+        - 鹤 `border-t` ҧ `pt-3`, `mt-2` ¡ǹӷҧ͡ҡǹʴšó֡Ѵਹ
+
+
+---
+
+## 16. Ѻาͧ͢ (Visual Consistency) ǹ 4 дѺ
+*   **觷**: ѺาբͧͧдѺ 1-4 դ͡ѹ лѺբͧͧҧʶҹóԧçѺբͧдѺ
+*   **¹ŧ**:
+    *   **HTML (day4.html)**:
+        - Ѻͧ **Descriptive** (1)  **Diagnostic** (2) վѧ͹ (g-slate-50, g-amber-50/50) Тͺյ ǡѺдѺ 3  4
+        - ѺǧŢ 1  2 շֺ (g-slate-500, g-amber-500) Тͤբ 繪شǡѹ 4 дѺ
+        - Ѻͧҧ scenario-content-box (ǹ Interactive Example) ѧТͺյբͧдѺ (Slate, Amber, Blue, Emerald)
     *   **JavaScript (day4.html)**:
-        - �ѻവ�ѧ��ѹ switchExampleScenario ������ҧ HTML ����դ��������� �������������Ѻ������ҧ�������ѧ��������§����������
+        - ѻവѧѹ switchExampleScenario ҧ HTML դ Ѻҧѧ§
+
+---
+
+## 17. ปรับปรุงขนาดฟอนต์ให้เป็นมาตรฐานทั้งไฟล์ (Typography Standardization based on Benchmark)
+*   **สิ่งที่ทำ**: ปรับปรุงขนาดตัวอักษรในทุกแท็บของ `day4.html` ให้เป็นมาตรฐานเดียวกัน โดยอิงจากกล่อง **Regression Evaluation Metrics** ที่ถูกปรับแต่งจนเป็นที่พอใจแล้ว (Lead paragraph: `text-lg`, Content: `text-base`) เพื่อแก้ปัญหาข้อความบางส่วนที่มีขนาดเล็กเกินไป (`text-xs`, `text-sm`) จนอ่านยาก
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **Tab 1 (ML Basics)**:
+        - ปรับคำโปรยหลักจาก `text-base` เป็น `text-lg`
+        - ปรับเนื้อหาใน Connection Box, การ์ด Data Science, และ 4 Types of Analytics จาก `text-sm` เป็น `text-base`
+        - ปรับ Interactive Example Box (ทั้ง HTML และ JS) ให้ใช้ `text-base` สำหรับเนื้อหาตัวอย่าง
+    *   **Tab 2 (Linear Regression)**:
+        - ปรับเนื้อหา Concept Card จาก `text-xs` เป็น `text-base`
+        - ปรับคำอธิบายคอนโทรลพารามิเตอร์และสัญลักษณ์ SSE จาก `text-sm`/`text-xs` เป็น `text-base`/`text-sm`
+    *   **Tab 3 (Logistic Regression)**:
+        - ปรับหัวข้อและเนื้อหาในการ์ดแนวคิดหลักจาก `text-sm` เป็น `text-base`
+        - ปรับกล่อง Amber (กติกาการแบ่งกลุ่ม) และคำอธิบายกลไกการคำนวณจาก `text-sm` เป็น `text-base`
+    *   **Tab 5 (Confusion Matrix)**:
+        - ปรับเนื้อหา Concept Card และสถานการณ์โรคระบาดจาก `text-xs`/`text-sm` เป็น `text-base`/`text-lg`
+        - ปรับข้อความในตาราง Matrix และ Live Metrics (หัวข้อ/สูตร) จาก `text-xs` เป็น `text-sm` เพื่อเพิ่มความชัดเจน
+    *   **Tab 6 (PCA & K-Means)**:
+        - ปรับเนื้อหา PCA และ Use Cases/Warnings จาก `text-sm` เป็น `text-base`
+        - ปรับเนื้อหาปูพื้นฐาน K-Means และขั้นตอนใน Wizard Controller จาก `text-sm`/`text-xs` เป็น `text-base`/`text-lg`
+        - ปรับคำอธิบาย Elbow Method จาก `text-sm` เป็น `text-base`
