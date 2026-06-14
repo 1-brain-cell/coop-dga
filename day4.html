@@ -384,23 +384,23 @@
 
     <nav class="tabs">
         <div class="max-w-7xl mx-auto flex flex-nowrap tab-bar px-8">
-            <button onclick="openTab(event, 'ml-basics')"
+            <button id="tab-btn-basics" onclick="openTab(event, 'ml-basics')"
                 class="tab-link px-5 py-4 font-semibold text-white border-b-[3px] border-amber-500 active">
                 <i class="fas fa-graduation-cap mr-2"></i>ML Basics
             </button>
-            <button onclick="openTab(event, 'regression')"
+            <button id="tab-btn-regression" onclick="openTab(event, 'regression')"
                 class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-chart-line mr-2"></i>Linear Regression
             </button>
-            <button onclick="openTab(event, 'classification')"
+            <button id="tab-btn-classification" onclick="openTab(event, 'classification')"
                 class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-tags mr-2"></i>Logistic Regression
             </button>
-            <button onclick="openTab(event, 'reg-metrics')"
+            <button id="tab-btn-metrics" onclick="openTab(event, 'reg-metrics')"
                 class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-microscope mr-2"></i>Regression Metrics
             </button>
-            <button onclick="openTab(event, 'confusion')"
+            <button id="tab-btn-confusion" onclick="openTab(event, 'confusion')"
                 class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-table mr-2"></i>Confusion Matrix & F1
             </button>
@@ -417,15 +417,15 @@
             <div id="ml-basics" class="tab-content active space-y-8">
                 <div class="border-l-4 border-blue-600 pl-4">
                     <h2 class="text-2xl font-bold text-gray-800">บทนำและขอบเขตวิทยาการข้อมูล (Data Science Overview)</h2>
-                    <p class="text-gray-600 text-base">สรุปเนื้อหาแกนหลักประจำชุดการเรียนรู้ เพื่อทำความเข้าใจความเกี่ยวเนื่องของโมเดลการวิเคราะห์</p>
+                    <p class="text-gray-600 text-lg">สรุปเนื้อหาแกนหลักประจำชุดการเรียนรู้ เพื่อทำความเข้าใจความเกี่ยวเนื่องของโมเดลการวิเคราะห์</p>
                 </div>
 
                 <!-- Connection Box -->
                 <div class="bg-blue-900 text-white p-6 rounded-xl shadow-md border flex flex-col md:flex-row gap-4 items-center mb-6">
                     <div class="text-4xl text-amber-400"><i class="fas fa-route"></i></div>
                     <div>
-                        <h4 class="font-bold text-amber-400 mb-1 text-base">เส้นทางการเรียนรู้: จากจัดเก็บข้อมูลสู่วิทยาการทำนายอนาคต</h4>
-                        <p class="text-sm text-blue-100 leading-relaxed">
+                        <h4 class="font-bold text-amber-400 mb-1 text-lg">เส้นทางการเรียนรู้: จากจัดเก็บข้อมูลสู่วิทยาการทำนายอนาคต</h4>
+                        <p class="text-base text-blue-100 leading-relaxed">
                             ใน Day 1-3 คุณได้ผ่านกระบวนการคัดกรองข้อมูล ปูพื้นฐานการควบคุมด้วย Python
                             และจัดเก็บข้อมูลอย่างเป็นระเบียบลงคลังสินค้าข้อมูล (Data Warehouse) แล้ว
                             ซึ่งนั่นคือรากฐานข้อมูลประวัติศาสตร์ (Descriptive & Diagnostic)
@@ -435,86 +435,91 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6 items-stretch">
-                    <div
-                        class="md:col-span-1 bg-slate-50 p-6 rounded-xl border text-center flex flex-col justify-center items-center min-h-[320px]">
-                        <!-- ของเดิม: <div class="text-blue-900 text-6xl mb-4"><i class="fas fa-circles-intersection"></i></div> -->
-                        <div class="text-blue-900 text-6xl mb-4"><i class="fas fa-diagram-project"></i></div>
-                        <h3 class="font-bold text-lg text-gray-800 mb-4">Data Science คืออะไร?</h3>
-                        <!-- ของเดิม:
-                        <p class="text-base text-gray-600 leading-relaxed text-center max-w-md">
-                            วิทยาการข้อมูลเกิดจากการบูรณาการความรู้ของ 3 ศาสตร์หลัก ได้แก่ 
-                            <ul>
-                                <li>Computer Science (ทักษะไอที/การเขียนโปรแกรม)</li>
-                                <li>Math & Statistics (คณิตศาสตร์และการคำนวณโมเดล)</li>
-                                <li>Business Domain Expertise (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</li>
-                            </ul>
-                            (ทักษะไอที/การเขียนโปรแกรม), 
-                            <strong>Math & Statistics</strong>
-                            (คณิตศาสตร์และการคำนวณโมเดล) และ 
-                            <strong>Business Domain Expertise</strong>
-                            (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</p>
-                        -->
-                        <p class="text-sm text-gray-600 leading-relaxed text-center max-w-md">
-                            วิทยาการข้อมูลเกิดจากการบูรณาการความรู้ของ 3 ศาสตร์หลัก ได้แก่
+                <div class="grid lg:grid-cols-5 gap-8 items-stretch">
+                    <!-- Data Science Definition -->
+                    <div class="lg:col-span-2 bg-gradient-to-b from-slate-50 to-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col justify-center">
+                        <div class="text-blue-600 text-5xl mb-6 text-center"><i class="fas fa-microchip"></i></div>
+                        <h3 class="font-bold text-xl text-gray-800 mb-4 text-center">Data Science คืออะไร?</h3>
+                        <p class="text-slate-600 leading-relaxed text-base mb-6">
+                            วิทยาการข้อมูลคือการนำข้อมูลดิบมาสกัดเป็นความรู้ที่นำไปใช้งานได้จริง ผ่านการบูรณาการ 3 ศาสตร์หลัก:
                         </p>
-                        <ul class="text-sm text-gray-600 leading-relaxed text-left list-disc pl-5 max-w-md mt-2 space-y-1">
-                            <li><strong>Computer Science</strong> (ทักษะไอที/การเขียนโปรแกรม)</li>
-                            <li><strong>Math & Statistics</strong> (คณิตศาสตร์และการคำนวณโมเดล)</li>
-                            <li><strong>Business Domain Expertise</strong> (ความรู้ความเข้าใจในบริบทของธุรกิจหน้างาน)</li>
-                        </ul>
-                    </div>
-
-                    <div class="md:col-span-2 space-y-4">
-                        <h3 class="font-bold text-lg text-gray-800"><i
-                                class="fas fa-layer-group mr-2 text-blue-600"></i>4 ระดับขั้นของการวิเคราะห์ข้อมูล (4
-                            Types of Data Analytics)</h3>
-                        <div class="grid sm:grid-cols-2 gap-4 text-sm">
-                            <div class="p-4 bg-white border-l-4 border-gray-400 rounded shadow-sm bg-slate-50/50">
-                                <span class="font-bold text-gray-800 block mb-1">1. Descriptive Analytics</span>
-                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                                    <li><strong>อธิบายสิ่งที่เกิดขึ้น (What happened?)</strong></li>
-                                    <li>ใช้วิธีนำข้อมูลในอดีตมาสรุปเป็นรายงาน กราฟ หรือ Dashboard เพื่อให้เห็นภาพรวมได้ง่าย</li>
-                                </ul>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><i class="fas fa-code text-xs"></i></div>
+                                <span class="text-base font-bold text-slate-700">Computer Science</span>
                             </div>
-                            <div class="p-4 bg-white border-l-4 border-yellow-500 rounded shadow-sm bg-slate-50/50">
-                                <span class="font-bold text-yellow-800 block mb-1">2. Diagnostic Analytics</span>
-                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                                    <li><strong>หาสาเหตุของสิ่งที่เกิด (Why did it happen?)</strong></li>
-                                    <li>วิเคราะห์ข้อมูลเชิงลึกเพื่อหาปัจจัยหรือสาเหตุที่ทำให้เกิดผลลัพธ์นั้น</li>
-                                </ul>
+                            <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600"><i class="fas fa-calculator text-xs"></i></div>
+                                <span class="text-base font-bold text-slate-700">Math & Statistics</span>
                             </div>
-                            <div class="p-4 bg-white border-l-4 border-blue-500 rounded shadow-sm bg-blue-50/50">
-                                <span class="font-bold text-blue-800 block mb-1">3. Predictive Analytics (เน้นใน Day 4)</span>
-                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                                    <li><strong>ทำนายสิ่งที่จะเกิดขึ้น (What will happen?)</strong></li>
-                                    <li>ใช้สถิติหรือ Machine Learning เพื่อคาดการณ์แนวโน้มในอนาคต</li>
-                                </ul>
-                            </div>
-                            <div class="p-4 bg-white border-l-4 border-green-500 rounded shadow-sm bg-green-50/50">
-                                <span class="font-bold text-green-800 block mb-1">4. Prescriptive Analytics</span>
-                                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                                    <li><strong>แนะนำสิ่งที่ควรทำ (What should we do?)</strong></li>
-                                    <li>ใช้ผลการวิเคราะห์และแบบจำลองเพื่อเสนอแนวทางที่เหมาะสมที่สุดในการตัดสินใจ</li>
-                                </ul>
+                            <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><i class="fas fa-briefcase text-xs"></i></div>
+                                <span class="text-base font-bold text-slate-700">Domain Expertise</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- 4 Types of Analytics -->
+                    <div class="lg:col-span-3 flex flex-col">
+                        <h3 class="font-bold text-xl text-gray-800 flex items-center gap-2 mb-6">
+                            <i class="fas fa-stairs text-blue-600"></i> 4 ระดับขั้นของการวิเคราะห์ข้อมูล
+                        </h3>
+                        <div class="grid sm:grid-cols-2 gap-4 flex-1">
+                            <!-- Type 1 -->
+                            <div class="group p-5 bg-slate-50 border-2 border-slate-200 rounded-2xl shadow-sm hover:border-slate-400 transition-all flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-slate-500 flex items-center justify-center text-white font-bold">1</div>
+                                    <span class="font-bold text-slate-800 text-lg">Descriptive</span>
+                                </div>
+                                <p class="text-sm font-bold text-slate-500 uppercase mb-1">What happened?</p>
+                                <p class="text-base text-slate-600 leading-relaxed">ใช้ข้อมูลอดีตมาสรุปเป็นรายงานหรือกราฟ เพื่อให้เห็น <strong>"ภาพรวม"</strong></p>
+                            </div>
+                            <!-- Type 2 -->
+                            <div class="group p-5 bg-amber-50/50 border-2 border-amber-100 rounded-2xl shadow-sm hover:border-amber-300 transition-all flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold">2</div>
+                                    <span class="font-bold text-slate-800 text-lg">Diagnostic</span>
+                                </div>
+                                <p class="text-sm font-bold text-amber-500 uppercase mb-1">Why did it happen?</p>
+                                <p class="text-base text-slate-600 leading-relaxed">วิเคราะห์เจาะลึกเพื่อค้นหา <strong>"สาเหตุ"</strong> ของสิ่งที่เกิดขึ้น</p>
+                            </div>
+                            <!-- Type 3 -->
+                            <div class="group p-5 bg-blue-50/50 border-2 border-blue-100 rounded-2xl shadow-sm hover:border-blue-300 transition-all flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold">3</div>
+                                    <span class="font-bold text-blue-900 text-lg">Predictive</span>
+                                </div>
+                                <p class="text-sm font-bold text-blue-600 uppercase mb-1">What will happen?</p>
+                                <p class="text-base text-slate-700 leading-relaxed">ใช้โมเดล ML เพื่อ <strong>"คาดการณ์"</strong> สิ่งที่จะเกิดในอนาคต</p>
+                            </div>
+                            <!-- Type 4 -->
+                            <div class="group p-5 bg-emerald-50/50 border-2 border-emerald-100 rounded-2xl shadow-sm hover:border-emerald-300 transition-all flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold">4</div>
+                                    <span class="font-bold text-emerald-900 text-lg">Prescriptive</span>
+                                </div>
+                                <p class="text-sm font-bold text-emerald-600 uppercase mb-1">What should we do?</p>
+                                <p class="text-base text-slate-700 leading-relaxed">เสนอแนะ <strong>"ทางเลือกที่ดีที่สุด"</strong> เพื่อใช้ประกอบการตัดสินใจ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                         <!-- Interactive Example Box -->
                         <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mt-4 space-y-3">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
-                                <span class="font-bold text-sm text-slate-700">
+                                <span class="font-bold text-base text-slate-700">
                                     <i class="fas fa-lightbulb text-amber-500 mr-1.5"></i>ตัวอย่างการวิเคราะห์ข้อมูลในสถานการณ์จริง
                                 </span>
                                 <!-- Small tabs -->
                                 <div class="flex gap-1.5 flex-wrap">
-                                    <button onclick="switchExampleScenario(1)" id="btn-scenario-1" class="scenario-tab-btn px-3 py-1 text-xs font-semibold rounded-full border bg-blue-600 text-white border-blue-600 transition">
+                                    <button onclick="switchExampleScenario(1)" id="btn-scenario-1" class="scenario-tab-btn px-3 py-1 text-sm font-semibold rounded-full border bg-blue-600 text-white border-blue-600 transition">
                                         ☕ ร้านกาแฟ
                                     </button>
-                                    <button onclick="switchExampleScenario(2)" id="btn-scenario-2" class="scenario-tab-btn px-3 py-1 text-xs font-semibold rounded-full border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    <button onclick="switchExampleScenario(2)" id="btn-scenario-2" class="scenario-tab-btn px-3 py-1 text-sm font-semibold rounded-full border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
                                         🛒 ร้านค้าออนไลน์
                                     </button>
-                                    <button onclick="switchExampleScenario(3)" id="btn-scenario-3" class="scenario-tab-btn px-3 py-1 text-xs font-semibold rounded-full border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
+                                    <button onclick="switchExampleScenario(3)" id="btn-scenario-3" class="scenario-tab-btn px-3 py-1 text-sm font-semibold rounded-full border bg-white text-slate-600 border-slate-200 hover:bg-slate-100 transition">
                                         📚 การศึกษา
                                     </button>
                                 </div>
@@ -522,34 +527,32 @@
 
                             <!-- Content container -->
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="scenario-content-box">
-                                <div class="p-3 bg-white border-l-4 border-gray-400 rounded shadow-sm flex flex-col justify-between">
+                                <div class="p-3 bg-slate-50/50 border-2 border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between">
                                     <div>
-                                        <span class="font-bold text-gray-700 block mb-1 text-sm">📊 Descriptive</span>
-                                        <p class="text-gray-600 leading-relaxed text-sm">เดือนนี้มียอดขาย 450,000 บาท</p>
+                                        <span class="font-bold text-slate-700 block mb-1 text-sm">📊 Descriptive</span>
+                                        <p class="text-slate-600 leading-relaxed text-base">เดือนนี้มียอดขาย 450,000 บาท</p>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-white border-l-4 border-yellow-500 rounded shadow-sm flex flex-col justify-between">
+                                <div class="p-3 bg-amber-50/50 border-2 border-amber-100 rounded-2xl shadow-sm flex flex-col justify-between">
                                     <div>
-                                        <span class="font-bold text-yellow-800 block mb-1 text-sm">🔍 Diagnostic</span>
-                                        <p class="text-gray-600 leading-relaxed text-sm">ยอดขายลดลงเพราะลูกค้าช่วงเช้ามาใช้บริการน้อยลง</p>
+                                        <span class="font-bold text-amber-800 block mb-1 text-sm">🔍 Diagnostic</span>
+                                        <p class="text-slate-600 leading-relaxed text-base">ยอดขายลดลงเพราะลูกค้าช่วงเช้ามาใช้บริการน้อยลง</p>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm flex flex-col justify-between">
+                                <div class="p-3 bg-blue-50/50 border-2 border-blue-100 rounded-2xl shadow-sm flex flex-col justify-between">
                                     <div>
                                         <span class="font-bold text-blue-800 block mb-1 text-sm">🔮 Predictive</span>
-                                        <p class="text-gray-600 leading-relaxed text-sm">หากแนวโน้มยังเหมือนเดิม เดือนหน้ายอดขายอาจลดลงอีก 5%</p>
+                                        <p class="text-slate-600 leading-relaxed text-base">หากแนวโน้มยังเหมือนเดิม เดือนหน้ายอดขายอาจลดลงอีก 5%</p>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-white border-l-4 border-green-500 rounded shadow-sm flex flex-col justify-between">
+                                <div class="p-3 bg-emerald-50/50 border-2 border-emerald-100 rounded-2xl shadow-sm flex flex-col justify-between">
                                     <div>
-                                        <span class="font-bold text-green-800 block mb-1 text-sm">💡 Prescriptive</span>
-                                        <p class="text-gray-600 leading-relaxed text-sm">ควรจัดโปรโมชันเครื่องดื่มช่วงเช้าเพื่อดึงลูกค้ากลับมา</p>
+                                        <span class="font-bold text-emerald-800 block mb-1 text-sm">💡 Prescriptive</span>
+                                        <p class="text-slate-600 leading-relaxed text-base">ควรจัดโปรโมชันเครื่องดื่มช่วงเช้าเพื่อดึงลูกค้ากลับมา</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
                 <!-- Supervised vs Unsupervised -->
                 <div class="border-l-4 border-blue-600 pl-4 pt-2">
@@ -618,8 +621,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="text-center mt-4 mb-2">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs border border-slate-200/60 shadow-sm">
@@ -704,43 +705,69 @@
                         <!-- Card grid container -->
                         <div class="grid md:grid-cols-2 gap-4" id="vscase-content-box">
                             <!-- Left card (Regression) -->
-                            <div class="p-4 bg-blue-50/60 border border-blue-200 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="p-5 bg-blue-50/60 border border-blue-200 rounded-2xl space-y-4 flex flex-col justify-between shadow-sm">
                                 <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="font-bold text-blue-900 text-base">📈 Regression (ทำนายตัวเลข)</span>
-                                        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-100 text-blue-700 rounded-full">Continuous</span>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="font-bold text-blue-900 text-base flex items-center gap-2">
+                                            <i class="fas fa-chart-line text-blue-500"></i> Regression (ทำนายตัวเลข)
+                                        </span>
+                                        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-100 text-blue-700 rounded-full uppercase">Continuous</span>
                                     </div>
                                     <div class="text-sm space-y-2 text-slate-700">
-                                        <div><span class="text-slate-400 font-medium">โจทย์:</span> <span id="vscase-reg-title">ทำนายคะแนนสอบ</span></div>
+                                        <div><span class="text-slate-400 font-medium">โจทย์:</span> <span id="vscase-reg-title" class="font-bold">ทำนายคะแนนสอบ</span></div>
                                         <div><span class="text-slate-400 font-medium">คำถาม:</span> <span class="font-semibold text-slate-800" id="vscase-reg-question">นักศึกษาคนนี้จะได้คะแนนเท่าไร?</span></div>
                                     </div>
+                                    <div class="mt-3 p-3 bg-white/80 rounded-xl border border-blue-100">
+                                        <span class="text-[10px] text-slate-400 block mb-0.5 uppercase font-bold">ผลลัพธ์ทำนาย:</span>
+                                        <span class="text-2xl font-bold text-blue-700 font-mono" id="vscase-reg-result">78.5 คะแนน</span>
+                                    </div>
                                 </div>
-                                <div class="pt-2 border-t border-blue-100/50 mt-2">
-                                    <span class="text-xs text-slate-400 block mb-0.5">ผลลัพธ์ทำนาย:</span>
-                                    <span class="text-xl font-bold text-blue-700 font-mono" id="vscase-reg-result">78.5 คะแนน</span>
+                                <!-- ปุ่มไปยัง Linear Regression (Transition Style) -->
+                                <div class="pt-3 border-t border-blue-100 mt-2">
+                                    <p class="text-sm font-semibold text-blue-900 mb-2">
+                                        👉 พร้อมศึกษาตัวอย่างอัลกอริทึมอย่าง Linear Regression หรือยัง?
+                                    </p>
+                                    <button onclick="document.getElementById('tab-btn-regression').click(); window.scrollTo({top: 0, behavior: 'smooth'});"
+                                        class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                                        <span>ไปยัง Linear Regression</span>
+                                        <i class="fas fa-arrow-right text-sm"></i>
+                                    </button>
                                 </div>
                             </div>
 
                             <!-- Right card (Classification) -->
-                            <div class="p-4 bg-green-50/60 border border-green-200 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="p-5 bg-green-50/60 border border-green-200 rounded-2xl space-y-4 flex flex-col justify-between shadow-sm">
                                 <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="font-bold text-green-900 text-base">🎯 Classification (แยกกลุ่ม)</span>
-                                        <span class="px-2 py-0.5 text-[10px] font-bold bg-green-100 text-green-700 rounded-full">Discrete</span>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="font-bold text-green-900 text-base flex items-center gap-2">
+                                            <i class="fas fa-tags text-green-500"></i> Classification (แยกกลุ่ม)
+                                        </span>
+                                        <span class="px-2 py-0.5 text-sm font-bold bg-green-100 text-green-700 rounded-full uppercase">Discrete</span>
                                     </div>
                                     <div class="text-sm space-y-2 text-slate-700">
-                                        <div><span class="text-slate-400 font-medium">โจทย์:</span> <span id="vscase-cls-title">ทำนายผลสอบ</span></div>
+                                        <div><span class="text-slate-400 font-medium">โจทย์:</span> <span id="vscase-cls-title" class="font-bold">ทำนายผลสอบ</span></div>
                                         <div><span class="text-slate-400 font-medium">คำถาม:</span> <span class="font-semibold text-slate-800" id="vscase-cls-question">นักศึกษาคนนี้จะสอบผ่านหรือไม่?</span></div>
                                     </div>
+                                    <div class="mt-3 p-3 bg-white/80 rounded-xl border border-green-100">
+                                        <span class="text-sm text-slate-400 block mb-0.5 uppercase font-bold">ผลลัพธ์ทำนาย:</span>
+                                        <span class="text-2xl font-bold text-green-700" id="vscase-cls-result">ผ่าน</span>
+                                    </div>
                                 </div>
-                                <div class="pt-2 border-t border-green-100/50 mt-2">
-                                    <span class="text-xs text-slate-400 block mb-0.5">ผลลัพธ์ทำนาย:</span>
-                                    <span class="text-xl font-bold text-green-700" id="vscase-cls-result">ผ่าน</span>
+                                <!-- ปุ่มไปยัง Logistic Regression (Transition Style) -->
+                                <div class="pt-3 border-t border-green-100 mt-2">
+                                    <p class="text-sm font-semibold text-green-900 mb-2">
+                                        👉 พร้อมศึกษาตัวอย่างอัลกอริทึมอย่าง Logistic Regression หรือยัง?
+                                    </p>
+                                    <button onclick="document.getElementById('tab-btn-classification').click(); window.scrollTo({top: 0, behavior: 'smooth'});"
+                                        class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                                        <span>ไปยัง Logistic Regression</span>
+                                        <i class="fas fa-arrow-right text-sm"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="text-xs text-slate-500 bg-slate-100 p-2.5 rounded-lg border text-center">
+                        <div class="text-sm text-slate-500 bg-slate-100 p-2.5 rounded-lg border text-center">
                             💡 <strong>ข้อสังเกต:</strong> ข้อมูลชุดเดียวกันสามารถนำไปประยุกต์ทำนายได้ทั้ง 2 แบบ ขึ้นอยู่กับเป้าหมายการตอบคำถาม โดย <strong class="text-blue-800">Regression จะได้คำตอบเป็นตัวเลข (ต่อเนื่อง)</strong> ส่วน <strong class="text-green-800">Classification จะได้คำตอบเป็นกลุ่ม/หมวดหมู่</strong>
                         </div>
                     </div>
@@ -874,29 +901,29 @@
 
                 <!-- Concept Card -->
                 <div class="bg-blue-50/70 p-5 rounded-xl border border-blue-100 shadow-sm space-y-3 mb-6">
-                    <h3 class="font-bold text-base text-blue-900 flex items-center gap-2">
+                    <h3 class="font-bold text-lg text-blue-900 flex items-center gap-2">
                         <i class="fas fa-lightbulb"></i> แนวคิดหัวใจสำคัญ: Linear Regression คืออะไร?
                     </h3>
-                    <p class="text-gray-700 text-xs leading-relaxed">
+                    <p class="text-gray-700 text-base leading-relaxed">
                         คือโมเดลการพยากรณ์ข้อมูลที่เป็น <strong>ตัวเลขต่อเนื่องเชิงปริมาณ</strong> (เช่น ยอดขายรายได้
                         หรืออุณหภูมิ) โดยหาความสัมพันธ์ระหว่างปัจจัยอิสระ $x$ (ตัวแปรต้น) กับผลลัพธ์ $y$ (ตัวแปรตาม)
                         ออกมาเป็นสมการเส้นตรง:
                     </p>
                     <div
-                        class="bg-white p-2.5 rounded-lg border text-center font-mono text-lg text-blue-900 font-bold max-w-sm mx-auto shadow-sm">
+                        class="bg-white p-2.5 rounded-lg border text-center font-mono text-xl text-blue-900 font-bold max-w-sm mx-auto shadow-sm">
                         ŷ = β₀ + β₁x
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4 pt-1 text-xs text-gray-600">
+                    <div class="grid md:grid-cols-2 gap-4 pt-1 text-sm text-gray-600">
                         <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-blue-950 block mb-1">β₀ (Intercept / จุดตัดแกน Y)</strong>
+                            <strong class="text-blue-950 block mb-1 text-base">β₀ (Intercept / จุดตัดแกน Y)</strong>
                             ค่าเริ่มต้นทำนายเมื่อแกน X เป็น 0 (เช่น แม้ไม่ลงโฆษณาเลย ก็มียอดขายเริ่มต้นที่ β₀ บาท)
                         </div>
                         <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-blue-950 block mb-1">β₁ (Slope / ความชัน)</strong>
+                            <strong class="text-blue-950 block mb-1 text-base">β₁ (Slope / ความชัน)</strong>
                             อัตราการเติบโตเมื่อ X เพิ่มขึ้น 1 หน่วย (เช่น ลงทุนโฆษณาเพิ่ม 1 บาท ยอดขายจะขึ้นอีก β₁ บาท)
                         </div>
                     </div>
-                    <div class="text-[11px] text-blue-800 bg-blue-100/50 p-2.5 rounded-lg">
+                    <div class="text-base text-blue-800 bg-blue-100/50 p-2.5 rounded-lg">
                         🎯 <strong>ความคลาดเคลื่อนกำลังสอง (SSE):</strong>
                         ระยะห่างความเพี้ยนระหว่างจุดจริงกับเส้นทำนายจะถูกจับมา <strong>ยกกำลังสอง</strong> แล้วรวมกัน
                         โมเดลที่ดีที่สุดคือตัวแปรที่สามารถคำนวณปรับแต่งความชันเพื่อลดค่า SSE ให้ต่ำที่สุดเท่าที่จะทำได้!
@@ -907,13 +934,13 @@
                     <div class="space-y-4 bg-gray-50 p-5 rounded-xl border">
                         <h3 class="font-bold text-lg text-blue-950">คอนโทรลพารามิเตอร์</h3>
                         <div>
-                            <label class="block text-base font-semibold text-gray-700 mb-1">จุดตัดแกน Y (Intercept: β₀):
+                            <label class="block text-base font-bold text-slate-700 mb-1">จุดตัดแกน Y (Intercept: β₀):
                                 <span id="valBeta0" class="font-bold text-blue-600">20</span></label>
                             <input type="range" id="sliderBeta0" min="0" max="100" value="20"
                                 class="w-full accent-blue-600">
                         </div>
                         <div>
-                            <label class="block text-base font-semibold text-gray-700 mb-1">ความชันของเส้นตรง (Slope:
+                            <label class="block text-base font-bold text-slate-700 mb-1">ความชันของเส้นตรง (Slope:
                                 β₁): <span id="valBeta1" class="font-bold text-blue-600">0.5</span></label>
                             <input type="range" id="sliderBeta1" min="-2" max="2" step="0.1" value="0.5"
                                 class="w-full accent-blue-600">
@@ -922,12 +949,12 @@
                             <div class="equation text-center font-bold text-base mb-2">สมการทำนาย: ŷ = <span
                                     id="eqBeta0">20</span> + (<span id="eqBeta1">0.5</span>)x</div>
                             <div class="p-3 bg-red-50 text-red-900 rounded text-center border border-red-200">
-                                <span class="text-xs font-bold uppercase block text-red-500">Sum of Squared Errors (SSE)
+                                <span class="text-sm font-bold uppercase block text-red-500">Sum of Squared Errors (SSE)
                                     - ผลรวมความคลาดเคลื่อนยกกำลังสอง</span>
                                 <span id="valSSE" class="text-2xl font-mono font-bold">0.00</span>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-500 leading-relaxed"><strong>หลักการทำงาน:</strong>
+                        <p class="text-base text-gray-700 leading-relaxed"><strong>หลักการทำงาน:</strong>
                             เป้าหมายของโมเดลคือการปรับค่า β₀ และ β₁ เพื่อให้เส้นพยากรณ์ลากผ่านใกล้จุดข้อมูลจริงมากที่สุด
                             ซึ่งจะทำให้ค่าความคลาดเคลื่อนยกกำลังสอง (SSE) มีค่าต่ำที่สุดตามหลักการคณิตศาสตร์ Least
                             Squares Method</p>
@@ -935,7 +962,7 @@
                     <div class="lg:col-span-2 flex flex-col items-center">
                         <canvas id="regressionCanvas" width="540" height="380"
                             class="border bg-white rounded-xl shadow-inner w-full max-w-xl"></canvas>
-                        <span class="text-xs text-gray-400 mt-2 text-center">เส้นประสีเขียวแสดง "Residuals"
+                        <span class="text-sm text-gray-500 mt-2 text-center">เส้นประสีเขียวแสดง "Residuals"
                             (ระยะห่างความเพี้ยนข้อมูล) ระหว่างค่าจริง (จุดแดง) กับเส้นทำนาย (สีน้ำเงิน)</span>
                     </div>
                 </div>
@@ -954,7 +981,7 @@
                             <i class="fas fa-bullseye text-sm"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-lg text-emerald-900">แนวคิดหลัก: Logistic Regression คืออะไร?</h4>
+                            <h4 class="font-bold text-xl text-emerald-900">แนวคิดหลัก: Logistic Regression คืออะไร?</h4>
                             <p class="text-xs text-emerald-600 font-medium uppercase tracking-wider">Classification Fundamentals</p>
                         </div>
                     </div>
@@ -963,39 +990,39 @@
                         Logistic Regression เป็นอัลกอริทึมที่ใช้สำหรับ <strong>Classification (การแยกประเภท)</strong> โดยจะคำนวณหา <strong>ความน่าจะเป็น (Probability)</strong> ที่ข้อมูลจะอยู่ในกลุ่มนั้น ๆ ก่อนตัดสินใจเลือกผลลัพธ์สุดท้าย
                     </p>
 
-                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="grid md:grid-cols-3 gap-4 text-base">
                         <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm transition-transform hover:scale-[1.02]">
-                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-base">
+                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-lg">
                                 <i class="fas fa-tags text-emerald-500"></i> ใช้กับ Classification
                             </strong>
-                            <span class="text-slate-600 text-sm leading-relaxed">แม้ชื่อจะมีคำว่า "Regression" แต่ผลลัพธ์สุดท้ายเป็น <strong>"กลุ่ม"</strong> (เช่น ผ่าน/ไม่ผ่าน) ไม่ใช่ค่าตัวเลขต่อเนื่อง</span>
+                            <span class="text-slate-600 text-base leading-relaxed">แม้ชื่อจะมีคำว่า "Regression" แต่ผลลัพธ์สุดท้ายเป็น <strong>"กลุ่ม"</strong> (เช่น ผ่าน/ไม่ผ่าน) ไม่ใช่ค่าตัวเลขต่อเนื่อง</span>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm transition-transform hover:scale-[1.02]">
-                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-base">
+                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-lg">
                                 <i class="fas fa-wave-square text-emerald-500"></i> Sigmoid (0 ถึง 1)
                             </strong>
-                            <span class="text-slate-600 text-sm leading-relaxed">โมเดลจะแปลงค่าสมการให้เป็น <strong>ความน่าจะเป็น</strong> ซึ่งต้องอยู่ระหว่าง 0% ถึง 100% เสมอ จึงต้องใช้ S-Curve (Sigmoid)</span>
+                            <span class="text-slate-600 text-base leading-relaxed">โมเดลจะแปลงค่าสมการให้เป็น <strong>ความน่าจะเป็น</strong> ซึ่งต้องอยู่ระหว่าง 0% ถึง 100% เสมอ จึงต้องใช้ S-Curve (Sigmoid)</span>
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm transition-transform hover:scale-[1.02]">
-                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-base">
+                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-lg">
                                 <i class="fas fa-border-style text-emerald-500"></i> Decision Boundary
                             </strong>
-                            <span class="text-slate-600 text-sm leading-relaxed">เกณฑ์ตัดสินใจ (Threshold) เช่น ถ้าโอกาสเกิน 0.5 ให้จัดเป็นคลาส 1 ทันที เพื่อระบุคลาสผลลัพธ์สุดท้าย</span>
+                            <span class="text-slate-600 text-base leading-relaxed">เกณฑ์ตัดสินใจ (Threshold) เช่น ถ้าโอกาสเกิน 0.5 ให้จัดเป็นคลาส 1 ทันที เพื่อระบุคลาสผลลัพธ์สุดท้าย</span>
                         </div>
                     </div>
 
                     <!-- เพิ่มส่วนคลายข้อสงสัยเรื่องชื่อ -->
                     <div class="bg-amber-100/50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm">
-                        <h5 class="font-bold text-amber-900 flex items-center gap-2 mb-1">
+                        <h5 class="font-bold text-amber-900 flex items-center gap-2 mb-1 text-base">
                             <i class="fas fa-question-circle"></i> ทำไมชื่อ "Regression" แต่ใช้แยกกลุ่ม (Classification)?
                         </h5>
-                        <p class="text-slate-700 text-sm leading-relaxed font-medium">
+                        <p class="text-slate-700 text-base leading-relaxed font-medium">
                             เพราะเบื้องหลังคณิตศาสตร์ของมันคือการหา "ตัวเลขความน่าจะเป็น" (เลขต่อเนื่องเหมือน Regression) <br class="hidden md:block"> 
                             แต่เป้าหมายสุดท้ายคือการนำตัวเลขนั้นมา <strong>"ปัดเศษเลือกกลุ่ม"</strong> มันจึงเป็นโมเดลที่ใช้สำหรับ Classification นั่นเองครับ
                         </p>
                     </div>
 
-                    <div class="bg-emerald-100/40 p-4 rounded-xl border border-emerald-200/50 text-sm italic text-emerald-900">
+                    <div class="bg-emerald-100/40 p-4 rounded-xl border border-emerald-200/50 text-base italic text-emerald-900">
                         💡 <strong>ลองนึกภาพ:</strong> เหมือนเครื่องวัดอุณหภูมิที่วัดได้ <strong>38.5 องศา</strong> (ตัวเลข = Regression) แต่เราใช้ตัวเลขนี้เพื่อตัดสินใจว่าคนนี้ <strong>"ป่วย" หรือ "ปกติ"</strong> (เลือกกลุ่ม = Classification)
                     </div>
                 </div>
@@ -1005,16 +1032,16 @@
                         <h3 class="font-bold text-lg text-emerald-950 flex items-center gap-2 border-b pb-2">
                             <i class="fas fa-sliders-h text-emerald-600"></i> กลไกการคำนวณแยกกลุ่ม
                         </h3>
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 text-sm space-y-3 text-slate-700 leading-relaxed shadow-inner">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 text-base space-y-3 text-slate-700 leading-relaxed shadow-inner">
                             <div class="space-y-1">
                                 <p class="font-bold text-slate-800">1. คำนวณสมการเชิงเส้นตรง (z)</p>
-                                <div class="bg-slate-50 p-2 rounded text-center font-mono text-blue-700 font-bold border border-slate-100 text-base">z = β₀ + β₁X</div>
+                                <div class="bg-slate-50 p-2 rounded text-center font-mono text-blue-700 font-bold border border-slate-100 text-lg">z = β₀ + β₁X</div>
                             </div>
                             <div class="space-y-1">
                                 <p class="font-bold text-slate-800">2. ส่งผ่าน Sigmoid Function</p>
-                                <div class="bg-slate-50 p-2 rounded text-center font-mono text-emerald-700 font-bold border border-slate-100 text-base">P = 1 / (1 + e<sup>-z</sup>)</div>
+                                <div class="bg-slate-50 p-2 rounded text-center font-mono text-emerald-700 font-bold border border-slate-100 text-lg">P = 1 / (1 + e<sup>-z</sup>)</div>
                             </div>
-                            <p class="pt-1 text-slate-500 text-xs italic">ผลลัพธ์ <strong>P</strong> คือความสูงของเส้นโค้ง S-Curve บนกราฟ (0 ถึง 1)</p>
+                            <p class="pt-1 text-slate-500 text-sm italic">ผลลัพธ์ <strong>P</strong> คือความสูงของเส้นโค้ง S-Curve บนกราฟ (0 ถึง 1)</p>
                         </div>
                         <div class="pt-2">
                             <label class="block text-base font-bold text-slate-700 mb-2">Decision Boundary (เกณฑ์ตัดสินใจ): <span id="valLogThresh"
@@ -1028,11 +1055,11 @@
                                 class="w-full accent-emerald-600 cursor-pointer">
                         </div>
                         <div
-                            class="p-4 bg-amber-50 border border-amber-200 text-sm rounded-xl text-amber-900 leading-relaxed shadow-sm">
+                            class="p-4 bg-amber-50 border border-amber-200 text-base rounded-xl text-amber-900 leading-relaxed shadow-sm">
                             <strong class="block mb-1 text-amber-800"><i class="fas fa-exclamation-circle"></i> กติกาการแบ่งกลุ่ม:</strong> 
                             จุดที่มีระดับความน่าจะเป็นลอยสูงพ้นเกณฑ์เส้นประสีแดง จะจัดเป็น <span class="text-orange-600 font-bold">Class 1 (โรคอ้วน)</span> 
                             ถ้าต่ำกว่าจะเป็น <span class="text-blue-600 font-bold">Class 0 (ปกติ)</span> 
-                            <br><span class="text-xs text-amber-700 mt-2 block italic">* วงแหวนสีแดงรอบจุด = ข้อมูลที่ทำนายผิดพลาด (Misclassification)</span>
+                            <br><span class="text-sm text-amber-700 mt-2 block italic">* วงแหวนสีแดงรอบจุด = ข้อมูลที่ทำนายผิดพลาด (Misclassification)</span>
                         </div>
                     </div>
                     <div class="lg:col-span-2 flex flex-col items-center">
@@ -1147,43 +1174,43 @@
 
                 <!-- Concept Card -->
                 <div class="bg-orange-50/70 p-5 rounded-xl border border-orange-100 shadow-sm space-y-3 mb-6">
-                    <h3 class="font-bold text-base text-orange-950 flex items-center gap-2">
+                    <h3 class="font-bold text-lg text-orange-950 flex items-center gap-2">
                         <i class="fas fa-th-large"></i> แนวคิดหัวใจสำคัญ: การประเมินผลกลุ่ม (Confusion Matrix)
                     </h3>
-                    <p class="text-gray-700 text-xs leading-relaxed">
+                    <p class="text-gray-700 text-base leading-relaxed">
                         ในการจำแนกกลุ่ม ความแม่นยำรวม (Accuracy) อาจหลอกตาเราได้ง่าย (เช่น คนป่วยมี 1 ใน 100 คน
                         ถ้าทายว่าปกติทุกคนก็ได้ความแม่นยำรวมสูงถึง 99% ทันทีแต่ไร้ประโยชน์สูงสุด) ตาราง Confusion Matrix
                         จึงช่วยจำแนกดูจุดบกพร่องแยกประเภท:
                     </p>
-                    <div class="grid md:grid-cols-3 gap-4 pt-1 text-xs text-gray-600">
-                        <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-orange-900 block mb-1">🎯 Accuracy (ความแม่นยำรวม)</strong>
+                    <div class="grid md:grid-cols-3 gap-4 pt-1 text-sm text-gray-600">
+                        <div class="bg-white/60 p-4 rounded border shadow-sm">
+                            <strong class="text-orange-900 block mb-1 text-base">🎯 Accuracy (ความแม่นยำรวม)</strong>
                             สัดส่วนที่ทำนายประเภทได้ถูกต้องทั้งหมด $\rightarrow$ (TP + TN) / Total
                         </div>
-                        <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-blue-900 block mb-1">🔍 Precision (ความแม่นยำคาดเดาบวก)</strong>
+                        <div class="bg-white/60 p-4 rounded border shadow-sm">
+                            <strong class="text-blue-900 block mb-1 text-base">🔍 Precision (ความแม่นยำคาดเดาบวก)</strong>
                             สัดส่วนการทายว่าบวกแล้วถูกจริง เพื่อจำกัดความตื่นตูมเตือนผิดพลาด (FP) $\rightarrow$ TP / (TP
                             + FP)
                         </div>
-                        <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-yellow-900 block mb-1">🛡️ Recall (ความสามารถตรวจเจอ)</strong>
+                        <div class="bg-white/60 p-4 rounded border shadow-sm">
+                            <strong class="text-yellow-900 block mb-1 text-base">🛡️ Recall (ความสามารถตรวจเจอ)</strong>
                             สัดส่วนคนเป็นโรคจริงที่ถูกค้นหาเจอ เพื่อจำกัดไม่ให้หลุดรอดขาดตรวจ (FN) $\rightarrow$ TP /
                             (TP + FN)
                         </div>
                     </div>
-                    <div class="text-[11px] text-orange-900 bg-orange-100/50 p-2.5 rounded-lg">
+                    <div class="text-base text-orange-900 bg-orange-100/50 p-2.5 rounded-lg">
                         ⚖️ <strong>F1-Score:</strong> ค่าเฉลี่ยกลางแบบฮาร์มอนิก (Harmonic Mean)
                         เพื่อประเมินความสอดคล้องโดยไม่ปล่อยให้ค่าใดค่าหนึ่งของ Precision หรือ Recall มีค่าต่ำจนเกินไป
                     </div>
                 </div>
 
-                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 text-sm text-gray-700 space-y-1">
-                    <span class="font-bold text-blue-900 text-base block mb-1"><i
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 text-base text-gray-700 space-y-1">
+                    <span class="font-bold text-blue-900 text-lg block mb-1"><i
                             class="fas fa-file-medical-alt mr-2"></i>สถานการณ์คัดกรองโรคระบาด (กำหนดกลุ่มประชากรรวมคงที่
                         200 รายชิ้น)</span>
-                    <p class="text-xs font-semibold text-gray-800">• กลุ่มผู้ติดเชื้อจริง (Actual Positive) =
+                    <p class="text-sm font-semibold text-gray-800">• กลุ่มผู้ติดเชื้อจริง (Actual Positive) =
                         บังคับคงที่ 50 ราย (คำนวณแชร์สัดส่วนระหว่าง ทายถูกตรงเป๊ะ กับ ทำหลุดรอดไป)</p>
-                    <p class="text-xs font-semibold text-gray-800">• กลุ่มคนปกติไม่ติดเชื้อจริง (Actual Negative) =
+                    <p class="text-sm font-semibold text-gray-800">• กลุ่มคนปกติไม่ติดเชื้อจริง (Actual Negative) =
                         บังคับคงที่ 150 ราย (คำนวณแชร์สัดส่วนระหว่าง ทายตื่นตูมฟรี กับ ทายถูกว่าปกติ)</p>
                 </div>
 
@@ -1194,65 +1221,61 @@
                             <thead>
                                 <tr>
                                     <th class="p-3 bg-gray-100 border border-gray-300" colspan="2" rowspan="2"></th>
-                                    <th class="p-3 bg-blue-100 border border-gray-300 text-xs font-bold text-blue-900"
+                                    <th class="p-3 bg-blue-100 border border-gray-300 text-sm font-bold text-blue-900"
                                         colspan="2">Predicted Class (ผลลัพธ์คาดเดาจากโมเดล AI)</th>
                                 </tr>
                                 <tr>
-                                    <th class="p-2 bg-blue-50 border border-gray-300 text-xs text-blue-800 font-bold">
+                                    <th class="p-2 bg-blue-50 border border-gray-300 text-sm text-blue-800 font-bold">
                                         ทายว่าติดเชื้อ (Positive)</th>
-                                    <th class="p-2 bg-blue-50 border border-gray-300 text-xs text-blue-800 font-bold">
+                                    <th class="p-2 bg-blue-50 border border-gray-300 text-sm text-blue-800 font-bold">
                                         ทายว่าไม่ติดเชื้อ (Negative)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th class="p-3 bg-orange-100 border border-gray-300 text-xs text-orange-900 font-bold"
+                                    <th class="p-3 bg-orange-100 border border-gray-300 text-sm text-orange-900 font-bold"
                                         rowspan="2">Actual Class<br>(ข้อมูลจริงหน้างาน)</th>
                                     <th
-                                        class="p-2 bg-orange-50 border border-gray-300 italic text-xs text-orange-800 font-bold">
-                                        ติดเชื้อจริง<br><span class="text-blue-700 text-[10px]">(คงที่ 50 ราย)</span>
+                                        class="p-2 bg-orange-50 border border-gray-300 italic text-sm text-orange-800 font-bold">
+                                        ติดเชื้อจริง<br><span class="text-blue-700 text-xs">(คงที่ 50 ราย)</span>
                                     </th>
                                     <td class="p-4 border border-gray-300 bg-green-50">
-                                        <div class="font-bold text-green-800 text-xs">True Positive (TP)</div>
+                                        <div class="font-bold text-green-800 text-sm">True Positive (TP)</div>
                                         <div id="lblSlideTP" class="text-2xl font-mono font-bold text-gray-800 my-1">45
                                         </div>
                                         <input type="range" id="slideTP" min="0" max="50" value="45"
                                             class="w-full accent-green-600">
-                                        <span class="text-[11px] text-green-600 block mt-1 font-semibold">"ติดจริง & AI
-                                            ทายถูกว่าติด"</span>
+                                        <span class="text-sm text-green-600 block mt-1 font-semibold">"ติดจริง & AI ทายถูกว่าติด"</span>
                                     </td>
                                     <td class="p-4 border border-gray-300 bg-red-50">
-                                        <div class="font-bold text-red-800 text-xs">False Negative (FN)</div>
+                                        <div class="font-bold text-red-800 text-sm">False Negative (FN)</div>
                                         <div id="lblSlideFN" class="text-2xl font-mono font-bold text-gray-800 my-1">5
                                         </div>
                                         <input type="range" id="slideFN" min="0" max="50" value="5"
                                             class="w-full accent-red-600">
-                                        <span class="text-[11px] text-rose-600 font-bold block mt-1">Type II Error
-                                            (ตรวจหาไม่เจอ)</span>
+                                        <span class="text-sm text-rose-600 font-bold block mt-1">Type II Error (ตรวจหาไม่เจอ)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th
-                                        class="p-2 bg-orange-50 border border-gray-300 italic text-xs text-orange-800 font-bold">
-                                        ไม่ติดเชื้อจริง<br><span class="text-blue-700 text-[10px]">(คงที่ 150
+                                        class="p-2 bg-orange-50 border border-gray-300 italic text-sm text-orange-800 font-bold">
+                                        ไม่ติดเชื้อจริง<br><span class="text-blue-700 text-xs">(คงที่ 150
                                             ราย)</span></th>
                                     <td class="p-4 border border-gray-300 bg-red-50">
-                                        <div class="font-bold text-red-800 text-xs">False Positive (FP)</div>
+                                        <div class="font-bold text-red-800 text-sm">False Positive (FP)</div>
                                         <div id="lblSlideFP" class="text-2xl font-mono font-bold text-gray-800 my-1">8
                                         </div>
                                         <input type="range" id="slideFP" min="0" max="150" value="8"
                                             class="w-full accent-red-600">
-                                        <span class="text-[11px] text-rose-600 font-bold block mt-1">Type I Error
-                                            (แจ้งเตือนพลาด)</span>
+                                        <span class="text-sm text-rose-600 font-bold block mt-1">Type I Error (แจ้งเตือนพลาด)</span>
                                     </td>
                                     <td class="p-4 border border-gray-300 bg-green-50">
-                                        <div class="font-bold text-green-800 text-xs">True Negative (TN)</div>
+                                        <div class="font-bold text-green-800 text-sm">True Negative (TN)</div>
                                         <div id="lblSlideTN" class="text-2xl font-mono font-bold text-gray-800 my-1">142
                                         </div>
                                         <input type="range" id="slideTN" min="0" max="150" value="142"
                                             class="w-full accent-green-600">
-                                        <span class="text-[11px] text-green-600 block mt-1 font-semibold">"ปกติจริง & AI
-                                            ทายถูกว่าปกติ"</span>
+                                        <span class="text-sm text-green-600 block mt-1 font-semibold">"ปกติจริง & AI ทายถูกว่าปกติ"</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1261,16 +1284,16 @@
 
                     <div
                         class="space-y-4 bg-gray-900 text-white p-5 rounded-xl flex flex-col justify-between shadow-lg">
-                        <h3 class="font-bold text-base text-orange-400 border-b border-gray-700 pb-2"><i
+                        <h3 class="font-bold text-lg text-orange-400 border-b border-gray-700 pb-2"><i
                                 class="fas fa-calculator mr-2"></i>Live Metrics Visualization</h3>
 
                         <div class="space-y-4 text-base">
                             <div
-                                class="bg-gray-800 p-2.5 rounded border border-gray-700 flex justify-between items-center">
+                                class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center">
                                 <div class="space-y-1">
-                                    <span class="font-bold block text-xs text-green-400">Accuracy
+                                    <span class="font-bold block text-sm text-green-400">Accuracy
                                         (ความแม่นยำรวมของทั้งระบบ)</span>
-                                    <div class="text-[11px] font-mono text-gray-300">
+                                    <div class="text-sm font-mono text-gray-300">
                                         (TP + TN) / Total
                                         <br><span id="txtFormulaAcc" class="text-green-300/80"></span>
                                     </div>
@@ -1280,11 +1303,11 @@
                             </div>
 
                             <div
-                                class="bg-gray-800 p-2.5 rounded border border-gray-700 flex justify-between items-center">
+                                class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center">
                                 <div class="space-y-1">
-                                    <span class="font-bold block text-xs text-blue-400">Precision
+                                    <span class="font-bold block text-sm text-blue-400">Precision
                                         (ความแม่นยำในการทำนายบวก)</span>
-                                    <div class="text-[11px] font-mono text-gray-300">
+                                    <div class="text-sm font-mono text-gray-300">
                                         TP / (TP + FP)
                                         <br><span id="txtFormulaPre" class="text-blue-300/80"></span>
                                     </div>
@@ -1294,11 +1317,11 @@
                             </div>
 
                             <div
-                                class="bg-gray-800 p-2.5 rounded border border-gray-700 flex justify-between items-center">
+                                class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center">
                                 <div class="space-y-1">
-                                    <span class="font-bold block text-xs text-yellow-400">Recall
+                                    <span class="font-bold block text-sm text-yellow-400">Recall
                                         (ความสามารถในการตรวจจับเชื้อ)</span>
-                                    <div class="text-[11px] font-mono text-gray-300">
+                                    <div class="text-sm font-mono text-gray-300">
                                         TP / (TP + FN)
                                         <br><span id="txtFormulaRec" class="text-yellow-300/80"></span>
                                     </div>
@@ -1308,11 +1331,11 @@
                             </div>
 
                             <div
-                                class="bg-gray-800 p-2.5 rounded border flex justify-between items-center border-purple-500">
+                                class="bg-gray-800 p-3 rounded-xl border flex justify-between items-center border-purple-500">
                                 <div class="space-y-1">
-                                    <span class="font-bold block text-xs text-purple-400">F1-Score
+                                    <span class="font-bold block text-sm text-purple-400">F1-Score
                                         (ค่าเฉลี่ยฮาร์มอนิกของ Precision & Recall)</span>
-                                    <div class="text-[11px] font-mono text-gray-300">
+                                    <div class="text-sm font-mono text-gray-300">
                                         2 × (Precision × Recall) / (Precision + Recall)
                                         <br><span id="txtFormulaF1" class="text-purple-300/80"></span>
                                     </div>
@@ -1335,11 +1358,11 @@
                 <!-- PCA Card -->
                 <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border space-y-4">
                     <h3 class="text-xl font-bold text-gray-800">🔬 PCA — การลดมิติข้อมูล</h3>
-                    <p class="text-gray-600 text-base">PCA ช่วย "บีบ" ข้อมูลหลาย dimension ให้เหลือน้อยมิติ
+                    <p class="text-gray-600 text-base leading-relaxed">PCA ช่วย "บีบ" ข้อมูลหลาย dimension ให้เหลือน้อยมิติ
                         แต่ยังรักษารูปแบบข้อมูลไว้</p>
 
                     <div
-                        class="bg-blue-50/70 p-5 rounded-xl border border-blue-100 shadow-sm text-sm text-gray-700 leading-relaxed">
+                        class="bg-blue-50/70 p-5 rounded-xl border border-blue-100 shadow-sm text-base text-gray-700 leading-relaxed">
                         📌 <strong>Principal Component Analysis (PCA)</strong> เปลี่ยนแกนของข้อมูลให้ PC1 เก็บ
                         "ความแปรปรวน" ไว้มากที่สุด — เหมือนหาทิศทางที่ข้อมูล "กระจาย" มากที่สุด
                     </div>
@@ -1351,18 +1374,18 @@
 
                     <div class="pca-controls flex flex-wrap gap-3 items-center">
                         <button
-                            class="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition font-semibold shadow-sm"
+                            class="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition font-semibold shadow-sm text-sm"
                             onclick="animatePCA()">▶️ แสดง PCA</button>
                         <button
-                            class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-5 py-2.5 rounded-lg transition font-semibold"
+                            class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-5 py-2.5 rounded-lg transition font-semibold text-sm"
                             onclick="resetPCA()">🔄 รีเซ็ต</button>
                         <span id="pca-info" class="text-sm text-gray-500 font-medium"></span>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-4 mt-6 pt-4 border-t">
                         <div class="bg-green-50 border border-green-200 rounded-xl p-5">
-                            <h4 class="font-bold text-green-800 mb-2">✅ ใช้ PCA เมื่อ...</h4>
-                            <ul class="text-sm text-green-950 space-y-1.5 list-disc list-inside">
+                            <h4 class="font-bold text-green-800 mb-2 text-lg">✅ ใช้ PCA เมื่อ...</h4>
+                            <ul class="text-base text-green-950 space-y-1.5 list-disc list-inside">
                                 <li>มีตัวแปรเยอะ (10+ features)</li>
                                 <li>ต้องการ visualize ใน 2D/3D</li>
                                 <li>ตัวแปรมี multicollinearity</li>
@@ -1370,8 +1393,8 @@
                             </ul>
                         </div>
                         <div class="bg-amber-50 border border-amber-200 rounded-xl p-5">
-                            <h4 class="font-bold text-amber-800 mb-2">⚠️ ข้อควรระวัง</h4>
-                            <ul class="text-sm text-amber-950 space-y-1.5 list-disc list-inside">
+                            <h4 class="font-bold text-amber-800 mb-2 text-lg">⚠️ ข้อควรระวัง</h4>
+                            <ul class="text-base text-amber-950 space-y-1.5 list-disc list-inside">
                                 <li>ต้อง standardize ข้อมูลก่อน</li>
                                 <li>PC ไม่มีความหมาย "ตรงๆ"</li>
                                 <li>สูญเสียข้อมูลบางส่วนเสมอ</li>
@@ -1400,37 +1423,37 @@
                                 <i class="fas fa-book-open text-sm"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg text-indigo-900">เตรียมความพร้อมก่อนเริ่มเรียนรู้ K-Means Clustering</h4>
+                                <h4 class="font-bold text-xl text-indigo-900">เตรียมความพร้อมก่อนเริ่มเรียนรู้ K-Means Clustering</h4>
                                 <p class="text-xs text-indigo-600 font-medium uppercase tracking-wider">Fundamentals & Workflow</p>
                             </div>
                         </div>
                         
-                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div class="grid md:grid-cols-3 gap-4 text-base">
                             <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm transition-transform hover:scale-[1.02]">
-                                <strong class="text-indigo-800 block mb-1.5 flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Cluster (กลุ่มข้อมูล)
+                                <strong class="text-indigo-800 block mb-1.5 flex items-center gap-2 font-bold text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Cluster (กลุ่มข้อมูล)
                                 </strong>
-                                <span class="text-slate-600 text-sm leading-relaxed">กลุ่มของข้อมูลที่มีลักษณะคล้ายคลึงกันและอยู่ในบริเวณใกล้เคียงกัน</span>
+                                <span class="text-slate-600 text-base leading-relaxed">กลุ่มของข้อมูลที่มีลักษณะคล้ายคลึงกันและอยู่ในบริเวณใกล้เคียงกัน</span>
                             </div>
                             <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm transition-transform hover:scale-[1.02]">
-                                <strong class="text-indigo-800 block mb-1.5 flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span> k (จำนวนกลุ่ม)
+                                <strong class="text-indigo-800 block mb-1.5 flex items-center gap-2 font-bold text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> k (จำนวนกลุ่ม)
                                 </strong>
-                                <span class="text-slate-600 text-sm leading-relaxed">จำนวนกลุ่มที่เราต้องการให้โมเดลแบ่ง (เช่น k = 3 คือแบ่งเป็น 3 กลุ่ม)</span>
+                                <span class="text-slate-600 text-base leading-relaxed">จำนวนกลุ่มที่เราต้องการให้โมเดลแบ่ง (เช่น k = 3 คือแบ่งเป็น 3 กลุ่ม)</span>
                             </div>
                             <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm transition-transform hover:scale-[1.02]">
-                                <strong class="text-indigo-800 block mb-1.5 flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Centroid (จุดศูนย์กลาง)
+                                <strong class="text-indigo-800 block mb-1.5 flex items-center gap-2 font-bold text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Centroid (จุดศูนย์กลาง)
                                 </strong>
-                                <span class="text-slate-600 text-sm leading-relaxed">จุดศูนย์กลางของแต่ละกลุ่ม ซึ่งถูกเลือกขึ้นมาเพื่อเป็นตัวแทนของแต่ละ Cluster</span>
+                                <span class="text-slate-600 text-base leading-relaxed">จุดศูนย์กลางของแต่ละกลุ่ม ซึ่งถูกเลือกขึ้นมาเพื่อเป็นตัวแทนของแต่ละ Cluster</span>
                             </div>
                         </div>
 
-                        <div class="bg-indigo-100/30 p-4 rounded-xl border border-indigo-200/50 text-sm space-y-3">
-                            <strong class="text-indigo-900 block flex items-center gap-2">
+                        <div class="bg-indigo-100/30 p-4 rounded-xl border border-indigo-200/50 text-base space-y-3">
+                            <strong class="text-indigo-900 block flex items-center gap-2 font-bold text-lg">
                                 <i class="fas fa-project-diagram text-indigo-500"></i> 📌 K-Means ทำงานอย่างไร? (อธิบายเข้าใจง่าย)
                             </strong>
-                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2 text-indigo-800 font-medium">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2 text-indigo-800 font-bold">
                                 <span class="bg-indigo-600 text-white px-2.5 py-0.5 rounded-lg shadow-sm">1</span> กำหนดจำนวนกลุ่ม (k)
                                 <i class="fas fa-chevron-right text-xs opacity-40"></i>
                                 <span class="bg-indigo-600 text-white px-2.5 py-0.5 rounded-lg shadow-sm">2</span> สุ่มตำแหน่ง Centroid
@@ -1455,7 +1478,7 @@
                                 <!-- Legend Moved Outside Canvas -->
                                 <div class="bg-white border border-slate-200 p-3 rounded-xl flex flex-wrap gap-3 justify-center shadow-sm" id="km-legend"></div>
                                 
-                                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl text-xs text-indigo-800 leading-relaxed">
+                                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl text-sm text-indigo-800 leading-relaxed">
                                     <i class="fas fa-info-circle mr-1"></i> <strong>คำแนะนำ:</strong> สังเกตการเปลี่ยนแปลงบนกราฟเมื่อกดขั้นตอนถัดไปในแต่ละ Step ฝั่งขวามือ
                                 </div>
                             </div>
@@ -1464,23 +1487,23 @@
                         <div class="lg:col-span-2 flex flex-col">
                             <!-- K-Means Wizard Controller Box -->
                             <div class="km-wizard-box h-full flex flex-col shadow-lg border-2">
-                                <h4 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2 flex items-center gap-2">
+                                <h4 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2 flex items-center gap-2">
                                     <i class="fas fa-list-ol text-indigo-500"></i> ขั้นตอน K-Means
                                 </h4>
                                 <div class="km-steps-container flex-1">
                                     <div class="km-w-step active cursor-pointer" id="km-step-1" onclick="jumpKMeans(0)">
                                         <div class="km-w-circle">1</div>
                                         <div class="km-w-content">
-                                            <div class="km-w-label">เลือก k และเตรียมข้อมูล</div>
+                                            <div class="km-w-label text-lg">เลือก k และเตรียมข้อมูล</div>
                                             <div class="km-w-desc">
                                                 <div class="mt-2 flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl shadow-sm">
-                                                    <span class="text-xs font-bold text-slate-500 uppercase">จำนวนกลุ่ม (k):</span>
+                                                    <span class="text-sm font-bold text-slate-500 uppercase">จำนวนกลุ่ม (k):</span>
                                                     <div class="flex items-center gap-1">
                                                         <button id="km-k-minus" onclick="changeK(-1); event.stopPropagation();" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors flex items-center justify-center border border-slate-200">
                                                             <i class="fas fa-minus text-xs"></i>
                                                         </button>
                                                         <input type="number" id="km-k" min="2" max="5" value="3" readonly
-                                                            class="km-number-input !w-12 !p-1 text-center border-none !bg-transparent">
+                                                            class="km-number-input !w-12 !p-1 text-center border-none !bg-transparent text-lg">
                                                         <button id="km-k-plus" onclick="changeK(1); event.stopPropagation();" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors flex items-center justify-center border border-slate-200">
                                                             <i class="fas fa-plus text-xs"></i>
                                                         </button>
@@ -1492,22 +1515,22 @@
                                     <div class="km-w-step cursor-pointer" id="km-step-2" onclick="jumpKMeans(1)">
                                         <div class="km-w-circle">2</div>
                                         <div class="km-w-content">
-                                            <div class="km-w-label">สุ่มจุดศูนย์กลาง</div>
-                                            <div class="km-w-desc">สุ่มวาง Centroids ลงบนกลุ่มข้อมูล</div>
+                                            <div class="km-w-label text-lg">สุ่มจุดศูนย์กลาง</div>
+                                            <div class="km-w-desc text-base">สุ่มวาง Centroids ลงบนกลุ่มข้อมูล</div>
                                         </div>
                                     </div>
                                     <div class="km-w-step cursor-pointer" id="km-step-3" onclick="jumpKMeans(2)">
                                         <div class="km-w-circle">3</div>
                                         <div class="km-w-content">
-                                            <div class="km-w-label">จัดกลุ่ม (Assign)</div>
-                                            <div class="km-w-desc">ดึงจุดข้อมูลเข้าหา Centroid ที่ใกล้ที่สุด</div>
+                                            <div class="km-w-label text-lg">จัดกลุ่ม (Assign)</div>
+                                            <div class="km-w-desc text-base">ดึงจุดข้อมูลเข้าหา Centroid ที่ใกล้ที่สุด</div>
                                         </div>
                                     </div>
                                     <div class="km-w-step cursor-pointer" id="km-step-4" onclick="jumpKMeans(3)">
                                         <div class="km-w-circle">4</div>
                                         <div class="km-w-content">
-                                            <div class="km-w-label">ขยับจุด (Update)</div>
-                                            <div class="km-w-desc">คำนวณตำแหน่งใหม่จากค่าเฉลี่ยกลุ่ม</div>
+                                            <div class="km-w-label text-lg">ขยับจุด (Update)</div>
+                                            <div class="km-w-desc text-base">คำนวณตำแหน่งใหม่จากค่าเฉลี่ยกลุ่ม</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1529,10 +1552,10 @@
 
                     <div class="mt-6 pt-4 border-t">
                         <div class="bg-green-50 border-2 border-green-100 rounded-2xl p-6 shadow-sm">
-                            <h4 class="font-bold text-green-800 mb-3 flex items-center gap-2 text-lg">
+                            <h4 class="font-bold text-green-800 mb-3 flex items-center gap-2 text-xl">
                                 <i class="fas fa-chart-line"></i> 📊 Elbow Method: การเลือกจำนวนกลุ่ม (k) ที่เหมาะสม
                             </h4>
-                            <p class="text-sm text-green-950 leading-relaxed">
+                            <p class="text-base text-green-950 leading-relaxed">
                                 ในโลกความจริง เรามักไม่รู้ว่าควรแบ่งข้อมูลเป็นกี่กลุ่มดี <strong>Elbow Method</strong> คือเทคนิคการหาค่า k ที่เหมาะสมโดยการทดลองใช้ค่า k หลาย ๆ ค่า แล้ววาดกราฟความสัมพันธ์เพื่อหาจุดหักมุมที่คล้ายกับ <strong>"ข้อศอก" (Elbow Point)</strong> โดยวิเคราะห์จากค่า WCSS (ผลรวมระยะห่างกำลังสองภายในกลุ่ม) ยิ่งค่า WCSS น้อย แสดงว่าข้อมูลในแต่ละกลุ่มยิ่งเกาะกลุ่มกันได้หนาแน่นและมีประสิทธิภาพ
                             </p>
                         </div>
@@ -1589,28 +1612,28 @@
             const box = document.getElementById('scenario-content-box');
             if (box && data) {
                 box.innerHTML = `
-                    <div class="p-3 bg-white border-l-4 border-gray-400 rounded shadow-sm flex flex-col justify-between">
+                    <div class="p-3 bg-slate-50/50 border-2 border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between">
                         <div>
-                            <span class="font-bold text-gray-700 block mb-1 text-xs">📊 Descriptive</span>
-                            <p class="text-gray-600 leading-relaxed text-sm">${data.descriptive}</p>
+                            <span class="font-bold text-slate-700 block mb-1 text-sm">📊 Descriptive</span>
+                            <p class="text-slate-600 leading-relaxed text-base">${data.descriptive}</p>
                         </div>
                     </div>
-                    <div class="p-3 bg-white border-l-4 border-yellow-500 rounded shadow-sm flex flex-col justify-between">
+                    <div class="p-3 bg-amber-50/50 border-2 border-amber-100 rounded-2xl shadow-sm flex flex-col justify-between">
                         <div>
-                            <span class="font-bold text-yellow-800 block mb-1 text-xs">🔍 Diagnostic</span>
-                            <p class="text-gray-600 leading-relaxed text-sm">${data.diagnostic}</p>
+                            <span class="font-bold text-amber-800 block mb-1 text-sm">🔍 Diagnostic</span>
+                            <p class="text-slate-600 leading-relaxed text-base">${data.diagnostic}</p>
                         </div>
                     </div>
-                    <div class="p-3 bg-white border-l-4 border-blue-500 rounded shadow-sm flex flex-col justify-between">
+                    <div class="p-3 bg-blue-50/50 border-2 border-blue-100 rounded-2xl shadow-sm flex flex-col justify-between">
                         <div>
-                            <span class="font-bold text-blue-800 block mb-1 text-xs">🔮 Predictive</span>
-                            <p class="text-gray-600 leading-relaxed text-sm">${data.predictive}</p>
+                            <span class="font-bold text-blue-800 block mb-1 text-sm">🔮 Predictive</span>
+                            <p class="text-slate-600 leading-relaxed text-base">${data.predictive}</p>
                         </div>
                     </div>
-                    <div class="p-3 bg-white border-l-4 border-green-500 rounded shadow-sm flex flex-col justify-between">
+                    <div class="p-3 bg-emerald-50/50 border-2 border-emerald-100 rounded-2xl shadow-sm flex flex-col justify-between">
                         <div>
-                            <span class="font-bold text-green-800 block mb-1 text-xs">💡 Prescriptive</span>
-                            <p class="text-gray-600 leading-relaxed text-sm">${data.prescriptive}</p>
+                            <span class="font-bold text-emerald-800 block mb-1 text-sm">💡 Prescriptive</span>
+                            <p class="text-slate-600 leading-relaxed text-base">${data.prescriptive}</p>
                         </div>
                     </div>
                 `;
