@@ -234,7 +234,7 @@
                 class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-table mr-2"></i>Confusion Matrix & F1
             </button>
-            <button onclick="openTab(event, 'pca-kmeans')"
+            <button id="tab-btn-pca-kmeans" onclick="openTab(event, 'pca-kmeans')"
                 class="tab-link px-5 py-4 font-semibold text-white/55 hover:text-white transition border-b-[3px] border-transparent">
                 <i class="fas fa-shapes mr-2"></i>PCA &amp; K-Means
             </button>
@@ -579,6 +579,7 @@
                 <!-- Clustering intro (ตัวแทนฝั่ง Unsupervised — ปิดท้าย) -->
                 <div id="detail-unsupervised"
                     class="hidden transition-all duration-300 bg-gradient-to-br from-purple-50 to-white p-6 rounded-xl border border-purple-200 shadow-sm">
+                    <!-- คำอธิบายเดิม (Commented out according to GEMINI.md rule 5)
                     <h4 class="font-bold text-purple-900 text-lg mb-2 flex items-center gap-2">
                         <i class="fas fa-object-group"></i> รู้จัก Clustering เบื้องต้น: การจับกลุ่มข้อมูลที่คล้ายกัน
                     </h4>
@@ -608,6 +609,88 @@
                                 <p class="text-gray-600 text-xs leading-relaxed">Classification รู้ชื่อกลุ่มล่วงหน้าจากเฉลย แต่ Clustering ไม่มีเฉลย ต้องค้นหากลุ่มขึ้นมาเองจากความคล้ายของข้อมูล</p>
                             </div>
                         </div>
+                    </div>
+                    -->
+
+                    <!-- ปรับพื้นฐานใหม่ตาม notes/day4_clustering.md -->
+                    <h4 class="font-bold text-purple-900 text-lg mb-2 flex items-center gap-2">
+                        <i class="fas fa-object-group"></i> รู้จัก Clustering เบื้องต้น: การจับกลุ่มข้อมูลที่คล้ายกัน
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-6 my-4">
+                        <!-- ฝั่งซ้าย: ความหมายและตัวอย่าง -->
+                        <div class="space-y-4">
+                            <div>
+                                <span class="font-bold text-purple-800 text-sm block mb-1">🧩 Clustering คืออะไร?</span>
+                                <p class="text-gray-700 text-sm leading-relaxed">
+                                    Clustering เป็นเทคนิคใน <strong class="text-purple-900">Unsupervised Learning</strong> ที่ใช้จัดกลุ่มข้อมูลตามความคล้ายคลึงกัน โดยไม่มีการกำหนดเฉลยหรือชื่อกลุ่มล่วงหน้า
+                                </p>
+                                <blockquote class="border-l-4 border-purple-500 pl-3 italic text-purple-800 my-2 text-sm bg-purple-100/50 p-2 rounded">
+                                    "ข้อมูลที่คล้ายกันควรอยู่กลุ่มเดียวกัน"
+                                </blockquote>
+                            </div>
+                            <div>
+                                <span class="font-bold text-purple-800 text-sm block mb-1">🌍 ตัวอย่างการใช้งานในชีวิตจริง</span>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                                    <li><strong>จับกลุ่มลูกค้า</strong> ตามพฤติกรรมการซื้อ (เพื่อทำโปรโมชันเฉพาะกลุ่ม)</li>
+                                    <li><strong>จับกลุ่มนักเรียน</strong> ตามผลการเรียน (เพื่อออกแบบการสอนที่เหมาะสม)</li>
+                                    <li><strong>จับกลุ่มพื้นที่</strong> ตามระดับมลพิษ (เพื่อเฝ้าระวังและจัดการสิ่งแวดล้อม)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- ฝั่งขวา: ตารางเปรียบเทียบ -->
+                        <div class="space-y-2">
+                            <span class="font-bold text-purple-800 text-sm block mb-1">⚡ ต่างจาก Classification อย่างไร?</span>
+                            <div class="overflow-x-auto rounded-lg border border-purple-100 shadow-sm bg-white">
+                                <table class="w-full text-sm text-left text-gray-600 border-collapse">
+                                    <thead>
+                                        <tr class="bg-purple-100/50 border-b border-purple-200">
+                                            <th class="p-3 font-bold text-purple-950">หัวข้อ</th>
+                                            <th class="p-3 font-bold text-blue-900 border-l border-purple-200">Classification</th>
+                                            <th class="p-3 font-bold text-purple-900 border-l border-purple-200">Clustering</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-purple-100">
+                                        <tr>
+                                            <td class="p-3 font-semibold text-gray-700 bg-purple-50/20">ประเภทโมเดล</td>
+                                            <td class="p-3 border-l border-purple-150">Supervised Learning</td>
+                                            <td class="p-3 border-l border-purple-150">Unsupervised Learning</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold text-gray-700 bg-purple-50/20">มีเฉลย (Label)</td>
+                                            <td class="p-3 border-l border-purple-150">มี</td>
+                                            <td class="p-3 border-l border-purple-150">ไม่มี</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold text-gray-700 bg-purple-50/20">รู้ชื่อกลุ่มล่วงหน้า</td>
+                                            <td class="p-3 border-l border-purple-150">รู้</td>
+                                            <td class="p-3 border-l border-purple-150">ไม่รู้</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold text-gray-700 bg-purple-50/20">เป้าหมาย</td>
+                                            <td class="p-3 border-l border-purple-150">ทำนายกลุ่มของข้อมูล</td>
+                                            <td class="p-3 border-l border-purple-150">ค้นหากลุ่มจากข้อมูล</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold text-gray-700 bg-purple-50/20">ตัวอย่างโจทย์</td>
+                                            <td class="p-3 border-l border-purple-150">แยกแยะอีเมล Spam / Not Spam</td>
+                                            <td class="p-3 border-l border-purple-150">จับกลุ่มลูกค้าตามพฤติกรรมการซื้อ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ปุ่มไปยังหน้าแท็บ K-means -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between border-t border-purple-100 pt-4 mt-4 bg-purple-50/40 p-4 rounded-lg gap-3">
+                        <span class="text-sm font-semibold text-purple-900">
+                            👉 <strong>พร้อมศึกษาตัวอย่างอัลกอริทึมที่นิยมอย่าง K-Means Clustering หรือยัง?</strong>
+                        </span>
+                        <button onclick="document.getElementById('tab-btn-pca-kmeans').click(); window.scrollTo({top: 0, behavior: 'smooth'});"
+                            class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 text-sm font-bold rounded-lg transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                            <span>ไปยัง K-Means Clustering</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1113,6 +1196,44 @@
                         ทำซ้ำจนกว่าจะไม่เปลี่ยน
                     </div>
 
+                    <!-- ปูพื้นฐานคำศัพท์ & หลักการทำงาน K-Means (NEW) -->
+                    <div class="bg-gradient-to-r from-purple-900 to-indigo-900 text-white p-5 rounded-xl shadow-md space-y-4">
+                        <div class="flex items-center gap-2 border-b border-white/20 pb-2">
+                            <span class="text-xl">📖</span>
+                            <h4 class="font-bold text-base text-amber-300">เตรียมความพร้อมก่อนเริ่มเรียนรู้ K-Means Clustering</h4>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                            <div class="bg-white/10 p-3 rounded-lg border border-white/15">
+                                <strong class="text-amber-200 block mb-1">⭐ Cluster (กลุ่มข้อมูล)</strong>
+                                <span class="text-slate-100 text-xs leading-relaxed">กลุ่มของข้อมูลที่มีลักษณะคล้ายคลึงกันและอยู่ในบริเวณใกล้เคียงกัน</span>
+                            </div>
+                            <div class="bg-white/10 p-3 rounded-lg border border-white/15">
+                                <strong class="text-amber-200 block mb-1">⭐ k (จำนวนกลุ่ม)</strong>
+                                <span class="text-slate-100 text-xs leading-relaxed">จำนวนกลุ่มที่เราต้องการให้โมเดลแบ่ง (เช่น k = 3 คือแบ่งเป็น 3 กลุ่ม)</span>
+                            </div>
+                            <div class="bg-white/10 p-3 rounded-lg border border-white/15">
+                                <strong class="text-amber-200 block mb-1">⭐ Centroid (จุดศูนย์กลาง)</strong>
+                                <span class="text-slate-100 text-xs leading-relaxed">จุดศูนย์กลางของแต่ละกลุ่ม ซึ่งถูกเลือกขึ้นมาเพื่อเป็นตัวแทนของแต่ละ Cluster</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/5 p-3 rounded-lg border border-white/10 text-xs space-y-1">
+                            <strong class="text-purple-200 block mb-1">📌 K-Means ทำงานอย่างไร? (อธิบายเข้าใจง่าย)</strong>
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-slate-100">
+                                <span class="bg-purple-800 px-2 py-0.5 rounded font-bold">1</span> กำหนดจำนวนกลุ่ม (k)
+                                <i class="fas fa-chevron-right text-[10px] opacity-50"></i>
+                                <span class="bg-purple-800 px-2 py-0.5 rounded font-bold">2</span> สุ่มตำแหน่ง Centroid
+                                <i class="fas fa-chevron-right text-[10px] opacity-50"></i>
+                                <span class="bg-purple-800 px-2 py-0.5 rounded font-bold">3</span> จัดแต่ละจุดให้อยู่กับ Centroid ที่ใกล้ที่สุด
+                                <i class="fas fa-chevron-right text-[10px] opacity-50"></i>
+                                <span class="bg-purple-800 px-2 py-0.5 rounded font-bold">4</span> คำนวณขยับ Centroid ใหม่
+                                <i class="fas fa-chevron-right text-[10px] opacity-50"></i>
+                                <span class="bg-purple-800 px-2 py-0.5 rounded font-bold">5</span> ทำซ้ำจนไม่เปลี่ยน
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="flex flex-wrap gap-4 items-center mb-4 bg-gray-50 p-4 rounded-xl border">
                         <span class="font-semibold text-gray-700 text-base">จำนวนกลุ่ม k =</span>
                         <input type="range" id="km-k" min="2" max="5" value="3"
@@ -1139,6 +1260,7 @@
                     <div class="km-legend mt-2 flex flex-wrap gap-4" id="km-legend"></div>
 
                     <div class="grid md:grid-cols-2 gap-4 mt-6 pt-4 border-t">
+                        <!-- คำอธิบายขั้นตอน K-Means & Elbow Method แบบเดิม (Commented out according to GEMINI.md rule 5)
                         <div class="bg-purple-50 border border-purple-200 rounded-xl p-5">
                             <h4 class="font-bold text-purple-800 mb-2">🔄 ขั้นตอน K-Means</h4>
                             <ol class="text-sm text-purple-950 space-y-1.5 list-decimal list-inside">
@@ -1153,6 +1275,24 @@
                             <p class="text-sm text-green-950 leading-relaxed">
                                 หา k ที่เหมาะสมโดย: plot กราฟ k vs WCSS (within-cluster sum of squares) แล้วหาจุดที่กราฟ
                                 "หัก" คล้ายข้อศอก — นั่นคือ k ที่ดีที่สุด
+                            </p>
+                        </div>
+                        -->
+
+                        <!-- ปรับปรุงการอธิบายใหม่เพื่อความเข้าใจง่ายสำหรับมือใหม่ -->
+                        <div class="bg-purple-50 border border-purple-200 rounded-xl p-5">
+                            <h4 class="font-bold text-purple-800 mb-2">🔄 ขั้นตอน K-Means</h4>
+                            <ol class="text-sm text-purple-950 space-y-2 list-decimal list-inside">
+                                <li>สุ่มเลือกจุดศูนย์กลางเริ่มต้น (k Centroids)</li>
+                                <li>จัดกลุ่มข้อมูล (Assign) โดยให้จุดข้อมูลแต่ละจุดอยู่กับ Centroid ที่ใกล้ที่สุด</li>
+                                <li>คำนวณตำแหน่ง Centroid ใหม่ (หาจากค่าเฉลี่ยของข้อมูลภายในแต่ละกลุ่ม)</li>
+                                <li>ทำซ้ำขั้นตอนที่ 2 และ 3 ไปเรื่อย ๆ จนกระทั่งตำแหน่ง Centroid ไม่มีพิกัดขยับเปลี่ยนอีก</li>
+                            </ol>
+                        </div>
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-5">
+                            <h4 class="font-bold text-green-800 mb-2">📊 Elbow Method</h4>
+                            <p class="text-sm text-green-950 leading-relaxed">
+                                <strong>หาจำนวนกลุ่ม (k) ที่เหมาะสมโดย:</strong> ทดลองใช้ค่า k หลาย ๆ ค่า และวาดกราฟความสัมพันธ์เพื่อหาจุดหักมุมคล้าย "ข้อศอก" (Elbow Point) โดยวิเคราะห์จากค่า WCSS (ผลรวมระยะห่างกำลังสองภายในกลุ่ม) ยิ่งค่า WCSS น้อย แสดงว่าข้อมูลในแต่ละกลุ่มยิ่งเกาะกลุ่มกันได้แน่นหนา
                             </p>
                         </div>
                     </div>
