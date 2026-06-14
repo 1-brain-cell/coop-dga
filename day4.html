@@ -941,80 +941,107 @@
                 </div>
             </div>
 
-            <div id="classification" class="tab-content space-y-6">
-                <div class="border-l-4 border-green-500 pl-4">
+            <div id="classification" class="tab-content space-y-8">
+                <div class="border-l-4 border-emerald-500 pl-4">
                     <h2 class="text-2xl font-bold text-gray-800">Classification & Logistic Regression</h2>
-                    <p class="text-gray-600 text-lg">เบื้องหลังการทำนายกลุ่มมาจากอะไร?
-                        โมเดลจะนำฟีเจอร์คำนวณผ่านฟังก์ชันคณิตศาสตร์เพื่อแปลงค่าเป็นระดับความน่าจะเป็นแบบ S-Curve</p>
+                    <p class="text-gray-600 text-lg">หัวใจสำคัญของการทำนายกลุ่มและการตัดสินใจอย่างมีหลักการ</p>
                 </div>
 
-                <!-- Concept Card -->
-                <div class="bg-green-50/70 p-5 rounded-xl border border-green-100 shadow-sm space-y-3 mb-6">
-                    <h3 class="font-bold text-base text-green-900 flex items-center gap-2">
-                        <i class="fas fa-brain"></i> แนวคิดหัวใจสำคัญ: Logistic Regression กับการจำแนกกลุ่ม
-                    </h3>
-                    <p class="text-gray-700 text-xs leading-relaxed">
-                        ใช้ทำนายผลลัพธ์ที่เป็น <strong>กลุ่ม/หมวดหมู่ประเภทขาดจากกัน</strong> (เช่น ป่วยอ้วนจริง=1,
-                        คนปกติ=0) สาเหตุที่เราไม่ใช้สมการเส้นตรงปกติเนื่องจากความน่าจะเป็นของโอกาสที่จะเกิด
-                        **จะต้องอยู่ระหว่าง 0% ถึง 100% (0.0 ถึง 1.0) เสมอ**
+                <!-- ปรับปรุงการปูพื้นฐานใหม่ตาม day4_classification.md -->
+                <div class="bg-emerald-50/50 border-2 border-emerald-100 p-6 rounded-2xl shadow-sm space-y-5">
+                    <div class="flex items-center gap-3 border-b border-emerald-200/60 pb-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-sm">
+                            <i class="fas fa-bullseye text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-emerald-900">แนวคิดหลัก: Logistic Regression คืออะไร?</h4>
+                            <p class="text-xs text-emerald-600 font-medium uppercase tracking-wider">Classification Fundamentals</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-slate-700 text-base leading-relaxed">
+                        Logistic Regression เป็นอัลกอริทึมที่ใช้สำหรับ <strong>Classification (การแยกประเภท)</strong> โดยจะคำนวณหา <strong>ความน่าจะเป็น (Probability)</strong> ที่ข้อมูลจะอยู่ในกลุ่มนั้น ๆ ก่อนตัดสินใจเลือกผลลัพธ์สุดท้าย
                     </p>
-                    <div class="grid md:grid-cols-2 gap-4 pt-1 text-xs text-gray-600">
-                        <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-green-950 block mb-1">📈 1. ดัดให้โค้งมนด้วย Sigmoid (S-Curve)</strong>
-                            โมเดลจะนำผลรวมสมการเส้นตรงมาป้อนผ่านฟังก์ชันคณิตศาสตร์ปรับความโค้ง
-                            เพื่อบีบจำกัดสเกลให้อยู่กึ่งกลางระหว่าง 0 ถึง 1 พอดี
+
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm transition-transform hover:scale-[1.02]">
+                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-base">
+                                <i class="fas fa-tags text-emerald-500"></i> ใช้กับ Classification
+                            </strong>
+                            <span class="text-slate-600 text-sm leading-relaxed">แม้ชื่อจะมีคำว่า "Regression" แต่ผลลัพธ์สุดท้ายเป็น <strong>"กลุ่ม"</strong> (เช่น ผ่าน/ไม่ผ่าน) ไม่ใช่ค่าตัวเลขต่อเนื่อง</span>
                         </div>
-                        <div class="bg-white/60 p-3 rounded border">
-                            <strong class="text-green-950 block mb-1">🛑 2. ตัดสินใจด้วย Decision Boundary</strong>
-                            เกณฑ์ตัดสินใจ (เช่น 0.5) หากความน่าจะเป็นสูงพ้นเกณฑ์จะปัดผลเป็นคลาส 1 ทันที
-                            หากไม่ถึงจะเป็นคลาส 0
+                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm transition-transform hover:scale-[1.02]">
+                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-base">
+                                <i class="fas fa-wave-square text-emerald-500"></i> Sigmoid (0 ถึง 1)
+                            </strong>
+                            <span class="text-slate-600 text-sm leading-relaxed">โมเดลจะแปลงค่าสมการให้เป็น <strong>ความน่าจะเป็น</strong> ซึ่งต้องอยู่ระหว่าง 0% ถึง 100% เสมอ จึงต้องใช้ S-Curve (Sigmoid)</span>
                         </div>
+                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm transition-transform hover:scale-[1.02]">
+                            <strong class="text-emerald-800 block mb-1.5 flex items-center gap-2 font-bold text-base">
+                                <i class="fas fa-border-style text-emerald-500"></i> Decision Boundary
+                            </strong>
+                            <span class="text-slate-600 text-sm leading-relaxed">เกณฑ์ตัดสินใจ (Threshold) เช่น ถ้าโอกาสเกิน 0.5 ให้จัดเป็นคลาส 1 ทันที เพื่อระบุคลาสผลลัพธ์สุดท้าย</span>
+                        </div>
+                    </div>
+
+                    <!-- เพิ่มส่วนคลายข้อสงสัยเรื่องชื่อ -->
+                    <div class="bg-amber-100/50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm">
+                        <h5 class="font-bold text-amber-900 flex items-center gap-2 mb-1">
+                            <i class="fas fa-question-circle"></i> ทำไมชื่อ "Regression" แต่ใช้แยกกลุ่ม (Classification)?
+                        </h5>
+                        <p class="text-slate-700 text-sm leading-relaxed font-medium">
+                            เพราะเบื้องหลังคณิตศาสตร์ของมันคือการหา "ตัวเลขความน่าจะเป็น" (เลขต่อเนื่องเหมือน Regression) <br class="hidden md:block"> 
+                            แต่เป้าหมายสุดท้ายคือการนำตัวเลขนั้นมา <strong>"ปัดเศษเลือกกลุ่ม"</strong> มันจึงเป็นโมเดลที่ใช้สำหรับ Classification นั่นเองครับ
+                        </p>
+                    </div>
+
+                    <div class="bg-emerald-100/40 p-4 rounded-xl border border-emerald-200/50 text-sm italic text-emerald-900">
+                        💡 <strong>ลองนึกภาพ:</strong> เหมือนเครื่องวัดอุณหภูมิที่วัดได้ <strong>38.5 องศา</strong> (ตัวเลข = Regression) แต่เราใช้ตัวเลขนี้เพื่อตัดสินใจว่าคนนี้ <strong>"ป่วย" หรือ "ปกติ"</strong> (เลือกกลุ่ม = Classification)
                     </div>
                 </div>
 
                 <div class="grid lg:grid-cols-3 gap-8">
-                    <div class="space-y-4 bg-gray-50 p-5 rounded-xl border">
-                        <h3 class="font-bold text-lg text-green-950"><i
-                                class="fas fa-sliders-h mr-2"></i>กลไกการคำนวณแยกกลุ่ม</h3>
-                        <div class="bg-white p-3 rounded border text-xs space-y-2 text-gray-700 leading-relaxed">
-                            <p class="font-bold text-gray-800 text-sm">ขั้นตอนที่ 1: คำนวณสมการเชิงเส้นตรง (Log-odds)
-                            </p>
-                            <div class="bg-gray-100 p-1 rounded text-center font-mono text-blue-700 text-sm">z = β₀ +
-                                β₁X</div>
-                            <p class="font-bold text-gray-800 pt-1 text-sm">ขั้นตอนที่ 2: ส่งผ่านฟังก์ชันปรับความโค้ง
-                                Sigmoid</p>
-                            <div class="bg-gray-100 p-1 rounded text-center font-mono text-green-700 text-sm">P = 1 / (1
-                                + e<sup>-z</sup>)</div>
-                            <p class="pt-1 text-gray-600">ผลลัพธ์ย่อย <strong>P</strong> คือค่าความน่าจะเป็น
-                                (Probability) ในช่วง 0 ถึง 1 (แสดงด้วยความสูงของเส้นโค้ง S-Curve บนกราฟ)</p>
+                    <div class="space-y-4 bg-gray-50 p-6 rounded-xl border-2 border-slate-100 shadow-sm">
+                        <h3 class="font-bold text-lg text-emerald-950 flex items-center gap-2 border-b pb-2">
+                            <i class="fas fa-sliders-h text-emerald-600"></i> กลไกการคำนวณแยกกลุ่ม
+                        </h3>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 text-sm space-y-3 text-slate-700 leading-relaxed shadow-inner">
+                            <div class="space-y-1">
+                                <p class="font-bold text-slate-800">1. คำนวณสมการเชิงเส้นตรง (z)</p>
+                                <div class="bg-slate-50 p-2 rounded text-center font-mono text-blue-700 font-bold border border-slate-100 text-base">z = β₀ + β₁X</div>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="font-bold text-slate-800">2. ส่งผ่าน Sigmoid Function</p>
+                                <div class="bg-slate-50 p-2 rounded text-center font-mono text-emerald-700 font-bold border border-slate-100 text-base">P = 1 / (1 + e<sup>-z</sup>)</div>
+                            </div>
+                            <p class="pt-1 text-slate-500 text-xs italic">ผลลัพธ์ <strong>P</strong> คือความสูงของเส้นโค้ง S-Curve บนกราฟ (0 ถึง 1)</p>
                         </div>
                         <div class="pt-2">
-                            <label class="block text-base font-semibold text-gray-700 mb-1">Decision Boundary
-                                (เกณฑ์เส้นแบ่งเขตตัดสินใจ): <span id="valLogThresh"
-                                    class="font-bold text-green-600">0.50</span></label>
+                            <label class="block text-base font-bold text-slate-700 mb-2">Decision Boundary (เกณฑ์ตัดสินใจ): <span id="valLogThresh"
+                                    class="font-black text-emerald-600 ml-1">0.50</span></label>
                             <input type="range" id="sliderLogThresh" min="0.1" max="0.9" step="0.05" value="0.50"
-                                class="w-full accent-green-600">
+                                class="w-full accent-emerald-600 cursor-pointer">
                         </div>
                         <div>
-                            <label class="block text-base font-semibold text-gray-700 mb-1">อัตราความชันของกราฟ
-                                (Steepness): <span id="valLogSteep" class="font-bold text-green-600">0.20</span></label>
+                            <label class="block text-base font-bold text-slate-700 mb-2">Steepness (ความชันกราฟ): <span id="valLogSteep" class="font-black text-emerald-600 ml-1">0.20</span></label>
                             <input type="range" id="sliderLogSteep" min="0.05" max="0.5" step="0.05" value="0.20"
-                                class="w-full accent-green-600">
+                                class="w-full accent-emerald-600 cursor-pointer">
                         </div>
                         <div
-                            class="p-3 bg-yellow-50 border border-yellow-200 text-xs rounded text-gray-600 leading-relaxed">
-                            <strong>กติกาแบ่งกลุ่ม:</strong> หากจุดข้อมูลมีระดับความน่าจะเป็นลอยสูงพ้นเกณฑ์เส้นปะสีแดง
-                            โมเดลจะจัดให้เป็น <span class="text-orange-600 font-bold">Class 1 (โรคอ้วน)</span>
-                            ถ้าไม่ถึงจะจัดเป็น <span class="text-blue-600 font-bold">Class 0 (ปกติ)</span>
-                            จุดวงแหวนสีแดงซ้อนภายนอกหมายถึงข้อมูลเกิดพยากรณ์ผิดพลาด (Misclassification)
+                            class="p-4 bg-amber-50 border border-amber-200 text-sm rounded-xl text-amber-900 leading-relaxed shadow-sm">
+                            <strong class="block mb-1 text-amber-800"><i class="fas fa-exclamation-circle"></i> กติกาการแบ่งกลุ่ม:</strong> 
+                            จุดที่มีระดับความน่าจะเป็นลอยสูงพ้นเกณฑ์เส้นประสีแดง จะจัดเป็น <span class="text-orange-600 font-bold">Class 1 (โรคอ้วน)</span> 
+                            ถ้าต่ำกว่าจะเป็น <span class="text-blue-600 font-bold">Class 0 (ปกติ)</span> 
+                            <br><span class="text-xs text-amber-700 mt-2 block italic">* วงแหวนสีแดงรอบจุด = ข้อมูลที่ทำนายผิดพลาด (Misclassification)</span>
                         </div>
                     </div>
                     <div class="lg:col-span-2 flex flex-col items-center">
                         <canvas id="logisticCanvas" width="540" height="380"
-                            class="border bg-white rounded-xl shadow-inner w-full max-w-xl"></canvas>
-                        <span class="text-xs text-gray-400 mt-2 text-center">แกนตั้งแสดงโอกาสความน่าจะเป็น 0.0 ถึง 1.0
-                            (0% ถึง 100%) | จุดสีฟ้าคือคนปกติ จุดสีส้มคือคนเป็นโรคอ้วนจริง (วงกลมสีแดงซ้อนนอก =
-                            ทายผิดกลุ่ม)</span>
+                            class="border-2 border-slate-200 bg-white rounded-2xl shadow-inner w-full max-w-xl"></canvas>
+                        <p class="text-sm text-slate-400 mt-3 text-center leading-relaxed">
+                            <strong>คำอธิบายกราฟ:</strong> แกนตั้งแสดงความน่าจะเป็น 0.0 - 1.0 (0% - 100%) <br>
+                            จุดสีฟ้า = คนปกติ | จุดสีส้ม = คนเป็นโรคอ้วนจริง
+                        </p>
                     </div>
                 </div>
             </div>
