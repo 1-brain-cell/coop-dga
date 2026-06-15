@@ -6,3 +6,9 @@ catalog/raw/
 catalog/*.bak
 __pycache__/
 *.pyc
+
+# Unnecessary scripts and helper files
+catalog/merge_links.py
+catalog/update_metadata.py
+catalog/google_drive_links.json
+catalog/google_drive_links.md

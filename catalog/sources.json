@@ -1,29 +1,5 @@
 [
   {
-    "id": "agri-burn-pm25",
-    "drive_file_id": "1I-nh55wSiebGIsCu2QqzCVNcoQn5Qe5A",
-    "icon": "fa-file-lines",
-    "org": "กรมส่งเสริมการเกษตร",
-    "title": "รายงานเผาพื้นที่การเกษตร",
-    "desc": "วิเคราะห์แนวโน้มการเผาพื้นที่การเกษตร",
-    "tags": [
-      "Geo-Spatial",
-      "Agri-Tech"
-    ]
-  },
-  {
-    "id": "pollution-waste",
-    "drive_file_id": "1Xh4CwVj-zekLzIuFj0adA1PN2vtW5w_g",
-    "icon": "fa-file-lines",
-    "org": "กรมควบคุมมลพิษ",
-    "title": "รายงานปริมาณขยะมูลฝอย",
-    "desc": "รายงานสถิติขยะมูลฝอยเฉลี่ยต่อประชากร เปรียบเทียบการเติบโตทางเศรษฐกิจและขีดความสามารถการจัดการหลุมฝังกลบ",
-    "tags": [
-      "Environment",
-      "Statistics"
-    ]
-  },
-  {
     "id": "dga306-data-story-storyboard-nuttakan-pearnngan",
     "file": "[DGA306] Data Story Storyboard - Nuttakan Pearnngan.pdf",
     "drive_file_id": "10PI4klaL8KFbAGDz1s9u-Gi9xrGx65hO",
@@ -357,20 +333,6 @@
       "Commerce",
       "SMEs",
       "Management"
-    ]
-  },
-  {
-    "id": "1-1-suthida-chiadchat",
-    "file": "ข้าวไทย ผู้ส่งออกสู่อันดับ 1 ตลาดอาเซียน (1) - suthida chiadchat.pdf",
-    "drive_file_id": "17fEeq8CvMW2U1nnMbOnqKQv5tiHxrjvh",
-    "icon": "fa-file-lines",
-    "org": "กรมส่งเสริมการค้าระหว่างประเทศ",
-    "title": "ศักยภาพการแข่งขัันข้าวไทยในตลาดภูมิภาคอาเซียน (ชุดเสริม)",
-    "desc": "การวิเคราะห์ส่วนแบ่งการตลาด ปริมาณการผลิต และยุทธศาสตร์การพัฒนาตลาดข้าวเพื่อการส่งออก",
-    "tags": [
-      "Trade",
-      "Agriculture",
-      "Export"
     ]
   },
   {
