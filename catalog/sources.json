@@ -28,349 +28,489 @@
     "file": "[DGA306] Data Story Storyboard - Nuttakan Pearnngan.pdf",
     "drive_file_id": "10PI4klaL8KFbAGDz1s9u-Gi9xrGx65hO",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "[DGA306] Data Story Storyboard - Nuttakan Pearnngan",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "ยางพาราไทย: แปลงใหญ่เปลี่ยนชีวิตเกษตรกร",
+    "desc": "สตอรี่บอร์ดนำเสนอโครงการเกษตรแปลงใหญ่เพื่อลดต้นทุนและเพิ่มผลผลิตยางพาราไทย",
+    "tags": [
+      "Agriculture",
+      "Storyboard",
+      "Economy"
+    ]
   },
   {
     "id": "dga306-3-safwan-paeroh",
     "file": "[DGA306] ทริป 3 คน - Safwan Paeroh.pdf",
     "drive_file_id": "1CS6HF0dn32XsF0-zDCVuD0EReJW_b2ZF",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "[DGA306] ทริป 3 คน - Safwan Paeroh",
-    "desc": "",
-    "tags": []
+    "org": "กรมอุทยานแห่งชาติ สัตว์ป่า และพันธุ์พืช",
+    "title": "สถานการณ์การท่องเที่ยวอุทยานแห่งชาติประเทศไทย",
+    "desc": "ข้อมูลสถิตินักท่องเที่ยวชาวไทยและต่างชาติ และแนวทางการส่งเสริมการท่องเที่ยวอุทยานอย่างยั่งยืน",
+    "tags": [
+      "Tourism",
+      "Environment",
+      "Statistics"
+    ]
   },
   {
     "id": "mnr-presentation-hame-k",
     "file": "[MNR] Presentation - hame k.pdf",
     "drive_file_id": "1LyscjYQ4XU8PTxZIKY0BtMUs2dGQQrV2",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "[MNR] Presentation - hame k",
-    "desc": "",
-    "tags": []
+    "org": "กระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม",
+    "title": "พื้นที่สีเขียว: หัวใจสำคัญของเมืองยั่งยืน",
+    "desc": "รายงานและวิเคราะห์สัดส่วนพื้นที่สีเขียวสาธารณะเปรียบเทียบกับงบประมาณพัฒนาในรายจังหวัด",
+    "tags": [
+      "Environment",
+      "Urban",
+      "Statistics"
+    ]
   },
   {
     "id": "data-visualization-laddawan-yeadyad",
     "file": "Data Visualization - Laddawan Yeadyad.pdf",
     "drive_file_id": "1aboUppykBjfFQfc8gGI1Tgq7YM8SDA6T",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "Data Visualization - Laddawan Yeadyad",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "สถิติและการนำเสนอข้อมูลระบบเกษตรแบบแปลงใหญ่",
+    "desc": "การนำเสนอข้อมูลเพื่อสร้างภาพการวิเคราะห์ข้อมูลโครงการเกษตรแปลงใหญ่และการลดต้นทุน",
+    "tags": [
+      "Agriculture",
+      "Statistics",
+      "Visualization"
+    ]
   },
   {
     "id": "dga306",
     "file": "DGA306 - ฐิตินันท์ อนุสรณ์.pdf",
     "drive_file_id": "15qD48zCRBpHltxGJzIOxtE2uwBgt-ttZ",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "DGA306 - ฐิตินันท์ อนุสรณ์",
-    "desc": "",
-    "tags": []
+    "org": "กรมฝนหลวงและการบินเกษตร",
+    "title": "รายงานสถิติผู้ขอรับบริการฝนหลวงประจำวัน",
+    "desc": "การวิเคราะห์ข้อมูลตำแหน่งและปริมาณผู้ขอรับบริการฝนหลวงทั่วประเทศเพื่อการวางแผนการปฏิบัติการ",
+    "tags": [
+      "Agriculture",
+      "Weather",
+      "Statistics"
+    ]
   },
   {
     "id": "dga306-1-rasamee-somsat-1",
     "file": "DGA306 รุ่นที่ 1 กรมทรัพยากรธรณี - Rasamee Somsat(1).pdf",
     "drive_file_id": "1AAOXPxfN9YRF9nkq7GEww0P-6Tha8IeD",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "DGA306 รุ่นที่ 1 กรมทรัพยากรธรณี - Rasamee Somsat(1)",
-    "desc": "",
-    "tags": []
+    "org": "กรมทรัพยากรธรณี",
+    "title": "การบริการข้อมูลทรัพยากรธรณีเพื่อการพัฒนาเศรษฐกิจ (ชุดที่ 2)",
+    "desc": "สถิติและข้อมูลการให้บริการวิเคราะห์ตัวอย่างแร่และทรัพยากรธรณีแก่ประชาชนและภาคเอกชน",
+    "tags": [
+      "Geology",
+      "Resources",
+      "Statistics"
+    ]
   },
   {
     "id": "dga306-1-rasamee-somsat",
     "file": "DGA306 รุ่นที่ 1 กรมทรัพยากรธรณี - Rasamee Somsat.pdf",
     "drive_file_id": "1-O12ckwlKTzwNtFyMa6xUl_GCByfZDhD",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "DGA306 รุ่นที่ 1 กรมทรัพยากรธรณี - Rasamee Somsat",
-    "desc": "",
-    "tags": []
+    "org": "กรมทรัพยากรธรณี",
+    "title": "การบริการข้อมูลทรัพยากรธรณีเพื่อการพัฒนาเศรษฐกิจ (ชุดที่ 1)",
+    "desc": "รายงานเชิงสถิติการจัดการและให้บริการข้อมูลทางวิชาการทรัพยากรธรณีของไทย",
+    "tags": [
+      "Geology",
+      "Resources",
+      "Statistics"
+    ]
   },
   {
     "id": "dga306-2567-pattanachai-choothong",
     "file": "DGA306 เปรียบเทียบปริมาณและรายได้ ปี 2567 - pattanachai choothong.pdf",
     "drive_file_id": "1zvAFfuuCMeKtmFH12ClFTqEvDM6Hdo_U",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "DGA306 เปรียบเทียบปริมาณและรายได้ ปี 2567 - pattanachai choothong",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานส่งเสริมวิสาหกิจขนาดกลางและขนาดย่อม",
+    "title": "รายงานเปรียบเทียบปริมาณและรายได้วิสาหกิจ ปี 2567",
+    "desc": "การวิเคราะห์เชิงลึกด้านแนวโน้มการเติบโต ยอดขาย และรายได้ของผู้ประกอบการในรอบปี 2567",
+    "tags": [
+      "Commerce",
+      "SMEs",
+      "Statistics"
+    ]
   },
   {
     "id": "diwfactory-nattaya-u",
     "file": "DIWFACTORY - Nattaya U.pdf",
     "drive_file_id": "1E_aSd-xb2lDNI6A0vV5w3O-8TVnWMB0j",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "DIWFACTORY - Nattaya U",
-    "desc": "",
-    "tags": []
+    "org": "กรมโรงงานอุตสาหกรรม",
+    "title": "วิเคราะห์การกระจายตัวของโรงงานอุตสาหกรรมในประเทศไทย",
+    "desc": "สถิติและภาพรวมการจดทะเบียนตั้งโรงงานอุตสาหกรรมและการประเมินผลกระทบเชิงพื้นที่",
+    "tags": [
+      "Industry",
+      "Factory",
+      "Statistics"
+    ]
   },
   {
     "id": "farmers-market-1-orasa-sy",
     "file": "Farmers_ Market (1) - orasa sy.pdf",
     "drive_file_id": "18SqU-spM8QTjhFCvWIWJU-32jP3fITGR",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "Farmers_ Market (1) - orasa sy",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "โครงการพัฒนาตลาดเกษตรกรออนไลน์ Farmers' Market",
+    "desc": "สถิติยอดการขาย การเข้าถึงเว็บ และการสนับสนุนเกษตรกรในการเพิ่มช่องทางจำหน่ายสินค้าออนไลน์",
+    "tags": [
+      "Agriculture",
+      "Commerce",
+      "Marketing"
+    ]
   },
   {
     "id": "i-love-sushiro-naruerat-c",
     "file": "I love sushiro กรมวิทย์บริการ - Naruerat C..pdf",
     "drive_file_id": "1zBnuc63vC7XzOjEDYNqxYuE_DH7ThCZG",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "I love sushiro กรมวิทย์บริการ - Naruerat C.",
-    "desc": "",
-    "tags": []
+    "org": "กรมวิทยาศาสตร์บริการ",
+    "title": "รายงานบริการสถิติและวิเคราะห์ข้อมูลความต้องการของภาครัฐ",
+    "desc": "การนำข้อมูลมาวิเคราะห์พฤติกรรมความต้องการบริการทดสอบทางวิทยาศาสตร์ของหน่วยงานรัฐ",
+    "tags": [
+      "Science",
+      "Services",
+      "Statistics"
+    ]
   },
   {
     "id": "mind-spm-narongrit-tinikul",
     "file": "MIND & SPM - Narongrit Tinikul.pdf",
     "drive_file_id": "1c6Eehvnsuzt7BFoSaajBTfVOalh5t7Gd",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "MIND & SPM - Narongrit Tinikul",
-    "desc": "",
-    "tags": []
+    "org": "กระทรวงอุตสาหกรรม",
+    "title": "ระบบข้อมูล MIND & SPM เพื่อการบริหารผู้ประกอบการอุตสาหกรรม",
+    "desc": "การวิเคราะห์ข้อมูลความต้องการและการสนับสนุนโรงงานอุตสาหกรรมตามเกณฑ์มาตรฐานความยั่งยืน",
+    "tags": [
+      "Industry",
+      "Management",
+      "Policy"
+    ]
   },
   {
     "id": "ppt-ncd-resident-playbook-premkamon-s",
     "file": "PPT NCD [[Resident Playbook]] - Premkamon S..pdf",
     "drive_file_id": "1PtD8WO68Xh5mx18pNovZbNyELKbZcb-f",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "PPT NCD [[Resident Playbook]] - Premkamon S.",
-    "desc": "",
-    "tags": []
+    "org": "กรมควบคุมโรค",
+    "title": "คู่มือการวิเคราะห์และแผนควบคุมโรคไม่ติดต่อเรื้อรัง (NCDs Playbook)",
+    "desc": "ข้อมูลสรุปสถานการณ์ อัตราป่วย และยุทธศาสตร์ป้องกันลดความเสี่ยงกลุ่มโรคไม่ติดต่อเรื้อรัง",
+    "tags": [
+      "Health",
+      "Policy",
+      "Statistics"
+    ]
   },
   {
     "id": "present-data4society-kittaporn-jainan",
     "file": "present-Data4society - Kittaporn Jainan.pdf",
     "drive_file_id": "1HdO0q3KJwSqu_1t1v-cVuOT6sQPSAzom",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "present-Data4society - Kittaporn Jainan",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานพัฒนารัฐบาลดิจิทัล (DGA)",
+    "title": "โครงการข้อมูลดิจิทัลเพื่อขับเคลื่อนสังคม Data4Society",
+    "desc": "การนำข้อมูลเปิดของรัฐมาใช้วิเคราะห์และสนับสนุนการพัฒนาคุณภาพชีวิตของประชาชนในมิติต่างๆ",
+    "tags": [
+      "Society",
+      "Digital",
+      "DGA"
+    ]
   },
   {
     "id": "presentation-papin-thanutchapat",
     "file": "presentation - Papin Thanutchapat.pdf",
     "drive_file_id": "1ksgxVEG_ATaqsdVPUrtU52V2lXdhn1Lh",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "presentation - Papin Thanutchapat",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานนโยบายและแผนพลังงาน",
+    "title": "รายงานสถานการณ์พลังงานและการใช้พลังงานทดแทนของประเทศไทย",
+    "desc": "การรวบรวมข้อมูลแนวโน้ม ปริมาณการผลิต และอัตราการใช้พลังงานในภาคเศรษฐกิจต่างๆ",
+    "tags": [
+      "Energy",
+      "Economy",
+      "Policy"
+    ]
   },
   {
     "id": "presentation",
     "file": "presentation_บูลย์ต้นตี้ดี้ - กวข. ศทส..pdf",
     "drive_file_id": "1Pibc0vnYP26N_S8UiwbWwNwLtHGTdBbk",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "presentation_บูลย์ต้นตี้ดี้ - กวข. ศทส.",
-    "desc": "",
-    "tags": []
+    "org": "การประปาส่วนภูมิภาค",
+    "title": "รายงานการประเมินคุณภาพน้ำและระบบการผลิตน้ำประปา",
+    "desc": "การวิเคราะห์เชิงลึกด้านสถิติผลการตรวจวิเคราะห์คุณภาพน้ำดิบและน้ำประปาของหน่วยวิเคราะห์ระบบน้ำ",
+    "tags": [
+      "Utilities",
+      "Water",
+      "Quality"
+    ]
   },
   {
     "id": "project-iampiknik-piknik",
     "file": "Project ผ่าโปรไฟล์เยาวชน - iampiknik piknik.pdf",
     "drive_file_id": "1gmSPLOV48YuMaJ_zLyLKt-zQjsu2hCke",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "Project ผ่าโปรไฟล์เยาวชน - iampiknik piknik",
-    "desc": "",
-    "tags": []
+    "org": "กระทรวงการพัฒนาสังคมและความมั่นคงของมนุษย์",
+    "title": "การวิเคราะห์ข้อมูลโปรไฟล์และสถานการณ์ปัญหาเยาวชนไทย",
+    "desc": "ข้อมูลเชิงสถิติปัญหาความยากจน โอกาสทางการศึกษา และความต้องการพัฒนาศักยภาพของเยาวชน",
+    "tags": [
+      "Society",
+      "Youth",
+      "Statistics"
+    ]
   },
   {
     "id": "slide",
     "file": "Slide_มาขึ้นทะเบียนกันเถอะ - อุดมพงษ์ กรมส่งเสริมการเกษตร.pdf",
     "drive_file_id": "1A9hqCpbGQcUex9Z-bOWjfDir9GXn-2h0",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "Slide_มาขึ้นทะเบียนกันเถอะ - อุดมพงษ์ กรมส่งเสริมการเกษตร",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "การส่งเสริมการขึ้นทะเบียนเกษตรกรและสิทธิประโยชน์",
+    "desc": "เอกสารแนะนำการขึ้นทะเบียน ขั้นตอนเอกสาร และสิทธิการเยียวยาภัยพิบัติทางธรรมชาติสำหรับเกษตรกร",
+    "tags": [
+      "Agriculture",
+      "Registration",
+      "Policy"
+    ]
   },
   {
     "id": "workshop-dga306-diw-2-jittima-ks",
     "file": "Workshop DGA306 DIW-2 - Jittima Ks.pdf",
     "drive_file_id": "1vWDO3kNBd0igtsQfzzZduWyZht16DShE",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "Workshop DGA306 DIW-2 - Jittima Ks",
-    "desc": "",
-    "tags": []
+    "org": "กรมโรงงานอุตสาหกรรม",
+    "title": "การประยุกต์ใช้แดชบอร์ดในการวิเคราะห์ใบอนุญาตโรงงานอุตสาหกรรม",
+    "desc": "วิเคราะห์ข้อมูลสถิติการออกใบอนุญาต รง.4 และประเภทอุตสาหกรรมที่มีการขยายตัวสูงสุด",
+    "tags": [
+      "Industry",
+      "Safety",
+      "License"
+    ]
   },
   {
     "id": "matchima-tongjeen",
     "file": "กรมบังคับคดี - MATCHIMA TONGJEEN.pdf",
     "drive_file_id": "17sX9ZfT6ffr8baIw-HzeAZyGp3_Bt2pa",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "กรมบังคับคดี - MATCHIMA TONGJEEN",
-    "desc": "",
-    "tags": []
+    "org": "กรมบังคับคดี",
+    "title": "รายงานการวิเคราะห์สถิติคดีและการขายทอดตลาด กรมบังคับคดี",
+    "desc": "ภาพรวมคดีแพ่ง คดีล้มละลาย การประมูลทรัพย์ และประสิทธิภาพในการคุ้มครองสิทธิคู่ความ",
+    "tags": [
+      "Justice",
+      "Statistics",
+      "Legal"
+    ]
   },
   {
     "id": "dds-benjaporn-ping",
     "file": "กรมราชทัณฑ์_DDs - Benjaporn Ping.pdf",
     "drive_file_id": "1MaNuw2omp8WpEGdkCQp1xWclwwWvM-GK",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "กรมราชทัณฑ์_DDs - Benjaporn Ping",
-    "desc": "",
-    "tags": []
+    "org": "กรมราชทัณฑ์",
+    "title": "การวิเคราะห์สถิติจำนวนและสัดส่วนผู้ต้องขังทั่วประเทศ",
+    "desc": "รายงานแดชบอร์ดแสดงจำนวนประชากรผู้ต้องขัง อัตราความหนาแน่น และสถิติเพื่อการจัดการราชทัณฑ์",
+    "tags": [
+      "Justice",
+      "Correctional",
+      "Statistics"
+    ]
   },
   {
     "id": "nunthanics-official",
     "file": "กลุ่มผัดมองโกเลีย - Nunthanics official.pdf",
     "drive_file_id": "1ZvKWteXV-Qrga2Pz22QC-mHO9ThB9DVc",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "กลุ่มผัดมองโกเลีย - Nunthanics official",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานส่งเสริมเศรษฐกิจสร้างสรรค์",
+    "title": "วิเคราะห์โอกาสทางธุรกิจในอุตสาหกรรมอาหารสร้างสรรค์",
+    "desc": "รายงานสรุปทิศทางตลาด วัฒนธรรมอาหารท้องถิ่น และการสร้างนวัตกรรมผลิตภัณฑ์อาหารสู่ตลาดสากล",
+    "tags": [
+      "Culture",
+      "Food",
+      "Economy"
+    ]
   },
   {
     "id": "worajit-busaba",
     "file": "การค้นหาและประเมินตลาดส่งออกใหม่สำหรับสินค้าเครื่องปรับอากาศ - Worajit Busaba.pdf",
     "drive_file_id": "1nfbAjk-7sB2fPtWDCTlLzOXTLINwYZMe",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "การค้นหาและประเมินตลาดส่งออกใหม่สำหรับสินค้าเครื่องปรับอากาศ - Worajit Busaba",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการค้าระหว่างประเทศ",
+    "title": "การวิเคราะห์และประเมินตลาดส่งออกเครื่องปรับอากาศไทยในตลาดโลก",
+    "desc": "การวิเคราะห์คู่แข่ง แนวโน้มความต้องการสินค้าเครื่องปรับอากาศ และการแสวงหาตลาดส่งออกใหม่",
+    "tags": [
+      "Trade",
+      "Export",
+      "Industry"
+    ]
   },
   {
     "id": "thanakorn-namuang",
     "file": "ข้อมูลผู้ประกอบการ - Thanakorn Namuang.pdf",
     "drive_file_id": "1Q3ol-9-1YcGCzuBBrHWxHuill6PDKJ5T",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "ข้อมูลผู้ประกอบการ - Thanakorn Namuang",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานส่งเสริมวิสาหกิจขนาดกลางและขนาดย่อม",
+    "title": "แดชบอร์ดวิเคราะห์โครงสร้างและสถานะผู้ประกอบการวิสาหกิจ (SMEs)",
+    "desc": "สรุปสถานการณ์ทางการเงิน การกระจายตัว และการประเมินศักยภาพการเติบโตของกลุ่มธุรกิจ SMEs",
+    "tags": [
+      "Commerce",
+      "SMEs",
+      "Management"
+    ]
   },
   {
     "id": "1-1-suthida-chiadchat",
     "file": "ข้าวไทย ผู้ส่งออกสู่อันดับ 1 ตลาดอาเซียน (1) - suthida chiadchat.pdf",
     "drive_file_id": "17fEeq8CvMW2U1nnMbOnqKQv5tiHxrjvh",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "ข้าวไทย ผู้ส่งออกสู่อันดับ 1 ตลาดอาเซียน (1) - suthida chiadchat",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการค้าระหว่างประเทศ",
+    "title": "ศักยภาพการแข่งขัันข้าวไทยในตลาดภูมิภาคอาเซียน (ชุดเสริม)",
+    "desc": "การวิเคราะห์ส่วนแบ่งการตลาด ปริมาณการผลิต และยุทธศาสตร์การพัฒนาตลาดข้าวเพื่อการส่งออก",
+    "tags": [
+      "Trade",
+      "Agriculture",
+      "Export"
+    ]
   },
   {
     "id": "1-suthida-chiadchat",
     "file": "ข้าวไทย ผู้ส่งออกสู่อันดับ 1 ตลาดอาเซียน - suthida chiadchat.pdf",
     "drive_file_id": "17fEeq8CvMW2U1nnMbOnqKQv5tiHxrjvh",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "ข้าวไทย ผู้ส่งออกสู่อันดับ 1 ตลาดอาเซียน - suthida chiadchat",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการค้าระหว่างประเทศ",
+    "title": "ศักยภาพการแข่งขันข้าวไทยในตลาดภูมิภาคอาเซียน",
+    "desc": "รายงานการส่งออกข้าวไทยไปกลุ่มอาเซียน เปรียบเทียบราคาและนโยบายสนับสนุนของคู่แข่งสำคัญ",
+    "tags": [
+      "Trade",
+      "Agriculture",
+      "Export"
+    ]
   },
   {
     "id": "dga306-khan-tarot",
     "file": "ดาวล้อมเดือน-DGA306 - Khan Tarot.pdf",
     "drive_file_id": "1gJP7aLS_cOqPRqqyRVwrZfSKLPlDq6M9",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "ดาวล้อมเดือน-DGA306 - Khan Tarot",
-    "desc": "",
-    "tags": []
+    "org": "สถาบันวิจัยดาราศาสตร์แห่งชาติ (มหาชน)",
+    "title": "โครงการบริการดาราศาสตร์สู่สังคมและสถิติการเรียนรู้",
+    "desc": "สรุปข้อมูลการดำเนินโครงการเผยแพร่ความรู้ดาราศาสตร์และการติดตามความพึงพอใจของผู้เข้าชม",
+    "tags": [
+      "Science",
+      "Education",
+      "Astronomy"
+    ]
   },
   {
     "id": "orasa-sy",
     "file": "ตลาดเกษตรกรออนไลน์ - orasa sy.pdf",
     "drive_file_id": "1yzol5qLwYcy1CjNRaTpR1FlPgT-E6iLZ",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "ตลาดเกษตรกรออนไลน์ - orasa sy",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "โครงการเพิ่มขีดความสามารถการขายผ่านตลาดเกษตรกรออนไลน์",
+    "desc": "สถิติการเข้าชมยอดสั่งซื้อ และยุทธศาสตร์ขยายการเข้าถึงช่องทางจำหน่ายสินค้าของกลุ่มเกษตรกรไทย",
+    "tags": [
+      "Agriculture",
+      "Commerce",
+      "Marketing"
+    ]
   },
   {
     "id": "ev-charging-station",
     "file": "มว-สงครามชาร์จด่วน  EV Charging Station (ฉลับล่าสุด) - ชุติกาญจน์ รุจจนมงคล.pdf",
     "drive_file_id": "1MNIQKvV1zsKvNANbdQZjfopDGBoA8ZEV",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "มว-สงครามชาร์จด่วน  EV Charging Station (ฉลับล่าสุด) - ชุติกาญจน์ รุจจนมงคล",
-    "desc": "",
-    "tags": []
+    "org": "สถาบันมาตรวิทยาแห่งชาติ (มว)",
+    "title": "การพัฒนามาตรฐานระบบการชาร์จไฟฟ้า EV Charging Station",
+    "desc": "รายงานเปรียบเทียบข้อกำหนดไฟฟ้า มาตรฐานระดับประเทศ ความปลอดภัย และความถูกต้องในการจำหน่ายไฟฟ้าสำหรับ EV",
+    "tags": [
+      "Energy",
+      "EV",
+      "Metrology"
+    ]
   },
   {
     "id": "pornpreecha-hansadeja",
     "file": "ศักยภาพในการลดก๊าซเรือนกระจกของประเทศไทย - pornpreecha hansadeja.pdf",
     "drive_file_id": "1l3GZya5jGrJ78qrJgGq-Dd4KY1wcTMXh",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "ศักยภาพในการลดก๊าซเรือนกระจกของประเทศไทย - pornpreecha hansadeja",
-    "desc": "",
-    "tags": []
+    "org": "องค์การบริหารจัดการก๊าซเรือนกระจก (องค์การมหาชน)",
+    "title": "การประเมินศักยภาพของประเทศไทยในการลดการปล่อยก๊าซเรือนกระจก",
+    "desc": "สรุปผลการวิจัย แผนการมีส่วนร่วมของประเทศ (NDC) และแนวทางการจัดการลดคาร์บอนในภาคอุตสาหกรรม",
+    "tags": [
+      "Environment",
+      "Climate",
+      "Policy"
+    ]
   },
   {
     "id": "ss-dd",
     "file": "หยุดเผา กรมส่งเสริมการเกษตร - Ss Dd.pdf",
     "drive_file_id": "1C0c2CSS2fDwJiCXQ_xmmyg50UurriyuU",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "หยุดเผา กรมส่งเสริมการเกษตร - Ss Dd",
-    "desc": "",
-    "tags": []
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "โครงการส่งเสริมและรณรงค์การหยุดเผาเศษวัสดุในพื้นที่การเกษตร",
+    "desc": "ผลกระทบการเผาต่อปริมาณฝุ่น PM2.5 และแนวทางสนับสนุนการไถกลบทำปุ๋ยแทนการเผา",
+    "tags": [
+      "Agriculture",
+      "Environment",
+      "PM2.5"
+    ]
   },
   {
     "id": "supaporn-wongniyom",
     "file": "เจ้หงส์ - Supaporn Wongniyom.pdf",
     "drive_file_id": "1PVx3MMxrwQgaYmJ2sa_9YghoJY5JpJWK",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "เจ้หงส์ - Supaporn Wongniyom",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานส่งเสริมวิสาหกิจขนาดกลางและขนาดย่อม",
+    "title": "กรณีศึกษาวิเคราะห์การเติบโตธุรกิจท้องถิ่น เจ้หงส์ค้าส่ง",
+    "desc": "กลยุทธ์การขาย โครงสร้างต้นทุนหมุนเวียน และการขยายสาขาร่วมกับโครงการสนับสนุนผู้ประกอบการท้องถิ่น",
+    "tags": [
+      "Commerce",
+      "SMEs",
+      "CaseStudy"
+    ]
   },
   {
     "id": "co2-phatcharintorn-deesomjorranee",
     "file": "เปรียบเทียบข้อมูล CO2 ของไทยกับข้อมูลดาวเทียม - Phatcharintorn Deesomjorranee.pdf",
     "drive_file_id": "167rTHU-8aeRHZD4nEE1mbsb6ri6pNKEF",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "เปรียบเทียบข้อมูล CO2 ของไทยกับข้อมูลดาวเทียม - Phatcharintorn Deesomjorranee",
-    "desc": "",
-    "tags": []
+    "org": "สำนักงานพัฒนาเทคโนโลยีอวกาศและภูมิสารสนเทศ (GISTDA)",
+    "title": "การวิเคราะห์เชิงเปรียบเทียบข้อมูล CO2 ของไทยกับข้อมูลดาวเทียมก๊าซเรือนกระจก",
+    "desc": "การตรวจสอบความถูกต้องระหว่างระบบรายงานการปล่อยก๊าซฯ ภาคพื้นดินกับข้อมูลภาพถ่ายดาวเทียมตรวจวัดปริมาณ CO2",
+    "tags": [
+      "Environment",
+      "Space",
+      "GISTDA"
+    ]
   },
   {
     "id": "pramuan-yingyong",
     "file": "แนวโน้มการส่งออกของไทย - Pramuan Yingyong.pdf",
     "drive_file_id": "1YoyihJpCg8IAGl1WwLYHWWrPMF1BEDXa",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "แนวโน้มการส่งออกของไทย - Pramuan Yingyong",
-    "desc": "",
-    "tags": []
+    "org": "กระทรวงพาณิชย์",
+    "title": "รายงานแนวโน้มการเติบโตและสถานการณ์การส่งออกของไทย",
+    "desc": "สถิติมูลค่าการนำเข้า-ส่งออก ปัจจัยสนับสนุนค่าเงินบาท และแนวโน้มกลุ่มตลาดส่งออกหลัก",
+    "tags": [
+      "Trade",
+      "Export",
+      "Economy"
+    ]
   },
   {
     "id": "2-pramuan-yingyong",
     "file": "แนวโน้มการส่งออกของไทย 2 - Pramuan Yingyong.pdf",
     "drive_file_id": "1FMmj-v0dlfgoAdKg_EDkBQ69FSKIA-Ap",
     "icon": "fa-file-lines",
-    "org": "",
-    "title": "แนวโน้มการส่งออกของไทย 2 - Pramuan Yingyong",
-    "desc": "",
-    "tags": []
+    "org": "กระทรวงพาณิชย์",
+    "title": "รายงานแนวโน้มการเติบโตและสถานการณ์การส่งออกของไทย (ฉบับอัปเดต)",
+    "desc": "การวิเคราะห์เจาะลึกและคาดการณ์ผลกระทบจากสถานการณ์ค่าครองชีพและนโยบายการค้าต่างประเทศ",
+    "tags": [
+      "Trade",
+      "Export",
+      "Economy"
+    ]
   }
 ]

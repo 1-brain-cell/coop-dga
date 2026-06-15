@@ -102,12 +102,31 @@ def extract_with_ocr(pdf_path: Path) -> str:
 
 def extract_text(pdf_path: Path, use_ocr: bool) -> str:
     text = extract_with_pypdf(pdf_path)
-    if len(text.strip()) < MIN_TEXT_CHARS:
-        text = extract_with_pdfplumber(pdf_path) or text
-    if len(text.strip()) < MIN_TEXT_CHARS and use_ocr:
-        print("    little/no embedded text — trying OCR", file=sys.stderr)
-        text = extract_with_ocr(pdf_path) or text
+    
+    # Check if text is poor quality (too short or contains too many null bytes)
+    pypdf_is_bad = len(text.strip()) < MIN_TEXT_CHARS or text.count('\x00') > 5
+    
+    if pypdf_is_bad:
+        if text.count('\x00') > 5:
+            print(f"    pypdf extracted text contains {text.count(chr(0))} null characters (garbled font) — trying pdfplumber fallback", file=sys.stderr)
+        plumber_text = extract_with_pdfplumber(pdf_path)
+        if plumber_text:
+            text = plumber_text
+            
+    # Check if text is still poor quality after pdfplumber
+    plumber_is_bad = len(text.strip()) < MIN_TEXT_CHARS or text.count('\x00') > 5
+    
+    if plumber_is_bad and use_ocr:
+        reason = "little/no text" if len(text.strip()) < MIN_TEXT_CHARS else f"{text.count(chr(0))} null characters"
+        print(f"    {reason} (garbled font) — trying OCR", file=sys.stderr)
+        ocr_text = extract_with_ocr(pdf_path)
+        if ocr_text:
+            text = ocr_text
+            
+    # Clean up any remaining null bytes from the final text
+    text = text.replace('\x00', '')
     return text
+
 
 
 # --------------------------------------------------------------------------- #
