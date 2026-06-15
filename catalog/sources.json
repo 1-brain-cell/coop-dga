@@ -2,7 +2,7 @@
   {
     "id": "agri-burn-pm25",
     "drive_file_id": "1I-nh55wSiebGIsCu2QqzCVNcoQn5Qe5A",
-    "icon": "fa-cloud-rain",
+    "icon": "fa-file-lines",
     "org": "กรมส่งเสริมการเกษตร",
     "title": "รายงานเผาพื้นที่การเกษตร",
     "desc": "วิเคราะห์แนวโน้มการเผาพื้นที่การเกษตร",
@@ -14,7 +14,7 @@
   {
     "id": "pollution-waste",
     "drive_file_id": "1Xh4CwVj-zekLzIuFj0adA1PN2vtW5w_g",
-    "icon": "fa-trash",
+    "icon": "fa-file-lines",
     "org": "กรมควบคุมมลพิษ",
     "title": "รายงานปริมาณขยะมูลฝอย",
     "desc": "รายงานสถิติขยะมูลฝอยเฉลี่ยต่อประชากร เปรียบเทียบการเติบโตทางเศรษฐกิจและขีดความสามารถการจัดการหลุมฝังกลบ",

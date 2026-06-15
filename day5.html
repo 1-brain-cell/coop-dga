@@ -587,6 +587,7 @@
             .step-box {
                 width: 100%;
             }
+
             .three-pillars {
                 flex-direction: column;
             }
@@ -600,15 +601,16 @@
         <div class="max-w-7xl flex justify-between items-center">
             <div>
                 <h1 class="text-3xl md:text-4xl font-bold">DGA306: Data Storytelling (Day 5)</h1>
-                <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | การเล่าเรื่องด้วยข้อมูลและ Visualization</p>
+                <p class="text-blue-200 mt-1 text-xl font-medium">Interactive Guide | การเล่าเรื่องด้วยข้อมูลและ
+                    Visualization</p>
             </div>
         </div>
         <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
     </header>
 
     <nav class="tabs">
-        <button class="tab-btn active" onclick="switchTab(event, 'tab-theory')"><i
-                class="fa-solid fa-book-open"></i> Review Day 5</button>
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-theory')"><i class="fa-solid fa-book-open"></i>
+            Review Day 5</button>
         <button class="tab-btn" onclick="switchTab(event, 'tab-game')"><i class="fa-solid fa-chart-pie"></i>
             กิจกรรม: Spot the Flaw</button>
         <button class="tab-btn" onclick="switchTab(event, 'tab-catalog')"><i class="fa-solid fa-folder-tree"></i>
@@ -725,7 +727,8 @@
                             คะแนนรวม: <span id="lblScore">0</span>
                         </div>
                         <button id="btnNext" class="btn-next">ด่านถัดไป <i class="fa-solid fa-arrow-right"></i></button>
-                        <button id="btnReset" class="btn-next" style="display: none;" onclick="resetGame()"><i class="fa-solid fa-rotate-left"></i> เริ่มใหม่</button>
+                        <button id="btnReset" class="btn-next" style="display: none;" onclick="resetGame()"><i
+                                class="fa-solid fa-rotate-left"></i> เริ่มใหม่</button>
                     </div>
                 </div>
             </div>
@@ -736,7 +739,7 @@
                 <h2>Catalog: ผลงานของผู้เรียนรุ่นก่อนหน้า</h2>
 
                 <div class="catalog-help">
-                    ค้นหาผลงานเก่าได้จาก <code>ชื่อไฟล์</code> <code>เนื้อหาภายในไฟล์</code> และ
+                    ค้นหาผลงานเก่าได้จาก <code>ชื่อไฟล์</code> <code>Key word ที่สนใจ</code> และ
                     <code>ชื่อหน่วยงาน</code> — พิมพ์หลายคำเพื่อค้นแบบเจาะจง (ต้องตรงทุกคำ)
                 </div>
 
@@ -1279,10 +1282,10 @@
                 document.getElementById('lblLevel').innerText = levels.length;
                 document.getElementById('btnReset').style.display = 'block';
 
-                ctx.fillStyle = "#ffffff"; 
+                ctx.fillStyle = "#ffffff";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#1e3a8a"; 
-                ctx.font = "bold 30px Sarabun"; 
+                ctx.fillStyle = "#1e3a8a";
+                ctx.font = "bold 30px Sarabun";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText("จบกิจกรรม Spot the Flaw", canvas.width / 2, canvas.height / 2);
