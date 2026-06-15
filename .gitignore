@@ -1,0 +1,8 @@
+# Catalog build inputs (source PDFs) — not needed by the site.
+# Extracted text already lives in catalog/catalog-index.json.
+catalog/raw/
+
+# Backups / Python cruft
+catalog/*.bak
+__pycache__/
+*.pyc
