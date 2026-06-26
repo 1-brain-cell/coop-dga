@@ -751,3 +751,58 @@ plan แก้ไขงานเพิ่มเติม
         - ปรับเนื้อหา PCA และ Use Cases/Warnings จาก `text-sm` เป็น `text-base`
         - ปรับเนื้อหาปูพื้นฐาน K-Means และขั้นตอนใน Wizard Controller จาก `text-sm`/`text-xs` เป็น `text-base`/`text-lg`
         - ปรับคำอธิบาย Elbow Method จาก `text-sm` เป็น `text-base`
+
+---
+
+# บันทึกการแก้ไข (Edit Timeline) - day5.html
+
+ลำดับประวัติการแก้ไขทั้งหมดตามไทม์ไลน์ในห้องแชทนี้ (จากก่อนไปหลัง)
+
+---
+
+## 1. สร้างระบบ Catalog ค้นหาผลงานผู้เรียน (Client-side Search)
+
+*   **สิ่งที่ทำ**: สร้างแท็บ **Catalog** ใน `day5.html` พร้อม pipeline ค้นหาผลงานแบบ static ไม่ต้อง backend
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **HTML**: เพิ่มแท็บ Catalog ในแถบ nav, เพิ่ม `<div id="tab-catalog">` พร้อม search box (`#txtSearch`), status bar (`#catalogStatus`), และ grid (`#catalogGrid`)
+    *   **CSS**: เพิ่ม styles สำหรับ `.catalog-help`, `.search-box`, `.catalog-status`, `.catalog-empty`, `.catalog-grid`, `.cat-item`, `.cat-header`, `.cat-body`, `.cat-footer`, `.cat-tags`, `.tag`, `.btn-pdf`, mark highlight
+    *   **JavaScript**: เขียน module `CatalogSearch` (IIFE) — โหลด `catalog/catalog-index.json` ผ่าน `fetch`, Thai-aware search ด้วย `norm()` + substring matching, weighted scoring (org/title/filename/tags=3, desc=2, content=1), AND across terms, highlight with `<mark>`, debounce 120ms
+    *   **catalog/sources.json**: สร้าง source of truth 34 entries (ข้อมูล org, title, desc, tags, drive_file_id, icon)
+    *   **catalog/build_index.py**: สคริปต์ Python สร้าง `catalog-index.json` จาก sources.json + PDF ใน `raw/` — รองรับ pypdf, pdfplumber, OCR (pytesseract), Thai tokenization (pythainlp), modes: `--discover`, `--link-drive`, `--download`, `--strict`
+    *   **catalog/catalog-index.json**: generate ครั้งแรก 34 entries
+
+---
+
+## 2. จัดระเบียบ metadata ใน sources.json (org, title, desc)
+
+*   **สิ่งที่ทำ**: ตรวจสอบและแก้ข้อมูลทุก 34 entries ให้ถูกต้อง — ชื่อหน่วยงาน (org) ตรงกับความเป็นจริง, title อ่านแล้วเข้าใจ, desc บอกเนื้อหาได้ชัด
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **sources.json**: แก้ org ที่ผิดหลายรายการ เช่น entry ที่ใช้ชื่อ username แทนชื่อหน่วยงาน, แก้ title ให้อ่านแล้วรู้เรื่อง, เติม desc ให้ครบทุก entry
+    *   rebuild `catalog-index.json` หลังแก้
+
+---
+
+## 3. เพิ่ม year filter (chip buttons) และแสดงปีในการ์ด
+
+*   **สิ่งที่ทำ**: เพิ่ม field `year` ใน sources.json ทุก entry + chip filter บน Catalog grid + badge ปีในการ์ดแต่ละใบ
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **sources.json**: เพิ่ม `"year": 2568` ใน 34 entries ทุกอัน
+    *   **build_index.py**: เพิ่ม `"year": entry.get("year")` ใน output index
+    *   **HTML**: เพิ่ม `<div class="year-filter" id="yearFilter">` ระหว่าง status bar กับ grid
+    *   **CSS**: เพิ่ม styles `.year-filter`, `.year-chip`, `.year-chip.active`, `.year-chip:hover` และ `.cat-year` badge; ปรับ `.cat-header` เป็น flexbox `justify-content: space-between`
+    *   **JavaScript (CatalogSearch)**:
+        *   เพิ่มตัวแปร `activeYear` และ reference `yearFilterEl`
+        *   เพิ่มฟังก์ชัน `buildYearChips()` — hardcode ปีที่รองรับ `[2568, 2569]` merge กับปีที่มีในข้อมูลจริง, สร้าง chip "ทั้งหมด" + chip แต่ละปี, bind click event
+        *   แก้ `render()` ให้ filter pool ตาม `activeYear` ก่อน แล้วค่อย search
+        *   แก้ empty state message — ถ้า filter ปีที่ยังไม่มีข้อมูลจะบอก "ยังไม่มีผลงานรุ่น พ.ศ. X — รอผลงานจากผู้เรียนรุ่นนี้"
+        *   แก้ `cardHtml()` เพิ่ม `yearBadge` (`<span class="cat-year">พ.ศ. XXXX</span>`) ใน `.cat-header`
+        *   เรียก `buildYearChips()` หลัง `prepare()` ใน init
+    *   **catalog/README.md**: เพิ่ม field `year` ในตารางและตัวอย่าง JSON; เพิ่มหมายเหตุว่า chip ปีขึ้นอัตโนมัติเมื่อมีข้อมูล และถ้าอยากให้ขึ้นล่วงหน้าให้เพิ่มใน `KNOWN_YEARS` ใน `day5.html`
+    *   rebuild `catalog-index.json`
+
+---
+
+# บันทึกการแก้ไข (Edit Timeline)
+
+* แก้ไข readme ใน ./catalog/
+* จัดระเบียบโดยการย้าย GEMINI.md ไปไว้ใน ./agents/

@@ -416,8 +416,38 @@
         .catalog-status {
             font-size: 13px;
             color: #64748b;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             min-height: 18px;
+        }
+
+        .year-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .year-chip {
+            padding: 4px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #f8fafc;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .year-chip:hover {
+            border-color: var(--secondary-blue);
+            color: var(--secondary-blue);
+        }
+
+        .year-chip.active {
+            background: var(--secondary-blue);
+            border-color: var(--secondary-blue);
+            color: #fff;
         }
 
         .catalog-empty {
@@ -466,6 +496,20 @@
             padding: 12px 15px;
             font-size: 14px;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-year {
+            font-size: 11px;
+            font-weight: normal;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .cat-body {
@@ -748,6 +792,8 @@
 
                 <div id="catalogStatus" class="catalog-status"></div>
 
+                <div class="year-filter" id="yearFilter"></div>
+
                 <div class="catalog-grid" id="catalogGrid"></div>
             </div>
         </div>
@@ -768,9 +814,11 @@
         // tokenizes Thai, writes catalog/catalog-index.json).
         const CatalogSearch = (function () {
             let items = [];
+            let activeYear = null;
             const grid = document.getElementById('catalogGrid');
             const statusEl = document.getElementById('catalogStatus');
             const input = document.getElementById('txtSearch');
+            const yearFilterEl = document.getElementById('yearFilter');
 
             const norm = s => (s || '').toString().toLowerCase().normalize('NFC');
             const escHtml = s => (s || '').replace(/[&<>"']/g, c =>
@@ -816,9 +864,10 @@
             function cardHtml(it, terms) {
                 const tags = (it.tags || []).map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
                 const url = it.url || '#';
+                const yearBadge = it.year ? `<span class="cat-year">พ.ศ. ${it.year}</span>` : '';
                 return `
                     <div class="cat-item">
-                        <div class="cat-header"><i class="fa-solid ${escHtml(it.icon || 'fa-file-lines')}"></i> ${highlight(it.org, terms)}</div>
+                        <div class="cat-header"><i class="fa-solid ${escHtml(it.icon || 'fa-file-lines')}"></i> ${highlight(it.org, terms)}${yearBadge}</div>
                         <div class="cat-body">
                             <h4>${highlight(it.title, terms)}</h4>
                             <p>${highlight(it.desc, terms)}</p>
@@ -828,13 +877,31 @@
                     </div>`;
             }
 
+            function buildYearChips() {
+                const fromData = new Set(items.map(i => i.data.year).filter(Boolean));
+                const KNOWN_YEARS = [2568, 2569, 2570];
+                const years = [...new Set([...fromData, ...KNOWN_YEARS])].sort();
+                const allChip = `<button class="year-chip active" data-year="">ทั้งหมด</button>`;
+                const chips = years.map(y => `<button class="year-chip" data-year="${y}">พ.ศ. ${y}</button>`).join('');
+                yearFilterEl.innerHTML = allChip + chips;
+                yearFilterEl.addEventListener('click', e => {
+                    const btn = e.target.closest('.year-chip');
+                    if (!btn) return;
+                    yearFilterEl.querySelectorAll('.year-chip').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeYear = btn.dataset.year ? Number(btn.dataset.year) : null;
+                    render(input.value);
+                });
+            }
+
             function render(query) {
                 const terms = norm(query).split(/\s+/).filter(Boolean);
+                let pool = activeYear ? items.filter(i => i.data.year === activeYear) : items;
                 let matches;
                 if (terms.length === 0) {
-                    matches = items.map(i => i.data);
+                    matches = pool.map(i => i.data);
                 } else {
-                    matches = items
+                    matches = pool
                         .map(i => ({ data: i.data, s: score(i, terms) }))
                         .filter(x => x.s > 0)
                         .sort((a, b) => b.s - a.s)
@@ -842,13 +909,17 @@
                 }
 
                 if (matches.length === 0) {
-                    grid.innerHTML = '<div class="catalog-empty">ไม่พบผลงานที่ตรงกับคำค้นหา ลองใช้คำที่สั้นลงหรือคำอื่น</div>';
+                    const emptyMsg = (activeYear && pool.length === 0)
+                        ? `ยังไม่มีผลงานรุ่น พ.ศ. ${activeYear} — รอผลงานจากผู้เรียนรุ่นนี้`
+                        : 'ไม่พบผลงานที่ตรงกับคำค้นหา ลองใช้คำที่สั้นลงหรือคำอื่น';
+                    grid.innerHTML = `<div class="catalog-empty">${emptyMsg}</div>`;
                 } else {
                     grid.innerHTML = matches.map(it => cardHtml(it, terms)).join('');
                 }
 
-                statusEl.textContent = terms.length
-                    ? `พบ ${matches.length} ผลงาน จากทั้งหมด ${items.length}`
+                const total = activeYear ? pool.length : items.length;
+                statusEl.textContent = (terms.length || activeYear)
+                    ? `พบ ${matches.length} ผลงาน จากทั้งหมด ${total}`
                     : `ทั้งหมด ${items.length} ผลงาน`;
             }
 
@@ -864,7 +935,7 @@
 
                 fetch('catalog/catalog-index.json')
                     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-                    .then(data => { prepare(data); render(''); })
+                    .then(data => { prepare(data); buildYearChips(); render(''); })
                     .catch(err => {
                         grid.innerHTML = '<div class="catalog-empty">ไม่สามารถโหลดข้อมูล Catalog ได้<br>' +
                             '(ต้องเปิดผ่านเว็บเซิร์ฟเวอร์ และต้องมีไฟล์ catalog/catalog-index.json)</div>';

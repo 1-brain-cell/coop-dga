@@ -11,7 +11,8 @@
       "Agriculture",
       "Storyboard",
       "Economy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dga306-3-safwan-paeroh",
@@ -25,7 +26,8 @@
       "Tourism",
       "Environment",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "mnr-presentation-hame-k",
@@ -39,7 +41,8 @@
       "Environment",
       "Urban",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "data-visualization-laddawan-yeadyad",
@@ -53,7 +56,8 @@
       "Agriculture",
       "Statistics",
       "Visualization"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dga306",
@@ -67,7 +71,8 @@
       "Agriculture",
       "Weather",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dga306-1-rasamee-somsat-1",
@@ -81,7 +86,8 @@
       "Geology",
       "Resources",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dga306-1-rasamee-somsat",
@@ -95,7 +101,8 @@
       "Geology",
       "Resources",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dga306-2567-pattanachai-choothong",
@@ -109,7 +116,8 @@
       "Commerce",
       "SMEs",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "diwfactory-nattaya-u",
@@ -123,7 +131,8 @@
       "Industry",
       "Factory",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "farmers-market-1-orasa-sy",
@@ -137,7 +146,8 @@
       "Agriculture",
       "Commerce",
       "Marketing"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "i-love-sushiro-naruerat-c",
@@ -151,7 +161,8 @@
       "Science",
       "Services",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "mind-spm-narongrit-tinikul",
@@ -165,7 +176,8 @@
       "Industry",
       "Management",
       "Policy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "ppt-ncd-resident-playbook-premkamon-s",
@@ -179,7 +191,8 @@
       "Health",
       "Policy",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "present-data4society-kittaporn-jainan",
@@ -193,7 +206,8 @@
       "Society",
       "Digital",
       "DGA"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "presentation-papin-thanutchapat",
@@ -207,7 +221,8 @@
       "Energy",
       "Economy",
       "Policy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "presentation",
@@ -221,7 +236,8 @@
       "Utilities",
       "Water",
       "Quality"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "project-iampiknik-piknik",
@@ -235,7 +251,8 @@
       "Society",
       "Youth",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "slide",
@@ -249,7 +266,8 @@
       "Agriculture",
       "Registration",
       "Policy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "workshop-dga306-diw-2-jittima-ks",
@@ -263,7 +281,8 @@
       "Industry",
       "Safety",
       "License"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "matchima-tongjeen",
@@ -277,7 +296,8 @@
       "Justice",
       "Statistics",
       "Legal"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dds-benjaporn-ping",
@@ -291,7 +311,8 @@
       "Justice",
       "Correctional",
       "Statistics"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "nunthanics-official",
@@ -305,7 +326,8 @@
       "Culture",
       "Food",
       "Economy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "worajit-busaba",
@@ -319,7 +341,8 @@
       "Trade",
       "Export",
       "Industry"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "thanakorn-namuang",
@@ -333,7 +356,8 @@
       "Commerce",
       "SMEs",
       "Management"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "1-suthida-chiadchat",
@@ -347,7 +371,8 @@
       "Trade",
       "Agriculture",
       "Export"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "dga306-khan-tarot",
@@ -361,7 +386,8 @@
       "Science",
       "Education",
       "Astronomy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "orasa-sy",
@@ -375,7 +401,8 @@
       "Agriculture",
       "Commerce",
       "Marketing"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "ev-charging-station",
@@ -389,7 +416,8 @@
       "Energy",
       "EV",
       "Metrology"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "pornpreecha-hansadeja",
@@ -403,7 +431,8 @@
       "Environment",
       "Climate",
       "Policy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "ss-dd",
@@ -417,7 +446,8 @@
       "Agriculture",
       "Environment",
       "PM2.5"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "supaporn-wongniyom",
@@ -431,7 +461,8 @@
       "Commerce",
       "SMEs",
       "CaseStudy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "co2-phatcharintorn-deesomjorranee",
@@ -445,7 +476,8 @@
       "Environment",
       "Space",
       "GISTDA"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "pramuan-yingyong",
@@ -459,7 +491,8 @@
       "Trade",
       "Export",
       "Economy"
-    ]
+    ],
+    "year": 2568
   },
   {
     "id": "2-pramuan-yingyong",
@@ -473,6 +506,7 @@
       "Trade",
       "Export",
       "Economy"
-    ]
+    ],
+    "year": 2568
   }
 ]

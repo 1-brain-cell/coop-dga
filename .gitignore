@@ -1,4 +1,4 @@
-# Catalog build inputs (source PDFs) — not needed by the site.
+# Catalog build inputs (source PDFs) not needed by the site.
 # Extracted text already lives in catalog/catalog-index.json.
 catalog/raw/
 
@@ -7,8 +7,4 @@ catalog/*.bak
 __pycache__/
 *.pyc
 
-# Unnecessary scripts and helper files
-catalog/merge_links.py
-catalog/update_metadata.py
-catalog/google_drive_links.json
-catalog/google_drive_links.md
+catalog/_archive/
