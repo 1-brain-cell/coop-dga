@@ -806,3 +806,72 @@ plan แก้ไขงานเพิ่มเติม
 
 * แก้ไข readme ใน ./catalog/
 * จัดระเบียบโดยการย้าย GEMINI.md ไปไว้ใน ./agents/
+
+---
+
+# บันทึกการแก้ไข (Edit Timeline) - day5.html
+
+Catalog-related updates made after the previous `day5.html` Catalog commit.
+
+---
+
+## 1. Preserve-safe Catalog build pipeline
+*   **What changed**: Refactored `catalog/build_index.py` so normal builds no longer re-extract all existing PDFs.
+*   **Code changes**:
+    *   **Baseline loading**: Normal build now reads the existing `catalog/catalog-index.json` and uses it as the baseline for generated entries.
+    *   **Content preservation**: Existing entries keep their previous `content` and `content_tokens` by default. This protects good OCR-derived text from being replaced by empty or noisy extraction output.
+    *   **New entry behavior**: New entries extract content only when a local PDF exists in `catalog/raw/`. If no local PDF exists, the entry is generated as metadata-only and the build warns.
+    *   **Removed IDs**: Entries removed from `catalog/sources.json` are removed from the generated index and reported during build.
+    *   **Refresh modes**: Added explicit content refresh commands with `--refresh-content <id>` and `--refresh-all-content`.
+    *   **Destructive clear guard**: Added `--allow-clear-content` as the only flag that allows existing non-empty `content` or `content_tokens` to be replaced by empty output.
+
+---
+
+## 2. Added PDF hash tracking for Catalog entries
+*   **What changed**: Added `pdf_hash` to generated catalog entries when a local PDF is available.
+*   **Code changes**:
+    *   **Hash source**: `pdf_hash` is computed from the SHA-256 hash of the local PDF bytes.
+    *   **Change warning**: If the local PDF hash differs from the hash already stored in `catalog-index.json`, the build warns but does not refresh or clear content automatically.
+    *   **Missing raw PDFs**: Existing `pdf_hash` values are preserved even when old PDFs are no longer present in `catalog/raw/`.
+
+---
+
+## 3. Migrated Catalog IDs to sequential primary keys
+*   **What changed**: Migrated Catalog IDs from long descriptive strings to stable sequential IDs.
+*   **Code changes**:
+    *   **sources.json**: Updated all 34 existing entries to use `cat001` through `cat034`.
+    *   **catalog-index.json**: Updated the generated index IDs with the same mapping.
+    *   **Preserved fields**: Kept existing `content`, `content_tokens`, `pdf_hash`, `filename`, `url`, and metadata fields intact during the migration.
+    *   **ID policy**: Documented that `id` is a primary key, new entries use the next `catNNN` number, and ID changes require a deliberate migration.
+
+---
+
+## 4. Simplified Drive link workflow with drive_url
+*   **What changed**: Replaced the active `--link-drive` workflow with direct `drive_url` support in `catalog/sources.json`.
+*   **Code changes**:
+    *   **URL priority**: `make_url()` now resolves links in this order: explicit `url`, parsed `drive_url`, then legacy `drive_file_id`.
+    *   **Drive URL parsing**: Added support for common Google Drive formats such as `/file/d/<ID>/view`, `/open?id=<ID>`, and `/uc?export=download&id=<ID>`.
+    *   **Legacy support**: Existing `drive_file_id` entries still work as fallback.
+    *   **Discover stubs**: `--discover` now creates new stubs with `drive_url`, `drive_file_id`, and `year`.
+    *   **Removed workflow**: Removed active `--link-drive`, `DRIVE_LINKS`, `link_drive()`, and `google_drive_links.json` logic from the build script.
+    *   **Ignore rule**: Added the local OCR data path to `.gitignore`.
+
+---
+
+## 5. Updated Catalog documentation
+*   **What changed**: Reorganized `catalog/README.md` to put daily maintainer workflows first.
+*   **Documentation changes**:
+    *   **Quick rules**: Added top-level guidance to edit `sources.json`, avoid committing `raw/`, and keep IDs stable.
+    *   **New entry workflow**: Documented the current flow: place PDFs in `catalog/raw/`, run `--discover`, fill `drive_url`, metadata, and `year`, then run `--strict`.
+    *   **Preserve-safe behavior**: Documented that normal builds preserve existing `content`, `content_tokens`, and `pdf_hash`.
+    *   **Refresh guidance**: Clarified when to use `--refresh-content`, `--refresh-all-content`, `--allow-clear-content`, and `--no-ocr`.
+    *   **Build modes**: Grouped common and advanced commands and removed references to `--link-drive`.
+
+---
+
+## 6. Cleaned build script comments and docstrings
+*   **What changed**: Cleaned comments and docstrings in `catalog/build_index.py` without changing runtime behavior.
+*   **Code changes**:
+    *   **Readability**: Replaced stale Thai/English mixed comments and decorative separators with concise English comments.
+    *   **Preserved explanations**: Kept comments where they clarify non-obvious behavior, including preserve-safe builds, OCR fallback, hash warnings, refresh behavior, and Drive URL generation.
+    *   **Verification**: Confirmed `catalog/catalog-index.json`, `catalog/sources.json`, and `day5.html` remained unchanged after strict build verification.
