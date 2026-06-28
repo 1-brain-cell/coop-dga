@@ -8,7 +8,6 @@ Pipeline (1 เส้น):
 โหมด (ใช้ร่วมกันได้หลายโหมดพร้อมกัน):
     (ไม่มี flag)        build ปกติ — preserve content เดิม, extract เฉพาะ entry ใหม่
     --discover          สแกน raw/*.pdf แล้วเติม stub entry ลง sources.json (ใช้ตอนเพิ่มไฟล์ใหม่)
-    --link-drive        เติม drive_file_id โดย match ชื่อไฟล์กับ google_drive_links.json
     --download          ลองดาวน์โหลดไฟล์ Drive สาธารณะลง raw/ อัตโนมัติ
     --refresh-content ID extract content ใหม่ให้ ID เดียว
     --refresh-all-content extract content ใหม่ทุก ID ที่มี local PDF
@@ -29,12 +28,12 @@ import json
 import re
 import sys
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 HERE = Path(__file__).resolve().parent
 SOURCES = HERE / "sources.json"
 RAW_DIR = HERE / "raw"
 OUTPUT = HERE / "catalog-index.json"
-DRIVE_LINKS = HERE / "google_drive_links.json"
 
 DRIVE_VIEW = "https://drive.google.com/file/d/{fid}/view?usp=sharing"
 DRIVE_DOWNLOAD = "https://drive.google.com/uc?export=download&id={fid}"
@@ -261,7 +260,7 @@ def download_from_drive(fid: str, dest: Path) -> bool:
 
 
 # ──────────────────────────────────────────────
-# PDF locator + slug helper
+# PDF locator + ID helper
 # ──────────────────────────────────────────────
 
 def find_pdf(entry: dict) -> Path | None:
@@ -277,10 +276,6 @@ def find_pdf(entry: dict) -> Path | None:
         if c.exists():
             return c
     return None
-
-
-def slugify(name: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
 def next_catalog_id(sources: list[dict]) -> str:
@@ -326,11 +321,32 @@ def make_content_tokens(entry: dict, filename: str, content: str) -> str:
     return thai_tokenize(searchable)
 
 
+def extract_drive_file_id(value: str) -> str | None:
+    if not value:
+        return None
+    m = re.search(r"/file/d/([A-Za-z0-9_-]+)(?:/|$)", value)
+    if m:
+        return m.group(1)
+    try:
+        parsed = urlparse(value)
+    except Exception:
+        return None
+    ids = parse_qs(parsed.query).get("id")
+    if ids and re.fullmatch(r"[A-Za-z0-9_-]+", ids[0]):
+        return ids[0]
+    return None
+
+
 def make_url(entry: dict) -> str | None:
     url = entry.get("url")
-    if not url and entry.get("drive_file_id"):
-        url = DRIVE_VIEW.format(fid=entry["drive_file_id"])
-    return url
+    if url:
+        return url
+    drive_url_fid = extract_drive_file_id(entry.get("drive_url", ""))
+    if drive_url_fid:
+        return DRIVE_VIEW.format(fid=drive_url_fid)
+    if entry.get("drive_file_id"):
+        return DRIVE_VIEW.format(fid=entry["drive_file_id"])
+    return None
 
 
 def make_filename(entry: dict, eid: str, pdf_path: Path | None,
@@ -352,7 +368,7 @@ def discover() -> None:
     """Scan raw/*.pdf and add a stub entry to sources.json for any new file.
 
     วาง PDF ลง raw/ แล้วรัน --discover จะได้ entry ใน sources.json ให้กรอก
-    org / drive_file_id / title ต่อ (title ถูกเดาจากชื่อไฟล์ก่อน)
+    drive_url / org / title ต่อ (title ถูกเดาจากชื่อไฟล์ก่อน)
     """
     RAW_DIR.mkdir(exist_ok=True)
     sources = json.loads(SOURCES.read_text(encoding="utf-8")) if SOURCES.exists() else []
@@ -374,12 +390,14 @@ def discover() -> None:
         sources.append({
             "id": eid,
             "file": pdf.name,
-            "drive_file_id": "",   # TODO: เติมจาก URL แชร์ Drive (/d/<ID>/view)
+            "drive_url": "",       # TODO: วาง URL แชร์ Drive
+            "drive_file_id": "",   # legacy fallback; prefer drive_url
             "icon": "fa-file-lines",
             "org": "",             # TODO: ชื่อหน่วยงาน
             "title": stem,         # เดาจากชื่อไฟล์ — แก้ตามต้องการ
             "desc": "",
             "tags": [],
+            "year": "",
         })
         added += 1
         print(f"  + discovered {pdf.name}  ->  id={eid}")
@@ -390,84 +408,6 @@ def discover() -> None:
     )
     print(f"discover: added {added} new entr{'y' if added == 1 else 'ies'} "
           f"to {SOURCES.name} (total {len(sources)})")
-
-
-# ──────────────────────────────────────────────
-# Mode: --link-drive  (เติม drive_file_id จาก google_drive_links.json)
-# ──────────────────────────────────────────────
-
-def _sanitize_filename(name: str) -> str:
-    """Normalize filename for fuzzy matching (lowercase, strip ext, collapse separators)."""
-    if not name:
-        return ""
-    name = name.lower()
-    name = re.sub(r"\.pdf$", "", name)
-    name = re.sub(r"[_\s']+", " ", name)
-    return name.strip()
-
-
-def _extract_fid(url: str) -> str:
-    m = re.search(r"/d/([^/]+)", url or "")
-    return m.group(1) if m else ""
-
-
-def link_drive(links_path: Path = DRIVE_LINKS) -> None:
-    """เติม drive_file_id ลง sources.json โดย match ชื่อไฟล์กับ google_drive_links.json
-
-    - ไม่ทับ drive_file_id ที่มีอยู่แล้ว
-    - รายงาน unmatched (ชื่อไฟล์ไม่ตรง) และ ambiguous (ซ้ำหลาย URL)
-    """
-    if not links_path.exists():
-        print(f"--link-drive: ไม่พบ {links_path} — ข้าม", file=sys.stderr)
-        return
-
-    sources = json.loads(SOURCES.read_text(encoding="utf-8"))
-    links = json.loads(links_path.read_text(encoding="utf-8"))
-
-    # แมป sanitized-name → [file_id, ...]
-    by_name: dict[str, list[str]] = {}
-    for lnk in links:
-        san = _sanitize_filename(lnk["name"])
-        by_name.setdefault(san, []).append(_extract_fid(lnk["url"]))
-
-    unmatched, filled = [], 0
-    for entry in sources:
-        if entry.get("drive_file_id"):
-            continue
-        fn = entry.get("file")
-        if not fn:
-            continue
-
-        san_fn = _sanitize_filename(fn)
-
-        # ถ้าชื่อมี (1) ให้ลอง match แบบไม่มี (1) ด้วย เช่น Rasamee(1) → Rasamee
-        is_dupe_variant = False
-        if "(1)" in fn:
-            san_no1 = _sanitize_filename(fn.replace("(1)", ""))
-            if san_no1 in by_name:
-                san_fn = san_no1
-                is_dupe_variant = True
-
-        ids = by_name.get(san_fn)
-        if not ids:
-            unmatched.append(fn)
-        elif len(ids) > 1:
-            # ชื่อซ้ำ: ไฟล์ที่มี (1) ใช้ id ที่ 2, ไฟล์ปกติใช้ id แรก
-            entry["drive_file_id"] = ids[1] if is_dupe_variant else ids[0]
-            filled += 1
-        else:
-            entry["drive_file_id"] = ids[0]
-            filled += 1
-
-    SOURCES.write_text(
-        json.dumps(sources, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    print(f"link-drive: เติม drive_file_id ให้ {filled} entry")
-    if unmatched:
-        print(f"  unmatched ({len(unmatched)} ชิ้น — เติมมือใน sources.json):")
-        for fn in unmatched:
-            print(f"    {fn}")
 
 
 # ──────────────────────────────────────────────
@@ -591,7 +531,7 @@ def print_summary(index: list[dict], strict: bool) -> int:
     print(f"  รวม: {len(index)} entry")
 
     if no_url:
-        print(f"\n  ⚠  ปุ่ม 'เปิดเอกสาร PDF' ใช้ไม่ได้ ({len(no_url)} entry) — ต้องเติม drive_file_id หรือ url:")
+        print(f"\n  ⚠  ปุ่ม 'เปิดเอกสาร PDF' ใช้ไม่ได้ ({len(no_url)} entry) — ต้องเติม drive_url, drive_file_id หรือ url:")
         for it in no_url:
             print(f"       {it['id']}")
     else:
@@ -638,17 +578,12 @@ def main() -> None:
                         help="อนุญาตให้ refresh ทับ content/content_tokens เดิมด้วยค่าว่าง")
     parser.add_argument("--discover", action="store_true",
                         help="สแกน raw/*.pdf เติม stub entry ลง sources.json แล้ว build")
-    parser.add_argument("--link-drive", action="store_true",
-                        help="เติม drive_file_id โดย match ชื่อไฟล์กับ google_drive_links.json")
     parser.add_argument("--strict", action="store_true",
                         help="exit code 1 ถ้ามี entry ที่ปุ่ม PDF ใช้ไม่ได้ (ใช้ก่อน commit)")
     args = parser.parse_args()
 
     if args.discover:
         discover()
-
-    if args.link_drive:
-        link_drive()
 
     if not SOURCES.exists():
         sys.exit(f"missing {SOURCES} — สร้างไฟล์นี้ก่อน (หรือรัน --discover)")

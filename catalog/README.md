@@ -15,10 +15,12 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
 | `sources.json` | รายการผลงาน — **แก้ที่นี่** | ✓ |
 | `build_index.py` | สคริปต์สร้าง index | ✓ |
 | `catalog-index.json` | index ที่เว็บโหลด (generate อัตโนมัติ) | ✓ |
-| `raw/` | PDF ต้นฉบับ (build input เท่านั้น) | ✗ |
+| `raw/` | PDF ชั่วคราวสำหรับ build/extract เท่านั้น | ✗ |
 | `_archive/` | สคริปต์ helper เก่า ไว้อ้างอิง | ✗ |
 
 > **กฎเหล็ก:** แก้ข้อมูลที่ `sources.json` เสมอ — ห้ามแก้ `catalog-index.json` ตรง ๆ เพราะมันถูก generate จาก `sources.json`
+
+`sources.json` เป็น active source of truth เพียงไฟล์เดียวสำหรับ metadata
 
 ## ID policy
 
@@ -28,7 +30,7 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
 - Entry ใหม่ให้ใช้เลขถัดไปจาก ID สูงสุดที่มีอยู่ เช่น ถ้าสูงสุดคือ `cat034` ให้ใช้ `cat035`
 - ห้ามเปลี่ยน ID เดิมแบบ casual edit เพราะจะทำให้ content ที่ preserve อยู่ใน `catalog-index.json` จับคู่ผิด entry
 - การเปลี่ยน ID ต้องเป็น deliberate migration ที่อัปเดตทั้ง `sources.json` และ `catalog-index.json` พร้อมกัน
-- การแก้ metadata ปกติ เช่น `org`, `title`, `desc`, `tags`, `year`, `drive_file_id` ไม่ควรเปลี่ยน `id`
+- การแก้ metadata ปกติ เช่น `org`, `title`, `desc`, `tags`, `year`, `drive_url` ไม่ควรเปลี่ยน `id`
 
 ## Preserve-safe build workflow
 
@@ -51,6 +53,7 @@ python build_index.py --strict
 - ถ้า ID ถูกลบออกจาก `sources.json` จะถูกลบจาก `catalog-index.json` และรายงานท้าย build
 - เพิ่ม `pdf_hash` ให้ entry ที่มี local PDF
 - ถ้า `pdf_hash` เปลี่ยน จะเตือนเท่านั้น ไม่ refresh หรือ clear content อัตโนมัติ
+- หลัง entry ถูก index แล้ว PDF เก่าใน `raw/` สามารถลบออกได้ เพราะ build ปกติ preserve `content`, `content_tokens`, และ `pdf_hash` จาก `catalog-index.json`
 
 เมื่อต้องการ refresh เนื้อหา PDF ให้ทำแบบชัดเจน:
 
@@ -79,16 +82,17 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
    └─ สร้าง stub entry ใน sources.json (title เดาจากชื่อไฟล์)
 
 3. เปิด sources.json แก้ entry ใหม่:
-   └─ drive_file_id  ← เอา ID จาก URL Drive: .../d/<ID>/view
+   └─ drive_url      ← วาง URL แชร์ Drive เต็ม ๆ
    └─ org            ← ชื่อหน่วยงาน (บังคับ)
    └─ title          ← ชื่อผลงานที่อ่านแล้วเข้าใจ
    └─ desc, tags     ← optional แต่ช่วยให้ค้นเจอ
+   └─ year           ← ปี พ.ศ. เช่น 2568
 
 4. python build_index.py --strict
    └─ build แบบ preserve-safe + extract เฉพาะ entry ใหม่ + ตรวจว่าครบ
 
 5. commit: sources.json + catalog-index.json
-   └─ ห้าม commit raw/
+   └─ ห้าม commit raw/; หลัง index แล้วลบ PDF เก่าออกจาก raw/ ได้
 ```
 
 ---
@@ -99,7 +103,8 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 {
   "id": "cat035",
   "file": "ชื่อไฟล์.pdf",
-  "drive_file_id": "1AbCdEfGhIjK...",
+  "drive_url": "https://drive.google.com/file/d/1AbCdEfGhIjK/view?usp=sharing",
+  "drive_file_id": "",
   "icon": "fa-chart-line",
   "org": "ชื่อหน่วยงาน",
   "title": "ชื่อผลงาน",
@@ -112,7 +117,8 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 | Field | บังคับ? | หมายเหตุ |
 |---|---|---|
 | `id` | ✓ | primary key, ต้องไม่ซ้ำ, ใช้รูปแบบ `catNNN` และ entry ใหม่ใช้เลขถัดไปจากเลขสูงสุด |
-| `drive_file_id` | ✓* | เอาจาก URL: `drive.google.com/file/d/**<ID>**/view` |
+| `drive_url` | ✓* | URL แชร์ Drive เต็ม ๆ เช่น `drive.google.com/file/d/<ID>/view`; build จะ parse ID ให้เอง |
+| `drive_file_id` | optional/legacy | ใช้ได้เหมือนเดิมเป็น fallback ถ้ายังมี entry เก่า หรือถ้า `drive_url` malformed |
 | `org` | ✓ | ชื่อหน่วยงาน — ใช้ค้นหาด้วยชื่อหน่วยงาน |
 | `title` | ✓ | ชื่อผลงาน |
 | `year` | ✓ | ปี พ.ศ. ที่ผลิตผลงาน เช่น `2568` — แสดงใน card และใช้กับ filter chip; chip ปีจะขึ้นอัตโนมัติเมื่อมีข้อมูล ถ้าอยากให้ chip ขึ้นล่วงหน้าก่อนมีข้อมูล ให้เพิ่มเลขปีเข้าไปใน `KNOWN_YEARS` ใน `day5.html` |
@@ -120,9 +126,9 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 | `desc` | optional | คำอธิบาย — ช่วยค้นเจอมากขึ้น |
 | `tags` | optional | array ของ tag เช่น `["Health", "Statistics"]` |
 | `icon` | optional | Font Awesome class เช่น `fa-chart-line`, `fa-leaf` |
-| `url` | optional | ใส่เองถ้าไม่ใช่ Drive, ไม่ใส่ก็สร้างจาก drive_file_id |
+| `url` | optional | override โดยตรงถ้าไม่ใช่ Drive หรือต้องการลิงก์เฉพาะ; ถ้ามี `url` จะชนะ `drive_url` และ `drive_file_id` |
 
-*ถ้าไม่มี `drive_file_id` และไม่มี `url` ปุ่ม "เปิดเอกสาร PDF" จะกดไม่ได้
+*ถ้าไม่มี `url`, `drive_url`, หรือ `drive_file_id` ปุ่ม "เปิดเอกสาร PDF" จะกดไม่ได้
 
 ---
 
@@ -139,7 +145,7 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 
 | ปัญหา | สาเหตุ | วิธีแก้ |
 |---|---|---|
-| ปุ่ม "เปิดเอกสาร PDF" กดไม่ได้ | `drive_file_id` ว่างหรือไม่มี `url` | เติม `drive_file_id` ใน `sources.json` แล้ว rebuild |
+| ปุ่ม "เปิดเอกสาร PDF" กดไม่ได้ | ไม่มี `url`, `drive_url`, หรือ `drive_file_id` | เติม `drive_url` ใน `sources.json` แล้ว rebuild |
 | ค้นชื่อหน่วยงานไม่เจอ | `org` ว่าง | เติม `org` ใน `sources.json` แล้ว rebuild |
 | ค้นเนื้อหาในไฟล์ไม่ได้สำหรับ entry ใหม่ | ไม่มี PDF ใน `raw/` หรือเป็นสไลด์รูปภาพ | วาง PDF ลง `raw/` แล้ว rebuild (ถ้าเป็นรูปภาพต้องติดตั้ง OCR ก่อน) |
 | ต้องการอ่าน PDF ใหม่สำหรับ entry เดิม | build ปกติ preserve `content` เดิม | ใช้ `--refresh-content <id>` หรือ `--refresh-all-content` |
@@ -153,7 +159,6 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 ```bash
 python build_index.py                  # build ปกติ
 python build_index.py --discover       # เติม stub entry จาก raw/*.pdf
-python build_index.py --link-drive     # เติม drive_file_id จาก google_drive_links.json
 python build_index.py --strict         # build + exit code 1 ถ้า URL ไม่ครบ
 python build_index.py --download       # ลองดาวน์โหลด PDF จาก Drive อัตโนมัติ
 python build_index.py --refresh-content <id>      # extract content ใหม่เฉพาะ ID
