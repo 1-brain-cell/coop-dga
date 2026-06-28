@@ -283,6 +283,15 @@ def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
+def next_catalog_id(sources: list[dict]) -> str:
+    highest = 0
+    for entry in sources:
+        m = re.fullmatch(r"cat(\d{3})", entry.get("id", ""))
+        if m:
+            highest = max(highest, int(m.group(1)))
+    return f"cat{highest + 1:03d}"
+
+
 def file_sha256(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as fh:
@@ -349,10 +358,8 @@ def discover() -> None:
     sources = json.loads(SOURCES.read_text(encoding="utf-8")) if SOURCES.exists() else []
 
     covered: set[str] = set()
-    used_ids: set[str] = set()
+    next_id_num = int(next_catalog_id(sources)[3:])
     for e in sources:
-        if e.get("id"):
-            used_ids.add(e["id"])
         p = find_pdf(e)
         if p:
             covered.add(p.name)
@@ -362,13 +369,8 @@ def discover() -> None:
         if pdf.name in covered:
             continue
         stem = pdf.stem
-        base = slugify(stem) or stem or "doc"
-        eid = base
-        n = 1
-        while eid in used_ids:
-            n += 1
-            eid = f"{base}-{n}"
-        used_ids.add(eid)
+        eid = f"cat{next_id_num:03d}"
+        next_id_num += 1
         sources.append({
             "id": eid,
             "file": pdf.name,
@@ -512,7 +514,7 @@ def build(use_ocr: bool, do_download: bool, refresh_ids: set[str],
 
         filename = make_filename(entry, eid, pdf_path, existing)
 
-        pdf_hash = None
+        pdf_hash = existing.get("pdf_hash") if existing else None
         if pdf_path:
             pdf_hash = file_sha256(pdf_path)
             old_hash = existing.get("pdf_hash") if existing else None

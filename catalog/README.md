@@ -20,6 +20,16 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
 
 > **กฎเหล็ก:** แก้ข้อมูลที่ `sources.json` เสมอ — ห้ามแก้ `catalog-index.json` ตรง ๆ เพราะมันถูก generate จาก `sources.json`
 
+## ID policy
+
+`id` เป็น primary key ของ catalog entry ใช้จับคู่ข้อมูลระหว่าง `sources.json` และ `catalog-index.json`
+
+- รูปแบบ ID คือ `catNNN` เช่น `cat001`, `cat002`, `cat035`
+- Entry ใหม่ให้ใช้เลขถัดไปจาก ID สูงสุดที่มีอยู่ เช่น ถ้าสูงสุดคือ `cat034` ให้ใช้ `cat035`
+- ห้ามเปลี่ยน ID เดิมแบบ casual edit เพราะจะทำให้ content ที่ preserve อยู่ใน `catalog-index.json` จับคู่ผิด entry
+- การเปลี่ยน ID ต้องเป็น deliberate migration ที่อัปเดตทั้ง `sources.json` และ `catalog-index.json` พร้อมกัน
+- การแก้ metadata ปกติ เช่น `org`, `title`, `desc`, `tags`, `year`, `drive_file_id` ไม่ควรเปลี่ยน `id`
+
 ## Preserve-safe build workflow
 
 `sources.json` เป็น source of truth สำหรับ metadata ที่แก้มือได้ ส่วน `catalog-index.json` เป็น generated search index ที่เก็บ `content` และ `content_tokens` จาก PDF ด้วย
@@ -87,7 +97,7 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 
 ```json
 {
-  "id": "unique-kebab-id",
+  "id": "cat035",
   "file": "ชื่อไฟล์.pdf",
   "drive_file_id": "1AbCdEfGhIjK...",
   "icon": "fa-chart-line",
@@ -101,7 +111,7 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 
 | Field | บังคับ? | หมายเหตุ |
 |---|---|---|
-| `id` | ✓ | ต้องไม่ซ้ำ, kebab-case, `--discover` สร้างให้อัตโนมัติ |
+| `id` | ✓ | primary key, ต้องไม่ซ้ำ, ใช้รูปแบบ `catNNN` และ entry ใหม่ใช้เลขถัดไปจากเลขสูงสุด |
 | `drive_file_id` | ✓* | เอาจาก URL: `drive.google.com/file/d/**<ID>**/view` |
 | `org` | ✓ | ชื่อหน่วยงาน — ใช้ค้นหาด้วยชื่อหน่วยงาน |
 | `title` | ✓ | ชื่อผลงาน |
