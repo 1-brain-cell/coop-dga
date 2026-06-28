@@ -18,7 +18,44 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
 | `raw/` | PDF ต้นฉบับ (build input เท่านั้น) | ✗ |
 | `_archive/` | สคริปต์ helper เก่า ไว้อ้างอิง | ✗ |
 
-> **กฎเหล็ก:** แก้ข้อมูลที่ `sources.json` เสมอ — ห้ามแก้ `catalog-index.json` ตรง ๆ เพราะมันถูก generate ทับทุกครั้งที่ build
+> **กฎเหล็ก:** แก้ข้อมูลที่ `sources.json` เสมอ — ห้ามแก้ `catalog-index.json` ตรง ๆ เพราะมันถูก generate จาก `sources.json`
+
+## Preserve-safe build workflow
+
+`sources.json` เป็น source of truth สำหรับ metadata ที่แก้มือได้ ส่วน `catalog-index.json` เป็น generated search index ที่เก็บ `content` และ `content_tokens` จาก PDF ด้วย
+
+Build ปกติเป็นแบบ preserve-safe:
+
+```bash
+python build_index.py --strict
+```
+
+พฤติกรรมของ build ปกติ:
+
+- โหลด `catalog-index.json` เดิมเป็น baseline
+- อัปเดต metadata จาก `sources.json`
+- เก็บ `content` และ `content_tokens` เดิมของ entry ที่มีอยู่แล้ว
+- ไม่ extract PDF ซ้ำสำหรับ entry เดิม
+- extract content เฉพาะ entry ใหม่ที่มี PDF ใน `raw/`
+- ถ้า entry ใหม่ไม่มี PDF จะสร้าง metadata-only entry และเตือน
+- ถ้า ID ถูกลบออกจาก `sources.json` จะถูกลบจาก `catalog-index.json` และรายงานท้าย build
+- เพิ่ม `pdf_hash` ให้ entry ที่มี local PDF
+- ถ้า `pdf_hash` เปลี่ยน จะเตือนเท่านั้น ไม่ refresh หรือ clear content อัตโนมัติ
+
+เมื่อต้องการ refresh เนื้อหา PDF ให้ทำแบบชัดเจน:
+
+```bash
+python build_index.py --refresh-content unique-kebab-id --strict
+python build_index.py --refresh-all-content --strict
+```
+
+ถ้า refresh แล้ว extraction ได้ค่าว่าง แต่ entry เดิมมี `content` หรือ `content_tokens` อยู่ สคริปต์จะ preserve ค่าเดิมไว้ เพื่อไม่ให้ OCR-derived content หายโดยไม่ตั้งใจ
+
+ใช้ flag นี้เฉพาะเมื่อยอมรับได้จริง ๆ ว่าจะล้าง content เดิม:
+
+```bash
+python build_index.py --refresh-content unique-kebab-id --allow-clear-content --strict
+```
 
 ---
 
@@ -38,7 +75,7 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
    └─ desc, tags     ← optional แต่ช่วยให้ค้นเจอ
 
 4. python build_index.py --strict
-   └─ rebuild + ตรวจว่าครบ (ดูสรุปท้าย — แก้จนไม่มี ⚠)
+   └─ build แบบ preserve-safe + extract เฉพาะ entry ใหม่ + ตรวจว่าครบ
 
 5. commit: sources.json + catalog-index.json
    └─ ห้าม commit raw/
@@ -83,7 +120,7 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
 
 1. เปิด `sources.json` หา entry ตาม `id` หรือ `file`
 2. แก้ค่าที่ต้องการ
-3. `python build_index.py` (หรือ `--strict` ก่อน commit)
+3. `python build_index.py --strict`
 4. commit `sources.json` + `catalog-index.json`
 
 ---
@@ -94,7 +131,9 @@ raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json  
 |---|---|---|
 | ปุ่ม "เปิดเอกสาร PDF" กดไม่ได้ | `drive_file_id` ว่างหรือไม่มี `url` | เติม `drive_file_id` ใน `sources.json` แล้ว rebuild |
 | ค้นชื่อหน่วยงานไม่เจอ | `org` ว่าง | เติม `org` ใน `sources.json` แล้ว rebuild |
-| ค้นเนื้อหาในไฟล์ไม่ได้ | ไม่มี PDF ใน `raw/` หรือเป็นสไลด์รูปภาพ | วาง PDF ลง `raw/` แล้ว rebuild (ถ้าเป็นรูปภาพต้องติดตั้ง OCR ก่อน) |
+| ค้นเนื้อหาในไฟล์ไม่ได้สำหรับ entry ใหม่ | ไม่มี PDF ใน `raw/` หรือเป็นสไลด์รูปภาพ | วาง PDF ลง `raw/` แล้ว rebuild (ถ้าเป็นรูปภาพต้องติดตั้ง OCR ก่อน) |
+| ต้องการอ่าน PDF ใหม่สำหรับ entry เดิม | build ปกติ preserve `content` เดิม | ใช้ `--refresh-content <id>` หรือ `--refresh-all-content` |
+| `pdf_hash` เปลี่ยน | local PDF เปลี่ยนจาก baseline | ตรวจว่า PDF ถูกต้อง แล้วใช้ `--refresh-content <id>` ถ้าต้องการ update content |
 | เปิดเว็บแล้ว Catalog ไม่โหลด | เปิดผ่าน `file://` | ต้องเปิดผ่าน HTTP: `python -m http.server 8000` |
 
 ---
@@ -107,6 +146,9 @@ python build_index.py --discover       # เติม stub entry จาก raw/*
 python build_index.py --link-drive     # เติม drive_file_id จาก google_drive_links.json
 python build_index.py --strict         # build + exit code 1 ถ้า URL ไม่ครบ
 python build_index.py --download       # ลองดาวน์โหลด PDF จาก Drive อัตโนมัติ
+python build_index.py --refresh-content <id>      # extract content ใหม่เฉพาะ ID
+python build_index.py --refresh-all-content       # extract content ใหม่ทุก entry ที่มี PDF
+python build_index.py --allow-clear-content       # อนุญาตให้ refresh ล้าง content เดิมถ้า extract ได้ค่าว่าง
 python build_index.py --no-ocr         # ข้าม OCR
 ```
 

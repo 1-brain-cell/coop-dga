@@ -6,10 +6,13 @@ Pipeline (1 เส้น):
     sources.json  +  raw/*.pdf   →   catalog-index.json   →   day5.html โหลดไปค้น
 
 โหมด (ใช้ร่วมกันได้หลายโหมดพร้อมกัน):
-    (ไม่มี flag)        build ปกติ — อ่าน PDF จาก raw/ หรือ metadata อย่างเดียว
+    (ไม่มี flag)        build ปกติ — preserve content เดิม, extract เฉพาะ entry ใหม่
     --discover          สแกน raw/*.pdf แล้วเติม stub entry ลง sources.json (ใช้ตอนเพิ่มไฟล์ใหม่)
     --link-drive        เติม drive_file_id โดย match ชื่อไฟล์กับ google_drive_links.json
     --download          ลองดาวน์โหลดไฟล์ Drive สาธารณะลง raw/ อัตโนมัติ
+    --refresh-content ID extract content ใหม่ให้ ID เดียว
+    --refresh-all-content extract content ใหม่ทุก ID ที่มี local PDF
+    --allow-clear-content อนุญาตให้ refresh ทับ content เดิมด้วยค่าว่าง
     --no-ocr            ข้าม OCR แม้ PDF จะเป็นรูปภาพ
     --strict            exit code 1 ถ้ามี entry ที่ปุ่ม "เปิดเอกสาร PDF" ใช้ไม่ได้
 
@@ -21,6 +24,7 @@ Optional dependencies (สคริปต์ยังรันได้แม้
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -37,6 +41,50 @@ DRIVE_DOWNLOAD = "https://drive.google.com/uc?export=download&id={fid}"
 
 # Heuristic: if a PDF yields fewer chars than this, treat it as image-only and OCR.
 MIN_TEXT_CHARS = 40
+
+
+# ──────────────────────────────────────────────
+# Optional OCR tooling discovery (Tesseract + poppler + tha data)
+#
+# Keep it zero-config for contributors who installed the standard Windows
+# packages (UB-Mannheim Tesseract, oschwartz10612 Poppler via winget) and
+# the Thai data shipped in catalog/tessdata/. If a path isn't found we leave
+# the env alone and rely on whatever is already on PATH.
+# ──────────────────────────────────────────────
+
+def _setup_ocr_tooling() -> None:
+    import os
+
+    # Thai traineddata bundled with the repo (so OCR works without admin install).
+    tessdata = HERE / "tessdata"
+    if (tessdata / "tha.traineddata").exists():
+        os.environ.setdefault("TESSDATA_PREFIX", str(tessdata))
+
+    extra_paths = []
+
+    # poppler (pdftoppm/pdfinfo) — winget package location.
+    for base in [
+        Path(os.environ.get("LOCALAPPDATA", "")) / "Microsoft" / "WinGet" / "Packages",
+    ]:
+        if base.exists():
+            for exe in base.glob("oschwartz10612.Poppler*/**/pdftoppm.exe"):
+                extra_paths.append(str(exe.parent))
+                break
+
+    # Tesseract default install dir.
+    for cand in [
+        Path(r"C:\Program Files\Tesseract-OCR"),
+        Path(r"C:\Program Files (x86)\Tesseract-OCR"),
+    ]:
+        if (cand / "tesseract.exe").exists():
+            extra_paths.append(str(cand))
+            break
+
+    if extra_paths:
+        os.environ["PATH"] = os.environ.get("PATH", "") + os.pathsep + os.pathsep.join(extra_paths)
+
+
+_setup_ocr_tooling()
 
 
 # ──────────────────────────────────────────────
@@ -73,16 +121,21 @@ def extract_with_pdfplumber(pdf_path: Path) -> str:
 
 
 def extract_with_ocr(pdf_path: Path) -> str:
-    """OCR image-only PDFs (Thai + English). Needs pdf2image, pytesseract, Tesseract."""
+    """OCR a PDF (Thai + English). Needs pdf2image, pytesseract, Tesseract + poppler.
+
+    Reads the file as bytes and uses ``convert_from_bytes`` so poppler never has
+    to open a Thai filename itself — on Windows it mangles non-ASCII paths to '?'.
+    """
     try:
-        from pdf2image import convert_from_path
+        from pdf2image import convert_from_bytes
         import pytesseract
     except ImportError:
         print("    OCR libs not installed (pdf2image/pytesseract) — skipping OCR",
               file=sys.stderr)
         return ""
     try:
-        images = convert_from_path(str(pdf_path), dpi=200)
+        data = pdf_path.read_bytes()
+        images = convert_from_bytes(data, dpi=300)
     except Exception as exc:
         print(f"    pdf2image failed (is poppler installed?): {exc}", file=sys.stderr)
         return ""
@@ -94,14 +147,40 @@ def extract_with_ocr(pdf_path: Path) -> str:
             print(f"    tesseract failed (is 'tha' data installed?): {exc}",
                   file=sys.stderr)
             return ""
-    return "\n".join(out)
+    return _collapse_thai_spacing("\n".join(out))
+
+
+# Tesseract sprinkles spaces between Thai glyphs ("ร ถ ย น ต ์" for "รถยนต์").
+# Those break substring search, so glue adjacent single Thai chars back together
+# while keeping spaces that separate Thai from Latin/digits or real word gaps.
+_THAI = r"฀-๿"
+_THAI_GAP = re.compile(rf"(?<=[{_THAI}])\s+(?=[{_THAI}])")
+
+
+def _collapse_thai_spacing(text: str) -> str:
+    lines = []
+    for line in text.splitlines():
+        # Repeatedly remove single spaces sitting between two Thai characters.
+        prev = None
+        while prev != line:
+            prev = line
+            line = _THAI_GAP.sub("", line)
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def _has_little_text(text: str) -> bool:
+    """True for image-only PDFs — no real text layer to extract."""
+    return len(text.strip()) < MIN_TEXT_CHARS
 
 
 def extract_text(pdf_path: Path, use_ocr: bool) -> str:
     text = extract_with_pypdf(pdf_path)
 
-    pypdf_is_bad = len(text.strip()) < MIN_TEXT_CHARS or text.count('\x00') > 5
-    if pypdf_is_bad:
+    # Null chars mean a broken embedded font (garbled Thai). pdfplumber sometimes
+    # recovers a cleaner glyph mapping, so try it — but we do NOT OCR these:
+    # OCR of design-heavy Thai slides is slow and noisier than the broken text.
+    if _has_little_text(text) or text.count('\x00') > 5:
         if text.count('\x00') > 5:
             print(f"    pypdf: {text.count(chr(0))} null chars (garbled font) — trying pdfplumber",
                   file=sys.stderr)
@@ -109,11 +188,9 @@ def extract_text(pdf_path: Path, use_ocr: bool) -> str:
         if plumber_text:
             text = plumber_text
 
-    plumber_is_bad = len(text.strip()) < MIN_TEXT_CHARS or text.count('\x00') > 5
-    if plumber_is_bad and use_ocr:
-        reason = ("little/no text" if len(text.strip()) < MIN_TEXT_CHARS
-                  else f"{text.count(chr(0))} null characters")
-        print(f"    {reason} — trying OCR", file=sys.stderr)
+    # OCR only genuine image-only PDFs (no usable text layer at all).
+    if _has_little_text(text) and use_ocr:
+        print("    little/no text (image-only PDF) — trying OCR", file=sys.stderr)
         ocr_text = extract_with_ocr(pdf_path)
         if ocr_text:
             text = ocr_text
@@ -204,6 +281,58 @@ def find_pdf(entry: dict) -> Path | None:
 
 def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+def file_sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def load_existing_index() -> list[dict]:
+    if not OUTPUT.exists():
+        return []
+    try:
+        data = json.loads(OUTPUT.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"WARNING: could not read existing {OUTPUT.name}: {exc}", file=sys.stderr)
+        return []
+    if not isinstance(data, list):
+        print(f"WARNING: existing {OUTPUT.name} is not a list; ignoring baseline", file=sys.stderr)
+        return []
+    return data
+
+
+def make_content_tokens(entry: dict, filename: str, content: str) -> str:
+    searchable = " ".join([
+        entry.get("org", ""),
+        entry.get("title", ""),
+        entry.get("desc", ""),
+        filename,
+        " ".join(entry.get("tags", [])),
+        content,
+    ])
+    return thai_tokenize(searchable)
+
+
+def make_url(entry: dict) -> str | None:
+    url = entry.get("url")
+    if not url and entry.get("drive_file_id"):
+        url = DRIVE_VIEW.format(fid=entry["drive_file_id"])
+    return url
+
+
+def make_filename(entry: dict, eid: str, pdf_path: Path | None,
+                  existing: dict | None) -> str:
+    if pdf_path:
+        return pdf_path.name
+    if entry.get("file"):
+        return entry["file"]
+    if existing and existing.get("filename"):
+        return existing["filename"]
+    return f"{entry.get('title', eid)}.pdf"
 
 
 # ──────────────────────────────────────────────
@@ -343,13 +472,35 @@ def link_drive(links_path: Path = DRIVE_LINKS) -> None:
 # Main build
 # ──────────────────────────────────────────────
 
-def build(use_ocr: bool, do_download: bool) -> list[dict]:
+def build(use_ocr: bool, do_download: bool, refresh_ids: set[str],
+          refresh_all_content: bool, allow_clear_content: bool) -> tuple[list[dict], list[str]]:
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))
     RAW_DIR.mkdir(exist_ok=True)
+    existing_index = load_existing_index()
+    existing_by_id = {
+        item.get("id"): item
+        for item in existing_index
+        if item.get("id")
+    }
+    source_ids = {
+        entry.get("id") or entry.get("drive_file_id") or entry.get("title")
+        for entry in sources
+    }
+    removed_ids = sorted(set(existing_by_id) - source_ids)
+    if removed_ids:
+        print(f"removed IDs not present in {SOURCES.name}: {', '.join(removed_ids)}")
+
+    missing_refresh_ids = sorted(refresh_ids - source_ids)
+    for eid in missing_refresh_ids:
+        print(f"WARNING: --refresh-content {eid} is not present in {SOURCES.name}",
+              file=sys.stderr)
+
     index = []
 
     for entry in sources:
         eid = entry.get("id") or entry.get("drive_file_id") or entry.get("title")
+        existing = existing_by_id.get(eid)
+        is_existing = existing is not None
         print(f"[{eid}] {entry.get('title', '')}")
 
         pdf_path = find_pdf(entry)
@@ -359,31 +510,52 @@ def build(use_ocr: bool, do_download: bool) -> list[dict]:
             if download_from_drive(entry["drive_file_id"], dest):
                 pdf_path = dest
 
-        filename = pdf_path.name if pdf_path else f"{entry.get('title', eid)}.pdf"
+        filename = make_filename(entry, eid, pdf_path, existing)
 
-        content = ""
+        pdf_hash = None
         if pdf_path:
+            pdf_hash = file_sha256(pdf_path)
+            old_hash = existing.get("pdf_hash") if existing else None
+            if old_hash and old_hash != pdf_hash:
+                print(f"WARNING: [{eid}] local PDF hash changed; preserving existing content "
+                      "until explicit refresh", file=sys.stderr)
+
+        content = existing.get("content", "") if existing else ""
+        content_tokens = existing.get("content_tokens", "") if existing else ""
+        should_refresh = refresh_all_content or eid in refresh_ids or (not is_existing and pdf_path)
+
+        if should_refresh and pdf_path:
             content = extract_text(pdf_path, use_ocr).strip()
+            content_tokens = make_content_tokens(entry, filename, content)
             print(f"    extracted {len(content)} chars")
+            if existing and not allow_clear_content:
+                old_content = existing.get("content", "")
+                old_tokens = existing.get("content_tokens", "")
+                if old_content and not content:
+                    content = old_content
+                    content_tokens = old_tokens
+                    print(f"WARNING: [{eid}] extraction returned empty content; preserved "
+                          "existing content (use --allow-clear-content to clear)",
+                          file=sys.stderr)
+                elif old_tokens and not content_tokens:
+                    content_tokens = old_tokens
+                    print(f"WARNING: [{eid}] tokenization returned empty content_tokens; "
+                          "preserved existing tokens (use --allow-clear-content to clear)",
+                          file=sys.stderr)
+        elif should_refresh:
+            print("WARNING: no local PDF — metadata-only entry "
+                  "(วาง PDF ใน catalog/raw/ แล้ว rebuild)", file=sys.stderr)
+            if not existing:
+                content_tokens = make_content_tokens(entry, filename, content)
         else:
-            print("    no local PDF — metadata-only entry "
-                  "(วาง PDF ใน catalog/raw/ แล้ว rebuild)")
+            if is_existing:
+                print("    preserved existing content")
+            else:
+                print("WARNING: no local PDF — metadata-only entry "
+                      "(วาง PDF ใน catalog/raw/ แล้ว rebuild)", file=sys.stderr)
+                content_tokens = make_content_tokens(entry, filename, content)
 
-        searchable = " ".join([
-            entry.get("org", ""),
-            entry.get("title", ""),
-            entry.get("desc", ""),
-            filename,
-            " ".join(entry.get("tags", [])),
-            content,
-        ])
-        content_tokens = thai_tokenize(searchable)
-
-        url = entry.get("url")
-        if not url and entry.get("drive_file_id"):
-            url = DRIVE_VIEW.format(fid=entry["drive_file_id"])
-
-        index.append({
+        item = {
             "id": eid,
             "icon": entry.get("icon", "fa-file-lines"),
             "org": entry.get("org", ""),
@@ -392,12 +564,15 @@ def build(use_ocr: bool, do_download: bool) -> list[dict]:
             "desc": entry.get("desc", ""),
             "tags": entry.get("tags", []),
             "year": entry.get("year"),
-            "url": url,
+            "url": make_url(entry),
             "content": content,
             "content_tokens": content_tokens,
-        })
+        }
+        if pdf_hash:
+            item["pdf_hash"] = pdf_hash
+        index.append(item)
 
-    return index
+    return index, removed_ids
 
 
 # ──────────────────────────────────────────────
@@ -452,6 +627,13 @@ def main() -> None:
                         help="ข้าม OCR แม้ PDF จะเป็นรูปภาพ")
     parser.add_argument("--download", action="store_true",
                         help="ลองดาวน์โหลดไฟล์ Drive สาธารณะลง raw/ อัตโนมัติ")
+    parser.add_argument("--refresh-content", action="append", default=[],
+                        metavar="ID",
+                        help="extract content ใหม่เฉพาะ ID นี้ (ใช้ซ้ำได้หลายครั้ง)")
+    parser.add_argument("--refresh-all-content", action="store_true",
+                        help="extract content ใหม่ทุก entry ที่มี local PDF")
+    parser.add_argument("--allow-clear-content", action="store_true",
+                        help="อนุญาตให้ refresh ทับ content/content_tokens เดิมด้วยค่าว่าง")
     parser.add_argument("--discover", action="store_true",
                         help="สแกน raw/*.pdf เติม stub entry ลง sources.json แล้ว build")
     parser.add_argument("--link-drive", action="store_true",
@@ -469,12 +651,20 @@ def main() -> None:
     if not SOURCES.exists():
         sys.exit(f"missing {SOURCES} — สร้างไฟล์นี้ก่อน (หรือรัน --discover)")
 
-    index = build(use_ocr=not args.no_ocr, do_download=args.download)
+    index, removed_ids = build(
+        use_ocr=not args.no_ocr,
+        do_download=args.download,
+        refresh_ids=set(args.refresh_content),
+        refresh_all_content=args.refresh_all_content,
+        allow_clear_content=args.allow_clear_content,
+    )
     OUTPUT.write_text(
         json.dumps(index, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(f"\nwrote {OUTPUT}  ({len(index)} entries)")
+    if removed_ids:
+        print(f"removed from {OUTPUT.name}: {', '.join(removed_ids)}")
 
     exit_code = print_summary(index, strict=args.strict)
     sys.exit(exit_code)
