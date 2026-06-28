@@ -1,103 +1,113 @@
-# Catalog — คู่มือเพิ่มและแก้ผลงาน
+# Catalog คู่มือเพิ่มและแก้ผลงาน
 
-ระบบค้นหาผลงานผู้เรียนเก่าในแท็บ **Catalog** ของ `day5.html`
-ค้นได้จาก **ชื่อไฟล์ / เนื้อหาภายในไฟล์ / ชื่อหน่วยงาน** โดยไม่ต้องมี backend
+## Overview
+
+แท็บ **Catalog** ใน `day5.html` ใช้ค้นหาผลงานผู้เรียนเก่า โดยค้นจาก filename, metadata และเนื้อหา PDF ที่ถูก index ไว้ล่วงหน้า
+
+ระบบนี้ไม่มี backend หน้าเว็บโหลดข้อมูลจาก `catalog/catalog-index.json` โดยตรง
+
+## Quick Rules
+
+- แก้ metadata ที่ `catalog/sources.json` ไม่แก้ `catalog/catalog-index.json` ตรง ๆ
+- เมื่อมีการแก้ที่เกี่ยวข้อง ให้ commit `catalog/sources.json`, `catalog/catalog-index.json`, `catalog/build_index.py` และ `catalog/README.md` ตามจริง
+- ห้าม commit `catalog/raw/`
+- `catalog/raw/` เป็น input ชั่วคราวสำหรับ extract PDF เท่านั้น
+- หลัง content ถูก index แล้ว PDF เก่าใน `raw/` สามารถลบออกได้
+- `id` เป็น primary key ห้ามเปลี่ยนแบบ casual edit
 
 ## Pipeline
 
-```
-raw/*.pdf  +  sources.json   ──build_index.py──►  catalog-index.json   ──►  day5.html
- (PDF ต้นฉบับ)  (source of truth)   (สร้าง index)      (เว็บโหลดไปค้น)
+```text
+raw PDFs + sources.json -> build_index.py -> catalog-index.json -> day5.html
 ```
 
-| ไฟล์/โฟลเดอร์ | หน้าที่ | ต้อง commit? |
+| Path | หน้าที่ | Commit? |
 |---|---|---|
-| `sources.json` | รายการผลงาน — **แก้ที่นี่** | ✓ |
-| `build_index.py` | สคริปต์สร้าง index | ✓ |
-| `catalog-index.json` | index ที่เว็บโหลด (generate อัตโนมัติ) | ✓ |
-| `raw/` | PDF ชั่วคราวสำหรับ build/extract เท่านั้น | ✗ |
-| `_archive/` | สคริปต์ helper เก่า ไว้อ้างอิง | ✗ |
+| `sources.json` | source of truth สำหรับ metadata ที่แก้มือ | yes |
+| `build_index.py` | สคริปต์สร้าง index | commit เฉพาะเมื่อแก้ script |
+| `catalog-index.json` | generated index ที่ `day5.html` โหลดไปค้น | yes |
+| `raw/` | PDF ชั่วคราวสำหรับ extract ตอน build | no |
+| `_archive/` | helper เก่าเก็บไว้อ้างอิง | no |
 
-> **กฎเหล็ก:** แก้ข้อมูลที่ `sources.json` เสมอ — ห้ามแก้ `catalog-index.json` ตรง ๆ เพราะมันถูก generate จาก `sources.json`
+## Add A New Catalog Entry
 
-`sources.json` เป็น active source of truth เพียงไฟล์เดียวสำหรับ metadata
-
-## ID policy
-
-`id` เป็น primary key ของ catalog entry ใช้จับคู่ข้อมูลระหว่าง `sources.json` และ `catalog-index.json`
-
-- รูปแบบ ID คือ `catNNN` เช่น `cat001`, `cat002`, `cat035`
-- Entry ใหม่ให้ใช้เลขถัดไปจาก ID สูงสุดที่มีอยู่ เช่น ถ้าสูงสุดคือ `cat034` ให้ใช้ `cat035`
-- ห้ามเปลี่ยน ID เดิมแบบ casual edit เพราะจะทำให้ content ที่ preserve อยู่ใน `catalog-index.json` จับคู่ผิด entry
-- การเปลี่ยน ID ต้องเป็น deliberate migration ที่อัปเดตทั้ง `sources.json` และ `catalog-index.json` พร้อมกัน
-- การแก้ metadata ปกติ เช่น `org`, `title`, `desc`, `tags`, `year`, `drive_url` ไม่ควรเปลี่ยน `id`
-
-## Preserve-safe build workflow
-
-`sources.json` เป็น source of truth สำหรับ metadata ที่แก้มือได้ ส่วน `catalog-index.json` เป็น generated search index ที่เก็บ `content` และ `content_tokens` จาก PDF ด้วย
-
-Build ปกติเป็นแบบ preserve-safe:
+1. วาง PDF ใหม่ใน `catalog/raw/`
+2. รัน:
 
 ```bash
-python build_index.py --strict
+python catalog/build_index.py --discover
 ```
 
-พฤติกรรมของ build ปกติ:
+3. เปิด `catalog/sources.json` แล้วเติม entry ใหม่:
+
+- `drive_url`
+- `org`
+- `title`
+- `desc`
+- `tags`
+- `year`
+
+4. รัน strict build:
+
+```bash
+python catalog/build_index.py --strict
+```
+
+5. Commit `catalog/sources.json` และ `catalog/catalog-index.json`
+6. ห้าม commit `catalog/raw/`
+7. หลัง index แล้ว PDF ใน `raw/` สามารถลบออกได้
+
+## Edit Existing Metadata
+
+1. แก้ metadata ใน `catalog/sources.json`
+2. รัน:
+
+```bash
+python catalog/build_index.py --strict
+```
+
+3. Commit `catalog/sources.json` และ `catalog/catalog-index.json`
+
+Normal build จะ preserve `content`, `content_tokens` และ `pdf_hash` ของ entry เดิม จึงใช้ได้กับงานแก้ metadata ทั่วไป
+
+## Preserve-Safe Build Behavior
+
+Normal build มีพฤติกรรมแบบ preserve-safe:
 
 - โหลด `catalog-index.json` เดิมเป็น baseline
-- อัปเดต metadata จาก `sources.json`
-- เก็บ `content` และ `content_tokens` เดิมของ entry ที่มีอยู่แล้ว
-- ไม่ extract PDF ซ้ำสำหรับ entry เดิม
-- extract content เฉพาะ entry ใหม่ที่มี PDF ใน `raw/`
-- ถ้า entry ใหม่ไม่มี PDF จะสร้าง metadata-only entry และเตือน
-- ถ้า ID ถูกลบออกจาก `sources.json` จะถูกลบจาก `catalog-index.json` และรายงานท้าย build
-- เพิ่ม `pdf_hash` ให้ entry ที่มี local PDF
-- ถ้า `pdf_hash` เปลี่ยน จะเตือนเท่านั้น ไม่ refresh หรือ clear content อัตโนมัติ
-- หลัง entry ถูก index แล้ว PDF เก่าใน `raw/` สามารถลบออกได้ เพราะ build ปกติ preserve `content`, `content_tokens`, และ `pdf_hash` จาก `catalog-index.json`
+- Entry เดิมเก็บ `content`, `content_tokens` และ `pdf_hash` เดิมไว้
+- PDF ของ entry เดิมไม่ถูก re-extract โดย default
+- Entry ใหม่ที่มี local PDF จะถูก extract
+- Entry ใหม่ที่ไม่มี local PDF จะเป็น metadata-only entry
+- ID ที่ถูกลบจาก `sources.json` จะถูกลบจาก generated index
+- ถ้า `pdf_hash` เปลี่ยน จะเตือนเท่านั้น ไม่ refresh content อัตโนมัติ
 
-เมื่อต้องการ refresh เนื้อหา PDF ให้ทำแบบชัดเจน:
+## Refresh Content
 
-```bash
-python build_index.py --refresh-content unique-kebab-id --strict
-python build_index.py --refresh-all-content --strict
-```
-
-ถ้า refresh แล้ว extraction ได้ค่าว่าง แต่ entry เดิมมี `content` หรือ `content_tokens` อยู่ สคริปต์จะ preserve ค่าเดิมไว้ เพื่อไม่ให้ OCR-derived content หายโดยไม่ตั้งใจ
-
-ใช้ flag นี้เฉพาะเมื่อยอมรับได้จริง ๆ ว่าจะล้าง content เดิม:
+ใช้ refresh เฉพาะเมื่อต้องการอ่าน PDF ใหม่จริง ๆ ไม่ต้องใช้กับการแก้ metadata ปกติ
 
 ```bash
-python build_index.py --refresh-content unique-kebab-id --allow-clear-content --strict
+python catalog/build_index.py --refresh-content <id> --strict
+python catalog/build_index.py --refresh-all-content --strict
 ```
 
----
+ถ้า refresh แล้ว extraction ได้ค่าว่าง แต่ entry เดิมมี content อยู่ สคริปต์จะ preserve ค่าเดิมไว้
 
-## เพิ่มผลงานใหม่ (checklist)
+ใช้ flag นี้เฉพาะเมื่อยอมรับได้ว่าจะล้าง content เดิม:
 
-```
-1. วาง PDF ลง catalog/raw/
-   └─ ตั้งแชร์ Drive เป็น "anyone with the link" ก่อน
-
-2. python build_index.py --discover
-   └─ สร้าง stub entry ใน sources.json (title เดาจากชื่อไฟล์)
-
-3. เปิด sources.json แก้ entry ใหม่:
-   └─ drive_url      ← วาง URL แชร์ Drive เต็ม ๆ
-   └─ org            ← ชื่อหน่วยงาน (บังคับ)
-   └─ title          ← ชื่อผลงานที่อ่านแล้วเข้าใจ
-   └─ desc, tags     ← optional แต่ช่วยให้ค้นเจอ
-   └─ year           ← ปี พ.ศ. เช่น 2568
-
-4. python build_index.py --strict
-   └─ build แบบ preserve-safe + extract เฉพาะ entry ใหม่ + ตรวจว่าครบ
-
-5. commit: sources.json + catalog-index.json
-   └─ ห้าม commit raw/; หลัง index แล้วลบ PDF เก่าออกจาก raw/ ได้
+```bash
+python catalog/build_index.py --refresh-content <id> --allow-clear-content --strict
 ```
 
----
+ถ้าต้องการข้าม OCR:
 
-## โครงสร้าง entry ใน `sources.json`
+```bash
+python catalog/build_index.py --no-ocr --strict
+```
+
+## Entry Structure
+
+ตัวอย่าง entry ใน `catalog/sources.json`:
 
 ```json
 {
@@ -114,83 +124,98 @@ python build_index.py --refresh-content unique-kebab-id --allow-clear-content --
 }
 ```
 
-| Field | บังคับ? | หมายเหตุ |
+| Field | Required? | หมายเหตุ |
 |---|---|---|
-| `id` | ✓ | primary key, ต้องไม่ซ้ำ, ใช้รูปแบบ `catNNN` และ entry ใหม่ใช้เลขถัดไปจากเลขสูงสุด |
-| `drive_url` | ✓* | URL แชร์ Drive เต็ม ๆ เช่น `drive.google.com/file/d/<ID>/view`; build จะ parse ID ให้เอง |
-| `drive_file_id` | optional/legacy | ใช้ได้เหมือนเดิมเป็น fallback ถ้ายังมี entry เก่า หรือถ้า `drive_url` malformed |
-| `org` | ✓ | ชื่อหน่วยงาน — ใช้ค้นหาด้วยชื่อหน่วยงาน |
-| `title` | ✓ | ชื่อผลงาน |
-| `year` | ✓ | ปี พ.ศ. ที่ผลิตผลงาน เช่น `2568` — แสดงใน card และใช้กับ filter chip; chip ปีจะขึ้นอัตโนมัติเมื่อมีข้อมูล ถ้าอยากให้ chip ขึ้นล่วงหน้าก่อนมีข้อมูล ให้เพิ่มเลขปีเข้าไปใน `KNOWN_YEARS` ใน `day5.html` |
-| `file` | แนะนำ | ชื่อ PDF ใน `raw/` — ถ้าไม่มีจะค้นได้แค่ metadata |
-| `desc` | optional | คำอธิบาย — ช่วยค้นเจอมากขึ้น |
-| `tags` | optional | array ของ tag เช่น `["Health", "Statistics"]` |
-| `icon` | optional | Font Awesome class เช่น `fa-chart-line`, `fa-leaf` |
-| `url` | optional | override โดยตรงถ้าไม่ใช่ Drive หรือต้องการลิงก์เฉพาะ; ถ้ามี `url` จะชนะ `drive_url` และ `drive_file_id` |
+| `id` | yes | primary key รูปแบบ `catNNN` |
+| `file` | recommended | ชื่อ PDF ใน `raw/` สำหรับ extract |
+| `drive_url` | recommended | URL แชร์ Drive แบบเต็ม เป็น input ปกติสำหรับ link ปุ่ม PDF |
+| `drive_file_id` | optional | fallback หรือ legacy field |
+| `icon` | optional | Font Awesome class เช่น `fa-chart-line` |
+| `org` | yes | ชื่อหน่วยงาน ใช้ค้นหา |
+| `title` | yes | ชื่อผลงาน |
+| `desc` | optional | คำอธิบาย ช่วยให้ค้นเจอมากขึ้น |
+| `tags` | optional | array ของ tag |
+| `year` | yes | ปี พ.ศ. เช่น `2568` |
+| `url` | optional | override โดยตรง ถ้ามีจะชนะ `drive_url` และ `drive_file_id` |
 
-*ถ้าไม่มี `url`, `drive_url`, หรือ `drive_file_id` ปุ่ม "เปิดเอกสาร PDF" จะกดไม่ได้
+URL priority ตอน build:
 
----
+1. `url` ใช้เป็น override
+2. `drive_url` เป็น input ปกติ
+3. `drive_file_id` ยังรองรับเป็น fallback หรือ legacy
 
-## แก้ข้อมูลที่ผิด (เช่น org ผิด)
+ถ้าไม่มีทั้ง `url`, `drive_url` และ `drive_file_id` ปุ่ม "เปิดเอกสาร PDF" จะใช้งานไม่ได้
 
-1. เปิด `sources.json` หา entry ตาม `id` หรือ `file`
-2. แก้ค่าที่ต้องการ
-3. `python build_index.py --strict`
-4. commit `sources.json` + `catalog-index.json`
+## ID Policy
 
----
+- `id` เป็น primary key ที่ใช้จับคู่ `sources.json` กับ `catalog-index.json`
+- รูปแบบ ID คือ `catNNN` เช่น `cat001`, `cat002`, `cat035`
+- Entry ใหม่ใช้เลขถัดไปจาก ID สูงสุดที่มีอยู่
+- การเปลี่ยน ID ต้องเป็น deliberate migration ที่อัปเดตทั้ง `sources.json` และ `catalog-index.json`
+- การแก้ metadata ปกติไม่ควรเปลี่ยน `id`
 
 ## Troubleshooting
 
 | ปัญหา | สาเหตุ | วิธีแก้ |
 |---|---|---|
-| ปุ่ม "เปิดเอกสาร PDF" กดไม่ได้ | ไม่มี `url`, `drive_url`, หรือ `drive_file_id` | เติม `drive_url` ใน `sources.json` แล้ว rebuild |
-| ค้นชื่อหน่วยงานไม่เจอ | `org` ว่าง | เติม `org` ใน `sources.json` แล้ว rebuild |
-| ค้นเนื้อหาในไฟล์ไม่ได้สำหรับ entry ใหม่ | ไม่มี PDF ใน `raw/` หรือเป็นสไลด์รูปภาพ | วาง PDF ลง `raw/` แล้ว rebuild (ถ้าเป็นรูปภาพต้องติดตั้ง OCR ก่อน) |
-| ต้องการอ่าน PDF ใหม่สำหรับ entry เดิม | build ปกติ preserve `content` เดิม | ใช้ `--refresh-content <id>` หรือ `--refresh-all-content` |
-| `pdf_hash` เปลี่ยน | local PDF เปลี่ยนจาก baseline | ตรวจว่า PDF ถูกต้อง แล้วใช้ `--refresh-content <id>` ถ้าต้องการ update content |
-| เปิดเว็บแล้ว Catalog ไม่โหลด | เปิดผ่าน `file://` | ต้องเปิดผ่าน HTTP: `python -m http.server 8000` |
+| ปุ่ม PDF ใช้ไม่ได้ | ไม่มี `url`, `drive_url` หรือ `drive_file_id` | เติม `drive_url` แล้วรัน strict build |
+| ค้นชื่อหน่วยงานไม่เจอ | `org` ว่างหรือสะกดผิด | แก้ `org` ใน `sources.json` แล้วรัน strict build |
+| ค้นเนื้อหาไฟล์ใหม่ไม่เจอ | ไม่มี PDF ใน `raw/` หรือ extract ไม่ได้ | วาง PDF ใน `raw/` แล้วรัน strict build |
+| ต้องการอ่าน PDF ใหม่ | build ปกติ preserve content เดิม | ใช้ `--refresh-content <id>` |
+| `pdf_hash` เปลี่ยน | local PDF เปลี่ยนจาก baseline | ตรวจ PDF แล้ว refresh เฉพาะเมื่อจำเป็น |
+| Catalog ไม่โหลด | เปิดผ่าน `file://` | เปิดผ่าน local web server |
 
----
+## Build Modes
 
-## โหมดของ `build_index.py`
+Common:
 
 ```bash
-python build_index.py                  # build ปกติ
-python build_index.py --discover       # เติม stub entry จาก raw/*.pdf
-python build_index.py --strict         # build + exit code 1 ถ้า URL ไม่ครบ
-python build_index.py --download       # ลองดาวน์โหลด PDF จาก Drive อัตโนมัติ
-python build_index.py --refresh-content <id>      # extract content ใหม่เฉพาะ ID
-python build_index.py --refresh-all-content       # extract content ใหม่ทุก entry ที่มี PDF
-python build_index.py --allow-clear-content       # อนุญาตให้ refresh ล้าง content เดิมถ้า extract ได้ค่าว่าง
-python build_index.py --no-ocr         # ข้าม OCR
+python catalog/build_index.py
+python catalog/build_index.py --discover
+python catalog/build_index.py --strict
 ```
 
-## Dependencies (ติดตั้งตามต้องการ)
+Advanced:
 
 ```bash
-pip install pypdf pdfplumber pythainlp      # ดึงข้อความ PDF + ตัดคำไทย
-pip install pdf2image pytesseract pillow     # OCR สำหรับสไลด์ที่เป็นรูปภาพ
+python catalog/build_index.py --download
+python catalog/build_index.py --refresh-content <id>
+python catalog/build_index.py --refresh-all-content
+python catalog/build_index.py --allow-clear-content
+python catalog/build_index.py --no-ocr
 ```
 
-OCR ต้องมีโปรแกรม **Tesseract** + ชุดภาษาไทย (`tha`) และ **poppler** ติดตั้งในเครื่องด้วย
+## Dependencies
 
----
-
-## รันเว็บเพื่อทดสอบ
+Dependencies เป็น optional สคริปต์ยังรันได้แม้ติดตั้งไม่ครบ
 
 ```bash
-# จากโฟลเดอร์ dga306_2026_interactive_guide
+pip install pypdf pdfplumber pythainlp
+pip install pdf2image pytesseract pillow
+```
+
+สำหรับ OCR ต้องมี Tesseract, Thai traineddata และ poppler ในเครื่องด้วย
+
+## Run The Local Web Server
+
+จาก project root:
+
+```bash
 python -m http.server 8000
-# เปิด http://localhost:8000/day5.html → แท็บ Catalog
 ```
 
----
+เปิด:
 
-## เบื้องหลัง — การตัดสินใจสำคัญ (อย่ารื้อโดยไม่มีเหตุผล)
+```text
+http://localhost:8000/day5.html
+```
 
-1. **ใช้ custom substring matcher แทน FlexSearch** — ภาษาไทยไม่มีช่องว่างระหว่างคำ ต้องค้นแบบ substring (`ขยะ` เจอใน `ขยะมูลฝอย`) ถ้าจะเปลี่ยนไลบรารีต้องมั่นใจว่ารองรับ Thai substring
-2. **`sources.json` เป็น source of truth** — ห้ามกลับไป hardcode การ์ดใน HTML
-3. **ทุก dependency เป็น optional** — สคริปต์ยังรันได้แม้ไม่มี lib ครบ (ข้าม + เตือน)
-4. **ถ่วงน้ำหนักค้นหา:** org/title/filename/tags = 3, desc = 2, content = 1; หลายคำเป็น AND
+แล้วไปที่แท็บ Catalog หรือใช้ live server extension ก็ได้
+
+## Review Policy And Design Notes
+
+- ใช้ custom substring matcher แทน FlexSearch เพราะภาษาไทยไม่มีช่องว่างระหว่างคำ และต้องการให้ substring match ทำงานได้
+- `sources.json` เป็น source of truth ห้ามกลับไป hardcode card ใน HTML
+- Dependencies เป็น optional เพื่อให้ contributor build ได้แม้เครื่องไม่พร้อมครบ
+- Search weights: `org`, `title`, `filename`, `tags` = 3, `desc` = 2, `content` = 1
+- หลายคำค้นใช้ AND behavior
