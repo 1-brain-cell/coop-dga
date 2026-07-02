@@ -510,5 +510,125 @@
       "Economy"
     ],
     "year": 2568
+  },
+  {
+    "id": "cat035",
+    "file": "กลุ่มที่ 3-กรมอุทยานแห่งชาติฯ - จุรีพร พวกกลาง.pdf",
+    "drive_file_id": "1WwfV2Oe_rjxaSzHwMxTi1ZTJ0_GO-riG",
+    "icon": "fa-file-lines",
+    "org": "กรมอุทยานแห่งชาติฯ",
+    "title": "ข้อมูลผลการเกิดไฟป่า",
+    "year": 2569
+  },
+  {
+    "id": "cat036",
+    "file": "กลุ่มอุตสาหกรรมยุคใหม่ - Kittipan Phasuk.pdf",
+    "drive_file_id": "1u3-WpvlVfNxd0NpEfBu2ZmKHbopx7lgP",
+    "icon": "fa-file-lines",
+    "org": "กระทรวงอุตสาหกรรม",
+    "title": "การพัฒนาและส่งเสริมกลุ่มอุตสาหกรรมยุคใหม่",
+    "desc": "เอกสารและลิงก์นำเสนอโครงการพัฒนาศักยภาพผู้ประกอบการและการยกระดับอุตสาหกรรมแห่งอนาคต",
+    "tags": [
+      "Industry",
+      "SMEs",
+      "Economy"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat037",
+    "file": "เจาะลึกพิกัด Hotspot เปิดแผนที่เสี่ยงหยุด 'เผา' ในพื้นที่เกษตรกรรม - wichu chabu.pdf",
+    "drive_file_id": "1bdGSfkE97eMGzwEbQo5arOhxqrE5CxR4",
+    "icon": "fa-file-lines",
+    "org": "กรมส่งเสริมการเกษตร",
+    "title": "ชี้พิกัดจุดความร้อน (Hotspot) ด้วยแผนที่เสี่ยง 'เผาซ้ำซาก' ในพื้นที่เกษตรกรรม",
+    "desc": "การวิเคราะห์จุดความร้อนและพื้นที่เผาซ้ำซากเพื่อหาแนวทางลดปัญหามลพิษฝุ่นละออง PM2.5",
+    "tags": [
+      "Agriculture",
+      "Environment",
+      "PM2.5",
+      "GISTDA"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat038",
+    "file": "เมาขับกับราคาน้ำมัน - Thanasit Methawee (Ong).pdf",
+    "drive_file_id": "1y-rwNzdD3n7VtsSw1w_S5v503MeIlmHB",
+    "icon": "fa-file-lines",
+    "org": "กรมคุมประพฤติ และ กรมธุรกิจพลังงาน",
+    "title": "การวิเคราะห์ความสัมพันธ์เมาขับกับราคาน้ำมัน",
+    "desc": "การศึกษาเชิงสถิติเปรียบเทียบคดีเมาแล้วขับกับระดับการเปลี่ยนแปลงราคาน้ำมันเพื่อการเฝ้าระวังทางสังคม",
+    "tags": [
+      "Society",
+      "Safety",
+      "Energy",
+      "Statistics"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat039",
+    "file": "DGA306_Group3_กรมทรัพยากรธรณี (17 June 2026)_Final - wanida rangubpit.pdf",
+    "drive_file_id": "1e1NmKYaqWpVXN2kvf0tEnSn2eB0bwy3M",
+    "icon": "fa-file-lines",
+    "org": "กรมทรัพยากรธรณี",
+    "title": "วิเคราะห์การกระจายตัวของธาตุโลหะ ในพื้นที่จังหวัดกระบี่",
+    "desc": "การวิเคราะห์และแผนที่แสดงผลการกระจายตัวของธาตุโลหะในดินและน้ำเพื่อเฝ้าระวังปัญหาสิ่งแวดล้อมจังหวัดกระบี่",
+    "tags": [
+      "Geology",
+      "Environment",
+      "Resources",
+      "Krabi"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat040",
+    "file": "Group7_สำนักงานพัฒนารัฐบาลดิจิทัล - kornkamon.pdf",
+    "drive_file_id": "1sMC4eG-S7pQVZBPW_Q1O96bxIZhnItDY",
+    "icon": "fa-file-lines",
+    "org": "สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน)",
+    "title": "การวิเคราะห์สถิติและแนวโน้มการอบรม เพื่อยกระดับทักษะดิจิทัลภาครัฐและเอกชน",
+    "desc": "รายงานการศึกษาสถิติจำนวนผู้เข้ารับการอบรมและการพัฒนาทักษะดิจิทัลของข้าราชการและเอกชนโดย DGA/TDGA",
+    "tags": [
+      "Education",
+      "Digital",
+      "Statistics",
+      "DGA"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat041",
+    "file": "Influenza_Intelligence 160669.pdf - Maneenut P.pdf",
+    "drive_file_id": "16uKmfYp1Cl5Mmjx4q3Jm3H5ewhTJ76ea",
+    "icon": "fa-file-lines",
+    "org": "กรมควบคุมโรค",
+    "title": "การแพร่ระบาดไข้หวัดใหญ่",
+    "desc": "วิเคราะห์ข้อมูลทางระบาดวิทยาเพื่อเฝ้าระวังและทำนายการแพร่ระบาดของโรคไข้หวัดใหญ่",
+    "tags": [
+      "Health",
+      "Epidemiology",
+      "Surveillance",
+      "Livestock"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat042",
+    "file": "PPT เสาใหม่ ใกล้ฉัน - Samonchanok Lojittikul.pdf",
+    "drive_file_id": "1GBTU9sStDR9KsiwDJ6Pypd966MVnNh9y",
+    "icon": "fa-file-lines",
+    "org": "กรมประชาสัมพันธ์",
+    "title": "วิเคราะห์สถานีวิทยุกระจายเสียงที่ควรได้รับการปรับปรุงอย่างเร่งด่วน",
+    "desc": "การวางแผนเชิงพื้นที่และการวิเคราะห์งบประมาณปี 2569 สำหรับระบบสถานีวิทยุกระจายเสียง FM และ AM ทั่วประเทศ",
+    "tags": [
+      "Infrastructure",
+      "Communication",
+      "Planning",
+      "Budget"
+    ],
+    "year": 2569
   }
 ]
