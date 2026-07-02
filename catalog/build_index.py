@@ -463,6 +463,7 @@ def build(use_ocr: bool, do_download: bool, refresh_ids: set[str],
             "desc": entry.get("desc", ""),
             "tags": entry.get("tags", []),
             "year": entry.get("year"),
+            "starred": entry.get("starred", False),
             "url": make_url(entry),
             "content": content,
             "content_tokens": content_tokens,
@@ -513,6 +514,10 @@ def print_summary(index: list[dict], strict: bool) -> int:
 
 
 def main() -> None:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Build the Catalog search index.")
     parser.add_argument("--no-ocr", action="store_true",
                         help="ข้าม OCR แม้ PDF จะเป็นรูปภาพ")

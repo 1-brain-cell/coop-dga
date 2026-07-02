@@ -459,6 +459,24 @@
             color: #fff;
         }
 
+        .year-chip[data-filter="starred"]:hover {
+            border-color: #fbbf24;
+            color: #d97706;
+        }
+
+        .year-chip[data-filter="starred"].active {
+            background: #fbbf24;
+            border-color: #fbbf24;
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        .year-chip[data-filter="starred"].active:hover {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #1e293b;
+        }
+
         .catalog-empty {
             grid-column: 1 / -1;
             text-align: center;
@@ -497,6 +515,31 @@
         .cat-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .cat-item.starred {
+            border: 2px solid #fbbf24;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.12);
+            position: relative;
+        }
+
+        .cat-item.starred:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.25);
+        }
+
+        .cat-starred-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+            white-space: nowrap;
         }
 
         .cat-header {
@@ -826,6 +869,7 @@
         const CatalogSearch = (function () {
             let items = [];
             let activeYear = null;
+            let showStarredOnly = false;
             const grid = document.getElementById('catalogGrid');
             const statusEl = document.getElementById('catalogStatus');
             const input = document.getElementById('txtSearch');
@@ -876,11 +920,22 @@
                 const tags = (it.tags || []).map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
                 const url = it.url || '#';
                 const yearBadge = it.year ? `<span class="cat-year">พ.ศ. ${it.year}</span>` : '';
+                const starredClass = it.starred ? ' starred' : '';
+                const starBadge = it.starred ? `<span class="cat-starred-badge"><i class="fa-solid fa-star"></i> แนะนำ</span>` : '';
                 return `
-                    <div class="cat-item">
-                        <div class="cat-header"><i class="fa-solid ${escHtml(it.icon || 'fa-file-lines')}"></i> ${highlight(it.org, terms)}${yearBadge}</div>
+                    <div class="cat-item${starredClass}">
+                        <div class="cat-header" style="align-items: flex-start;">
+                            <span style="display: flex; align-items: flex-start; gap: 8px;">
+                                <i class="fa-solid ${escHtml(it.icon || 'fa-file-lines')}" style="margin-top: 3px; flex-shrink: 0;"></i>
+                                <span style="word-break: break-word; line-height: 1.3;">${highlight(it.org, terms)}</span>
+                            </span>
+                            <span style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; padding-left: 10px; margin-top: 1px;">
+                                ${starBadge}
+                                ${yearBadge}
+                            </span>
+                        </div>
                         <div class="cat-body">
-                            <h4>${highlight(it.title, terms)}</h4>
+                            <h4>${it.starred ? '<i class="fa-solid fa-star" style="color: #fbbf24; margin-right: 5px;"></i>' : ''}${highlight(it.title, terms)}</h4>
                             <p>${highlight(it.desc, terms)}</p>
                             <div class="cat-tags">${tags}</div>
                         </div>
@@ -892,22 +947,40 @@
                 const fromData = new Set(items.map(i => i.data.year).filter(Boolean));
                 const KNOWN_YEARS = [2568, 2569, 2570];
                 const years = [...new Set([...fromData, ...KNOWN_YEARS])].sort();
-                const allChip = `<button class="year-chip active" data-year="">ทั้งหมด</button>`;
-                const chips = years.map(y => `<button class="year-chip" data-year="${y}">พ.ศ. ${y}</button>`).join('');
-                yearFilterEl.innerHTML = allChip + chips;
+                const allChip = `<button class="year-chip active" data-filter="all">ทั้งหมด</button>`;
+                const starredChip = `<button class="year-chip" data-filter="starred"><i class="fa-solid fa-star" style="color: #fbbf24; margin-right: 4px;"></i> แนะนำ</button>`;
+                const chips = years.map(y => `<button class="year-chip" data-filter="year" data-year="${y}">พ.ศ. ${y}</button>`).join('');
+                yearFilterEl.innerHTML = allChip + starredChip + chips;
                 yearFilterEl.addEventListener('click', e => {
                     const btn = e.target.closest('.year-chip');
                     if (!btn) return;
                     yearFilterEl.querySelectorAll('.year-chip').forEach(c => c.classList.remove('active'));
                     btn.classList.add('active');
-                    activeYear = btn.dataset.year ? Number(btn.dataset.year) : null;
+                    
+                    const filterType = btn.dataset.filter;
+                    if (filterType === 'all') {
+                        activeYear = null;
+                        showStarredOnly = false;
+                    } else if (filterType === 'starred') {
+                        activeYear = null;
+                        showStarredOnly = true;
+                    } else if (filterType === 'year') {
+                        activeYear = btn.dataset.year ? Number(btn.dataset.year) : null;
+                        showStarredOnly = false;
+                    }
                     render(input.value);
                 });
             }
 
             function render(query) {
                 const terms = norm(query).split(/\s+/).filter(Boolean);
-                let pool = activeYear ? items.filter(i => i.data.year === activeYear) : items;
+                let pool = items;
+                if (showStarredOnly) {
+                    pool = items.filter(i => i.data.starred);
+                } else if (activeYear) {
+                    pool = items.filter(i => i.data.year === activeYear);
+                }
+                
                 let matches;
                 if (terms.length === 0) {
                     matches = pool.map(i => i.data);
@@ -920,16 +993,21 @@
                 }
 
                 if (matches.length === 0) {
-                    const emptyMsg = (activeYear && pool.length === 0)
-                        ? `ยังไม่มีผลงานรุ่น พ.ศ. ${activeYear} — รอผลงานจากผู้เรียนรุ่นนี้`
-                        : 'ไม่พบผลงานที่ตรงกับคำค้นหา ลองใช้คำที่สั้นลงหรือคำอื่น';
+                    let emptyMsg = 'ไม่พบผลงานที่ตรงกับคำค้นหา ลองใช้คำที่สั้นลงหรือคำอื่น';
+                    if (showStarredOnly) {
+                        emptyMsg = 'ยังไม่มีผลงานแนะนำ/ติดดาวในขณะนี้';
+                    } else if (activeYear && pool.length === 0) {
+                        emptyMsg = `ยังไม่มีผลงานรุ่น พ.ศ. ${activeYear} — รอผลงานจากผู้เรียนรุ่นนี้`;
+                    }
                     grid.innerHTML = `<div class="catalog-empty">${emptyMsg}</div>`;
                 } else {
                     grid.innerHTML = matches.map(it => cardHtml(it, terms)).join('');
                 }
 
-                const total = activeYear ? pool.length : items.length;
-                statusEl.textContent = (terms.length || activeYear)
+                const total = showStarredOnly 
+                    ? items.filter(i => i.data.starred).length 
+                    : (activeYear ? pool.length : items.length);
+                statusEl.textContent = (terms.length || activeYear || showStarredOnly)
                     ? `พบ ${matches.length} ผลงาน จากทั้งหมด ${total}`
                     : `ทั้งหมด ${items.length} ผลงาน`;
             }

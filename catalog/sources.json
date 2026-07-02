@@ -12,7 +12,8 @@
       "Storyboard",
       "Economy"
     ],
-    "year": 2568
+    "year": 2568,
+    "starred": true
   },
   {
     "id": "cat002",
@@ -42,7 +43,8 @@
       "Urban",
       "Statistics"
     ],
-    "year": 2568
+    "year": 2568,
+    "starred": true
   },
   {
     "id": "cat004",
