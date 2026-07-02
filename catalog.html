@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGA306 - Project Catalog</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=Poppins:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        html {
+            font-size: 18px;
+        }
+
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #2563eb;
+            --bg-light: #f0f4f8;
+            --accent-orange: #f97316;
+            --text-dark: #1e293b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --catalog-primary: #0f766e;
+            --catalog-btn: #059669;
+            --catalog-btn-hover: #047857;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Sarabun', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #1e3a8a;
+            color: white;
+            padding: 32px 24px 24px 24px;
+            text-align: left;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .header-home {
+            position: absolute;
+            top: 50px;
+            right: 24px;
+            border: 2px solid rgba(255, 255, 255, .28);
+            background: rgba(255, 255, 255, .06);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: .85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        .header-home:hover {
+            background: rgba(255, 255, 255, .14);
+            border-color: rgba(255, 255, 255, .45);
+            transform: translateY(-1px);
+        }
+
+        .header-home .ico {
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 18px;
+            color: #bfdbfe;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent-orange);
+            padding-left: 12px;
+        }
+
+        /* Catalog styles */
+        .catalog-help {
+            background: #eff6ff;
+            border-left: 4px solid var(--secondary-blue);
+            padding: 15px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #334155;
+        }
+
+        .catalog-help code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            color: #e11d48;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: inherit;
+            margin-bottom: 12px;
+        }
+
+        .catalog-status {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 12px;
+            min-height: 18px;
+        }
+
+        .catalog-subtitle {
+            color: var(--primary-blue);
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .year-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .year-chip {
+            padding: 4px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #f8fafc;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .year-chip:hover {
+            border-color: var(--secondary-blue);
+            color: var(--secondary-blue);
+        }
+
+        .year-chip.active {
+            background: var(--secondary-blue);
+            border-color: var(--secondary-blue);
+            color: #fff;
+        }
+
+        .year-chip[data-filter="starred"]:hover {
+            border-color: #fbbf24;
+            color: #d97706;
+        }
+
+        .year-chip[data-filter="starred"].active {
+            background: #fbbf24;
+            border-color: #fbbf24;
+            color: #1e293b;
+        }
+
+        .year-chip[data-filter="starred"].active i {
+            color: #fff !important;
+        }
+
+        .year-chip[data-filter="starred"].active:hover {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #1e293b;
+        }
+
+        .catalog-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            padding: 30px 15px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+        }
+
+        .cat-body mark,
+        .cat-header mark {
+            background: #fde68a;
+            color: inherit;
+            padding: 0 1px;
+            border-radius: 2px;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .cat-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: 0.2s;
+        }
+
+        .cat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .cat-item.starred {
+            border: 2px solid #fbbf24;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.12);
+            position: relative;
+        }
+
+        .cat-item.starred:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.25);
+        }
+
+        .cat-starred-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+            white-space: nowrap;
+        }
+
+        .cat-header {
+            background: var(--catalog-primary);
+            color: #fff;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-year {
+            font-size: 11px;
+            font-weight: normal;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .cat-body {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .cat-body h4 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .cat-body p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .cat-tags {
+            margin-top: 10px;
+        }
+
+        .tag {
+            font-size: 11px;
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .cat-footer {
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .btn-pdf {
+            display: block;
+            text-align: center;
+            background: var(--catalog-btn);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-pdf:hover {
+            background: var(--catalog-btn-hover);
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 24px 20px 24px 20px !important;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-home {
+                position: static;
+                align-self: flex-start;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="max-w-7xl flex justify-between items-center">
+            <div>
+                <h1>DGA306: Project Catalog</h1>
+                <p>คลังผลงาน Final Project การวิเคราะห์ข้อมูลในภาครัฐ</p>
+            </div>
+        </div>
+        <a class="header-home" href="index.html"><span class="ico">🏠</span>Back to home</a>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Catalog: ผลงาน Final Project การวิเคราะห์ข้อมูลในภาครัฐ (DGA306)</h2>
+            
+            <p class="catalog-subtitle">คลังผลงานการวิเคราะห์ข้อมูลจากผู้เข้าอบรมหลักสูตร DGA306 นำเสนอกรณีศึกษาจากหน่วยงานภาครัฐที่ประยุกต์ใช้เทคนิคด้าน Data Analytics เพื่อสร้างข้อมูลเชิงลึก สนับสนุนการตัดสินใจ และยกระดับประสิทธิภาพการดำเนินงานภาครัฐ</p>
+            
+            <div class="catalog-help">
+                ค้นหาผลงานเก่าได้จาก <code>ชื่อไฟล์</code> <code>Key word ที่สนใจ</code> และ
+                <code>ชื่อหน่วยงาน</code> — พิมพ์หลายคำเพื่อค้นแบบเจาะจง (ต้องตรงทุกคำ)
+            </div>
+
+            <input type="text" id="txtSearch" class="search-box"
+                placeholder="พิมพ์คำค้นหา (เช่น ฝนหลวง, ขยะ, สถิติ, ชื่อหน่วยงาน)...">
+
+            <div id="catalogStatus" class="catalog-status"></div>
+
+            <div class="year-filter" id="yearFilter"></div>
+
+            <div class="catalog-grid" id="catalogGrid"></div>
+        </div>
+    </div>
+
+    <footer>
+        DGA306 • Hosted with GitHub Pages
+    </footer>
+
+    <script>
+        // --- Catalog: load index + Thai-aware client-side search ---
+        // Index is built offline by catalog/build_index.py (extracts PDF text,
+        // tokenizes Thai, writes catalog/catalog-index.json).
+        const CatalogSearch = (function () {
+            let items = [];
+            let activeYear = null;
+            let showStarredOnly = false;
+            const grid = document.getElementById('catalogGrid');
+            const statusEl = document.getElementById('catalogStatus');
+            const input = document.getElementById('txtSearch');
+            const yearFilterEl = document.getElementById('yearFilter');
+
+            const norm = s => (s || '').toString().toLowerCase().normalize('NFC');
+            const escHtml = s => (s || '').replace(/[&<>"']/g, c =>
+                ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            const escReg = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+            // Each item is searched across weighted fields. content/content_tokens
+            // are pre-tokenized for Thai; we also keep raw strings so substring
+            // matching works even when Thai isn't word-segmented at build time.
+            function prepare(raw) {
+                items = raw.map(it => {
+                    const strong = norm([it.org, it.title, it.filename, (it.tags || []).join(' ')].join(' '));
+                    const medium = norm(it.desc);
+                    const weak = norm((it.content_tokens || '') + ' ' + (it.content || ''));
+                    return { data: it, strong, medium, weak };
+                });
+            }
+
+            // AND across terms; score by best field a term hits. 0 => no match.
+            function score(item, terms) {
+                let total = 0;
+                for (const t of terms) {
+                    let best = 0;
+                    if (item.strong.includes(t)) best = 3;
+                    else if (item.medium.includes(t)) best = 2;
+                    else if (item.weak.includes(t)) best = 1;
+                    if (best === 0) return 0;
+                    total += best;
+                }
+                return total;
+            }
+
+            function highlight(text, terms) {
+                let html = escHtml(text);
+                for (const t of terms) {
+                    if (!t) continue;
+                    html = html.replace(new RegExp(escReg(escHtml(t)), 'gi'),
+                        m => '<mark>' + m + '</mark>');
+                }
+                return html;
+            }
+
+            function cardHtml(it, terms) {
+                const tags = (it.tags || []).map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
+                const url = it.url || '#';
+                const yearBadge = it.year ? `<span class="cat-year">พ.ศ. ${it.year}</span>` : '';
+                const starredClass = it.starred ? ' starred' : '';
+                const starBadge = it.starred ? `<span class="cat-starred-badge"><i class="fa-solid fa-star"></i> แนะนำ</span>` : '';
+                return `
+                    <div class="cat-item${starredClass}">
+                        <div class="cat-header" style="align-items: flex-start;">
+                            <span style="display: flex; align-items: flex-start; gap: 8px;">
+                                <i class="fa-solid ${escHtml(it.icon || 'fa-file-lines')}" style="margin-top: 3px; flex-shrink: 0;"></i>
+                                <span style="word-break: break-word; line-height: 1.3;">${highlight(it.org, terms)}</span>
+                            </span>
+                            <span style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; padding-left: 10px; margin-top: 1px;">
+                                ${starBadge}
+                                ${yearBadge}
+                            </span>
+                        </div>
+                        <div class="cat-body">
+                            <h4>${it.starred ? '<i class="fa-solid fa-star" style="color: #fbbf24; margin-right: 5px;"></i>' : ''}${highlight(it.title, terms)}</h4>
+                            <p>${highlight(it.desc, terms)}</p>
+                            <div class="cat-tags">${tags}</div>
+                        </div>
+                        <div class="cat-footer"><a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer" class="btn-pdf">เปิดเอกสาร PDF</a></div>
+                    </div>`;
+            }
+
+            function buildYearChips() {
+                const fromData = new Set(items.map(i => i.data.year).filter(Boolean));
+                const KNOWN_YEARS = [2568, 2569, 2570];
+                const years = [...new Set([...fromData, ...KNOWN_YEARS])].sort();
+                const allChip = `<button class="year-chip active" data-filter="all">ทั้งหมด</button>`;
+                const starredChip = `<button class="year-chip" data-filter="starred"><i class="fa-solid fa-star" style="color: #fbbf24; margin-right: 4px;"></i> แนะนำ</button>`;
+                const chips = years.map(y => `<button class="year-chip" data-filter="year" data-year="${y}">พ.ศ. ${y}</button>`).join('');
+                yearFilterEl.innerHTML = allChip + starredChip + chips;
+                yearFilterEl.addEventListener('click', e => {
+                    const btn = e.target.closest('.year-chip');
+                    if (!btn) return;
+                    yearFilterEl.querySelectorAll('.year-chip').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filterType = btn.dataset.filter;
+                    if (filterType === 'all') {
+                        activeYear = null;
+                        showStarredOnly = false;
+                    } else if (filterType === 'starred') {
+                        activeYear = null;
+                        showStarredOnly = true;
+                    } else if (filterType === 'year') {
+                        activeYear = btn.dataset.year ? Number(btn.dataset.year) : null;
+                        showStarredOnly = false;
+                    }
+                    render(input.value);
+                });
+            }
+
+            function render(query) {
+                const terms = norm(query).split(/\s+/).filter(Boolean);
+                let pool = items;
+                if (showStarredOnly) {
+                    pool = items.filter(i => i.data.starred);
+                } else if (activeYear) {
+                    pool = items.filter(i => i.data.year === activeYear);
+                }
+                
+                let matches;
+                if (terms.length === 0) {
+                    matches = pool.map(i => i.data);
+                } else {
+                    matches = pool
+                        .map(i => ({ data: i.data, s: score(i, terms) }))
+                        .filter(x => x.s > 0)
+                        .sort((a, b) => b.s - a.s)
+                        .map(x => x.data);
+                }
+
+                if (matches.length === 0) {
+                    let emptyMsg = 'ไม่พบผลงานที่ตรงกับคำค้นหา ลองใช้คำที่สั้นลงหรือคำอื่น';
+                    if (showStarredOnly) {
+                        emptyMsg = 'ยังไม่มีผลงานแนะนำ/ติดดาวในขณะนี้';
+                    } else if (activeYear && pool.length === 0) {
+                        emptyMsg = `ยังไม่มีผลงานรุ่น พ.ศ. ${activeYear} — รอผลงานจากผู้เรียนรุ่นนี้`;
+                    }
+                    grid.innerHTML = `<div class="catalog-empty">${emptyMsg}</div>`;
+                } else {
+                    grid.innerHTML = matches.map(it => cardHtml(it, terms)).join('');
+                }
+
+                const total = showStarredOnly 
+                    ? items.filter(i => i.data.starred).length 
+                    : (activeYear ? pool.length : items.length);
+                statusEl.textContent = (terms.length || activeYear || showStarredOnly)
+                    ? `พบ ${matches.length} ผลงาน จากทั้งหมด ${total}`
+                    : `ทั้งหมด ${items.length} ผลงาน`;
+            }
+
+            let loaded = false;
+            function init() {
+                if (loaded) return;
+                loaded = true;
+                let debounce;
+                input.addEventListener('input', e => {
+                    clearTimeout(debounce);
+                    debounce = setTimeout(() => render(e.target.value), 120);
+                });
+
+                fetch('catalog/catalog-index.json')
+                    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+                    .then(data => { prepare(data); buildYearChips(); render(''); })
+                    .catch(err => {
+                        grid.innerHTML = '<div class="catalog-empty">ไม่สามารถโหลดข้อมูล Catalog ได้<br>' +
+                            '(ต้องเปิดผ่านเว็บเซิร์ฟเวอร์ และต้องมีไฟล์ catalog/catalog-index.json)</div>';
+                        statusEl.textContent = '';
+                        console.error('catalog-index.json load failed:', err);
+                    });
+            }
+
+            return { init };
+        })();
+        CatalogSearch.init();
+    </script>
+</body>
+
+</html>
