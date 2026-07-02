@@ -875,3 +875,12 @@ Catalog-related updates made after the previous `day5.html` Catalog commit.
     *   **Readability**: Replaced stale Thai/English mixed comments and decorative separators with concise English comments.
     *   **Preserved explanations**: Kept comments where they clarify non-obvious behavior, including preserve-safe builds, OCR fallback, hash warnings, refresh behavior, and Drive URL generation.
     *   **Verification**: Confirmed `catalog/catalog-index.json`, `catalog/sources.json`, and `day5.html` remained unchanged after strict build verification.
+
+---
+
+## 7. ปรับสไตล์คำอธิบาย Catalog เป็นแบบ Subtitle ของหัวข้อ h2
+*   **สิ่งที่ทำ**: ปรับเปลี่ยนสไตล์ของย่อหน้าคำอธิบาย Catalog (ใต้หัวข้อ `<h2>`) ใน `day5.html` ให้มีรูปแบบอักษรและโทนสีน้ำเงินแบบเดียวกับหัวข้อหลัก แต่มีขนาดเล็กลงและมีระยะห่างที่พอดี เพื่อทำหน้าที่เป็นคำบรรยายใต้หัวข้ออย่างเป็นระเบียบเรียบร้อย
+*   **การเปลี่ยนแปลงในโค้ด**:
+    *   **HTML**: เปลี่ยนคลาสของแท็ก `<p>` บรรยายจาก `catalog-status` ไปเป็น `catalog-subtitle` เพื่อไม่ให้ชนกับระบบแสดงผลการค้นหา
+    *   **CSS**: เพิ่มสไตล์ `.catalog-subtitle` เพื่อควบคุมสีเป็น `var(--primary-blue)`, ขนาดตัวอักษร `15px`, ความหนา `600` (Semi-bold), `line-height: 1.5`, พร้อมปรับ `margin-top: -10px` และ `margin-bottom: 20px` ให้จัดวางชิดใต้หัวข้อ `<h2>` อย่างสวยงาม
+
