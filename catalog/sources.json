@@ -613,7 +613,8 @@
       "Surveillance",
       "Livestock"
     ],
-    "year": 2569
+    "year": 2569,
+    "starred": true
   },
   {
     "id": "cat042",
@@ -629,6 +630,7 @@
       "Planning",
       "Budget"
     ],
-    "year": 2569
+    "year": 2569,
+    "starred": true
   }
 ]
