@@ -911,5 +911,25 @@ Catalog-related updates made after the previous `day5.html` Catalog commit.
         *   ปรับปรุงส่วนหัวการ์ด `.cat-header` โดยนำคุณสมบัติ `white-space: nowrap` และการจำกัดพื้นที่แสดงผลออก เพื่อเปิดให้ข้อความยาวสามารถเว้นวรรคขึ้นบรรทัดใหม่ (`word-break: break-word`)
         *   จัดโครงสร้างภายในด้วย Flexbox ใหม่ เพื่อดึงไอคอนดาวและป้าย พ.ศ. ของผลงานให้อยู่ฝั่งขวาสุดอย่างสวยงามเป็นระเบียบเรียบร้อย
 
+---
+
+## 10. อัปเดต metadata Catalog และคู่มือ workflow
+*   **สิ่งที่ทำ**: บันทึกการเปลี่ยนแปลงจาก commit `29dc4a5` (`Update catalog metadata and docs workflow`) ที่ปรับข้อมูล Catalog และเอกสารการดูแลระบบให้ตรงกับหน้า `catalog.html`
+*   **การเปลี่ยนแปลงในโค้ดและเอกสาร**:
+    *   **catalog/README.md**:
+        *   ปรับ overview จากเดิมที่อ้างถึงแท็บ Catalog ใน `day5.html` ไปเป็นหน้า `catalog.html`
+        *   จัดหัวข้อใหม่ให้เริ่มจากสิ่งที่ต้องรู้ก่อน เช่น แก้ `catalog/sources.json`, ห้ามแก้ `catalog/catalog-index.json` ด้วยมือ, และต้องรัน `python catalog/build_index.py --strict` หลังแก้ metadata
+        *   เพิ่ม workflow สำหรับเพิ่ม entry ใหม่, แก้ metadata เดิม, กรณี `sources.json` ถูก commit โดยยังไม่ได้ rebuild, การจับคู่ไฟล์ PDF ใน `catalog/raw/`, การ refresh content ราย entry, และการ download จาก Drive
+        *   เพิ่ม field reference ให้ครอบคลุม `drive_file_id`, `drive_url`, `url`, `year`, และ `starred`
+        *   เพิ่ม current snapshot ว่ามี catalog 42 entries, ปี 2568 มี 34 entries, ปี 2569 มี 8 entries, และ starred มี 7 entries
+    *   **catalog/sources.json**:
+        *   ย้ายสถานะ starred ออกจาก `cat003`
+        *   เพิ่ม `"starred": true` ให้ `cat011`, `cat028`, `cat030`, `cat031`, `cat041`, และ `cat042`
+        *   แก้ชื่อไฟล์ของ `cat037` จากชื่อที่มี quote รอบคำว่า เผา เป็นชื่อที่ใช้ underscore เพื่อให้ตรงกับไฟล์จริง
+    *   **catalog/catalog-index.json**:
+        *   rebuild index ให้ sync กับ `catalog/sources.json`
+        *   อัปเดตสถานะ starred ตาม metadata ใหม่
+        *   เพิ่มข้อมูล searchable content และ `pdf_hash` สำหรับรายการปี 2569 ที่ถูก index ใหม่ เช่น `cat035` ถึง `cat042`
+
 
 
