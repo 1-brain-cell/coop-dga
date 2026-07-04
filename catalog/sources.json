@@ -43,8 +43,7 @@
       "Urban",
       "Statistics"
     ],
-    "year": 2568,
-    "starred": true
+    "year": 2568
   },
   {
     "id": "cat004",
@@ -164,7 +163,8 @@
       "Services",
       "Statistics"
     ],
-    "year": 2568
+    "year": 2568,
+    "starred": true
   },
   {
     "id": "cat012",
@@ -419,7 +419,8 @@
       "EV",
       "Metrology"
     ],
-    "year": 2568
+    "year": 2568,
+    "starred": true
   },
   {
     "id": "cat029",
@@ -449,7 +450,8 @@
       "Environment",
       "PM2.5"
     ],
-    "year": 2568
+    "year": 2568,
+    "starred": true
   },
   {
     "id": "cat031",
@@ -464,7 +466,8 @@
       "SMEs",
       "CaseStudy"
     ],
-    "year": 2568
+    "year": 2568,
+    "starred": true
   },
   {
     "id": "cat032",
@@ -537,7 +540,7 @@
   },
   {
     "id": "cat037",
-    "file": "เจาะลึกพิกัด Hotspot เปิดแผนที่เสี่ยงหยุด 'เผา' ในพื้นที่เกษตรกรรม - wichu chabu.pdf",
+    "file": "เจาะลึกพิกัด Hotspot เปิดแผนที่เสี่ยงหยุด _เผา_ ในพื้นที่เกษตรกรรม - wichu chabu.pdf",
     "drive_file_id": "1bdGSfkE97eMGzwEbQo5arOhxqrE5CxR4",
     "icon": "fa-file-lines",
     "org": "กรมส่งเสริมการเกษตร",
