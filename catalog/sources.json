@@ -622,5 +622,122 @@
     ],
     "year": 2569,
     "starred": true
+  },
+  {
+    "id": "cat043",
+    "file": "_[DGA306] _G3.Data Story Storyboard (1) - ภัค คํานัน(1).pdf",
+    "drive_url": "",
+    "drive_file_id": "1FIzHrsgNwz_2YeGTR1k8IrEHUDmDAfpc",
+    "icon": "fa-file-lines",
+    "org": "สำนักงานคณะกรรมการพัฒนาระบบราชการ ร่วมกับ สำนักงานขับเคลื่อนการปฏิรูปประเทศ ยุทธศาสตร์ชาติ และการสร้างความสามัคคีปรองดอง",
+    "title": "ความสัมพันธ์ระหว่างงบประมาณกับจำนวนการเข้าสมัครรับรางวัลเลิศรัฐของหน่วยงานภาครัฐ (ระดับกรม)",
+    "desc": "ศึกษาความสัมพันธ์ระหว่างขนาดงบประมาณที่หน่วยงานได้รับกับการส่งผลงานเข้าประกวดรางวัลเลิศรัฐ (Public Sector Excellence Awards)",
+    "tags": [
+      "PublicSector",
+      "Awards",
+      "Budget",
+      "Storyboard"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat044",
+    "file": "DGA306 (รุ่นที่ 2) Group 6 การประเมิณราคาสิ่งก่อสร้าง - Peerayut Tongraya.pdf",
+    "drive_url": "",
+    "drive_file_id": "16LHGVe2nAc9pMSQftvT-VQeOOcAp4B2y",
+    "icon": "fa-file-lines",
+    "org": "สำนักงบประมาณ ร่วมกับ สำนักงานการแข่งขันทางการค้า ร่วมกับ สำนักงานคณะกรรมการคุ้มครองผู้บริโภค",
+    "title": "การประเมินราคาสิ่งก่อสร้าง",
+    "desc": "วิเคราะห์ข้อมูลภาพรวมและเปรียบเทียบราคาประเมินทรัพย์สิน ที่ใช้เป็นฐานจัดเก็บภาษีที่ดิน",
+    "tags": [
+      "Construction",
+      "Valuation",
+      "PropertyTax",
+      "RealEstate"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat045",
+    "file": "DGA306(รุ่น2)_G2_จากห้องแล็บสู่พลังงานสะอาด  มาตร - Meaw Meaw.pdf",
+    "drive_url": "",
+    "drive_file_id": "1uFyvZ42JyWzRHEGg2DwcJMfm7OzRTyGu",
+    "icon": "fa-file-lines",
+    "org": "สถาบันมาตรวิทยาแห่งชาติ (มว)",
+    "title": "จากห้องแลปสู่พลังงานสะอาด",
+    "desc": "นำเสนอความสำคัญของมาตรฐานการสอบเทียบเครื่องมือวัดความเร็วลม (Anemometer) ในห้องแล็บ เพื่อนำไปสู่การรองรับการลงทุนทุ่งกังหันลม",
+    "tags": [
+      "WindEnergy",
+      "Metrology",
+      "CleanEnergy"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat046",
+    "file": "Group P.O.T - Star Kkamjong.pdf",
+    "drive_url": "",
+    "drive_file_id": "1FLKsj6AhwZGmWARJvwVA6UY_lqklfGPU",
+    "icon": "fa-file-lines",
+    "org": "สำนักงานคณะกรรมการป้องกันและปราบปรามยาเสพติด ร่วมกับ สำนักงานคณะกรรมการป้องกันและปราบปรามการทุจริตในภาครัฐ ร่วมกับ สถาบันเพื่อการยุติธรรมแห่งประเทศไทย",
+    "title": "กาารตรวจสอบเรื่องร้องเรียนของประชาชนด้านยาเสพติด",
+    "desc": "วิเคราะห์สถิติเรื่องร้องเรียน/แจ้งเบาะแสด้านยาเสพติดของประชาชน",
+    "tags": [
+      "Narcotics",
+      "Complaints",
+      "Justice",
+      "Safety"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat047",
+    "file": "Salmon Head Project(1) - Nunthakarn Boonruangkan.pdf",
+    "drive_url": "",
+    "drive_file_id": "1Y4b9Z7H2Lui7Q1dRUmSWImQ1s2qQ9gGh",
+    "icon": "fa-file-lines",
+    "org": "กรมสรรพากร",
+    "title": "เจาะลึกพื้นที่ ชวนยื่นภาษีออนไลน์ ให้ตรงใจ",
+    "desc": "วิเคราะห์สถิติช่องทางการยื่นแบบภาษีย้อนหลัง เพื่อผลักดันนโยบายลดการยื่นแบบฯ กระดาษให้ลดน้อยลง",
+    "tags": [
+      "Tax",
+      "E-Filing",
+      "Paperless",
+      "Revenue"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat048",
+    "file": "กลุ่มปลาส้ม DGA306 Data Analytics Techniques - Moodz Love all around.pdf",
+    "drive_url": "",
+    "drive_file_id": "1HhyPgdmPdLMRt50QTGArYn72a3-0ckkW",
+    "icon": "fa-file-lines",
+    "org": "สำนักงานคณะกรรมการสุขภาพแห่งชาติ",
+    "title": "แซ่บ...ซ่อนแซด (Sad) เรื่องเล่าจากจานปลาดิบน้ำจืด",
+    "desc": "ข้อมูลแบบสำรวจเพื่อศึกษาพฤติกรรม แรงจูงใจ ปัจจัย และความรอบรู้เกี่ยวกับโรคพยาธิใบไม้ตับ และมะเร็งท่อน้ำดี",
+    "tags": [
+      "LiverFluke",
+      "Cancer",
+      "Health",
+      "Behavior"
+    ],
+    "year": 2569
+  },
+  {
+    "id": "cat049",
+    "file": "นำเสนอ DGA G7 - Kanit Tinnoraset.pdf",
+    "drive_url": "",
+    "drive_file_id": "1P2k35E8tu2z4VwT-E1w5zbHkLuwj2QLy",
+    "icon": "fa-file-lines",
+    "org": "สถาบันส่งเสริมศิลปหัตถกรรมไทย ร่วมกับ สถาบันพระปกเกล้า ร่วมกับ สถาบันบริหารจัดการธนาคารที่ดิน",
+    "title": "หัตถกรรมไทยจากคุณค่า สู่มูลค่าการส่งออกที่ยั่งยืน",
+    "desc": "การวิเคราะห์ข้อมูลเพื่อการวางแผนหาตลาดใหม่ และสร้างมูลค่าหัตถกรรมไทยอย่างยั่งยืน",
+    "tags": [
+      "Handicraft",
+      "Export",
+      "Trade"
+    ],
+    "year": 2569
   }
 ]
